@@ -9,18 +9,33 @@ import { useRecoilState } from "recoil";
 
 import type { MenuDataItem } from "@ant-design/pro-layout";
 import ProLayout from "@ant-design/pro-layout";
-import { SmileOutlined, HeartOutlined, FrownOutlined } from "@ant-design/icons";
+import {
+  SmileOutlined,
+  HeartOutlined,
+  FrownOutlined,
+  NotificationOutlined,
+  SettingOutlined,
+  ShopOutlined,
+  ProjectOutlined,
+  RadarChartOutlined
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
 import { createBrowserHistory } from "history";
 import RightContent from "./components/RightContent";
-import { ReactComponent as LogoSvg } from "@/assets/logo/react.svg";
+// import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
+import LogoIcon from "@/assets/logo/logo.png";
 import styles from "./index.module.less";
 import Footer from "./components/Footer";
 
 const history = createBrowserHistory();
 
 const IconMap: { [key: string]: React.ReactNode } = {
+  notification: <NotificationOutlined />,
+  system: <SettingOutlined />,
+  storeMng: <ShopOutlined />,
+  businessMng: <RadarChartOutlined />,
+
   smile: <SmileOutlined />,
   heart: <HeartOutlined />,
   frown: <FrownOutlined />,
@@ -94,7 +109,7 @@ const LayoutPage: FC = ({ children }) => {
         <a
           className={styles.layoutPageHeader}
         >
-          <LogoSvg  />
+          <img className={styles.layoutPageLogo} src={LogoIcon} />
           {title}
         </a>
       )}

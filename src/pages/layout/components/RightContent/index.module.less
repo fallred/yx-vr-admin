@@ -22,6 +22,7 @@
     padding: 0 12px;
     cursor: pointer;
     transition: all 0.3s;
+    color: #333;
     > span {
       vertical-align: middle;
     }
@@ -32,12 +33,6 @@
       background: @pro-header-hover-bg;
     }
   }
-  .search {
-    padding: 0 12px;
-    &:hover {
-      background: transparent;
-    }
-  }
   .account {
     .avatar {
       margin-right: 8px;
@@ -46,16 +41,6 @@
       background: rgba(255, 255, 255, 0.85);
     }
   }
-
-  .lang {
-    cursor: pointer;
-    padding: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    vertical-align: middle;
-  }
 }
 
 .dark {
@@ -63,8 +48,9 @@
     color: @primary-color;
   }
   .action {
+    color: #333;
     &:hover {
-      background: #252a3d;
+      // background: #252a3d;
     }
     &:global(.opened) {
       background: #252a3d;

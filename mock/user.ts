@@ -3,39 +3,124 @@ import { MockMethod } from 'vite-plugin-mock';
 
 const mockMenuList = [
   {
-    path: '/dashboard',
-    name: '面板',
-    locale: 'menu.dashboard',
-    icon: 'heart',
+    path: '/notification',
+    name: '公告',
+    locale: 'menu.notification',
+    icon: 'notification',
   },
   {
-    path: '/project',
-    name: 'Project',
-    icon: 'smile',
-    locale: 'menu.project',
+    path: '/system',
+    name: '系统管理',
+    locale: 'menu.system',
+    icon: 'system',
     children: [
       {
-        path: '/project/list',
-        name: 'Project List',
-        locale: 'menu.project.list',
+        path: '/system/role',
+        name: '角色管理',
+        locale: 'menu.system.role',
+        icon: 'smile',
+      },
+      {
+        path: '/system/user',
+        name: '用户管理',
+        locale: 'menu.system.user',
+        icon: 'smile',
+      },
+      {
+        path: '/system/operateLog',
+        name: '操作日志',
+        locale: 'menu.system.operateLog',
+        icon: 'smile',
+      },
+      {
+        path: '/system/noticeMng',
+        name: '公告管理',
+        locale: 'menu.system.noticeMng',
         icon: 'smile',
       },
     ],
   },
   {
-    path: '/permission',
-    name: 'permission',
-    locale: 'menu.permission',
-    icon: 'smile',
+    path: '/storeMng',
+    name: '门店管理',
+    locale: 'menu.storeMng',
+    icon: 'storeMng',
     children: [
       {
-        path: '/permission/list',
-        name: 'permission list',
-        locale: 'menu.permission.list',
+        path: '/storeMng/associate',
+        name: '关联人管理',
+        locale: 'menu.storeMng.associate',
+        icon: 'smile',
+      },
+      {
+        path: '/storeMng/shopList',
+        name: '门店管理',
+        locale: 'menu.storeMng.shopList',
+        icon: 'smile',
+      },
+      {
+        path: '/storeMng/shopDetail',
+        name: '门店信息',
+        locale: 'menu.storeMng.shopDetail',
         icon: 'smile',
       },
     ],
   },
+  {
+    path: '/businessMng',
+    name: '经营管理',
+    locale: 'menu.businessMng',
+    icon: 'businessMng',
+    children: [
+      {
+        path: '/businessMng/reportList',
+        name: '经营报表',
+        locale: 'menu.businessMng.reportList',
+        icon: 'smile',
+      },
+      {
+        path: '/businessMng/rankList',
+        name: '排行榜',
+        locale: 'menu.businessMng.rankList',
+        icon: 'smile',
+      },
+    ],
+  },
+
+  // {
+  //   path: '/dashboard',
+  //   name: '面板',
+  //   locale: 'menu.dashboard',
+  //   icon: 'heart',
+  // },
+  // {
+  //   path: '/project',
+  //   name: 'Project',
+  //   icon: 'smile',
+  //   locale: 'menu.project',
+  //   children: [
+  //     {
+  //       path: '/project/list',
+  //       name: 'Project List',
+  //       locale: 'menu.project.list',
+  //       icon: 'smile',
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/permission',
+  //   name: 'permission',
+  //   locale: 'menu.permission',
+  //   icon: 'smile',
+  //   children: [
+  //     {
+  //       path: '/permission/list',
+  //       name: 'permission list',
+  //       locale: 'menu.permission.list',
+  //       icon: 'smile',
+  //     },
+  //   ],
+  // },
   {
     path: '/404',
     name: '404',
