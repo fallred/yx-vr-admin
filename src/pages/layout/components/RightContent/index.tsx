@@ -36,7 +36,7 @@ const GlobalHeaderRight: React.FC = () => {
   return (
     <Space className={className}>
       <Avatar />
-      <Link to={'/system'}>修改密码</Link>
+      <Link to={'/setting/updatePass'}>修改密码</Link>
     </Space>
   );
 };

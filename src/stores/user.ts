@@ -17,9 +17,13 @@ const initialState: User = {
     newUser: JSON.parse(localStorage.getItem('newUser')!) ?? true,
     logged: false,
     menuList: [],
-    username: localStorage.getItem('username') || '',
-    role: (localStorage.getItem('username') || '') as Role,
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
+    role: (localStorage.getItem('userName') || '') as Role,
+    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    accessToken: localStorage.getItem('accessToken') || '',
+    userName: localStorage.getItem('userName') || '',
+    userAccount: localStorage.getItem('userAccount') || '',
+    appId: localStorage.getItem('appId') || '',
+    identity_type: localStorage.getItem('identity_type') || '',
 };
 
 export const userState = atom({

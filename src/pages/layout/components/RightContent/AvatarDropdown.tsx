@@ -20,7 +20,7 @@ export type GlobalHeaderRightProps = {
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const [user, setUser] = useRecoilState(userState);
 
-  const { username, avatar } = user;
+  const { userName, avatar } = user;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -66,7 +66,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     return loading;
   }
 
-  if (!username) {
+  if (!userName) {
     return loading;
   }
 
@@ -88,7 +88,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
           src={avatar}
           alt="avatar"
         />
-        <span className={`${classes.name} anticon`}>{username}</span>
+        <span className={`${classes.name} anticon`}>{userName}</span>
       </span>
     </HeaderDropdown>
   );

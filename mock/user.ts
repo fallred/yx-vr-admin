@@ -234,9 +234,22 @@ export default [
     method: 'POST',
     response: ({ body }) => {
       return {
-        token: '123abcdefg',
-        username: body.username,
-        role: body.username,
+        "userAccount": "18627107089",
+        "appId": "vr2037_00001",
+        "identity_type": 0,
+        "userName": "shuwei",
+        "token": {
+            "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxODYyNzEwNzA4OSIsImV4cCI6MTY1MDk4MTczNCwiaWF0IjoxNjUwMzc2OTM0LCJqdGkiOiJhYzZlZTY4Ny04ZDY4LTQ5ODEtODYwNi05NjhjYjAwODZmYWUiLCJ1c2VybmFtZSI6IjE4NjI3MTA3MDg5In0.M-4LwfCuzWZp_pCV7PdExaP1jWqAmY-5J46VM7gOTP4"
+        }
+      };
+    },
+  },
+  {
+    url: '/api/v1/auth/upatepwd',
+    method: 'POST',
+    response: ({ body }) => {
+      return {
+       
       };
     },
   },

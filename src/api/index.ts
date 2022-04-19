@@ -1,5 +1,6 @@
 import { MenuList } from "@/models/menu.interface";
 import { LoginParams, LoginResult } from "@/models/login";
+import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
 import { useBatch, useCreate, useGetList, useGetOne, useUpdate } from "./request";
 
@@ -8,7 +9,9 @@ const projectResource = '/projects';
 export const useLogin = () => {
     return useCreate<LoginParams, LoginResult>("/login");
 }
-
+export const useUpdatePass = () => {
+    return useCreate<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd");
+}
 export const useGetCurrentUser = () => {
     return useGetOne<CurrentUserResult>(
         "CurrentUser",

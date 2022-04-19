@@ -3,46 +3,35 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import { userState } from '@/stores/user';
-import { LoginParams } from "@/models/login";
-// import { loginAsync } from '@/stores/user.store';
-// import { useAppDispatch } from '@/stores';
+import { IUpdatePassParams } from "@/models/setting";
 import { Location } from "history";
-import { useLogin } from "@/api";
+import { useUpdatePass } from "@/api";
 import LogoIcon from "@/assets/logo/logo.png";
 import styles from "./index.module.less";
 import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
 
-const initialValues: LoginParams = {
-  username: "guest",
-  password: "guest",
-  verifycode: ""
-  // remember: true
+const initialValues: IUpdatePassParams = {
+    oldpwd: '',
+    newpwd: '',
+    renewpwd: ''
 };
 
 const LoginForm: FC = () => {
-  const loginMutation = useLogin();
+  const updatePassMutation = useUpdatePass();
   const navigate = useNavigate();
   const location = useLocation() as Location<{ from: string }>;
   const [user, setUser] = useRecoilState(userState);
   // const dispatch = useAppDispatch();
 
-  const onFinished = async (form: LoginParams) => {
-    const result = await loginMutation.mutateAsync(form);
+  const onFinished = async (form: IUpdatePassParams) => {
+    const result = await updatePassMutation.mutateAsync(form);
     console.log("result: ", result);
 
     if (result) {
       setUser({
-        ...user,
-        ...result,
-        logged: true
+        logged: false
       });
-      localStorage.setItem("accessToken", result.token.accessToken);
-      localStorage.setItem("userName", result.userName);
-      localStorage.setItem("userAccount", result.userAccount);
-      localStorage.setItem("appId", result.appId);
-      localStorage.setItem("identity_type", result.identity_type);
-
-      const from = location.state?.from || { pathname: "/notification" };
+      const from = location.state?.from || { pathname: "/login" };
       navigate(from);
     }
   };
@@ -59,21 +48,24 @@ const LoginForm: FC = () => {
         <div className={styles.desc}>是一家VR游戏公司</div>
       </div>
       <div className={styles.main}>
-        <Form<LoginParams> onFinish={onFinished} initialValues={initialValues}>
+        <Form<IUpdatePassParams> onFinish={onFinished} initialValues={initialValues}>
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "请输入用户名！" }]}
+            name="oldpwd"
+            rules={[{ required: true, message: "请输入旧密码！" }]}
           >
-            <Input size="large" placeholder="用户名" />
+            <Input type="password" size="large" placeholder="旧密码" />
           </Form.Item>
           <Form.Item
-            name="password"
-            rules={[{ required: true, message: "请输入密码！" }]}
+            name="newpwd"
+            rules={[{ required: true, message: "请输入新密码！" }]}
           >
-            <Input type="password" size="large" placeholder="密码" />
+            <Input type="password" size="large" placeholder="新密码" />
           </Form.Item>
-          <Form.Item name="remember" valuePropName="checked">
-            <Checkbox>记住用户</Checkbox>
+          <Form.Item
+            name="renewpwd"
+            rules={[{ required: true, message: "请输入确认密码！" }]}
+          >
+            <Input type="password" size="large" placeholder="确认密码" />
           </Form.Item>
           <Form.Item>
             <Button
@@ -82,7 +74,7 @@ const LoginForm: FC = () => {
               htmlType="submit"
               type="primary"
             >
-              登录
+              确定
             </Button>
           </Form.Item>
         </Form>

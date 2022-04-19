@@ -1,4 +1,5 @@
 import { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import LogoIcon from "@/assets/logo/logo.png";
 
 const Settings: LayoutSettings & {
   pwa?: boolean;
@@ -15,7 +16,7 @@ const Settings: LayoutSettings & {
   title: '2037 VR运营管理系统',
   pwa: false,
   iconfontUrl: '',
-  logo: '',
+  logo: LogoIcon,
 };
 
 export default Settings;

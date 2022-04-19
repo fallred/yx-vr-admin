@@ -55,7 +55,7 @@ const LayoutPage: FC = ({ children }) => {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      navigate("/dashboard");
+      navigate("/notification");
     }
   }, [navigate, location]);
 
@@ -108,7 +108,7 @@ const LayoutPage: FC = ({ children }) => {
         <a
           className={styles.layoutPageHeader}
         >
-          <img className={styles.layoutPageLogo} src={LogoIcon} />
+          {logo ? <img className={styles.layoutPageLogo} src={LogoIcon} /> : null}
           {title}
         </a>
       )}

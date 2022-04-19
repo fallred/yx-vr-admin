@@ -23,6 +23,7 @@ const ShopDetail = lazy(() => import('@/pages/store-mng/shop-detail'));
 const BusinessMng = lazy(() => import('@/pages/business/index'));
 const ReportList = lazy(() => import('@/pages/business/report-list'));
 const RankList = lazy(() => import('@/pages/business/rank-list'));
+const UpdatePass = lazy(() => import('@/pages/settings/update-pass'));
 
 const routeList: RouteObject[] = [
 
@@ -78,6 +79,10 @@ const routeList: RouteObject[] = [
       {
         path: "/businessMng/rankList",
         element: <WrapperRouteComponent><RankList /></WrapperRouteComponent>,
+      },
+      {
+        path: "/setting/updatePass",
+        element: <WrapperRouteComponent auth={true}><UpdatePass /></WrapperRouteComponent>,
       },
       {
         path: "*",
