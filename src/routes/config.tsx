@@ -10,7 +10,7 @@ export interface WrapperRouteProps extends RouteProps {
 }
 
 const WrapperRouteComponent: FC<WrapperRouteProps> = ({ auth, children }) => {
-  const { formatMessage } = useIntl();
+  // const { formatMessage } = useIntl();
 
   if (auth) {
     return <PrivateRoute>{children}</PrivateRoute>;

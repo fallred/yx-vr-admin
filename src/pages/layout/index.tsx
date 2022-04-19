@@ -103,7 +103,6 @@ const LayoutPage: FC = ({ children }) => {
       }}
       {...settings}
       onCollapse={toggle}
-      formatMessage={formatMessage}
       onMenuHeaderClick={() => history.push("https://reactjs.org/")}
       headerTitleRender={(logo, title, props) => (
         <a
