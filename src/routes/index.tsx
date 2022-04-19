@@ -20,9 +20,9 @@ const Associate = lazy(() => import('@/pages/store-mng/associate'));
 const ShopList = lazy(() => import('@/pages/store-mng/shop-list'));
 const ShopDetail = lazy(() => import('@/pages/store-mng/shop-detail'));
 
-const BusinessMng = lazy(() => import('@/pages/business-mng/index'));
-const ReportList = lazy(() => import('@/pages/report-list'));
-const RankList = lazy(() => import('@/pages/business-mng/rank-list'));
+const BusinessMng = lazy(() => import('@/pages/business/index'));
+const ReportList = lazy(() => import('@/pages/business/report-list'));
+const RankList = lazy(() => import('@/pages/business/rank-list'));
 
 const routeList: RouteObject[] = [
 
@@ -44,58 +44,40 @@ const routeList: RouteObject[] = [
         element: <WrapperRouteComponent><Notification /></WrapperRouteComponent>,
       },
       {
-        path: "/system",
-        element: <WrapperRouteComponent><SystemMng /></WrapperRouteComponent>,
-        children: [
-          {
-            path: "/system/role",
-            element: <WrapperRouteComponent><RoleMng /></WrapperRouteComponent>,
-          },
-          {
-            path: "/system/user",
-            element: <WrapperRouteComponent><UserMng /></WrapperRouteComponent>,
-          },
-          {
-            path: "/system/operateLog",
-            element: <WrapperRouteComponent><OperateLog /></WrapperRouteComponent>,
-          },
-          {
-            path: "/system/noticeMng",
-            element: <WrapperRouteComponent><NoticeMng /></WrapperRouteComponent>,
-          }
-        ]
+        path: "/system/role",
+        element: <WrapperRouteComponent><RoleMng /></WrapperRouteComponent>,
       },
       {
-        path: "/storeMng",
-        element: <WrapperRouteComponent><SystemMng /></WrapperRouteComponent>,
-        children: [
-          {
-            path: "/storeMng/associate",
-            element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
-          },
-          {
-            path: "/storeMng/shopList",
-            element: <WrapperRouteComponent><ShopList /></WrapperRouteComponent>,
-          },
-          {
-            path: "/storeMng/shopDetail",
-            element: <WrapperRouteComponent><ShopDetail /></WrapperRouteComponent>,
-          },
-        ]
+        path: "/system/user",
+        element: <WrapperRouteComponent><UserMng /></WrapperRouteComponent>,
       },
       {
-        path: "/businessMng",
-        element: <WrapperRouteComponent><BusinessMng /></WrapperRouteComponent>,
-        children: [
-          {
-            path: "/businessMng/reportList",
-            element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
-          },
-          {
-            path: "/businessMng/rankList",
-            element: <WrapperRouteComponent><RankList /></WrapperRouteComponent>,
-          },
-        ]
+        path: "/system/operateLog",
+        element: <WrapperRouteComponent><OperateLog /></WrapperRouteComponent>,
+      },
+      {
+        path: "/system/noticeMng",
+        element: <WrapperRouteComponent><NoticeMng /></WrapperRouteComponent>,
+      },
+      {
+        path: "/storeMng/associate",
+        element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
+      },
+      {
+        path: "/storeMng/shopList",
+        element: <WrapperRouteComponent><ShopList /></WrapperRouteComponent>,
+      },
+      {
+        path: "/storeMng/shopDetail",
+        element: <WrapperRouteComponent><ShopDetail /></WrapperRouteComponent>,
+      },
+      {
+        path: "/businessMng/reportList",
+        element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
+      },
+      {
+        path: "/businessMng/rankList",
+        element: <WrapperRouteComponent><RankList /></WrapperRouteComponent>,
       },
       {
         path: "*",
