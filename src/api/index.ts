@@ -12,6 +12,13 @@ export const useLogin = () => {
 export const useUpdatePass = () => {
     return useCreate<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd");
 }
+export const usePerssionList = () => {
+    return useGetList<string[]>("permissionList",
+        "/manage/perssion/list"
+    );
+};
+
+
 export const useGetCurrentUser = () => {
     return useGetOne<CurrentUserResult>(
         "CurrentUser",
@@ -23,8 +30,8 @@ export const useGetCurrentMenus = () => {
     return useGetList<MenuList>("CurrentMenuList",
         "/current/menu"
     );
-
 }
+
 export const useGetProjects = (pagination: any, filters: any) => {
     return useGetList<API.ProjectPagination>(
         "Projects",

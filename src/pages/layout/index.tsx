@@ -1,11 +1,14 @@
 import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useRecoilState } from "recoil";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { MenuList, MenuChild } from "@/models/menu.interface";
 import { useGuide } from "../guide/useGuide";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useGetCurrentMenus } from "@/api";
+import { useGetCurrentMenus, usePerssionList } from "@/api";
 import { userState } from "@/stores/user";
-import { useRecoilState } from "recoil";
+import { permissionListState, menuListState } from '@/stores/menu';
+import {systemMenuList} from '@/config/menu-config';
+
 
 import type { MenuDataItem } from "@ant-design/pro-layout";
 import ProLayout from "@ant-design/pro-layout";
@@ -42,9 +45,12 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
-  const { data: menuList, error } = useGetCurrentMenus();
+  // const { data: menuList, error } = useGetCurrentMenus();
+  const { data: perssionList, error } = usePerssionList();
   
-  const [user, setUser] = useRecoilState(userState);
+  const [permissionList, setPermissionList] = useRecoilState(permissionListState);
+  const [menuList, setMenuList] = useRecoilState(menuListState);
+  setPermissionList(permissionList);
   const [pathname, setPathname] = useState("/welcome");
   const { device, collapsed, newUser, settings } = user;
   const isMobile = device === "MOBILE";
@@ -92,6 +98,14 @@ const LayoutPage: FC = ({ children }) => {
     }));
 
     return m;
+  };
+
+  const generateMenuList = () => {
+      if (!perssionList) return [];
+      const menuListTemp = systemMenuList.filter(item => {
+        
+      });
+      setMenuList(menuListTemp)
   };
 
   return (

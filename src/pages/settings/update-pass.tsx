@@ -38,7 +38,7 @@ const LoginForm: FC = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.top}>
+      {/* <div className={styles.top}>
         <div className={styles.header}>
           <Link to="/">
             <img className={styles.logo} src={LogoIcon} />
@@ -46,7 +46,7 @@ const LoginForm: FC = () => {
           </Link>
         </div>
         <div className={styles.desc}>是一家VR游戏公司</div>
-      </div>
+      </div> */}
       <div className={styles.main}>
         <Form<IUpdatePassParams> onFinish={onFinished} initialValues={initialValues}>
           <Form.Item

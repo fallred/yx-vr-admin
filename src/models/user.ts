@@ -1,7 +1,6 @@
 import { Device } from '@/models';
 import { MenuChild } from '@/models/menu.interface';
 import { PureSettings } from '@ant-design/pro-layout/lib/defaultSettings';
-import { S } from 'mockjs';
 import { Role } from './login';
 
 export type Locale = 'zh-cn' | 'en-us';
