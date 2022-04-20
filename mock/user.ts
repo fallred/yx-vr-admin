@@ -228,6 +228,22 @@ const mockNoticeList = [
   }
 ];
 
+const mockPermissionCodeList = [
+  'notification',
+  'systemMng',
+  'roleMng',
+  'userMng',
+  'operateLog',
+  'noticeMng',
+  'storeMng',
+  'associate',
+  'shopList',
+  'shopDetail',
+  'businessMng',
+  'reportList',
+  'rankList'
+];
+
 export default [
   {
     url: '/api/v1/login',
@@ -253,6 +269,14 @@ export default [
       };
     },
   },
+  {
+    url: '/api/v1/manage/perssion/list',
+    method: 'GET',
+    response: ({ body }) => {
+      return mockPermissionCodeList;
+    },
+  },
+
   {
     url: '/api/v1/current/user',
     method: 'get',

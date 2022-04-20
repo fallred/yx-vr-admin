@@ -12,7 +12,7 @@ export const useLogin = () => {
 export const useUpdatePass = () => {
     return useCreate<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd");
 }
-export const usePerssionList = () => {
+export const usePermissionList = () => {
     return useGetList<string[]>("permissionList",
         "/manage/perssion/list"
     );
