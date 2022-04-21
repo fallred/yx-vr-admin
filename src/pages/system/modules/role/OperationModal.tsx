@@ -1,12 +1,14 @@
 import React, { FC, useEffect, useRef } from "react";
+import { useRecoilState } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input } from "antd";
 import ProForm, {
   ModalForm,
   ProFormText,
   ProFormTextArea,
+  ProFormTreeSelect
 } from "@ant-design/pro-form";
-import { menuListState } from "@stores/menu";
+import { menuListState } from '@/stores/menu';
 
 interface OperationModalProps {
   done: boolean;
@@ -23,6 +25,7 @@ const formLayout = {
 };
 
 const OperationModal: FC<OperationModalProps> = (props) => {
+  const [menuList, setMenuList] = useRecoilState(menuListState);
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
@@ -91,7 +94,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
           ]}
         />
         <ProFormTreeSelect
-          name="name"
+          name="menuCodeList"
           placeholder="Please select"
           allowClear
           width={330}
@@ -130,7 +133,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
           // }}
           // tree-select args
           fieldProps={{
-            treeData: menuListState,
+            treeData: menuList,
             showArrow: false,
             filterTreeNode: true,
             showSearch: true,
@@ -141,20 +144,12 @@ const OperationModal: FC<OperationModalProps> = (props) => {
             treeNodeFilterProp: 'name',
             fieldNames: {
               label: 'name',
+              value: 'code',
+              children: 'children'
             },
           }}
         />
-        <ProFormTextArea
-          name="auth"
-          label="角色权限"
-          rules={[
-            {
-              required: true,
-              message: '请输入角色权限',
-            },
-          ]}
-        />
-      </Form>
+        </Form>
     );
   };
 

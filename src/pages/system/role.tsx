@@ -6,7 +6,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
-import { useAddProject, useBatchDeleteProject, useGetProjects, useUpdateProject } from "@/api";
+import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@/api";
 import OperationModal from "./modules/role/OperationModal";
 
 const TableList= () => {
@@ -16,7 +16,7 @@ const TableList= () => {
 
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [projects, setProjects] = useState<API.IRole[]>();
+  const [roles, setRole] = useState<API.IRole[]>();
   const [filters, setFilters] = useState<API.IRole[]>();
   const [current, setCurrent] = useState<Partial<API.IRole> | undefined>(
     undefined
@@ -32,14 +32,14 @@ const TableList= () => {
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.IRole[]>([]);
 
-  const { data, error, isLoading, refetch } = useGetProjects(pagination, filters);
+  const { data, error, isLoading, refetch } = useGetRoleList(pagination, filters);
 
-  const { mutateAsync } = useAddProject();
-  const { mutateAsync: update } = useUpdateProject();
-  const { mutateAsync: batchDelete } = useBatchDeleteProject();
+  const { mutateAsync } = useAddRole();
+  const { mutateAsync: update } = useUpdateRole();
+  const { mutateAsync: batchDelete } = useBatchDeleteRole();
 
   useEffect(() => {
-    setProjects(data?.list);
+    setRole(data?.data);
     setPagination({
       ...pagination,
       total: data?.total,
@@ -136,28 +136,28 @@ const TableList= () => {
 
   const columns: ProColumns<API.IRole>[] = [
     {
-      title: formatMessage({ id: "app.project.name" }),
+      title: '角色名',
       dataIndex: "name",
-      tip: "项目名称是唯一的 key",
-      sorter: true,
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrent(entity);
-              setShowDetail(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      tip: "请输入角色名",
+      // sorter: true,
+      // render: (dom, entity) => {
+      //   return (
+      //     <a
+      //       onClick={() => {
+      //         setCurrent(entity);
+      //         setShowDetail(true);
+      //       }}
+      //     >
+      //       {dom}
+      //     </a>
+      //   );
+      // },
     },
     {
-      title: formatMessage({ id: "app.project.description" }),
-      dataIndex: "description",
+      title: '角色描述',
+      dataIndex: "comment",
       valueType: "textarea",
-      sorter: true,
+      // sorter: true,
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
@@ -171,7 +171,7 @@ const TableList= () => {
             showEditModal(record);
           }}
         >
-          {formatMessage({ id: "gloabal.tips.modify" })}
+          编辑
         </a>,
         <a
           key="delete"
@@ -190,7 +190,7 @@ const TableList= () => {
             });
           }}
         >
-          {formatMessage({ id: "gloabal.tips.delete" })}
+          删除
         </a>,
       ],
     },
@@ -212,7 +212,7 @@ const TableList= () => {
           </Button>,
         ]}
         request={undefined}
-        dataSource={projects}
+        dataSource={roles}
         columns={columns}
         pagination={pagination}
         onChange={(pagination, filters, sorter) => {

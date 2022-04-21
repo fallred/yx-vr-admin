@@ -160,9 +160,9 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
 
     const service = async () => {
         let params: listParams = {};
-        const pagination = transformPagination(pagination);
+        const pageTemp = transformPagination(pagination);
         // const filters = transformFilters(filters);
-        params = { ...pagination, ...filters  };
+        params = { ...pageTemp, ...filters  };
         const transformRequest: AxiosTransformer = (data, headers) => {
         }
         console.log('params: ', params);
@@ -210,6 +210,21 @@ const useCreate = <T, U>(url: string) => {
     });
 }
 
+const useCreateByQuery = <T, U>(url: string) => {
+    const axios = useAxios();
+    const queryClient = useQueryClient()
+    return useMutation(async (params: T) => {
+        const data: U = await axios.post(
+            `${url}`,
+            null,
+            {
+                params
+            }
+        );
+        return data;
+    });
+}
+
 const useUpdate = <T>(url: string) => {
     const axios = useAxios();
     const queryClient = useQueryClient()
@@ -252,6 +267,7 @@ export {
     useCreate,
     useDelete,
     useBatch,
+    useCreateByQuery
 };
 
 export default axios;

@@ -2,7 +2,7 @@ import { MenuList } from "@/models/menu.interface";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
-import { useBatch, useCreate, useGetList, useGetOne, useUpdate } from "./request";
+import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate } from "./request";
 
 const roleResource = '/roles';
 
@@ -31,13 +31,12 @@ export const useAddRole = () => {
 }
 
 export const useUpdateRole = () => {
-    return useUpdate<API.IRole>('/manage/role/edit');
+    return useCreate<API.IRole>('/manage/role/edit');
 }
 
 export const useBatchDeleteRole = () => {
-    return useBatch(projectResource + ':batchDelete');
+    return useCreateByQuery('/manage/role/delete');
 }
-
 
 
 export const useGetCurrentUser = () => {

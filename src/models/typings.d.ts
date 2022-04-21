@@ -10,7 +10,8 @@ declare namespace API {
     deleted: number;
     menus?:string;
     powerSelected?: string;
-    menuTree?: MenuList
+    menuTree?: MenuList;
+    menuCodeList?: string[]
   }
   // 角色列表-分页
   export interface IRolePaginationResp {
