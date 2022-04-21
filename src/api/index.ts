@@ -4,7 +4,7 @@ import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
 import { useBatch, useCreate, useGetList, useGetOne, useUpdate } from "./request";
 
-const projectResource = '/projects';
+const roleResource = '/roles';
 
 export const useLogin = () => {
     return useCreate<LoginParams, LoginResult>("/login");
@@ -17,6 +17,27 @@ export const usePermissionList = () => {
         "/manage/perssion/list"
     );
 };
+
+export const useGetRoleList = (pagination: any, filters: any) => {
+    return useGetList<API.IRolePaginationResp>(
+        "RolesList",
+        '/manage/role/query',
+        pagination,
+        filters
+    );
+}
+export const useAddRole = () => {
+    return useCreate<API.IRole, API.IRole>('/manage/role/create');
+}
+
+export const useUpdateRole = () => {
+    return useUpdate<API.IRole>('/manage/role/edit');
+}
+
+export const useBatchDeleteRole = () => {
+    return useBatch(projectResource + ':batchDelete');
+}
+
 
 
 export const useGetCurrentUser = () => {

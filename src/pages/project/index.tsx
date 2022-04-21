@@ -97,7 +97,8 @@ const TableList= () => {
     try {
       if (values.id === 0) {
         await addProject(values);
-      } else {
+      }
+      else {
         await updateProject(values);
       }
 

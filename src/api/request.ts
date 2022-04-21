@@ -112,17 +112,17 @@ export const useAxios = () => {
 const transformPagination = (pagination: any) => {
     if (!pagination) return;
 
-    const current = pagination.current ? pagination.current : pagination.defaultCurrent;
+    const page = pagination.current ? pagination.current : pagination.defaultCurrent;
     const pageSize = pagination.pageSize ? pagination.pageSize : pagination.defaultPageSize;
 
-    let offset = 0;
-    if (current && pageSize) {
-        offset = (current - 1) * pageSize;
-    }
+    // let offset = 0;
+    // if (current && pageSize) {
+    //     offset = (current - 1) * pageSize;
+    // }
 
     return {
-        offset,
-        limit: pageSize,
+        page,
+        rows: pageSize,
     }
 }
 
@@ -160,13 +160,10 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
 
     const service = async () => {
         let params: listParams = {};
-
-        params = { ...transformPagination(pagination) };
-        params.filter = transformFilters(filters);
-        params.order = transformSorter(sorter);
-
+        const pagination = transformPagination(pagination);
+        // const filters = transformFilters(filters);
+        params = { ...pagination, ...filters  };
         const transformRequest: AxiosTransformer = (data, headers) => {
-
         }
         console.log('params: ', params);
         const data: T = await axios.get(

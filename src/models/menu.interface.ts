@@ -1,4 +1,4 @@
-interface MenuItem {
+export interface MenuItem {
   /** menu item name */
   name: string;
   /** menu labels */

@@ -122,7 +122,6 @@ const LayoutPage: FC = ({ children }) => {
     }
   }, [navigate, location]);
   useEffect(() => {
-    debugger;
     setPermissionList(permitCodeList);
   }, [permitCodeList]);
   useEffect(() => {
