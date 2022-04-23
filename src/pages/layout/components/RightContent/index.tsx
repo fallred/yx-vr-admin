@@ -9,7 +9,7 @@ import HeaderSearch from "../HeaderSearch";
 // import "./index.less";
 import classes from "./index.module.less";
 import { useRecoilState } from "recoil";
-import { userState } from "@/stores/user";
+import { userState } from "@/lib/recoilState";
 import SelectLang from "./SelectLang";
 import { ReactComponent as LanguageSvg } from '@/assets/header/language.svg';
 

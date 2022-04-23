@@ -7,7 +7,8 @@ import Notification from "@/pages/notification";
 import WrapperRouteComponent from "./config";
 
 const NotFound = lazy(() => import('@/pages/404'));
-// const Project = lazy(() => import('@/pages/project'));
+const Dashboard = lazy(() => import('@/pages/dashboard'));
+const Project = lazy(() => import('@/pages/project'));
 
 const SystemMng = lazy(() => import('@/pages/system/index'));
 const RoleMng = lazy(() => import('@/pages/system/role'));
@@ -31,14 +32,14 @@ const routeList: RouteObject[] = [
     path: "/",
     element: <WrapperRouteComponent auth={true} ><LayoutPage /></WrapperRouteComponent>,
     children: [
-      // {
-      //   path: "/dashboard",
-      //   element: <WrapperRouteComponent><Dashboard /></WrapperRouteComponent>,
-      // },
-      // {
-      //   path: "/project/list",
-      //   element: <WrapperRouteComponent><Project /></WrapperRouteComponent>,
-      // },
+      {
+        path: "/dashboard",
+        element: <WrapperRouteComponent><Dashboard /></WrapperRouteComponent>,
+      },
+      {
+        path: "/project/list",
+        element: <WrapperRouteComponent><Project /></WrapperRouteComponent>,
+      },
 
       {
         path: "/notification",

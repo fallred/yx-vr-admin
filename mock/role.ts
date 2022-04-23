@@ -28,13 +28,29 @@ const roleInfo = {
     ]
 };
 
+const delResp = {
+  "status": 200,
+  "msg": null,
+  "total": 0,
+  "pages": 0,
+  "success": true,
+  "data": "角色删除成功!"
+}
+
 export default [
   {
-    url: '/api/v1/manage/role/query',
-    method: 'GET',
-    response: ({ body }) => {
-      return roleInfo;
-    },
+      url: '/api/v1/manage/role/query',
+      method: 'GET',
+      response: ({ body }) => {
+        return roleInfo;
+      },
   },
+  {
+      url: '/api/v1/manage/role/delete',
+      method: 'POST',
+      response: ({ body, query }) => {
+        return delResp;
+      },
+  }
 ] as MockMethod[];
 

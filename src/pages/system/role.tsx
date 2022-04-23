@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import ProTable from "@ant-design/pro-table";
-import { Button, message, Modal, PaginationProps } from "antd";
+import { Button, message, Modal, PaginationProps, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
@@ -122,7 +122,9 @@ const TableList= () => {
     const hide = message.loading("正在删除");
     if (!selectedRows) return true;
     try {
-      await batchDelete(selectedRows.map((row) => row.id));
+      const ids = selectedRows.map((row) => row.id) ?? [];
+      const idsStr = ids.join(',');
+      await batchDelete({ids: idsStr});
       setPagination({...pagination, current: 1});
       hide();
       message.success("删除成功，即将刷新");
@@ -199,18 +201,37 @@ const TableList= () => {
   return (
     <PageContainer>
       <ProTable<API.IRole>
-        headerTitle={formatMessage({
-                id: 'app.project.title',
-                defaultMessage: '项目管理',
-              })}
+        headerTitle="角色管理"
         actionRef={actionRef}
         rowKey="id"
         options={{reload: false}}
         toolBarRender={() => [
           <Button type="primary" key="primary" onClick={showModal}>
-            <PlusOutlined /> <LocaleFormatter id="gloabal.tips.create" />
+            新增
           </Button>,
         ]}
+        // tableAlertRender={({ selectedRowKeys, selectedRows, onCleanSelected }) => (
+        //   <Space size={24}>
+        //     <span>
+        //       已选 {selectedRowKeys.length} 项
+        //       <a style={{ marginLeft: 8 }} onClick={onCleanSelected}>
+        //         取消选择
+        //       </a>
+        //     </span>
+        //   </Space>
+        // )}
+        // tableAlertOptionRender={() => {
+        //   return (
+        //     <Space size={16}>
+        //       <a onClick={async () => {
+        //         await handleRemove(selectedRowsState);
+        //         setSelectedRows([]);
+        //         refetch();
+
+        //       }}>批量删除</a>
+        //     </Space>
+        //   );
+        // }}
         request={undefined}
         dataSource={roles}
         columns={columns}
@@ -248,6 +269,7 @@ const TableList= () => {
           ],
         }}
       />
+      
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
           extra={
@@ -266,7 +288,7 @@ const TableList= () => {
 
             }}
           >
-            <LocaleFormatter id="app.project.batchDeletion"  />
+            删除
           </Button>
         </FooterToolbar>
       )}

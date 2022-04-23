@@ -3,7 +3,7 @@ import Driver from 'driver.js';
 import 'driver.js/dist/driver.min.css';
 import './index.less';
 import { useLocale } from '@/locales';
-import { userState } from "@/stores/user";
+import { userState } from "@/lib/recoilState";
 import { useRecoilState } from 'recoil';
 
 export const useGuide = () => {

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useRecoilState } from 'recoil';
-import { userState } from '@/stores/user';
+import { userState } from "@/lib/recoilState";
 import { LoginParams } from "@/models/login";
 // import { loginAsync } from '@/stores/user.store';
 // import { useAppDispatch } from '@/stores';

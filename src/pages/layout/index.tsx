@@ -1,14 +1,13 @@
 import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { MenuList, MenuChild } from "@/models/menu.interface";
 import { useGetCurrentMenus, usePermissionList } from "@/api";
-import { userState } from "@/stores/user";
-import { permissionListState, menuListState } from '@/stores/menu';
+import { userState, permissionListState, menuListState } from "@/lib/recoilState";
+import recoilService from '@/lib/recoilService';
 import {systemMenuList} from '@/config/menu-config';
 import { useGuide } from "../guide/useGuide";
-
 
 import type { MenuDataItem } from "@ant-design/pro-layout";
 import ProLayout from "@ant-design/pro-layout";
@@ -48,8 +47,8 @@ const IconMap: { [key: string]: React.ReactNode } = {
 const LayoutPage: FC = ({ children }) => {
   // const { data: menuList, error } = useGetCurrentMenus();
   const { data: permitCodeList, error } = usePermissionList();
-  const [permissionList, setPermissionList] = useRecoilState(permissionListState);
-  const [menuList, setMenuList] = useRecoilState(menuListState);
+  const permissionList = useRecoilValue(permissionListState);
+  const menuList = useRecoilValue(menuListState);
   const [pathname, setPathname] = useState("/welcome");
   const [user, setUser] = useRecoilState(userState);
   const { device, collapsed, newUser, settings } = user;
@@ -61,20 +60,6 @@ const LayoutPage: FC = ({ children }) => {
 
   const toggle = () => {
     setUser({ ...user, collapsed: !collapsed });
-  };
-
-  const initMenuListAll = (menu: MenuList) => {
-    const MenuListAll: MenuChild[] = [];
-    menu.forEach((m) => {
-      if (!m?.children?.length) {
-        MenuListAll.push(m);
-      } else {
-        m?.children.forEach((mu) => {
-          MenuListAll.push(mu);
-        });
-      }
-    });
-    return MenuListAll;
   };
 
   const loopMenuItem = (menus?: MenuDataItem[]): MenuDataItem[] => {
@@ -122,11 +107,13 @@ const LayoutPage: FC = ({ children }) => {
     }
   }, [navigate, location]);
   useEffect(() => {
-    setPermissionList(permitCodeList);
+    recoilService.getPermissionList(permitCodeList);
+    // setPermissionList(permitCodeList);
   }, [permitCodeList]);
   useEffect(() => {
     const menuListTemp = generateMenuList();
-    setMenuList(menuListTemp);
+    recoilService.getMenuList(menuListTemp);
+    // setMenuList(menuListTemp);
   }, [permissionList]);
   useEffect(() => {
     newUser && driverStart();

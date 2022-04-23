@@ -216,7 +216,7 @@ const useCreateByQuery = <T, U>(url: string) => {
     return useMutation(async (params: T) => {
         const data: U = await axios.post(
             `${url}`,
-            null,
+            {},
             {
                 params
             }

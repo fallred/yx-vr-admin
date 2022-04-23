@@ -1,12 +1,13 @@
 import React, { Suspense, useMemo } from "react";
 import ReactDOM from "react-dom";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
+import { ErrorBoundary } from "react-error-boundary";
 import { RecoilRoot } from "recoil";
 import axios, { AxiosContext } from "./api/request";
+import RecoilObserver from './lib/RecoilObserver';
 
 import "./index.css";
 import App from "./App";
-import { ErrorBoundary } from "react-error-boundary";
 import SuspendFallbackLoading from "./pages/layout/suspendFallbackLoading";
 
 const queryClient = new QueryClient({
@@ -47,6 +48,7 @@ ReactDOM.render(
           )}
         > */}
           <Suspense fallback={<SuspendFallbackLoading />}>
+            <RecoilObserver />
             <App />
           </Suspense>
         {/* </ErrorBoundary> */}

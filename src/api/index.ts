@@ -4,7 +4,7 @@ import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
 import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate } from "./request";
 
-const roleResource = '/roles';
+const projectResource = '/projects';
 
 export const useLogin = () => {
     return useCreate<LoginParams, LoginResult>("/login");

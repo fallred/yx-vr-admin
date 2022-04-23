@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input } from "antd";
 import ProForm, {
@@ -8,7 +8,7 @@ import ProForm, {
   ProFormTextArea,
   ProFormTreeSelect
 } from "@ant-design/pro-form";
-import { menuListState } from '@/stores/menu';
+import { menuListState } from "@/lib/recoilState";
 
 interface OperationModalProps {
   done: boolean;
@@ -25,7 +25,7 @@ const formLayout = {
 };
 
 const OperationModal: FC<OperationModalProps> = (props) => {
-  const [menuList, setMenuList] = useRecoilState(menuListState);
+  let menuList = useRecoilValue(menuListState);
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
@@ -99,38 +99,9 @@ const OperationModal: FC<OperationModalProps> = (props) => {
           allowClear
           width={330}
           secondary
-          // request={async () => {
-          //   return [
-          //     {
-          //       title: 'Node1',
-          //       value: '0-0',
-          //       children: [
-          //         {
-          //           title: 'Child Node1',
-          //           value: '0-0-0',
-          //         },
-          //       ],
-          //     },
-          //     {
-          //       title: 'Node2',
-          //       value: '0-1',
-          //       children: [
-          //         {
-          //           title: 'Child Node3',
-          //           value: '0-1-0',
-          //         },
-          //         {
-          //           title: 'Child Node4',
-          //           value: '0-1-1',
-          //         },
-          //         {
-          //           title: 'Child Node5',
-          //           value: '0-1-2',
-          //         },
-          //       ],
-          //     },
-          //   ];
-          // }}
+          request={async () => {
+            return menuList;
+          }}
           // tree-select args
           fieldProps={{
             treeData: menuList,

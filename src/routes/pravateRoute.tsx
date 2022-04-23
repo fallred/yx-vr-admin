@@ -4,7 +4,7 @@ import { Result, Button } from 'antd';
 import { useLocale } from '@/locales';
 import { Navigate, RouteProps, useLocation } from 'react-router';
 import { useRecoilState } from 'recoil';
-import { userState } from '@/stores/user';
+import { userState } from "@/lib/recoilState";
 import { createBrowserHistory } from "history";
 
 const PrivateRoute: FC<RouteProps> = ({children}) => {
