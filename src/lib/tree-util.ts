@@ -1,4 +1,4 @@
-import {MenuList} from '@/models/menu.interface.ts';
+import { MenuList } from "@/models/menu.interface";
 // 传入选中的树形菜单
 
 /**
@@ -21,5 +21,5 @@ export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: numb
 }
 
 export function queryMenuNode(nodeInfo) {
-    
+
 }

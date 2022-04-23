@@ -1,4 +1,28 @@
+export interface IButtonItem {
+  id: number,
+  mid: number,
+  code: string,
+  name: string,
+  desc: string,
+  url: string,
+  menuName: string,
+}
 export interface MenuItem {
+  menuId: number;
+  menuName: string;
+  menuType: string;
+  icon?: string;
+  pid: number;
+  sort: number;
+  visible: number;
+  url: string;
+  target: string;
+  mustLogin: boolean;
+  // 子节点
+  children?: MenuItem[];
+  // 按钮权限
+  permission?: IButtonItem[];
+
   /** menu item name */
   name: string;
   /** menu labels */
@@ -6,17 +30,10 @@ export interface MenuItem {
     zh_CN: string;
     en_US: string;
   };
-  /** 图标名称
-   *
-   * 子子菜单不需要图标
-   */
-  icon?: string;
   /** 菜单id */
   key: string;
   /** 菜单路由 */
   path: string;
-  /** 子菜单 */
-  children?: MenuItem[];
 }
 
 export type MenuChild = Omit<MenuItem, 'children'>;
