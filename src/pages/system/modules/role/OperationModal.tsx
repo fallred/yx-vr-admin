@@ -9,6 +9,7 @@ import ProForm, {
   ProFormTreeSelect
 } from "@ant-design/pro-form";
 import { menuListState } from "@/lib/recoilState";
+const { SHOW_PARENT } = ProFormTreeSelect;
 
 interface OperationModalProps {
   done: boolean;
@@ -93,33 +94,37 @@ const OperationModal: FC<OperationModalProps> = (props) => {
             },
           ]}
         />
-        <ProFormTreeSelect
-          name="menuCodeList"
-          placeholder="Please select"
-          allowClear
-          width={330}
-          secondary
-          request={async () => {
-            return menuList;
-          }}
-          // tree-select args
-          fieldProps={{
-            treeData: menuList,
-            showArrow: false,
-            filterTreeNode: true,
-            showSearch: true,
-            dropdownMatchSelectWidth: false,
-            labelInValue: true,
-            autoClearSearchValue: true,
-            multiple: true,
-            treeNodeFilterProp: 'name',
-            fieldNames: {
-              label: 'name',
-              value: 'code',
-              children: 'children'
-            },
-          }}
-        />
+        <ProFormText name="powerSelected" label="权限菜单">
+          <ProFormTreeSelect
+            name="menuCodeList"
+            placeholder="Please select"
+            allowClear
+            width={330}
+            secondary
+            request={async () => {
+              return menuList;
+            }}
+            // tree-select args
+            fieldProps={{
+              treeData: menuList,
+              showArrow: false,
+              filterTreeNode: true,
+              showSearch: true,
+              dropdownMatchSelectWidth: false,
+              labelInValue: true,
+              autoClearSearchValue: true,
+              multiple: true,
+              treeNodeFilterProp: 'name',
+              treeCheckable: true,
+              showCheckedStrategy: SHOW_PARENT,
+              fieldNames: {
+                label: 'name',
+                value: 'code',
+                children: 'children'
+              },
+            }}
+          />
+        </ProFormText>
         </Form>
     );
   };

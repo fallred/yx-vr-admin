@@ -8,10 +8,10 @@ declare namespace API {
     code: string;
     comment: string;
     deleted: number;
-    menus?:string;
+    // menus?:string;
     powerSelected?: string;
-    menuTree?: MenuList;
-    menuCodeList?: string[]
+    selectedMenuTree?: MenuList;
+    selectedMenuCodeList?: string[]
   }
   // 角色列表-分页
   export interface IRolePaginationResp {
