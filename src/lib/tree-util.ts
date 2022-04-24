@@ -7,7 +7,16 @@ import { MenuList } from "@/models/menu.interface";
  * @returns selectedMenuIdList
  */
 export function transToSelectedIds(selectedMenuTree: MenuList) {
-
+    selectedIds = []
+    for item in selectedMenuTree:
+        if item.visible:
+            selectedIds.append(item.menuId)
+        children = item?.children
+        if not children:
+            continue
+        select_children = transToSelectedIds(children)
+        selectedIds.append(select_children)
+    return selectedIds
 }
 
 /**
@@ -17,9 +26,23 @@ export function transToSelectedIds(selectedMenuTree: MenuList) {
  * @return selectedMenuTree
  */
 export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: number[]) {
-
+    for item in menuTree:
+        if selectedMenuIdList.contains(item.menuId):
+            item.visible = 1
+        children = item?.children
+        if not children:
+            continue
+        transToSelectedTree(children, selectedMenuIdList)
+    return menuTree
+        
 }
 
-export function queryMenuNode(nodeInfo) {
-
+export function queryMenuNode(menuTree: MenuList, menuId: number) {
+    for item in menuTree:
+        if item.menuId == menuId:
+            return item
+        children = item?.children
+        if not children:
+            continue
+        reutrn queryMenuNode(children, menuId)
 }
