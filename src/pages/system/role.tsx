@@ -7,7 +7,7 @@ import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
 import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@/api";
-import OperationModal from "./modules/role/OperationModal";
+import OperationDrawer from "./modules/role/OperationDrawer";
 
 const TableList= () => {
   const { formatMessage } = useLocale();
@@ -296,7 +296,7 @@ const TableList= () => {
         </FooterToolbar>
       )}
 
-      <OperationModal
+      <OperationDrawer
         done={done}
         current={current}
         visible={visible}

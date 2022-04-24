@@ -1,48 +1,73 @@
 import { MenuList } from "@/models/menu.interface";
+import Item from "antd/lib/list/Item";
+import { MenuItemGroupProps } from "antd/lib/menu";
 // 传入选中的树形菜单
 
 /**
  * 将选中的树结构，转化成选中的树节点id，存入一个数组中
  * @param selectedMenuTree
- * @returns selectedMenuIdList
+ * @return selectedMenuIdList
  */
 export function transToSelectedIds(selectedMenuTree: MenuList) {
-    selectedIds = []
-    for item in selectedMenuTree:
-        if item.visible:
-            selectedIds.append(item.menuId)
-        children = item?.children
-        if not children:
-            continue
-        select_children = transToSelectedIds(children)
-        selectedIds.append(select_children)
+    const selectedIds = [];
+    for (item in selectedMenuTree) {
+        if (item.visible) {
+            selectedIds.push(item.menuId);
+        }
+        if (!item?.children || item?.children?.length === 0) {
+            continue;
+        }
+        const selectedChildren = transToSelectedIds(item.children);
+        selectedIds.push(selectedChildren);
+    }
     return selectedIds
 }
 
 /**
- * 将所有菜单节点树，选中的菜单id。转化为选中的节点的树
+ * 将所有菜单节点树，选中的菜单id, 半选的菜单id，转化为选中的节点的树
  * @param menuTree
+ * @param selectedMenuIdList
  * @param selectedMenuIdList
  * @return selectedMenuTree
  */
-export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: number[]) {
-    for item in menuTree:
-        if selectedMenuIdList.contains(item.menuId):
-            item.visible = 1
-        children = item?.children
-        if not children:
-            continue
-        transToSelectedTree(children, selectedMenuIdList)
-    return menuTree
-        
+export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
+    const tempTree = [];
+    for (item in menuTree) {
+        const {
+            ...menuProps,
+            children
+        } = item;
+        const itemTemp = {...menuProps};
+        if (selectedMenuIdList.includes(item.menuId)) {
+            itemTemp.selected = true;
+            if (!children || children.length === 0) {
+                continue;
+            }
+            itemTemp.children = transToSelectedTree(children, selectedMenuIdList);
+            tempTree.push(itemTemp);
+        }
+        // 半选，说明一定有子节点，无需判断
+        if (halfCheckedIdList.includes(item.menuId)) {
+            itemTemp.selected = false;
+            // 说明一定有子节点，无需判断
+            // if (!children || children.length === 0) {
+            //     continue;
+            // }
+            itemTemp.children = transToSelectedTree(children, selectedMenuIdList);
+            tempTree.push(itemTemp);
+        }
+    }
+    return tempTree;
 }
 
 export function queryMenuNode(menuTree: MenuList, menuId: number) {
-    for item in menuTree:
-        if item.menuId == menuId:
-            return item
-        children = item?.children
-        if not children:
-            continue
-        reutrn queryMenuNode(children, menuId)
+    for (item in menuTree) {
+        if (item.menuId === menuId) {
+            return item;
+        }
+        if (!item?.children || item?.children?.length === 0) {
+            continue;
+        }
+        return queryMenuNode(children, menuId);
+    }
 }

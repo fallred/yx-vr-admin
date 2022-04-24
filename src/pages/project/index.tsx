@@ -263,8 +263,7 @@ const TableList= () => {
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
-                  refetch();
-
+              refetch();
             }}
           >
             <LocaleFormatter id="app.project.batchDeletion"  />
