@@ -4,11 +4,11 @@ import { DefaultFooter } from '@ant-design/pro-layout';
 
 export default () => (
   <DefaultFooter
-    copyright="2021 柚程云出品"
+    copyright="2022 影行科技"
     links={[
       {
-        key: '柚程云',
-        title: '柚程云',
+        key: '影行科技',
+        title: '影行科技',
         blankTarget: true,
         href: '',
       },
@@ -19,8 +19,8 @@ export default () => (
         blankTarget: true,
       },
       {
-        key: '柚程云管理平台',
-        title: '柚程云管理平台',
+        key: '影行科技管理平台',
+        title: '影行科技管理平台',
         blankTarget: true,
         href: '',
       },

@@ -1,4 +1,4 @@
-import { MenuList } from "@/models/menu.interface";
+import { MenuList, MenuItem } from "@/models/menu.interface";
 import Item from "antd/lib/list/Item";
 import { MenuItemGroupProps } from "antd/lib/menu";
 // 传入选中的树形菜单
@@ -10,7 +10,7 @@ import { MenuItemGroupProps } from "antd/lib/menu";
  */
 export function transToSelectedIds(selectedMenuTree: MenuList) {
     const selectedIds = [];
-    for (item in selectedMenuTree) {
+    for (let item in selectedMenuTree) {
         if (item.visible) {
             selectedIds.push(item.menuId);
         }
@@ -32,10 +32,10 @@ export function transToSelectedIds(selectedMenuTree: MenuList) {
  */
 export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
     const tempTree = [];
-    for (item in menuTree) {
+    for (let item in menuTree) {
         const {
-            ...menuProps,
-            children
+            children,
+            ...menuProps
         } = item;
         const itemTemp = {...menuProps};
         if (selectedMenuIdList.includes(item.menuId)) {
@@ -61,19 +61,21 @@ export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: numb
 }
 
 /**
- * 查询菜单节点信息
+ * 查询根据节点key查询菜单节点信息
  * @param menuTree
- * @param menuId
+ * @param key 'menuId'
+ * @param value menuId -> value
  * @return menuNode
  */
-export function queryMenuNode(menuTree: MenuList, menuId: number) {
-    for (item in menuTree) {
-        if (item.menuId === menuId) {
+export function queryMenuNode(menuTree: MenuList, key: string, value: any): MenuItem {
+    for (let i = 0; i < menuTree.length; i++) {
+        const item = menuTree[i];
+        if (item?.[key] === value) {
             return item;
         }
         if (!item?.children || item?.children?.length === 0) {
             continue;
         }
-        return queryMenuNode(children, menuId);
+        return queryMenuNode(item?.children, key, value);
     }
 }

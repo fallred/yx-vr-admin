@@ -1,3 +1,4 @@
+import {IButtonItem} from '@/models/menu.interface';
 import defaultSubject from './defaultSubject';
 import {
   TOPIC_GET_USER_INFO,
@@ -18,8 +19,13 @@ const getSystemMenuTree = systemMenuTree => {
   defaultSubject.notify(TOPIC_GET_SYSTEM_MENU_TREE, systemMenuTree);
 };
 
-const getPermissionList = (permissionList) => {
-  defaultSubject.notify(TOPIC_GET_PERMISSION_LIST, permissionList);
+const getPermissionList = (permissionList: IButtonItem[]) => {
+  const authCodeList = permissionList.map(item => {
+    const splitList = item.code?.split(':') ?? [];
+    const opCoode = splitList?.[1];
+    return opCoode;
+  });
+  defaultSubject.notify(TOPIC_GET_PERMISSION_LIST, authCodeList);
 };
 
 export const recoilService = {

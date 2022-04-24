@@ -1,19 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
+import { useRecoilValue } from "recoil";
 import ProTable from "@ant-design/pro-table";
 import { Button, message, Modal, PaginationProps, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
+import { permissionListState } from "@/stores/recoilState";
+import {PageFuncEnum} from '@/models/page-func';
+import {PageFuncMap} from '@/enums/page-func';
 import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@/api";
+import WrapAuth from '@/components/wrap-auth/index';
 import OperationDrawer from "./modules/role/OperationDrawer";
 
 const TableList= () => {
+  const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
-
   const addBtn = useRef(null);
-
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [roles, setRole] = useState<API.IRole[]>();
@@ -201,6 +205,8 @@ const TableList= () => {
     },
   ];
 
+  const AuthButton = WrapAuth(Button, permissionList);
+
   return (
     <PageContainer>
       <ProTable<API.IRole>
@@ -209,9 +215,10 @@ const TableList= () => {
         rowKey="id"
         options={{reload: false}}
         toolBarRender={() => [
-          <Button type="primary" key="primary" onClick={showModal}>
-            新增
-          </Button>,
+          <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
+            {/* 新增 */}
+            {PageFuncMap.get(PageFuncEnum.ADD)}
+          </AuthButton>,
         ]}
         // tableAlertRender={({ selectedRowKeys, selectedRows, onCleanSelected }) => (
         //   <Space size={24}>

@@ -2,11 +2,11 @@ import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { MenuList, MenuChild } from "@/models/menu.interface";
+import { MenuItem, MenuList, MenuChild } from "@/models/menu.interface";
 import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
 import { userState, userMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';
-import {systemMenuList} from '@/config/menu-config';
+import {queryMenuNode} from '@/lib/tree-util';
 import { useGuide } from "../guide/useGuide";
 
 import type { MenuDataItem } from "@ant-design/pro-layout";
@@ -45,7 +45,6 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
-  debugger;
   const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
   const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
   const [pathname, setPathname] = useState("/welcome");
@@ -61,11 +60,12 @@ const LayoutPage: FC = ({ children }) => {
     setUser({ ...user, collapsed: !collapsed });
   };
 
-  const loopMenuItem = (menus?: MenuDataItem[]): MenuDataItem[] => {
+  const loopMenuItem = (menus?: MenuList): MenuDataItem[] => {
     if (!menus || menus.length === 0) return [];
 
     const m = menus.map(({ icon, children, ...item }) => ({
       ...item,
+      key: item.menuId,
       name: item.menuName,
       path: item.url,
       icon: icon && IconMap[icon as string],
@@ -78,7 +78,11 @@ const LayoutPage: FC = ({ children }) => {
     const list = loopMenuItem(userMenuTree);
     return list;
   };
-
+  const handlePageChange = (location: Location) => {
+    const menuNode = queryMenuNode(userMenuTree, 'url', location.pathname);
+    const {permission = []} = menuNode ?? {};
+    recoilService.getPermissionList(permission);
+  };
   useEffect(() => {
     if (location.pathname === "/") {
       navigate("/notification");
@@ -103,6 +107,7 @@ const LayoutPage: FC = ({ children }) => {
       }}
       {...settings}
       onCollapse={toggle}
+      onPageChange={handlePageChange}
       // onMenuHeaderClick={() => history.push("https://reactjs.org/")}
       headerTitleRender={(logo, title, props) => (
         <a
