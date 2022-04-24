@@ -99,7 +99,7 @@ const LayoutPage: FC = ({ children }) => {
       menuListTemp = loopMenuItem1(systemMenuList);
     }
     return menuListTemp;
-};
+  };
 
   useEffect(() => {
     if (location.pathname === "/") {
