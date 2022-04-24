@@ -97,3 +97,13 @@ export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuth
  */
 export function genFuncTree(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[]): IFuncMenuTree {
 }
+
+/**
+ * 传入系统菜单，选中的菜单id列表，选中的按钮id列表。返回后端的选中的权限树（包含perssions按钮权限）
+ * @param systemMenuTree
+ * @param menuCheckedIds
+ * @param funcCheckedIds
+ * @return selectedMenuTree
+ */
+export function genSelectedAuthTree(menuCheckedIds: API.IID[], funcCheckedIds: API.IID[]): IMenuTree {
+}
