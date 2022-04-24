@@ -30,8 +30,9 @@ export interface MenuItem {
 export interface IFuncMenuItem {
   id: number;
   code: string;
-  url: string;
+  // url: string;
   menuName: string;
+  children: IFuncMenuItem[];
 }
 
 export type MenuChild = Omit<MenuItem, 'children'>;
