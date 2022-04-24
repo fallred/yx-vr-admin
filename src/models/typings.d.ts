@@ -1,6 +1,7 @@
-import {MenuList} from './menu.interface';
+import {IMenuTree} from './menu.interface';
 
 declare namespace API {
+  export type IId = string | number;
   // 角色
   export interface IRole {
     id: number;
@@ -10,7 +11,7 @@ declare namespace API {
     deleted: number;
     // menus?:string;
     powerSelected?: string;
-    selectedMenuTree?: MenuList;
+    selectedMenuTree?: IMenuTree;
     selectedMenuCodeList?: string[]
   }
   // 角色列表-分页

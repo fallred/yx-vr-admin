@@ -1,4 +1,5 @@
-import { MenuList, MenuItem } from "@/models/menu.interface";
+import { IMenuTree, MenuItem, IFuncMenuTree, ICheckedAuthInfo } from "@/models/menu.interface";
+import { API } from "@/models/typings";
 import Item from "antd/lib/list/Item";
 import { MenuItemGroupProps } from "antd/lib/menu";
 // 传入选中的树形菜单
@@ -8,7 +9,7 @@ import { MenuItemGroupProps } from "antd/lib/menu";
  * @param selectedMenuTree
  * @return selectedMenuIdList
  */
-export function transToSelectedIds(selectedMenuTree: MenuList) {
+export function transToSelectedIds(selectedMenuTree: IMenuTree) {
     const selectedIds = [];
     for (let item in selectedMenuTree) {
         if (item.visible) {
@@ -30,7 +31,7 @@ export function transToSelectedIds(selectedMenuTree: MenuList) {
  * @param selectedMenuIdList
  * @return selectedMenuTree
  */
-export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
+export function transToSelectedTree(menuTree: IMenuTree, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
     const tempTree = [];
     for (let item in menuTree) {
         const {
@@ -67,7 +68,7 @@ export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: numb
  * @param value menuId -> value
  * @return menuNode
  */
-export function queryMenuNode(menuTree: MenuList, key: string, value: any): MenuItem {
+export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): MenuItem {
     for (let i = 0; i < menuTree.length; i++) {
         const item = menuTree[i];
         if (item?.[key] === value) {
@@ -78,4 +79,21 @@ export function queryMenuNode(menuTree: MenuList, key: string, value: any): Menu
         }
         return queryMenuNode(item?.children, key, value);
     }
+}
+
+/**
+ * 传入选中的树，返回选中的菜单keys, 和功能按钮keys
+ * @param selectedMenuTree
+ * @return menuNodes  funcNodes
+ */
+export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuthInfo {
+}
+
+/**
+ * 传入系统原始菜单树，和选中的菜单keys。返回选中的功能按钮树
+ * @param systemMenuTree
+ * @param menuIds
+ * @return funcMenuTree
+ */
+export function genFuncTree(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[]): IFuncMenuTree {
 }

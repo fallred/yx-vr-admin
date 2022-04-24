@@ -59,7 +59,7 @@ const mockUserMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": 1,
+            "id": 5,
             "mid": 2,
             "code": "related_person:list",
             "name": null,
@@ -68,7 +68,7 @@ const mockUserMenuTree = [
             "menuName": "查询"
           },
           {
-            "id": 2,
+            "id": 6,
             "mid": 2,
             "code": "related_person:add",
             "name": null,
@@ -77,7 +77,7 @@ const mockUserMenuTree = [
             "menuName": "新增"
           },
           {
-            "id": 3,
+            "id": 7,
             "mid": 2,
             "code": "related_person:edit",
             "name": null,
@@ -86,7 +86,7 @@ const mockUserMenuTree = [
             "menuName": "编辑"
           },
           // {
-          //   "id": 4,
+          //   "id": 8,
           //   "mid": 2,
           //   "code": "related_person:delete",
           //   "name": null,

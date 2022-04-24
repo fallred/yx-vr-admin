@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
-import MenuTree from '@/components/auth-tree/menu-tree.tsx';
+import AuthTree from '../auth-tree/index';
 import ProForm, {
   ModalForm,
   ProFormText,
@@ -30,8 +30,10 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const userMenuTree = useRecoilValue(userMenuTreeState);
   const formRef = useRef(null);
   const [form] = Form.useForm();
-  const { visible, current, onCancel, onSubmit } = props;
-
+  const { visible, current = {}, onCancel, onSubmit } = props;
+  const {selectedMenuTree} = current;
+  const [menuCheckedKeys, setMenuCheckedKeys] = useState<React.Key[]>([]);
+  const [funcCheckedKeys, setFuncCheckedKeys] = useState<React.Key[]>([]);
   useEffect(() => {
     if (formRef.current) {
       if (!visible) {
@@ -49,6 +51,10 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     }
   }, [current]);
 
+  useEffect(() => {
+    const lCheckedKeys = [];
+
+  }, [selectedMenuTree]);
   const handleSubmit = () => {
     if (!form) return;
     form.submit();
@@ -59,7 +65,6 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
       onSubmit(values as API.IRole);
     }
   };
-
 
   const getModalContent = () => {
     return (
@@ -95,7 +100,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
           ]}
         />
         <ProFormText name="powerSelected" label="权限菜单">
-            <MenuTree />
+            <AuthTree leftCheckedKeys={menuCheckedKeys} rightCheckedKeys={funcCheckedKeys} />
         </ProFormText>
         </Form>
     );

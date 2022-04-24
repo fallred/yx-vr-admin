@@ -2,7 +2,7 @@ import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { MenuItem, MenuList, MenuChild } from "@/models/menu.interface";
+import { MenuItem, IMenuTree, MenuChild } from "@/models/menu.interface";
 import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
 import { userState, userMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';
@@ -29,7 +29,6 @@ import RightContent from "./components/RightContent";
 import LogoIcon from "@/assets/logo/logo.png";
 import styles from "./index.module.less";
 import Footer from "./components/Footer";
-import { debug } from "console";
 
 const history = createBrowserHistory();
 
@@ -60,7 +59,7 @@ const LayoutPage: FC = ({ children }) => {
     setUser({ ...user, collapsed: !collapsed });
   };
 
-  const loopMenuItem = (menus?: MenuList): MenuDataItem[] => {
+  const loopMenuItem = (menus?: IMenuTree): MenuDataItem[] => {
     if (!menus || menus.length === 0) return [];
 
     const m = menus.map(({ icon, children, ...item }) => ({

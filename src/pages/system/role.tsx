@@ -199,8 +199,8 @@ const TableList= () => {
             onClick={(e) => {
               e.preventDefault();
               Modal.confirm({
-                title: "删除項目",
-                content: "确定删除该項目吗？",
+                title: "删除角色",
+                content: "确定删除该角色吗？",
                 okText: "确认",
                 cancelText: "取消",
                 onOk: async () => {

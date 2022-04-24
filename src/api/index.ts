@@ -1,4 +1,4 @@
-import { MenuList } from "@/models/menu.interface";
+import { IMenuTree } from "@/models/menu.interface";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
@@ -14,14 +14,14 @@ export const useUpdatePass = () => {
 }
 
 export const useGetSystemMenuTree = () => {
-    return useGetOne<MenuList>(
+    return useGetOne<IMenuTree>(
         "systemMenuTree",
         "/manage/menu/list"
       );
 };
 
 export const useGetUserMenuTree = () => {
-    return useGetOne<MenuList>(
+    return useGetOne<IMenuTree>(
         "userMenuTree",
         "/manage/user/menu"
       );
@@ -56,7 +56,7 @@ export const useGetCurrentUser = () => {
 }
 
 export const useGetCurrentMenus = () => {
-    return useGetList<MenuList>("CurrentMenuList",
+    return useGetList<IMenuTree>("CurrentMenuList",
         "/current/menu"
     );
 }
