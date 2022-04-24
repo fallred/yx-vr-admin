@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useRecoilState } from 'recoil';
-import { userState } from "@/lib/recoilState";
+import { userState } from "@/stores/recoilState";
 import { IUpdatePassParams } from "@/models/setting";
 import { Location } from "history";
 import { useUpdatePass } from "@/api";

@@ -8,7 +8,7 @@ import ProForm, {
   ProFormTextArea,
   ProFormTreeSelect
 } from "@ant-design/pro-form";
-import { menuListState } from "@/lib/recoilState";
+import { userMenuTreeState } from "@/stores/recoilState";
 const { SHOW_PARENT } = ProFormTreeSelect;
 
 interface OperationModalProps {
@@ -26,7 +26,7 @@ const formLayout = {
 };
 
 const OperationModal: FC<OperationModalProps> = (props) => {
-  let menuList = useRecoilValue(menuListState);
+  const userMenuTree = useRecoilValue(userMenuTreeState);
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;

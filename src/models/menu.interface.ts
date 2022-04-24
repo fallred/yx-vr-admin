@@ -1,14 +1,14 @@
 export interface IButtonItem {
-  id: number,
-  mid: number,
-  code: string,
-  name: string,
-  desc: string,
-  url: string,
-  menuName: string,
+  id: number;
+  mid: number;
+  code: string;
+  name: string;
+  desc: string;
+  url: string;
+  menuName: string;
 }
 export interface MenuItem {
-  menuId: number;
+  menuId: number | strig;
   menuName: string;
   menuType: string;
   icon?: string;
@@ -18,22 +18,11 @@ export interface MenuItem {
   url: string;
   target: string;
   mustLogin: boolean;
+  selected?: boolean;
   // 子节点
   children?: MenuItem[];
   // 按钮权限
   permission?: IButtonItem[];
-
-  /** menu item name */
-  name: string;
-  /** menu labels */
-  label: {
-    zh_CN: string;
-    en_US: string;
-  };
-  /** 菜单id */
-  key: string;
-  /** 菜单路由 */
-  path: string;
 }
 
 export type MenuChild = Omit<MenuItem, 'children'>;

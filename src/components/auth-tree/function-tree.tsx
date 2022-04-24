@@ -45,7 +45,7 @@ const treeData = [
   },
 ];
 
-const Demo = () => {
+const FuncTree = () => {
   const [expandedKeys, setExpandedKeys] = useState<React.Key[]>(['0-0-0', '0-0-1']);
   const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(['0-0-0']);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
@@ -80,8 +80,9 @@ const Demo = () => {
       onSelect={onSelect}
       selectedKeys={selectedKeys}
       treeData={treeData}
+      fieldNames={title: 'title', key: 'key', children: 'children'}
     />
   );
 };
 
-export default Demo;
+export default FuncTree;

@@ -3,9 +3,9 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { MenuList, MenuChild } from "@/models/menu.interface";
-import { useGetCurrentMenus, usePermissionList } from "@/api";
-import { userState, permissionListState, menuListState } from "@/lib/recoilState";
-import recoilService from '@/lib/recoilService';
+import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
+import { userState, userMenuTreeState } from "@/stores/recoilState";
+import recoilService from '@/stores/recoilService';
 import {systemMenuList} from '@/config/menu-config';
 import { useGuide } from "../guide/useGuide";
 
@@ -45,10 +45,9 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
-  // const { data: menuList, error } = useGetCurrentMenus();
-  const { data: permitCodeList, error } = usePermissionList();
-  const permissionList = useRecoilValue(permissionListState);
-  const menuList = useRecoilValue(menuListState);
+  debugger;
+  const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
+  const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
   const [pathname, setPathname] = useState("/welcome");
   const [user, setUser] = useRecoilState(userState);
   const { device, collapsed, newUser, settings } = user;
@@ -63,42 +62,21 @@ const LayoutPage: FC = ({ children }) => {
   };
 
   const loopMenuItem = (menus?: MenuDataItem[]): MenuDataItem[] => {
-    if (!menus) return [];
+    if (!menus || menus.length === 0) return [];
 
     const m = menus.map(({ icon, children, ...item }) => ({
       ...item,
+      name: item.menuName,
+      path: item.url,
       icon: icon && IconMap[icon as string],
       children: children && loopMenuItem(children),
     }));
 
     return m;
   };
-
-  const loopMenuItem1 = (menus?: MenuDataItem[]): MenuDataItem[] => {
-    if (!menus) return [];
-    const m = [];
-    menus.forEach(({ icon, children, ...item }) => {
-      const menuItem = {
-        ...item,
-        icon: icon && IconMap[icon as string],
-        children: children && loopMenuItem1(children),
-      };
-      const hasPermission = permissionList.includes(menuItem.code);
-      if (hasPermission) {
-        m.push(menuItem);
-      }
-    });
-    return m;
-  };
   const generateMenuList = () => {
-    let menuListTemp = [];
-    if (!permissionList || permissionList.length === 0) {
-      menuListTemp = [];
-    }
-    else {
-      menuListTemp = loopMenuItem1(systemMenuList);
-    }
-    return menuListTemp;
+    const list = loopMenuItem(userMenuTree);
+    return list;
   };
 
   useEffect(() => {
@@ -107,17 +85,13 @@ const LayoutPage: FC = ({ children }) => {
     }
   }, [navigate, location]);
   useEffect(() => {
-    recoilService.getPermissionList(permitCodeList);
-    // setPermissionList(permitCodeList);
-  }, [permitCodeList]);
+    recoilService.getSystemMenuTree(systemMenuTree);
+  }, [systemMenuTree]);
   useEffect(() => {
-    const menuListTemp = generateMenuList();
-    recoilService.getMenuList(menuListTemp);
-    // setMenuList(menuListTemp);
-  }, [permissionList]);
+    recoilService.getUserMenuTree(userMenuTree);
+  }, [userMenuTree]);
   useEffect(() => {
     newUser && driverStart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newUser]);
 
   return (
@@ -142,13 +116,13 @@ const LayoutPage: FC = ({ children }) => {
       menuItemRender={(menuItemProps, defaultDom) => {
         if (
           menuItemProps.isUrl ||
-          !menuItemProps.path ||
-          location.pathname === menuItemProps.path
+          !menuItemProps.url ||
+          location.pathname === menuItemProps.url
         ) {
           return defaultDom;
         }
 
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        return <Link to={menuItemProps.url}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [
         {

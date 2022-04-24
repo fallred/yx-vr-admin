@@ -1,135 +1,183 @@
 import { MockMethod } from 'vite-plugin-mock';
 
 
-const mockMenuList = [
+const mockUserMenuTree = [
   {
-    path: '/notification',
-    name: '公告',
-    locale: 'menu.notification',
+    menuId: '0-0',
+    url: '/notification',
+    menuName: '公告',
     icon: 'notification',
   },
   {
-    path: '/system',
-    name: '系统管理',
-    locale: 'menu.system',
+    menuId: '0-1',
+    url: '/system',
+    menuName: '系统管理',
     icon: 'system',
     children: [
       {
-        path: '/system/role',
-        name: '角色管理',
-        locale: 'menu.system.role',
+        menuId: '0-1-0',
+        url: '/system/role',
+        menuName: '角色管理',
         icon: 'smile',
       },
       {
-        path: '/system/user',
-        name: '用户管理',
-        locale: 'menu.system.user',
+        menuId: '0-1-1',
+        url: '/system/user',
+        menuName: '用户管理',
         icon: 'smile',
       },
       {
-        path: '/system/operateLog',
-        name: '操作日志',
-        locale: 'menu.system.operateLog',
+        menuId: '0-1-2',
+        url: '/system/operateLog',
+        menuName: '操作日志',
         icon: 'smile',
       },
       {
-        path: '/system/noticeMng',
-        name: '公告管理',
-        locale: 'menu.system.noticeMng',
+        menuId: '0-1-3',
+        url: '/system/noticeMng',
+        menuName: '公告管理',
         icon: 'smile',
       },
     ],
   },
   {
-    path: '/storeMng',
-    name: '门店管理',
-    locale: 'menu.storeMng',
+    menuId: '0-2',
+    url: '/storeMng',
+    menuName: '门店管理',
     icon: 'storeMng',
     children: [
       {
-        path: '/storeMng/associate',
-        name: '关联人管理',
-        locale: 'menu.storeMng.associate',
+        menuId: '0-2-0',
+        url: '/storeMng/associate',
+        menuName: '关联人管理',
         icon: 'smile',
       },
       {
-        path: '/storeMng/shopList',
-        name: '门店管理',
-        locale: 'menu.storeMng.shopList',
+        menuId: '0-2-1',
+        url: '/storeMng/shopList',
+        menuName: '门店管理',
         icon: 'smile',
       },
       {
-        path: '/storeMng/shopDetail',
-        name: '门店信息',
-        locale: 'menu.storeMng.shopDetail',
+        menuId: '0-2-2',
+        url: '/storeMng/shopDetail',
+        menuName: '门店信息',
         icon: 'smile',
       },
     ],
   },
   {
-    path: '/businessMng',
-    name: '经营管理',
-    locale: 'menu.businessMng',
+    menuId: '0-3',
+    url: '/businessMng',
+    menuName: '经营管理',
     icon: 'businessMng',
     children: [
       {
-        path: '/businessMng/reportList',
-        name: '经营报表',
-        locale: 'menu.businessMng.reportList',
+        menuId: '0-3-0',
+        url: '/businessMng/reportList',
+        menuName: '经营报表',
         icon: 'smile',
       },
       {
-        path: '/businessMng/rankList',
-        name: '排行榜',
-        locale: 'menu.businessMng.rankList',
+        menuId: '0-3-1',
+        url: '/businessMng/rankList',
+        menuName: '排行榜',
         icon: 'smile',
       },
     ],
   },
-
-  // {
-  //   path: '/dashboard',
-  //   name: '面板',
-  //   locale: 'menu.dashboard',
-  //   icon: 'heart',
-  // },
-  // {
-  //   path: '/project',
-  //   name: 'Project',
-  //   icon: 'smile',
-  //   locale: 'menu.project',
-  //   children: [
-  //     {
-  //       path: '/project/list',
-  //       name: 'Project List',
-  //       locale: 'menu.project.list',
-  //       icon: 'smile',
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/permission',
-  //   name: 'permission',
-  //   locale: 'menu.permission',
-  //   icon: 'smile',
-  //   children: [
-  //     {
-  //       path: '/permission/list',
-  //       name: 'permission list',
-  //       locale: 'menu.permission.list',
-  //       icon: 'smile',
-  //     },
-  //   ],
-  // },
-  {
-    path: '/404',
-    name: '404',
-    locale: 'menu.notfound',
-    icon: 'frown',
-  }
-
 ]
-
+const mockSystemMenuTree = [
+  {
+    menuId: '0-0',
+    url: '/notification',
+    menuName: '公告',
+    icon: 'notification',
+  },
+  {
+    menuId: '0-1',
+    url: '/system',
+    menuName: '系统管理',
+    icon: 'system',
+    children: [
+      {
+        menuId: '0-1-0',
+        url: '/system/role',
+        menuName: '角色管理',
+        icon: 'smile',
+      },
+      {
+        menuId: '0-1-1',
+        url: '/system/user',
+        menuName: '用户管理',
+        icon: 'smile',
+      },
+      {
+        menuId: '0-1-2',
+        url: '/system/operateLog',
+        menuName: '操作日志',
+        icon: 'smile',
+      },
+      {
+        menuId: '0-1-3',
+        url: '/system/noticeMng',
+        menuName: '公告管理',
+        icon: 'smile',
+      },
+    ],
+  },
+  {
+    menuId: '0-2',
+    url: '/storeMng',
+    menuName: '门店管理',
+    icon: 'storeMng',
+    children: [
+      {
+        menuId: '0-2-0',
+        url: '/storeMng/associate',
+        menuName: '关联人管理',
+        icon: 'smile',
+      },
+      {
+        menuId: '0-2-1',
+        url: '/storeMng/shopList',
+        menuName: '门店管理',
+        icon: 'smile',
+      },
+      {
+        menuId: '0-2-2',
+        url: '/storeMng/shopDetail',
+        menuName: '门店信息',
+        icon: 'smile',
+      },
+    ],
+  },
+  {
+    menuId: '0-3',
+    url: '/businessMng',
+    menuName: '经营管理',
+    icon: 'businessMng',
+    children: [
+      {
+        menuId: '0-3-0',
+        url: '/businessMng/reportList',
+        menuName: '经营报表',
+        icon: 'smile',
+      },
+      {
+        menuId: '0-3-1',
+        url: '/businessMng/rankList',
+        menuName: '排行榜',
+        icon: 'smile',
+      },
+    ],
+  },
+  // {
+  //   url: '/404',
+  //   menuName: '404',
+  //   icon: 'frown',
+  // }
+]
 const mockNoticeList = [
   {
     id: '000000001',
@@ -269,11 +317,25 @@ export default [
       };
     },
   },
+  // {
+  //   url: '/api/v1/manage/perssion/list',
+  //   method: 'GET',
+  //   response: ({ body }) => {
+  //     return mockPermissionCodeList;
+  //   },
+  // },
   {
-    url: '/api/v1/manage/perssion/list',
-    method: 'GET',
+    url: '/api/v1/manage/menu/list',
+    method: 'get',
     response: ({ body }) => {
-      return mockPermissionCodeList;
+      return mockSystemMenuTree;
+    },
+  },
+  {
+    url: '/api/v1/manage/user/menu',
+    method: 'get',
+    response: ({ body }) => {
+      return mockUserMenuTree;
     },
   },
 
@@ -286,13 +348,6 @@ export default [
         username: 'decker',
         role: 'admin',
       };
-    },
-  },
-  {
-    url: '/api/v1/current/menu',
-    method: 'get',
-    response: ({ body }) => {
-      return mockMenuList;
     },
   },
   {

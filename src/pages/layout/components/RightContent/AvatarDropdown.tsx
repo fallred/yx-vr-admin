@@ -11,7 +11,7 @@ import { Avatar, Menu, Spin } from "antd";
 import HeaderDropdown from "../HeaderDropdown";
 import classes from "./index.module.less";
 import { useRecoilState } from "recoil";
-import { userState } from "@/lib/recoilState";
+import { userState } from "@/stores/recoilState";
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;

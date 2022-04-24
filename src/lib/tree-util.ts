@@ -60,6 +60,12 @@ export function transToSelectedTree(menuTree: MenuList, selectedMenuIdList: numb
     return tempTree;
 }
 
+/**
+ * 查询菜单节点信息
+ * @param menuTree
+ * @param menuId
+ * @return menuNode
+ */
 export function queryMenuNode(menuTree: MenuList, menuId: number) {
     for (item in menuTree) {
         if (item.menuId === menuId) {

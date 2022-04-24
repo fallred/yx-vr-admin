@@ -28,8 +28,13 @@ export const userState = atom({
     default: initialState,
 });
 
-export const menuListState = atom({
-  key: 'menuListState',
+export const userMenuTreeState = atom({
+  key: 'userMenuTreeState',
+  default: [],
+});
+
+export const systemMenuTreeState = atom({
+  key: 'systemMenuTreeState',
   default: [],
 });
 

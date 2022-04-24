@@ -2,14 +2,14 @@ import React, { FC, useEffect, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
-import AuthTree from '@/components/auth-tree/index.tsx';
+import MenuTree from '@/components/auth-tree/menu-tree.tsx';
 import ProForm, {
   ModalForm,
   ProFormText,
   ProFormTextArea,
   ProFormTreeSelect
 } from "@ant-design/pro-form";
-import { menuListState } from "@/lib/recoilState";
+import { userMenuTreeState } from "@/stores/recoilState";
 const { SHOW_PARENT } = ProFormTreeSelect;
 
 interface OperationDrawerProps {
@@ -27,7 +27,7 @@ const formLayout = {
 };
 
 const OperationDrawer: FC<OperationDrawerProps> = (props) => {
-  let menuList = useRecoilValue(menuListState);
+  const userMenuTree = useRecoilValue(userMenuTreeState);
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
@@ -95,39 +95,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
           ]}
         />
         <ProFormText name="powerSelected" label="权限菜单">
-          <ProFormTreeSelect
-            name="menuCodeList"
-            placeholder="Please select"
-            allowClear
-            width={330}
-            secondary
-            request={async () => {
-              return menuList;
-            }}
-            // tree-select args
-            fieldProps={{
-              treeData: menuList,
-              showArrow: false,
-              filterTreeNode: true,
-              showSearch: true,
-              dropdownMatchSelectWidth: false,
-              labelInValue: true,
-              autoClearSearchValue: true,
-              multiple: true,
-              treeNodeFilterProp: 'name',
-              treeCheckable: true,
-              showCheckedStrategy: SHOW_PARENT,
-              fieldNames: {
-                label: 'name',
-                value: 'code',
-                children: 'children'
-              },
-            }}
-          />
-        </ProFormText>
-        
-        <ProFormText name="powerSelected" label="权限菜单">
-            <AuthTree />
+            <MenuTree />
         </ProFormText>
         </Form>
     );

@@ -7,7 +7,7 @@ import classes from "./index.module.less";
 import { localeConfig } from "@/config/locale";
 import { useLocale } from "@/locales";
 import { useRecoilState } from "recoil";
-import { userState } from "@/lib/recoilState";
+import { userState } from "@/stores/recoilState";
 import HeaderDropdown from "../HeaderDropdown";
 
 interface SelectLangProps {

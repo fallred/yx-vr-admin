@@ -1,21 +1,19 @@
 import React, { Suspense, useEffect, useMemo } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { IntlProvider } from "react-intl";
-
-import { localeConfig } from "@/config/locale";
 import { ConfigProvider } from "antd";
+import { IntlProvider } from "react-intl";
+import { createBrowserHistory } from "history";
+import { useRecoilState } from "recoil";
+
 import enUS from "antd/es/locale/en_US";
 import zhCN from "antd/es/locale/zh_CN";
 import moment from "moment";
 import "moment/locale/zh-cn";
+import { localeConfig } from "@/config/locale";
+import { useGetCurrentUser } from "@/api";
+import { userState } from "@/stores/recoilState";
 import RenderRouter from "./routes";
-
 import "./App.less";
-
-import { useGetCurrentUser } from "./api";
-import { createBrowserHistory } from "history";
-import { useRecoilState } from "recoil";
-import { userState } from "./stores/user";
 
 const history = createBrowserHistory();
 

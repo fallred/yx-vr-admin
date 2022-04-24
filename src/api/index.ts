@@ -12,10 +12,19 @@ export const useLogin = () => {
 export const useUpdatePass = () => {
     return useCreate<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd");
 }
-export const usePermissionList = () => {
-    return useGetList<string[]>("permissionList",
-        "/manage/perssion/list"
-    );
+
+export const useGetSystemMenuTree = () => {
+    return useGetOne<MenuList>(
+        "systemMenuTree",
+        "/manage/menu/list"
+      );
+};
+
+export const useGetUserMenuTree = () => {
+    return useGetOne<MenuList>(
+        "userMenuTree",
+        "/manage/user/menu"
+      );
 };
 
 export const useGetRoleList = (pagination: any, filters: any) => {

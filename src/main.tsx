@@ -4,7 +4,7 @@ import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { RecoilRoot } from "recoil";
 import axios, { AxiosContext } from "./api/request";
-import RecoilObserver from './lib/RecoilObserver';
+import RecoilObserver from './stores/RecoilObserver.tsx';
 
 import "./index.css";
 import App from "./App";
