@@ -142,7 +142,16 @@ const TableList= () => {
       return false;
     }
   };
-
+  function YgSpan(props) {
+    return (
+     <a
+      {...props}
+    >
+      {props.children}
+    </a>
+    );
+  }
+  const AuthLink = WrapAuth(YgSpan, permissionList);
   const columns: ProColumns<API.IRole>[] = [
     {
       title: '角色名',
@@ -172,36 +181,41 @@ const TableList= () => {
       title: formatMessage({ id: "gloabal.tips.operation" }),
       dataIndex: "option",
       valueType: "option",
-      render: (_, record) => [
-        <a
-          key="edit"
-          onClick={(e) => {
-            e.preventDefault();
-            showEditModal(record);
-          }}
-        >
-          编辑
-        </a>,
-        <a
-          key="delete"
-          onClick={(e) => {
-            e.preventDefault();
-            Modal.confirm({
-              title: "删除項目",
-              content: "确定删除该項目吗？",
-              okText: "确认",
-              cancelText: "取消",
-              onOk: async () => {
-                await handleRemove([{ ...record }]);
-                setSelectedRows([]);
-                refetch();
-              },
-            });
-          }}
-        >
-          删除
-        </a>,
-      ],
+      render: (_, record) => {
+        const btnList = [
+          <AuthLink
+            key={PageFuncEnum.EDIT}
+            operCode={PageFuncEnum.EDIT}
+            onClick={(e) => {
+              e.preventDefault();
+              showEditModal(record);
+            }}
+          >
+            编辑
+          </AuthLink>,
+          <AuthLink
+            key={PageFuncEnum.DELETE}
+            operCode={PageFuncEnum.DELETE}
+            onClick={(e) => {
+              e.preventDefault();
+              Modal.confirm({
+                title: "删除項目",
+                content: "确定删除该項目吗？",
+                okText: "确认",
+                cancelText: "取消",
+                onOk: async () => {
+                  await handleRemove([{ ...record }]);
+                  setSelectedRows([]);
+                  refetch();
+                },
+              });
+            }}
+          >
+            删除
+          </AuthLink>,
+        ];
+        return btnList;
+      },
     },
   ];
 
@@ -216,7 +230,6 @@ const TableList= () => {
         options={{reload: false}}
         toolBarRender={() => [
           <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
-            {/* 新增 */}
             {PageFuncMap.get(PageFuncEnum.ADD)}
           </AuthButton>,
         ]}
