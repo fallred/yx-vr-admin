@@ -85,15 +85,15 @@ const mockUserMenuTree = [
             "url": "/api/dataInput/edit",
             "menuName": "编辑"
           },
-          // {
-          //   "id": 8,
-          //   "mid": 2,
-          //   "code": "related_person:delete",
-          //   "name": null,
-          //   "desc": null,
-          //   "url": "/api/dataInput/delete",
-          //   "menuName": "删除"
-          // }
+          {
+            "id": 8,
+            "mid": 2,
+            "code": "related_person:delete",
+            "name": null,
+            "desc": null,
+            "url": "/api/dataInput/delete",
+            "menuName": "删除"
+          }
         ]
       },
       {

@@ -5,6 +5,7 @@ import {IFuncMenuTree} from '@/models/menu.interface';
 import { systemMenuTreeState } from "@/stores/recoilState";
 import { genFuncTree, genSelectedAuthTree } from "@/lib/tree-util";
 import { API } from '@/models/typings';
+import WithCompLoad from '@/components/with-load/index';
 import styles from "./index.module.less";
 
 interface AuthTreeProps {
@@ -25,7 +26,7 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     const [checkedKeys1, setCheckedKeys1] = useState<React.Key[]>([]);
     const [selectedKeys1, setSelectedKeys1] = useState<React.Key[]>([]);
     const [autoExpandParent1, setAutoExpandParent1] = useState<boolean>(true);
-    
+    const WithLoadTree = WithCompLoad(Tree);
     const updateFuncMenuTree = (menuIds: API.IId[]) => {
         const computedTree = genFuncTree('', systemMenuTree, menuIds);
         setFuncMenuTree(computedTree);
@@ -83,35 +84,36 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     }, [rightCheckedKeys]);
     return (
         <div className={styles.container}>
-            <Tree
-              className={styles.menuTree}
-              key="authTree1"
-              checkable
-              onExpand={onExpand}
-              expandedKeys={expandedKeys}
-              autoExpandParent={autoExpandParent}
-              onCheck={onCheck}
-              checkedKeys={checkedKeys}
-              onSelect={onSelect}
-              selectedKeys={selectedKeys}
-              treeData={systemMenuTree}
-              fieldNames={{title: 'menuName', key: 'menuId', children: 'children'}}
-            />
-    
-            <Tree
-                className={styles.funcTree}
-                key="authTree2"
-                checkable
-                onExpand={onExpand1}
-                expandedKeys={expandedKeys1}
-                autoExpandParent={autoExpandParent1}
-                onCheck={onCheck1}
-                checkedKeys={checkedKeys1}
-                onSelect={onSelect1}
-                selectedKeys={selectedKeys1}
-                treeData={funcMenuTree}
-                fieldNames={{title: 'menuName', key: 'id', children: 'children'}}
-            />
+            <div key="authTree1" className={styles.menuTree}>
+                <WithLoadTree
+                    list={systemMenuTree}
+                    checkable
+                    onExpand={onExpand}
+                    expandedKeys={expandedKeys}
+                    autoExpandParent={autoExpandParent}
+                    onCheck={onCheck}
+                    checkedKeys={checkedKeys}
+                    onSelect={onSelect}
+                    selectedKeys={selectedKeys}
+                    treeData={systemMenuTree}
+                    fieldNames={{title: 'menuName', key: 'menuId', children: 'children'}}
+                />
+            </div>
+            <div key="authTree2" className={styles.funcTree}>
+                <WithLoadTree
+                    list={funcMenuTree}
+                    checkable
+                    onExpand={onExpand1}
+                    expandedKeys={expandedKeys1}
+                    autoExpandParent={autoExpandParent1}
+                    onCheck={onCheck1}
+                    checkedKeys={checkedKeys1}
+                    onSelect={onSelect1}
+                    selectedKeys={selectedKeys1}
+                    treeData={funcMenuTree}
+                    fieldNames={{title: 'menuName', key: 'id', children: 'children'}}
+                />
+            </div>
         </div>
       );
 };

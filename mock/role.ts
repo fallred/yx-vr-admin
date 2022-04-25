@@ -37,12 +37,32 @@ const delResp = {
   "data": "角色删除成功!"
 }
 
+const editResp = {
+  status: 200,
+  msg: '',
+  data: true
+};
+
 export default [
   {
       url: '/api/v1/manage/role/query',
       method: 'GET',
       response: ({ body }) => {
         return roleInfo;
+      },
+  },
+  {
+      url: '/api/v1/manage/role/edit',
+      method: 'POST',
+      response: ({ body }) => {
+        return editResp;
+      },
+  },
+  {
+      url: '/api/v1/manage/role/create',
+      method: 'POST',
+      response: ({ body }) => {
+        return editResp;
       },
   },
   {

@@ -303,16 +303,18 @@ const TableList= () => {
             </div>
           }
         >
-          <Button
+          <AuthButton
+            type="primary"
+            key="primary"
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
                   refetch();
-
             }}
+            operCode={PageFuncEnum.DELETE}
           >
-            删除
-          </Button>
+            {PageFuncMap.get(PageFuncEnum.DELETE)}
+          </AuthButton>,
         </FooterToolbar>
       )}
 
