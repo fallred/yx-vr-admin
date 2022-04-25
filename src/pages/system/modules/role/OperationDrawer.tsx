@@ -58,7 +58,6 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   }, [selectedMenuTree]);
 
   const handleSubmit = () => {
-    debugger;
     if (!form) return;
     const formData = form.getFieldsValue();
     const selMenuTree = authTreeRef?.current?.getValue();

@@ -629,13 +629,6 @@ export default [
       };
     },
   },
-  // {
-  //   url: '/api/v1/manage/perssion/list',
-  //   method: 'GET',
-  //   response: ({ body }) => {
-  //     return mockPermissionCodeList;
-  //   },
-  // },
   {
     url: '/api/v1/manage/menu/list',
     method: 'get',
@@ -650,18 +643,16 @@ export default [
       return mockUserMenuTree;
     },
   },
-
-  {
-    url: '/api/v1/current/user',
-    method: 'get',
-    // statusCode: 401,
-    response: ({ body }) => {
-      return {
-        username: 'decker',
-        role: 'admin',
-      };
-    },
-  },
+  // {
+  //   url: '/api/v1/current/user',
+  //   method: 'get',
+  //   response: ({ body }) => {
+  //     return {
+  //       username: 'decker',
+  //       role: 'admin',
+  //     };
+  //   },
+  // },
   {
     url: '/api/v1/current/notice',
     method: 'get',
