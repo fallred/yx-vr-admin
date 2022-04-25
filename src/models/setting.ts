@@ -8,5 +8,5 @@ export interface IUpdatePassParams {
 }
 
 export interface IUpdatePassResult {
-    newpwd: string;
+  newpwd: string;
 }

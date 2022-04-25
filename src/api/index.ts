@@ -1,5 +1,7 @@
 import { IMenuTree } from "@/models/menu.interface";
 import { IUser, IUserList, IUserPaginationResp } from "@/models/user.interface";
+import { ILog, ILogList, ILogPaginationResp } from "@/models/log.interface";
+import { INotice, INoticeList, INoticePaginationResp } from "@/models/notice-mng";
 import { IShopStore, IShopStorePaginationResp } from "@/models/shop-store.interface";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
@@ -104,6 +106,43 @@ export const useUpdateShopStore = () => {
 }
 export const useBatchDeleteShopStore = () => {
     return useCreateByQuery('/manage/store/delete');
+}
+
+// 日志管理
+export const useGetLogList = (pagination: any, filters: any) => {
+    return useGetList<ILogPaginationResp>(
+        "LogList",
+        '/app/log/query',
+        pagination,
+        filters
+    );
+}
+export const useQueryLogDetail = () => {
+    return useGetOne<ILog>(
+        "logDetail",
+        "/app/log/detial"
+    );
+}
+
+// 公告管理
+export const useQueryNoticeList = (pagination: any, filters: any) => {
+    return useGetList<INoticePaginationResp>(
+        "NoticeList",
+        '/app/notice/query',
+        pagination,
+        filters
+    );
+}
+export const useAddNotice = () => {
+    return useCreate<INotice, INotice>('/app/notice/create');
+}
+
+export const useUpdateNotice = () => {
+    return useCreate<INotice>('/app/notice/edit');
+}
+
+export const useBatchDeleteNotice = () => {
+    return useCreateByQuery('/app/notice/delete');
 }
 
 // export const useGetCurrentUser = () => {

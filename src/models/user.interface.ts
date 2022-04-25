@@ -43,4 +43,4 @@ export interface IUserPaginationResp {
     pages: number;
     success: boolean;
     data: IUserList;
-  }
+}

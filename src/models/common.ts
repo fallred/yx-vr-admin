@@ -1,3 +1,10 @@
+export enum PageFuncEnum {
+    'LIST' = 'list',
+    'ADD' = 'add',
+    'EDIT' = 'edit',
+    'DELETE' = 'delete',
+}
+
 export enum StatusEnum {
 }
 export interface IProvince {

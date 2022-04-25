@@ -95,63 +95,56 @@ const mockQueryUserResp = {
 };
 
 const mockQueryUserInfo = {
-    "status": 200,
-    "msg": "查询成功",
-    "total": 0,
-    "pages": 0,
-    "success": true,
-    "data": {
-        "id": 1,
-        "username": "admin56789",
-        "realName": "admin",
-        "password": "a2b0f4bc3a602e85acac0d3c9ce89480",
-        "mobile": null,
-        "email": null,
-        "companyName": null,
-        "attention": null,
-        "identityType": 0,
-        "remark": null,
-        "status": 0,
-        "createDate": "2020-04-17 14:07:09",
-        "loginDate": "2022-04-24 21:03:29",
-        "imageUrl": null,
-        "loginIp": "171.113.232.71",
-        "roleId": 1,
-        "roleNm": "超级管理员",
-        "appId": "vr2037_00000,vr2037_00001",
-        "apps": [
-        {
-            "appId": "vr2037_00000",
-            "nm": "xxxx店",
-            "province": null,
-            "city": null,
-            "district": null,
-            "address": null,
-            "franchisee": null,
-            "manager": null,
-            "status": null,
-            "grade": null,
-            "partner": null,
-            "tm": "2022-04-12 10:46:59",
-            "code": "vr_0000"
-        },
-        {
-            "appId": "vr2037_00001",
-            "nm": "xxxx店",
-            "province": null,
-            "city": null,
-            "district": null,
-            "address": null,
-            "franchisee": null,
-            "manager": null,
-            "status": null,
-            "grade": null,
-            "partner": null,
-            "tm": "2022-04-12 10:46:59",
-            "code": "vr_0001"
-        }
-        ]
-    }
+  "id": 1,
+  "username": "admin56789",
+  "realName": "admin",
+  "password": "a2b0f4bc3a602e85acac0d3c9ce89480",
+  "mobile": null,
+  "email": null,
+  "companyName": null,
+  "attention": null,
+  "identityType": 0,
+  "remark": null,
+  "status": 0,
+  "createDate": "2020-04-17 14:07:09",
+  "loginDate": "2022-04-24 21:03:29",
+  "imageUrl": null,
+  "loginIp": "171.113.232.71",
+  "roleId": 1,
+  "roleNm": "超级管理员",
+  "appId": "vr2037_00000,vr2037_00001",
+  "apps": [
+  {
+      "appId": "vr2037_00000",
+      "nm": "xxxx店",
+      "province": null,
+      "city": null,
+      "district": null,
+      "address": null,
+      "franchisee": null,
+      "manager": null,
+      "status": null,
+      "grade": null,
+      "partner": null,
+      "tm": "2022-04-12 10:46:59",
+      "code": "vr_0000"
+  },
+  {
+      "appId": "vr2037_00001",
+      "nm": "xxxx店",
+      "province": null,
+      "city": null,
+      "district": null,
+      "address": null,
+      "franchisee": null,
+      "manager": null,
+      "status": null,
+      "grade": null,
+      "partner": null,
+      "tm": "2022-04-12 10:46:59",
+      "code": "vr_0001"
+  }
+  ]
 };
 const mockUpdateUserResp = {
     "data": {},

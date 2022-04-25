@@ -1,5 +1,5 @@
 
-import {PageFuncEnum} from '@/models/page-func';
+import {PageFuncEnum} from '@/models/common';
 
 export const PageFuncMap = new Map([
     [PageFuncEnum.LIST, '查询'],
