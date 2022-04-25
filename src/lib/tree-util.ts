@@ -13,7 +13,7 @@ import { POINT_CONVERSION_COMPRESSED } from "constants";
  */
 export function transToSelectedIds(selectedMenuTree: IMenuTree) {
     const selectedIds = [];
-    for (let item in selectedMenuTree) {
+    for (let item of selectedMenuTree) {
         if (item.visible) {
             selectedIds.push(item.menuId);
         }
@@ -35,7 +35,7 @@ export function transToSelectedIds(selectedMenuTree: IMenuTree) {
  */
 export function transToSelectedTree(menuTree: IMenuTree, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
     const tempTree = [];
-    for (let item in menuTree) {
+    for(let item of menuTree) {
         const {
             children,
             ...menuProps
@@ -91,12 +91,12 @@ export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): IMe
 export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuthInfo {
     let menuNodes = [];
     let funcNodes = [];
-    for(let temp in selectedMenuTree) {
+    for(let temp of selectedMenuTree) {
         if (temp.selected) {
             menuNodes.push(temp.menuId);
         }
         if (temp.permission && temp.permission.length > 0) {
-            for(btemp in temp.permission) {
+            for(btemp of temp.permission) {
                 funcNodes.push(btemp.id);
             }
         }
@@ -164,7 +164,8 @@ export function genFuncTree(pname: String = '', systemMenuTree: IMenuTree, menuC
  */
 export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[], funcCheckedIds: API.IID[]): IMenuTree {
     const checkedTree = [];
-    for(let temp in systemMenuTree) {
+    for(let i = 0; i < systemMenuTree.length; i++) {
+        let temp = cloneDeep(systemMenuTree[i]);
         if (menuCheckedIds.includes(temp.menuId)) {
             temp.selected = true;
         }
@@ -175,18 +176,19 @@ export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: A
                 continue;
             }
             temp.children = childrenTree;
+            checkedTree.push(temp);
         }
         if (temp?.permission?.length > 0) {
             const pList = [];
-            for(let pTemp in temp.permission) {
+            for(let pTemp of temp.permission) {
                 if (!funcCheckedIds.includes(pTemp.id)) {
                     continue;
                 }
                 pList.push(pTemp);
             }
             temp.permission = pList;
+            checkedTree.push(temp);
         }
-        checkedTree.push(temp);
     }
-    return checkedTree
+    return checkedTree;
 }

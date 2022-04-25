@@ -1,9 +1,9 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useImperativeHandle } from 'react';
 import { useRecoilValue } from "recoil";
 import { Tree } from 'antd';
 import {IFuncMenuTree} from '@/models/menu.interface';
 import { systemMenuTreeState } from "@/stores/recoilState";
-import { genFuncTree } from "@/lib/tree-util";
+import { genFuncTree, genSelectedAuthTree } from "@/lib/tree-util";
 import { API } from '@/models/typings';
 import styles from "./index.module.less";
 
@@ -13,7 +13,7 @@ interface AuthTreeProps {
 }
 
 const AuthTree: FC<AuthTreeProps> = (props) => {
-    const { leftCheckedKeys, rightCheckedKeys } = props;
+    const { leftCheckedKeys, rightCheckedKeys, cRef } = props;
     const systemMenuTree = useRecoilValue(systemMenuTreeState);
     const [funcMenuTree, setFuncMenuTree] = useState<IFuncMenuTree>([]);
     const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
@@ -28,7 +28,6 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     
     const updateFuncMenuTree = (menuIds: API.IId[]) => {
         const computedTree = genFuncTree('', systemMenuTree, menuIds);
-        debugger;
         setFuncMenuTree(computedTree);
     };
     const onExpand = (expandedKeysValue: React.Key[]) => {
@@ -40,7 +39,6 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     };
 
     const onCheck = (checkedKeysValue: React.Key[], info: any) => {
-        debugger;
         console.log('onCheck', checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
         const selectedKeys = info.halfCheckedKeys.concat(checkedKeysValue);
@@ -69,6 +67,13 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
         console.log('onSelect', info);
         setSelectedKeys1(selectedKeysValue);
     };
+    useImperativeHandle(cRef, () => ({
+        // changeVal 就是暴露给父组件的方法
+        getValue: () => {
+            const selectedTree = genSelectedAuthTree(systemMenuTree, checkedKeys, checkedKeys1);
+            return selectedTree;
+        },
+    }));
     useEffect(() => {
         setCheckedKeys(leftCheckedKeys);
         updateFuncMenuTree(leftCheckedKeys);

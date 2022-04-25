@@ -34,6 +34,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const {selectedMenuTree} = current;
   const [menuCheckedKeys, setMenuCheckedKeys] = useState<React.Key[]>([]);
   const [funcCheckedKeys, setFuncCheckedKeys] = useState<React.Key[]>([]);
+  const authTreeRef = useRef<React.Component>(null);
   useEffect(() => {
     if (formRef.current) {
       if (!visible) {
@@ -55,8 +56,17 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     const lCheckedKeys = [];
 
   }, [selectedMenuTree]);
+
   const handleSubmit = () => {
+    debugger;
     if (!form) return;
+    const formData = form.getFieldsValue();
+    const selMenuTree = authTreeRef?.current?.getValue();
+    const powerSelected = selMenuTree ? JSON.stringify(selMenuTree) : '[]';
+    form.setFieldsValue({
+      ...formData,
+      powerSelected
+    });
     form.submit();
   };
 
@@ -100,7 +110,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
           ]}
         />
         <ProFormText name="powerSelected" label="权限菜单">
-            <AuthTree leftCheckedKeys={menuCheckedKeys} rightCheckedKeys={funcCheckedKeys} />
+            <AuthTree cRef={authTreeRef} leftCheckedKeys={menuCheckedKeys} rightCheckedKeys={funcCheckedKeys} />
         </ProFormText>
         </Form>
     );
