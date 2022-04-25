@@ -14,7 +14,7 @@ import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@
 import WrapAuth from '@/components/wrap-auth/index';
 import OperationDrawer from "./modules/role/OperationDrawer";
 
-const TableList= () => {
+const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const addBtn = useRef(null);
@@ -87,10 +87,10 @@ const TableList= () => {
     setVisible(false);
   };
 
-  const addProject = async (data: API.IRole) => {
+  const addRole = async (data: API.IRole) => {
     await mutateAsync(data);
   };
-  const updateProject = async (data: API.IRole) => {
+  const updateRole = async (data: API.IRole) => {
     await update(data);
   };
   const handleSubmit = async (values: API.IRole) => {
@@ -102,10 +102,10 @@ const TableList= () => {
     const hide = message.loading("正在添加/更新");
     try {
       if (values.id === 0) {
-        await addProject(values);
+        await addRole(values);
       }
       else {
-        await updateProject(values);
+        await updateRole(values);
       }
 
       hide();
@@ -157,25 +157,11 @@ const TableList= () => {
       title: '角色名',
       dataIndex: "name",
       tip: "请输入角色名",
-      // sorter: true,
-      // render: (dom, entity) => {
-      //   return (
-      //     <a
-      //       onClick={() => {
-      //         setCurrent(entity);
-      //         setShowDetail(true);
-      //       }}
-      //     >
-      //       {dom}
-      //     </a>
-      //   );
-      // },
     },
     {
       title: '角色描述',
       dataIndex: "comment",
       valueType: "textarea",
-      // sorter: true,
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
@@ -233,28 +219,6 @@ const TableList= () => {
             {PageFuncMap.get(PageFuncEnum.ADD)}
           </AuthButton>,
         ]}
-        // tableAlertRender={({ selectedRowKeys, selectedRows, onCleanSelected }) => (
-        //   <Space size={24}>
-        //     <span>
-        //       已选 {selectedRowKeys.length} 项
-        //       <a style={{ marginLeft: 8 }} onClick={onCleanSelected}>
-        //         取消选择
-        //       </a>
-        //     </span>
-        //   </Space>
-        // )}
-        // tableAlertOptionRender={() => {
-        //   return (
-        //     <Space size={16}>
-        //       <a onClick={async () => {
-        //         await handleRemove(selectedRowsState);
-        //         setSelectedRows([]);
-        //         refetch();
-
-        //       }}>批量删除</a>
-        //     </Space>
-        //   );
-        // }}
         request={undefined}
         dataSource={roles}
         columns={columns}
@@ -297,9 +261,9 @@ const TableList= () => {
         <FooterToolbar
           extra={
             <div>
-              <LocaleFormatter id="app.project.chosen" defaultMessage="已选择" />{' '}
+              <LocaleFormatter id="app.role.chosen" defaultMessage="已选择" />{' '}
               <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              <LocaleFormatter id="app.project.item" defaultMessage="项" />
+              <LocaleFormatter id="app.role.item" defaultMessage="项" />
             </div>
           }
         >
@@ -330,4 +294,4 @@ const TableList= () => {
   );
 };
 
-export default TableList;
+export default RoleTableList;

@@ -51,6 +51,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
 
   useEffect(() => {
     const lCheckedKeys = [];
+
   }, [selectedMenuTree]);
 
   const handleSubmit = () => {
