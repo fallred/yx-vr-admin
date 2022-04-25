@@ -1,7 +1,7 @@
 import { API } from "./typings";
 
 export interface IButtonItem {
-  id: number;
+  id: API.IId;
   code: string;
   url: string;
   menuName: string;
@@ -9,14 +9,14 @@ export interface IButtonItem {
   // name?: string;
   // desc?: string;
 }
-export interface MenuItem {
-  menuId: number | strig;
+export interface IMenuItem {
+  menuId: API.IId;
   menuName: string;
   icon: string;
   url: string;
   selected?: boolean;
   // 子节点
-  children?: MenuItem[];
+  children?: IMenuItem[];
   // 按钮权限
   permission?: IButtonItem[];
   target?: string;
@@ -28,16 +28,16 @@ export interface MenuItem {
 }
 
 export interface IFuncMenuItem {
-  id: number;
+  id: API.IId;
   code: string;
   // url: string;
   menuName: string;
   children: IFuncMenuItem[];
 }
 
-export type MenuChild = Omit<MenuItem, 'children'>;
+export type MenuChild = Omit<IMenuItem, 'children'>;
 
-export type IMenuTree = MenuItem[];
+export type IMenuTree = IMenuItem[];
 export type IFuncMenuTree = IFuncMenuItem[];
 export type PerssionList = string[];
 

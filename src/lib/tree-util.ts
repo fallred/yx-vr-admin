@@ -1,4 +1,5 @@
-import { IMenuTree, MenuItem, IFuncMenuTree, ICheckedAuthInfo } from "@/models/menu.interface";
+import cloneDeep from 'lodash/cloneDeep';
+import { IMenuTree, IMenuItem, IFuncMenuTree, ICheckedAuthInfo } from "@/models/menu.interface";
 import { API } from "@/models/typings";
 import Item from "antd/lib/list/Item";
 import { MenuItemGroupProps } from "antd/lib/menu";
@@ -69,8 +70,8 @@ export function transToSelectedTree(menuTree: IMenuTree, selectedMenuIdList: num
  * @param value menuId -> value
  * @return menuNode
  */
-export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): MenuItem {
-    for (let i = 0; i < menuTree.length; i++) {
+export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): IMenuItem {
+    for(let i = 0; i < menuTree.length; i++) {
         const item = menuTree[i];
         if (item?.[key] === value) {
             return item;
@@ -88,20 +89,24 @@ export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): Men
  * @return menuNodes  funcNodes
  */
 export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuthInfo {
-    const menuNodes = [];
-    const funcNodes = [];
-    for temp in selectedMenuTree:
-        if temp.selected  == 1:
-            menuNodes.append(temp.menuId)
-        if temp.permission:
-            for btemp in temp.permission:
-                funcNodes.append(temp.id)
-        if temp.children:
-            s_menuNodes, s_funcNodes = queryMenuAndFuncNodes(tem.children)
-            menuNodes.extends(s_menuNodes)
-            funcNodes.extends(s_funcNodes)
-    return menuNodes, funcNodes
-
+    let menuNodes = [];
+    let funcNodes = [];
+    for(let temp in selectedMenuTree) {
+        if (temp.selected) {
+            menuNodes.push(temp.menuId);
+        }
+        if (temp.permission && temp.permission.length > 0) {
+            for(btemp in temp.permission) {
+                funcNodes.push(btemp.id);
+            }
+        }
+        if (temp.children) {
+            const {menuCheckedIds, funcCheckedIds} = queryMenuAndFuncNodes(temp.children);
+            menuNodes = menuNodes.concat(menuCheckedIds);
+            funcNodes = funcNodes.concat(funcCheckedIds);
+        }
+    }
+    return {menuNodes, funcNodes};
 }
 
 /**
@@ -110,33 +115,43 @@ export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuth
  * @param menuIds 包含半选菜单id
  * @return funcMenuTree
  */
-export function genFuncTree(pname: String, systemMenuTree: IMenuTree, menuCheckedIds: API.IID[]): IFuncMenuTree {
-    funcMenuTree = list()
-    for temp in systemMenuTree:
-        temp.menuName = pname is not null ? (pname +"/"+temp.menuName) : temp.menuName
-        if not menuCheckedIds.contains(temp.menuId):
-            continue
-        if not temp.permission and not temp.children:
-            continue
-        if temp.children and not temp.permission:
-            c_funcMenuTree = getFuncTree(temp.menuName, temp.children, menuCheckedIds)
-            funcMenuTree.extends(c_funcMenuTree)
-        if not temp.children and temp.permission:
-            fucnMenuTreeNodeChildren = list()
-            for p_temp in temp.permission:
-                fucnMenuTreeNodeChildren.append({
-                    id: p_temp.id;
-                    code: p_temp.code;
-                    url: p_temp.url;
-                    menuName: p_temp.menuName
-                })
-            funcMenuTree.append({
-                id: temp.id;
-                code: temp.code;
-                // url: string;
-                menuName: temp.menuName;
-                children: fucnMenuTreeNodeChildren;
-            })
+export function genFuncTree(pname: String = '', systemMenuTree: IMenuTree, menuCheckedIds: API.IID[]): IFuncMenuTree {
+    let funcMenuTree = [];
+    for(let i = 0; i < systemMenuTree.length; i++) {
+        let temp = cloneDeep(systemMenuTree[i]);
+        temp.menuName = pname ? `${pname}/${temp.menuName}` : temp.menuName;
+        if (!menuCheckedIds.includes(temp.menuId)) {
+            continue;
+        }
+        if ((!temp.permission || temp?.permission.length === 0)
+            && (!temp.children || temp?.children.length === 0)) {
+            continue;
+        }
+        if ((temp?.permission?.length === 0 || !temp.permission)
+            && temp.children) {
+            const funcMenuTreeOneLevel = genFuncTree(temp.menuName, temp.children, menuCheckedIds);
+            funcMenuTree = funcMenuTree.concat(funcMenuTreeOneLevel);
+        }
+        if ((temp?.children?.length === 0 || !temp.children)
+            && temp.permission) {
+            const fucnMenuTreeNodeChildren = [];
+            for (let pTemp of temp.permission) {
+                fucnMenuTreeNodeChildren.push({
+                    id: pTemp.id,
+                    code: pTemp.code,
+                    url: pTemp.url,
+                    menuName: pTemp.menuName
+                });
+            }
+            funcMenuTree.push({
+                id: temp.menuId,
+                code: temp.code,
+                // url: string,
+                menuName: temp.menuName,
+                children: fucnMenuTreeNodeChildren,
+            });
+        }
+    }
     return funcMenuTree
 }
 
@@ -148,22 +163,30 @@ export function genFuncTree(pname: String, systemMenuTree: IMenuTree, menuChecke
  * @return selectedMenuTree
  */
 export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[], funcCheckedIds: API.IID[]): IMenuTree {
-    checkedTree = list()
-    for temp in systemMenuTree:
-        if menuCheckedIds.contains(temp.menuId):
-            temp.selected = 1
-        else if not menuCheckedIds.contains(temp.menuId) and temp.children is not null:
-            selected_children = genSelectedAuthTree(temp.children, menuCheckedIds, funcCheckedIds)
-            if selected_children is null:
-                continue
-            temp.children = selected_children
-        if temp.permission is not null:
-            p_list = list()
-            for p_temp in temp.permission:
-                if not funcCheckedIds.contains(p_temp.id):
-                    continue
-                p_list.append(p_temp)
-            temp.permission = p_list
-        checkedTree.append(temp)
+    const checkedTree = [];
+    for(let temp in systemMenuTree) {
+        if (menuCheckedIds.includes(temp.menuId)) {
+            temp.selected = true;
+        }
+        else if (!menuCheckedIds.includes(temp.menuId)
+            && temp?.children?.length > 0) {
+            const childrenTree = genSelectedAuthTree(temp.children, menuCheckedIds, funcCheckedIds);
+            if (childrenTree?.length === 0) {
+                continue;
+            }
+            temp.children = childrenTree;
+        }
+        if (temp?.permission?.length > 0) {
+            const pList = [];
+            for(let pTemp in temp.permission) {
+                if (!funcCheckedIds.includes(pTemp.id)) {
+                    continue;
+                }
+                pList.push(pTemp);
+            }
+            temp.permission = pList;
+        }
+        checkedTree.push(temp);
+    }
     return checkedTree
 }

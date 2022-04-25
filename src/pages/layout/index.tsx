@@ -2,7 +2,7 @@ import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { MenuItem, IMenuTree, MenuChild } from "@/models/menu.interface";
+import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu.interface";
 import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
 import { userState, userMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';

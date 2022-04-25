@@ -5,6 +5,7 @@ import {IFuncMenuTree} from '@/models/menu.interface';
 import { systemMenuTreeState } from "@/stores/recoilState";
 import { genFuncTree } from "@/lib/tree-util";
 import { API } from '@/models/typings';
+import styles from "./index.module.less";
 
 interface AuthTreeProps {
     leftCheckedKeys: API.IId[];
@@ -26,7 +27,8 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     const [autoExpandParent1, setAutoExpandParent1] = useState<boolean>(true);
     
     const updateFuncMenuTree = (menuIds: API.IId[]) => {
-        const computedTree = genFuncTree(systemMenuTree, menuIds);
+        const computedTree = genFuncTree('', systemMenuTree, menuIds);
+        debugger;
         setFuncMenuTree(computedTree);
     };
     const onExpand = (expandedKeysValue: React.Key[]) => {
@@ -38,9 +40,11 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     };
 
     const onCheck = (checkedKeysValue: React.Key[], info: any) => {
+        debugger;
         console.log('onCheck', checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
-        updateFuncMenuTree(checkedKeysValue);
+        const selectedKeys = info.halfCheckedKeys.concat(checkedKeysValue);
+        updateFuncMenuTree(selectedKeys);
     };
 
     const onSelect = (selectedKeysValue: React.Key[], info: any) => {
@@ -73,8 +77,10 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
         setCheckedKeys1(rightCheckedKeys);
     }, [rightCheckedKeys]);
     return (
-        <React.Fragment>
+        <div className={styles.container}>
             <Tree
+              className={styles.menuTree}
+              key="authTree1"
               checkable
               onExpand={onExpand}
               expandedKeys={expandedKeys}
@@ -88,18 +94,20 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
             />
     
             <Tree
-              checkable
-              onExpand={onExpand1}
-              expandedKeys={expandedKeys1}
-              autoExpandParent={autoExpandParent1}
-              onCheck={onCheck1}
-              checkedKeys={checkedKeys1}
-              onSelect={onSelect1}
-              selectedKeys={selectedKeys1}
-              treeData={systemMenuTree}
-              fieldNames={{title: 'menuName', key: 'id', children: 'children'}}
+                className={styles.funcTree}
+                key="authTree2"
+                checkable
+                onExpand={onExpand1}
+                expandedKeys={expandedKeys1}
+                autoExpandParent={autoExpandParent1}
+                onCheck={onCheck1}
+                checkedKeys={checkedKeys1}
+                onSelect={onSelect1}
+                selectedKeys={selectedKeys1}
+                treeData={funcMenuTree}
+                fieldNames={{title: 'menuName', key: 'id', children: 'children'}}
             />
-        </React.Fragment>
+        </div>
       );
 };
 export default AuthTree;
