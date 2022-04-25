@@ -88,7 +88,8 @@ export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): Men
  * @return menuNodes  funcNodes
  */
 export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuthInfo {
-    menuNodes, funcNodes = list(), list()
+    const menuNodes = [];
+    const funcNodes = [];
     for temp in selectedMenuTree:
         if temp.selected  == 1:
             menuNodes.append(temp.menuId)
