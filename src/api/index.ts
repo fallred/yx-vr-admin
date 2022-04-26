@@ -35,12 +35,18 @@ export const useGetUserMenuTree = () => {
 // 角色
 export const useGetRoleList = (pagination: any, filters: any) => {
     return useGetList<API.IRolePaginationResp>(
-        "RolesList",
+        "RolesListPage",
         '/manage/role/query',
         pagination,
         filters
     );
 }
+export const useGetRoleListAll = () => {
+    return useGetOne<API.IRoleList>(
+        "RoleListAll",
+        "/manage/role/list",
+      );
+};
 export const useAddRole = () => {
     return useCreate<API.IRole, API.IRole>('/manage/role/create');
 }
@@ -158,22 +164,22 @@ export const useBatchDeleteNotice = () => {
 //     );
 // }
 
-// export const useGetProjects = (pagination: any, filters: any) => {
-//     return useGetList<API.ProjectPagination>(
-//         "Projects",
-//         projectResource,
-//         pagination,
-//         filters
-//     );
-// }
-// export const useAddProject = () => {
-//     return useCreate<API.Project, API.Project>(projectResource);
-// }
+export const useGetProjects = (pagination: any, filters: any) => {
+    return useGetList<API.ProjectPagination>(
+        "Projects",
+        projectResource,
+        pagination,
+        filters
+    );
+}
+export const useAddProject = () => {
+    return useCreate<API.Project, API.Project>(projectResource);
+}
 
-// export const useUpdateProject = () => {
-//     return useUpdate<API.Project>(projectResource);
-// }
+export const useUpdateProject = () => {
+    return useUpdate<API.Project>(projectResource);
+}
 
-// export const useBatchDeleteProject = () => {
-//     return useBatch(projectResource + ':batchDelete');
-// }
+export const useBatchDeleteProject = () => {
+    return useBatch(projectResource + ':batchDelete');
+}

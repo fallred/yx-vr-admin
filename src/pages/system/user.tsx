@@ -1,20 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
-import ProTable from "@ant-design/pro-table";
 import { Button, message, Modal, PaginationProps, Space } from "antd";
+import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
+import {SexEnum} from '@/models/common';
 import {PageFuncEnum} from '@/models/common';
-import {PageFuncMap} from '@/enums/common';
-import { useAddUser, useBatchDeleteUser, useUpdateUser, useGetUserList } from "@/api";
+import {PageFuncMap, UserStatusMap} from '@/enums/common';
+import {
+  useAddUser,
+  useBatchDeleteUser,
+  useUpdateUser,
+  useGetUserList
+} from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
-import OperationDrawer from "./modules/user/OperationDrawer";
 import { IUser, UserStatusEnum } from "@/models/user.interface";
 import { UserStatusMap } from "@/enums/common";
+import OperationDrawer from "./modules/user/OperationDrawer";
 
 const UserTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
@@ -61,7 +67,6 @@ const UserTableList= () => {
 
   const showEditModal = (item: IUser) => {
     setVisible(true);
-    item.selectedMenuTree = JSON.parse(item.powerSelected);
     setCurrent(item);
   };
 
@@ -75,7 +80,6 @@ const UserTableList= () => {
 
   const handleDone = () => {
     setAddBtnblur();
-
     setVisible(false);
   };
 
@@ -156,7 +160,7 @@ const UserTableList= () => {
     // },
     {
       title: '用户',
-      dataIndex: 'avatar',
+      dataIndex: 'imageUrl',
       key: 'avatar',
       valueType: 'avatar',
       width: 150,
@@ -174,24 +178,27 @@ const UserTableList= () => {
       dataIndex: "realName",
       // valueType: "textarea",
       ellipsis: true,
+      width: 120,
     },
     {
       title: '性别',
       width: 80,
       dataIndex: "sex",
       valueEnum: {
-        male: { text: '男'},
-        famale: { text: '女'},
+        [SexEnum.MALE]: { text: UserStatusMap.get(SexEnum.MALE)},
+        [SexEnum.FEMALE]: { text: UserStatusMap.get(SexEnum.FEMALE)},
       },
     },
     {
       title: '手机号',
       dataIndex: 'mobile',
+      // copyable: true,
     },
     {
       title: '角色名称',
       dataIndex: 'roleNm',
       valueType: 'text',
+      with: 100,
       // sorter: true,
       // hideInSearch: true,
     },
@@ -204,7 +211,7 @@ const UserTableList= () => {
     },
     {
       title: '状态',
-      width: 80,
+      width: 120,
       dataIndex: 'status',
       initialValue: 'all',
       valueEnum: {
@@ -215,35 +222,37 @@ const UserTableList= () => {
     },
     {
       title: '上次登陆时间',
+      width: 180,
       key: 'showTime',
       dataIndex: 'loginDate',
       valueType: 'dateTime',
+      ellipsis: true,
+      hideInSearch: true,
       // sorter: true,
-      // hideInSearch: true,
     },
     {
       title: '上次登陆IP',
+      width: 140,
       dataIndex: 'loginIp',
       valueType: 'text',
+      hideInSearch: true,
       // sorter: true,
-      // hideInSearch: true,
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
       dataIndex: "option",
+      key: 'option',
       valueType: "option",
+      fixed: 'right',
+      width: 200,
       render: (_, record) => {
+        const opMenuList = [
+          // { key: 'copy', name: '复制' },
+        ];
+        if (PageFuncEnum.DELETE) {
+          opMenuList.push({ key: PageFuncEnum.DELETE, name: '删除' });
+        }
         const btnList = [
-          <AuthLink
-            key={PageFuncEnum.LIST}
-            operCode={PageFuncEnum.LIST}
-            onClick={(e) => {
-              e.preventDefault();
-              showViewDrawer(record);
-            }}
-          >
-            查看数据权限
-          </AuthLink>,
           <AuthLink
             key={PageFuncEnum.EDIT}
             operCode={PageFuncEnum.EDIT}
@@ -255,25 +264,54 @@ const UserTableList= () => {
             编辑
           </AuthLink>,
           <AuthLink
-            key={PageFuncEnum.DELETE}
-            operCode={PageFuncEnum.DELETE}
+            key={PageFuncEnum.LIST}
+            operCode={PageFuncEnum.LIST}
             onClick={(e) => {
               e.preventDefault();
-              Modal.confirm({
-                title: "删除用户",
-                content: "确定删除该用户吗？",
-                okText: "确认",
-                cancelText: "取消",
-                onOk: async () => {
-                  await handleRemove([{ ...record }]);
-                  setSelectedRows([]);
-                  refetch();
-                },
-              });
+              showViewDrawer(record);
             }}
           >
-            删除
+            查看数据权限
           </AuthLink>,
+          // <AuthLink
+          //   key={PageFuncEnum.DELETE}
+          //   operCode={PageFuncEnum.DELETE}
+          //   onClick={(e) => {
+          //     e.preventDefault();
+          //     Modal.confirm({
+          //       title: "删除用户",
+          //       content: "确定删除该用户吗？",
+          //       okText: "确认",
+          //       cancelText: "取消",
+          //       onOk: async () => {
+          //         await handleRemove([{ ...record }]);
+          //         setSelectedRows([]);
+          //         refetch();
+          //       },
+          //     });
+          //   }}
+          // >
+          //   删除
+          // </AuthLink>,
+          <TableDropdown
+            key="actionGroup"
+            onSelect={(key) => {
+              if (key === PageFuncEnum.DELETE) {
+                Modal.confirm({
+                  title: "删除用户",
+                  content: "确定删除该用户吗？",
+                  okText: "确认",
+                  cancelText: "取消",
+                  onOk: async () => {
+                    await handleRemove([{ ...record }]);
+                    setSelectedRows([]);
+                    refetch();
+                  },
+                });
+              }
+            }}
+            menus={opMenuList}
+          />,
         ];
         return btnList;
       },
@@ -285,9 +323,10 @@ const UserTableList= () => {
   return (
     <PageContainer>
       <ProTable<IUser>
+        rowKey="id"
         headerTitle="用户管理"
         actionRef={actionRef}
-        rowKey="id"
+        scroll={{ x: 1300 }}
         options={{reload: false}}
         toolBarRender={() => [
           <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
@@ -348,7 +387,7 @@ const UserTableList= () => {
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
-                  refetch();
+              refetch();
             }}
             operCode={PageFuncEnum.DELETE}
           >
@@ -356,7 +395,6 @@ const UserTableList= () => {
           </AuthButton>,
         </FooterToolbar>
       )}
-
       <OperationDrawer
         done={done}
         current={current}
@@ -365,7 +403,7 @@ const UserTableList= () => {
         onCancel={handleCancel}
         onSubmit={handleSubmit}
       />
-      </PageContainer>
+    </PageContainer>
   );
 };
 

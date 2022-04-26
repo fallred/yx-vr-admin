@@ -112,14 +112,14 @@ const mockQueryLogInfo = {
 
 export default [
   {
-    url: '/app/log/query',
+    url: '/api/v1/app/log/query',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryLogResp;
     },
   },
   {
-    url: '/app/log/detial',
+    url: '/api/v1/app/log/detial',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryLogInfo;

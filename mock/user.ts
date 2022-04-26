@@ -120,6 +120,15 @@ const mockUserMenuTree = [
             "url": "/api/dataInput/add",
             "menuName": "新增"
           },
+          {
+            "id": 7,
+            "mid": 2,
+            "code": "related_person:edit",
+            "name": null,
+            "desc": null,
+            "url": "/api/dataInput/edit",
+            "menuName": "编辑"
+          },
         ]
       },
       {

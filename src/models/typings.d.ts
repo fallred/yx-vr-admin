@@ -24,6 +24,8 @@ declare namespace API {
     data: IRole[];
   }
 
+  export type IRoleList = IRole[];
+
   /**
    * 
    * @export

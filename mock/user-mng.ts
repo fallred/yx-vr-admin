@@ -21,7 +21,7 @@ const mockQueryUserResp = {
         "status": 0,
         "createDate": "2020-04-17 14:07:09",
         "loginDate": "2022-04-24 21:03:29",
-        "imageUrl": null,
+        "imageUrl": 'https://p.gsxcdn.com/463892616_1960z29o.jpg',
         "loginIp": "171.113.232.71",
         "roleId": 1,
         "roleNm": "超级管理员",
@@ -161,35 +161,35 @@ const mockCreateUserResp = {
 
 export default [
   {
-    url: '/manage/user/query',
+    url: '/api/v1/manage/user/query',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryUserResp;
     },
   },
   {
-    url: '/manage/user/query/one',
+    url: '/api/v1/manage/user/query/one',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryUserInfo;
     },
   },
   {
-    url: '/manage/user/edit',
+    url: '/api/v1/manage/user/edit',
     method: 'POST',
     response: ({ body }) => {
       return mockUpdateUserResp;
     },
   },
   {
-    url: '/manage/user/create',
+    url: '/api/v1/manage/user/create',
     method: 'POST',
     response: ({ body }) => {
       return mockCreateUserResp;
     },
   },
   {
-    url: '/manage/user/delete',
+    url: '/api/v1/manage/user/delete',
     method: 'POST',
     response: ({ body }) => {
        return {
@@ -201,7 +201,7 @@ export default [
     },
   },
   {
-    url: '/manage/user/app',
+    url: '/api/v1/manage/user/app',
     method: 'POST',
     response: ({ body }) => {
         return {

@@ -1,9 +1,10 @@
 import type { UserConfigExport, ConfigEnv } from 'vite'
 import { loadEnv } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import { viteMockServe } from 'vite-plugin-mock'
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import vitePluginImp from "vite-plugin-imp";
+import { viteMockServe } from 'vite-plugin-mock';
 import { resolve } from 'path';
-import svgr from 'vite-plugin-svgr'
+import svgr from 'vite-plugin-svgr';
 import { getAliases } from "vite-aliases";
 import styleImport from 'vite-plugin-style-import';
 
@@ -36,6 +37,7 @@ export default ({ command } : { command: string}) => {
       include: [
         '@ant-design/colors',
         '@ant-design/icons',
+        '@ant-design/pro-card',
       ],
     },
     // server: {
@@ -57,6 +59,14 @@ export default ({ command } : { command: string}) => {
         localEnabled: command === 'serve',
         logger: true,
       }),
+      // vitePluginImp({
+      //   libList: [
+      //     {
+      //       libName: "antd",
+      //       style: (name) => `antd/es/${name}/style`,
+      //     },
+      //   ],
+      // }),
       // styleImport({
       //   libs: [
       //     {

@@ -36,20 +36,20 @@ const RoleTableList= () => {
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.IRole[]>([]);
 
-  const { data, error, isLoading, refetch } = useGetRoleList(pagination, filters);
+  const { data: rolePageResp, error, isLoading, refetch } = useGetRoleList(pagination, filters);
 
   const { mutateAsync } = useAddRole();
   const { mutateAsync: update } = useUpdateRole();
   const { mutateAsync: batchDelete } = useBatchDeleteRole();
 
   useEffect(() => {
-    setRole(data?.data);
+    setRole(rolePageResp?.data);
     setPagination({
       ...pagination,
-      total: data?.total,
+      total: rolePageResp?.total,
       showQuickJumper: true,
     });
-  }, [data]);
+  }, [rolePageResp]);
 
   useEffect(() => {
     refetch();
@@ -281,15 +281,18 @@ const RoleTableList= () => {
           </AuthButton>,
         </FooterToolbar>
       )}
-
-      <OperationDrawer
-        done={done}
-        current={current}
-        visible={visible}
-        onDone={handleDone}
-        onCancel={handleCancel}
-        onSubmit={handleSubmit}
-      />
+      {
+        visible
+        ? <OperationDrawer
+          done={done}
+          current={current}
+          visible={visible}
+          onDone={handleDone}
+          onCancel={handleCancel}
+          onSubmit={handleSubmit}
+        />
+        : null
+      }
       </PageContainer>
   );
 };

@@ -34,35 +34,35 @@ const mockSubmitResp = {
 
 export default [
     {
-      url: '/app/notice/query',
+      url: '/api/v1/app/notice/query',
       method: 'GET',
       response: ({ body }) => {
         return mockQueryNoticeResp;
       },
     },
     {
-      url: '/app/notice/detial',
+      url: '/api/v1/app/notice/detial',
       method: 'GET',
       response: ({ body }) => {
         return mockQueryNoticeInfo;
       },
     },
     {
-      url: '/app/notice/edit',
+      url: '/api/v1/app/notice/edit',
       method: 'POST',
       response: ({ body }) => {
         return mockSubmitResp;
       },
     },
     {
-      url: '/app/notice/create',
+      url: '/api/v1/app/notice/create',
       method: 'POST',
       response: ({ body }) => {
         return mockSubmitResp;
       },
     },
     {
-      url: '/app/notice/delete',
+      url: '/api/v1/app/notice/delete',
       method: 'POST',
       response: ({ body }) => {
          return mockSubmitResp;

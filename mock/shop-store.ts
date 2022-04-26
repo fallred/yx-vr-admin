@@ -64,35 +64,35 @@ const mockSubmitStoreResp = {
 
 export default [
   {
-    url: '/app/store/query',
+    url: '/api/v1/app/store/query',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryStoreResp;
     },
   },
   {
-    url: '/app/store/detial',
+    url: '/api/v1/app/store/detial',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryStoreInfo;
     },
   },
   {
-    url: '/manage/store/edit',
+    url: '/api/v1/manage/store/edit',
     method: 'POST',
     response: ({ body }) => {
       return mockSubmitStoreResp;
     },
   },
   {
-    url: '/manage/store/create',
+    url: '/api/v1/manage/store/create',
     method: 'POST',
     response: ({ body }) => {
       return mockSubmitStoreResp;
     },
   },
   {
-    url: '/manage/store/delete',
+    url: '/api/v1/manage/store/delete',
     method: 'POST',
     response: ({ body }) => {
        return mockSubmitStoreResp;

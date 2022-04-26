@@ -341,27 +341,42 @@ const mockQueryAreaList = [
     }
 ];
 
+const mockUploadResp = {
+	"data": {},
+	"msg": "",
+	"pages": 0,
+	"status": 0,
+	"success": false,
+	"total": 0
+};
 export default [
     {
-        url: '/app/area/province',
+        url: '/api/v1/app/area/province',
         method: 'GET',
         response: ({ body }) => {
             return mockQueryProvinceList;
         },
     },
     {
-        url: '/app/area/city',
+        url: '/api/v1/app/area/city',
         method: 'GET',
         response: ({ body }) => {
             return mockQueryCityList;
         },
     },
     {
-        url: '/app/area/area',
+        url: '/api/v1/app/area/area',
         method: 'GET',
         response: ({ body }) => {
         return mockQueryAreaList;
         },
     },
+    {
+      url: '/api/v1/app/file/upload',
+      method: 'POST',
+      response: ({ body }) => {
+        return mockUploadResp;
+      },
+  },
 ] as MockMethod[];
 

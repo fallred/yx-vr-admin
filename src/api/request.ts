@@ -167,28 +167,14 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
         }
         console.log('params: ', params);
         const data: T = await axios.get(
-            `${url}`, {
-            params,
-            paramsSerializer: params => {
-                return qs.stringify(params, { arrayFormat: 'repeat' })
-            },
-            transformRequest,
-        });
-
-        return data;
-
-    }
-    return useQuery(key, () => service());
-
-}
-
-const useGetOne = <T>(key: string, url: string, params?: any) => {
-    const axios = useAxios();
-
-    const service = async () => {
-        const data: T = await axios.get(
             `${url}`,
-            params
+            {
+                params,
+                paramsSerializer: params => {
+                    return qs.stringify(params, { arrayFormat: 'repeat' })
+                },
+                transformRequest,
+            }
         );
 
         return data;
@@ -198,6 +184,24 @@ const useGetOne = <T>(key: string, url: string, params?: any) => {
 
 }
 
+const useGetOne = <T>(key: string, url: string, params?: any, config?: any) => {
+    const axios = useAxios();
+
+    const service = async () => {
+        const data: T = await axios.get(
+            `${url}`,
+            params,
+            config
+        );
+
+        return data;
+
+    }
+    return useQuery(key, () => service());
+
+}
+
+// body
 const useCreate = <T, U>(url: string) => {
     const axios = useAxios();
     const queryClient = useQueryClient()
@@ -210,6 +214,7 @@ const useCreate = <T, U>(url: string) => {
     });
 }
 
+// query
 const useCreateByQuery = <T, U>(url: string) => {
     const axios = useAxios();
     const queryClient = useQueryClient()
@@ -255,6 +260,22 @@ const useBatch = (url: string) => {
         const data = await axios.post(
             `${url}`,
             { idList: ids },
+        );
+        return data;
+    });
+}
+
+const useUpload = (url: string) => {
+    const axios = useAxios();
+    return useMutation(async (file: File) => {
+        const data = await axios.post(
+            url,
+            file,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         );
         return data;
     });

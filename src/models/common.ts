@@ -1,3 +1,4 @@
+export type IValue = string | number;
 export enum PageFuncEnum {
     'LIST' = 'list',
     'ADD' = 'add',
@@ -7,6 +8,12 @@ export enum PageFuncEnum {
 
 export enum StatusEnum {
 }
+
+export enum SexEnum {
+    'FEMALE' = 0,
+    'MALE' = 1,
+}
+
 export interface IProvince {
     id: number;
     code: string;
@@ -23,4 +30,9 @@ export interface IArea {
     code: string;
     name: string;
     citycode: string;
+}
+
+export interface IOption {
+    label: IValue;
+    value: IValue;
 }
