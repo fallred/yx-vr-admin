@@ -3,6 +3,7 @@ import { IUser, IUserList, IUserPaginationResp } from "@/models/user.interface";
 import { ILog, ILogList, ILogPaginationResp } from "@/models/log.interface";
 import { INotice, INoticeList, INoticePaginationResp } from "@/models/notice-mng";
 import { IShopStore, IShopStorePaginationResp } from "@/models/shop-store.interface";
+import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
@@ -151,6 +152,25 @@ export const useBatchDeleteNotice = () => {
     return useCreateByQuery('/app/notice/delete');
 }
 
+// 省市区
+export const useGetProvinceList = () => {
+    return useGetOne<IProvince[]>(
+        "provinceList",
+        "/app/area/province"
+    );
+};
+export const useGetCityList = () => {
+    return useGetOne<ICity[]>(
+        "cityList",
+        "/app/area/city"
+    );
+};
+export const useGetAreaList = () => {
+    return useGetOne<IArea[]>(
+        "areaList",
+        "/app/area/area"
+    );
+};
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(
 //         "CurrentUser",

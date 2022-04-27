@@ -13,6 +13,7 @@ import ProForm, {
 import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import { useGetRoleListAll } from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
+import ShopStoreTable from '@/pages/store-mng/shop-list';
 
 interface OperationDrawerProps {
   done: boolean;
@@ -76,7 +77,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const getModalContent = () => {
     return (
       <Form {...formLayout} form={form} ref={formRef} onFinish={handleFinish}>
-         <ProCard
+          <ProCard
             title="基本信息"
             bordered
             headerBordered
@@ -109,7 +110,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
               key="sex"
               name="sex"
               label="性别"
-              width="sm"
+              width="md"
               options={SexOptions}
               placeholder="选择性别"
             />
@@ -117,7 +118,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
               key="status"
               name="status"
               label="状态"
-              width="sm"
+              width="md"
               options={UserStatusOptions}
               placeholder="选择账号状态"
             />
@@ -150,37 +151,37 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
             <ProFormText key="imgUrl" name="imgUrl" label="头像设置">
               <AvatarUpload />
             </ProFormText>
-        </ProCard>
-        <ProCard
-            title="数据设置"
-            bordered
-            headerBordered
-            collapsible
-            style={{
-              marginBottom: 16,
-              minWidth: 200,
-              maxWidth: '100%',
-            }}
-          >
-            <ProFormSelect
-              key="identityType"
-              name="identityType"
-              label="账号类型"
-              width="sm"
-              options={IdentifyOptions}
-              placeholder="选择账号类型"
-            />
-            <ProFormSelect
-              key="roleId"
-              name="roleId"
-              label="角色"
-              width="sm"
-              options={roleOptions}
-              // fieldNames={fieldNames}
-              placeholder="选择角色"
-            />
-            
-        </ProCard>
+          </ProCard>
+          <ProCard
+              title="数据设置"
+              bordered
+              headerBordered
+              collapsible
+              style={{
+                marginBottom: 16,
+                minWidth: 200,
+                maxWidth: '100%',
+              }}
+            >
+              <ProFormSelect
+                key="identityType"
+                name="identityType"
+                label="账号类型"
+                width="md"
+                options={IdentifyOptions}
+                placeholder="选择账号类型"
+              />
+              <ProFormSelect
+                key="roleId"
+                name="roleId"
+                label="角色"
+                width="md"
+                options={roleOptions}
+                // fieldNames={fieldNames}
+                placeholder="选择角色"
+              />
+              <ShopStoreTable filterType="" />
+          </ProCard>
       </Form>
     );
   };
@@ -188,7 +189,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   return (
     <Drawer
         title={`用户${current ? "编辑" : "添加"}`}
-        width={600}
+        width={800}
         onClose={onCancel}
         visible={visible}
         bodyStyle={{ paddingBottom: 0 }}

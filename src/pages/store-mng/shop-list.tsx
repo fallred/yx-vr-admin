@@ -2,14 +2,14 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
 import { Button, message, Modal, PaginationProps, Space } from "antd";
+import { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
 import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
-import {PageFuncEnum} from '@/models/common';
-import {SexEnum} from '@/models/common';
+import {PageFuncEnum, SexEnum} from '@/models/common';
 import {ShopStoreStatusMap, ShopStoreStatusOptions} from '@/enums/common';
 import {
   useAddShopStore,
@@ -19,7 +19,8 @@ import {
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store.interface";
-import { ShopStoreStatusMap, ShopStoreStatusOptions } from "@/enums/common";
+import ProvinceCityArea from '@/components/province-city-area';
+
 // import OperationDrawer from "./modules/user/OperationDrawer";
 
 interface IShopListProps {
@@ -27,6 +28,7 @@ interface IShopListProps {
   showOperate?: boolean;
 }
 const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterType: ''}) => {
+  const {showOperate, filterType} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const addBtn = useRef(null);
@@ -174,62 +176,81 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
       width: 150,
     },
     {
-      title: '性别',
-      width: 80,
-      dataIndex: "sex",
-      valueEnum: {
-        [SexEnum.MALE]: { text: UserStatusMap.get(SexEnum.MALE)},
-        [SexEnum.FEMALE]: { text: UserStatusMap.get(SexEnum.FEMALE)},
-      },
-    },
-    {
-      title: '手机号',
-      dataIndex: 'mobile',
-      // copyable: true,
-    },
-    {
-      title: '角色名称',
-      dataIndex: 'roleNm',
+      key: 'code',
+      title: '门店编码',
+      dataIndex: 'code',
       valueType: 'text',
-      with: 100,
-      // sorter: true,
-      // hideInSearch: true,
+      width: 140,
     },
     {
-      title: '门店ID',
-      dataIndex: 'appId',
-      valueType: 'text',
-      // sorter: true,
-      // hideInSearch: true,
+      key: 'province',
+      title: '省',
+      dataIndex: "province",
+      valueType: "text",
+      width: 100,
+    },
+    {
+      key: 'city',
+      title: '市',
+      dataIndex: "city",
+      valueType: "text",
+      width: 100,
+    },
+    {
+      key: 'district',
+      title: '区',
+      dataIndex: "district",
+      valueType: "text",
+      width: 100,
+    },
+    {
+      key: 'address',
+      title: '区',
+      dataIndex: "address",
+      valueType: "textarea",
+      width: 100,
+    },
+    {
+      key: 'franchisee',
+      title: '加盟商',
+      dataIndex: "franchisee",
+      valueType: "text",
+      width: 100,
+    },
+    {
+      key: 'manager',
+      title: '店长',
+      dataIndex: "manager",
+      valueType: "text",
+      width: 100,
     },
     {
       title: '状态',
-      width: 120,
-      dataIndex: 'status',
-      initialValue: 'all',
+      width: 80,
+      dataIndex: "status",
       valueEnum: {
-        [UserStatusEnum.NORMAL]: { text: UserStatusMap.get(UserStatusEnum.NORMAL), status: 'Success' },
-        [UserStatusEnum.FREEZE]: { text: UserStatusMap.get(UserStatusEnum.FREEZE), status: 'Error' },
-        [UserStatusEnum.DISABLED]: { text: UserStatusMap.get(UserStatusEnum.NORMAL), status: 'Default' },
+        [ShopStoreStatusEnum.NORMAL]: { text: ShopStoreStatusMap.get(ShopStoreStatusEnum.NORMAL)},
+        [ShopStoreStatusEnum.DISABLED]: { text: ShopStoreStatusMap.get(ShopStoreStatusEnum.DISABLED)},
       },
     },
     {
-      title: '上次登陆时间',
-      width: 180,
-      key: 'showTime',
-      dataIndex: 'loginDate',
-      valueType: 'dateTime',
-      ellipsis: true,
-      hideInSearch: true,
-      // sorter: true,
+      title: '门店评级',
+      dataIndex: "grade",
+      valueType: "rate",
+      width: 200,
+      // copyable: true,
     },
     {
-      title: '上次登陆IP',
-      width: 140,
-      dataIndex: 'loginIp',
+      title: '合伙人',
+      dataIndex: 'partner',
       valueType: 'text',
-      hideInSearch: true,
-      // sorter: true,
+      with: 120,
+    },
+    {
+      title: '签约时间',
+      dataIndex: 'tm',
+      valueType: 'time',
+      with: 120,
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
@@ -257,42 +278,42 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
             编辑
           </AuthLink>,
           <AuthLink
-            key={PageFuncEnum.LIST}
-            operCode={PageFuncEnum.LIST}
+            key={PageFuncEnum.EDIT}
+            operCode={PageFuncEnum.EDIT}
             onClick={(e) => {
               e.preventDefault();
-              showViewDrawer(record);
+              // showViewDrawer(record);
             }}
           >
-            查看数据权限
+            禁用
           </AuthLink>,
-          // <AuthLink
-          //   key={PageFuncEnum.DELETE}
-          //   operCode={PageFuncEnum.DELETE}
-          //   onClick={(e) => {
-          //     e.preventDefault();
-          //     Modal.confirm({
-          //       title: "删除用户",
-          //       content: "确定删除该用户吗？",
-          //       okText: "确认",
-          //       cancelText: "取消",
-          //       onOk: async () => {
-          //         await handleRemove([{ ...record }]);
-          //         setSelectedRows([]);
-          //         refetch();
-          //       },
-          //     });
-          //   }}
-          // >
-          //   删除
-          // </AuthLink>,
+          <AuthLink
+            key={PageFuncEnum.DELETE}
+            operCode={PageFuncEnum.DELETE}
+            onClick={(e) => {
+              e.preventDefault();
+              Modal.confirm({
+                title: "删除门店",
+                content: "确定删除该门店吗？",
+                okText: "确认",
+                cancelText: "取消",
+                onOk: async () => {
+                  await handleRemove([{ ...record }]);
+                  setSelectedRows([]);
+                  refetch();
+                },
+              });
+            }}
+          >
+            删除
+          </AuthLink>,
           <TableDropdown
             key="actionGroup"
             onSelect={(key) => {
               if (key === PageFuncEnum.DELETE) {
                 Modal.confirm({
-                  title: "删除用户",
-                  content: "确定删除该用户吗？",
+                  title: "删除门店",
+                  content: "确定删除该门店吗？",
                   okText: "确认",
                   cancelText: "取消",
                   onOk: async () => {
@@ -312,9 +333,32 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
   ];
 
   const AuthButton = WrapAuth(Button, permissionList);
+  function onFilterChange() {
 
+  }
   return (
-    <PageContainer>
+    <>
+      {
+        props.filterType === 'light' ? 
+        <LightFilter
+          initialValues={{
+          }}
+          footerRender={false}
+          onFinish={async (values) => console.log(values)}
+        >
+          <ProFormText name="keyword" size="md" label="关键词" />
+          <ProvinceCityArea />
+        </LightFilter>
+        :
+        <QueryFilter
+          submitter={false}
+          onChange={onFilterChange}
+        >
+          <ProFormText name="keyword" label="关键词" />
+          <ProvinceCityArea />
+        </QueryFilter>
+      }
+      
       <ProTable<IShopStore>
         rowKey="id"
         headerTitle="门店管理"
@@ -341,31 +385,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
             setSelectedRows(selectedRows);
           },
         }}
-        search={{
-          filterType: props.filterType,
-          defaultCollapsed: false,
-          optionRender: ({ searchText, resetText }, { form }) => [
-            <Button
-              key="search"
-              type="primary"
-              onClick={() => {
-                // form?.submit();
-                console.log("search submit");
-                setFilters(form?.getFieldsValue());
-              }}
-            >
-              {searchText}
-            </Button>,
-            <Button
-              key="reset"
-              onClick={() => {
-                form?.resetFields();
-              }}
-            >
-              {resetText}
-            </Button>,
-          ],
-        }}
+        search={false}
       />
       
       {selectedRowsState?.length > 0 && (
@@ -392,7 +412,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
               >
                 {PageFuncMap.get(PageFuncEnum.DELETE)}
               </AuthButton>
-              : null;
+              : null
           }
         </FooterToolbar>
       )}
@@ -404,7 +424,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
         onCancel={handleCancel}
         onSubmit={handleSubmit}
       /> */}
-    </PageContainer>
+    </>
   );
 };
 

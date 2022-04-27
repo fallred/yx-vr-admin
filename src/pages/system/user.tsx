@@ -70,6 +70,8 @@ const UserTableList= () => {
     setCurrent(item);
   };
 
+  const showViewDrawer = () => {};
+
   const setAddBtnblur = () => {
     if (addBtn.current) {
       // eslint-disable-next-line react/no-find-dom-node

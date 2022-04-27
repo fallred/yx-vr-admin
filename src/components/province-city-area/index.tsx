@@ -1,6 +1,8 @@
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Cascader } from 'antd';
-import {ProFormSelect} from "@ant-design/pro-form";
+import ProForm, {ProFormSelect} from "@ant-design/pro-form";
 import {IOption} from '@/models/common';
+import {useGetProvinceList, useGetCityList, useGetAreaList} from '@/api/index';
 
 const ProvinceCityArea = () => {
     const {data: provinceResp} = useGetProvinceList();
@@ -30,32 +32,35 @@ const ProvinceCityArea = () => {
       }, [provinceResp]);
 
     return (
-        <>
+        <React.Fragment colSize={12}>
             <ProFormSelect
                 key="province"
                 name="province"
                 label="省"
-                width="sm"
                 options={provinceOptions}
                 placeholder="选择省"
+                // width="md"
+                // colSize={4}
             />
             <ProFormSelect
                 key="city"
                 name="city"
                 label="市"
-                width="sm"
-                options={CityOptions}
+                options={cityOptions}
                 placeholder="选择市"
+                // width="md"
+                // colSize={4}
             />
             <ProFormSelect
-                key="area"
-                name="area"
+                key="district"
+                name="district"
                 label="区"
-                width="sm"
-                options={AreaOptions}
+                options={areaOptions}
                 placeholder="选择区"
+                // width="md"
+                // colSize={4}
             />
-        </>
+        </React.Fragment>
     );
 };
 
