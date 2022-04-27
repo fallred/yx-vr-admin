@@ -20,14 +20,13 @@ import {
 import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store.interface";
 import ProvinceCityArea from '@/components/province-city-area';
-
 // import OperationDrawer from "./modules/user/OperationDrawer";
 
 interface IShopListProps {
   filterType?: string;
   showOperate?: boolean;
 }
-const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterType: ''}) => {
+const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterType: ''}) => {
   const {showOperate, filterType} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
@@ -205,7 +204,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
     },
     {
       key: 'address',
-      title: '区',
+      title: '详细地址',
       dataIndex: "address",
       valueType: "textarea",
       width: 100,
@@ -237,28 +236,29 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
       title: '门店评级',
       dataIndex: "grade",
       valueType: "rate",
-      width: 200,
+      width: 150,
       // copyable: true,
     },
     {
       title: '合伙人',
       dataIndex: 'partner',
       valueType: 'text',
-      with: 120,
+      width: 120,
     },
     {
       title: '签约时间',
       dataIndex: 'tm',
       valueType: 'time',
-      with: 120,
+      width: 120,
     },
+    showOperate ?
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
       dataIndex: "option",
       key: 'option',
       valueType: "option",
       fixed: 'right',
-      width: 200,
+      width: 140,
       render: (_, record) => {
         const opMenuList = [
           // { key: 'copy', name: '复制' },
@@ -329,7 +329,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
         ];
         return btnList;
       },
-    },
+    } : {},
   ];
 
   const AuthButton = WrapAuth(Button, permissionList);
@@ -338,7 +338,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
   }
   return (
     <>
-      {
+      {/* {
         props.filterType === 'light' ? 
         <LightFilter
           initialValues={{
@@ -353,17 +353,24 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
         <QueryFilter
           submitter={false}
           onChange={onFilterChange}
+          span={12}
         >
           <ProFormText name="keyword" label="关键词" />
           <ProvinceCityArea />
         </QueryFilter>
-      }
+      } */}
       
+      <div className="store-list-search">
+          <ProFormText name="keyword" label="关键词" />
+          <ProvinceCityArea />
+      </div>
       <ProTable<IShopStore>
-        rowKey="id"
+        rowKey="appId"
         headerTitle="门店管理"
+        defaultSize="small"
         actionRef={actionRef}
-        scroll={{ x: 1300 }}
+        scroll={{ x: 1000 }}
+        bordered={false}
         options={{reload: false}}
         toolBarRender={() => {
           const toolBtns = showOperate ? [
@@ -377,6 +384,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
         dataSource={shopStoreList}
         columns={columns}
         pagination={pagination}
+        hideOnSinglePage={true}
         onChange={(pagination, filters, sorter) => {
           setPagination(pagination);
         }}
@@ -386,6 +394,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: true, filterTyp
           },
         }}
         search={false}
+        footer={false}
       />
       
       {selectedRowsState?.length > 0 && (

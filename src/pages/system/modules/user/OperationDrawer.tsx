@@ -151,19 +151,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
             <ProFormText key="imgUrl" name="imgUrl" label="头像设置">
               <AvatarUpload />
             </ProFormText>
-          </ProCard>
-          <ProCard
-              title="数据设置"
-              bordered
-              headerBordered
-              collapsible
-              style={{
-                marginBottom: 16,
-                minWidth: 200,
-                maxWidth: '100%',
-              }}
-            >
-              <ProFormSelect
+            <ProFormSelect
                 key="identityType"
                 name="identityType"
                 label="账号类型"
@@ -180,8 +168,20 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 // fieldNames={fieldNames}
                 placeholder="选择角色"
               />
-              <ShopStoreTable filterType="" />
           </ProCard>
+          {/* <ProCard
+              title="数据设置"
+              bordered
+              headerBordered
+              collapsible
+              style={{
+                marginBottom: 16,
+                minWidth: 200,
+                maxWidth: '100%',
+              }}
+          >
+          </ProCard> */}
+          <ShopStoreTable filterType="" />
       </Form>
     );
   };

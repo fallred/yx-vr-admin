@@ -21,6 +21,7 @@ import WrapAuth from '@/components/wrap-auth/index';
 import { IUser, UserStatusEnum } from "@/models/user.interface";
 import { UserStatusMap } from "@/enums/common";
 import OperationDrawer from "./modules/user/OperationDrawer";
+import ShopListDrawer from "./modules/user/storeListDrawer";
 
 const UserTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
@@ -28,6 +29,7 @@ const UserTableList= () => {
   const addBtn = useRef(null);
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
+  const [shopViewVisible, setShopViewVisible] = useState<boolean>(false);
   const [userList, setUserList] = useState<IUser[]>();
   const [filters, setFilters] = useState<IUser[]>();
   const [current, setCurrent] = useState<Partial<IUser> | undefined>(
@@ -70,7 +72,13 @@ const UserTableList= () => {
     setCurrent(item);
   };
 
-  const showViewDrawer = () => {};
+  const showViewDrawer = (item: IUser) => {
+    setShopViewVisible(true);
+    setCurrent(item);
+  };
+  const hideViewDrawer = () => {
+    setShopViewVisible(false);
+  };
 
   const setAddBtnblur = () => {
     if (addBtn.current) {
@@ -125,7 +133,6 @@ const UserTableList= () => {
   };
   /**
    * 删除节点
-   *
    * @param selectedRows
    */
   const handleRemove = async (selectedRows: IUser[]) => {
@@ -404,6 +411,11 @@ const UserTableList= () => {
         onDone={handleDone}
         onCancel={handleCancel}
         onSubmit={handleSubmit}
+      />
+      <ShopListDrawer
+        current={current}
+        visible={shopViewVisible}
+        onClose={hideViewDrawer}
       />
     </PageContainer>
   );
