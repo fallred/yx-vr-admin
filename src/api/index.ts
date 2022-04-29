@@ -46,7 +46,7 @@ export const useGetRoleListAll = () => {
     return useGetOne<API.IRoleList>(
         "RoleListAll",
         "/manage/role/list",
-      );
+    );
 };
 export const useAddRole = () => {
     return useCreate<API.IRole, API.IRole>('/manage/role/create');
@@ -90,12 +90,18 @@ export const useSetUserApps = () => {
 
 
 // 门店管理
-export const useGetShopStoreList = (pagination: any, filters: any) => {
+export const useGetShopStoreListWithPage = (pagination: any, filters: any) => {
     return useGetList<IShopStorePaginationResp>(
         "StoreList",
         '/app/store/query',
         pagination,
         filters
+    );
+}
+export const useGetShopStoreList = () => {
+    return useGetOne<IShopStoreList>(
+        "StoreListAll",
+        "/app/store/list",
     );
 }
 export const useQueryShopStoreDetail = () => {

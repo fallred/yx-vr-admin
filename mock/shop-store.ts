@@ -40,6 +40,46 @@ const mockQueryStoreResp = {
   ]
 };
 
+const mockQueryStoreListAllResp = {
+  "status": 200,
+  "msg": "门店查询成功！",
+  "total": 0,
+  "pages": 0,
+  "success": true,
+  "data": [
+    {
+      "appId": "vr2037_00000",
+      "nm": "xxxx店",
+      "province": null,
+      "city": null,
+      "district": null,
+      "address": null,
+      "franchisee": null,
+      "manager": null,
+      "status": null,
+      "grade": null,
+      "partner": null,
+      "tm": "2022-04-12 10:46:59",
+      "code": "vr_0000"
+    },
+    {
+      "appId": "vr2037_00001",
+      "nm": "xxxx店",
+      "province": null,
+      "city": null,
+      "district": null,
+      "address": null,
+      "franchisee": null,
+      "manager": null,
+      "status": null,
+      "grade": null,
+      "partner": null,
+      "tm": "2022-04-12 10:46:59",
+      "code": "vr_0001"
+    }
+  ]
+};
+
 const mockQueryStoreInfo = {
   "appId": "vr2037_00000",
   "nm": "xxxx店",
@@ -68,6 +108,13 @@ export default [
     method: 'GET',
     response: ({ body }) => {
       return mockQueryStoreResp;
+    },
+  },
+  {
+    url: '/api/v1/app/store/list',
+    method: 'GET',
+    response: ({ body }) => {
+      return mockQueryStoreListAllResp;
     },
   },
   {

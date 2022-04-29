@@ -7,6 +7,7 @@ import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
+import ProCard from '@ant-design/pro-card';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';
@@ -15,7 +16,7 @@ import {
   useAddShopStore,
   useBatchDeleteShopStore,
   useUpdateShopStore,
-  useGetShopStoreList
+  useGetShopStoreListWithPage
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store.interface";
@@ -46,7 +47,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<IShopStore[]>([]);
 
-  const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreList(pagination, filters);
+  const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreListWithPage(pagination, filters);
 
   const { mutateAsync } = useAddShopStore();
   const { mutateAsync: update } = useUpdateShopStore();
@@ -157,6 +158,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
     );
   }
   const AuthLink = WrapAuth(YgSpan, permissionList);
+  const AuthButton = WrapAuth(Button, permissionList);
   const columns: ProColumns<IShopStore>[] = [
     {
       key: 'appId',
@@ -330,8 +332,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
       },
     } : {},
   ];
-
-  const AuthButton = WrapAuth(Button, permissionList);
   function onFilterChange() {
   }
   return (
@@ -357,11 +357,12 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
           <ProvinceCityArea />
         </QueryFilter>
       } */}
-      
-      <div className="store-list-search">
+      <ProCard style={{marginBottom: 20}}>
+        <div className="store-list-search">
           <ProFormText name="keyword" label="关键词" />
           <ProvinceCityArea />
-      </div>
+        </div>
+      </ProCard>
       <ProTable<IShopStore>
         rowKey="appId"
         headerTitle="门店管理"
