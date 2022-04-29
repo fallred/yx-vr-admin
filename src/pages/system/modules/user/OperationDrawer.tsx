@@ -188,19 +188,17 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
 
   return (
     <Drawer
-        title={`用户${current ? "编辑" : "添加"}`}
-        width={800}
-        onClose={onCancel}
-        visible={visible}
-        bodyStyle={{ paddingBottom: 0 }}
-        extra={
+      title={`用户${current ? "编辑" : "添加"}`}
+      width={800}
+      onClose={onCancel}
+      visible={visible}
+      bodyStyle={{ paddingBottom: 0 }}
+      extra={
         <Space>
-            <Button onClick={onCancel}>取消</Button>
-            <Button onClick={handleSubmit} type="primary">
-            保存
-            </Button>
+          <Button onClick={onCancel}>取消</Button>
+          <Button onClick={handleSubmit} type="primary">保存</Button>
         </Space>
-        }
+      }
     >
       {getModalContent()}
     </Drawer>

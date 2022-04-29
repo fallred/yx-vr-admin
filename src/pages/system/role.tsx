@@ -142,12 +142,12 @@ const RoleTableList= () => {
       return false;
     }
   };
-  function YgSpan(props) {
+  function YgSpan(props1) {
     return (
      <a
-      {...props}
+      {...props1}
     >
-      {props.children}
+      {props1.children}
     </a>
     );
   }

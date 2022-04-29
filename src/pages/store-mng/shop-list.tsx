@@ -128,7 +128,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   };
   /**
    * 删除节点
-   *
    * @param selectedRows
    */
   const handleRemove = async (selectedRows: IShopStore[]) => {
@@ -148,12 +147,12 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
       return false;
     }
   };
-  function YgSpan(props) {
+  function YgSpan(props1) {
     return (
      <a
-      {...props}
+      {...props1}
     >
-      {props.children}
+      {props1.children}
     </a>
     );
   }
@@ -334,7 +333,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
 
   const AuthButton = WrapAuth(Button, permissionList);
   function onFilterChange() {
-
   }
   return (
     <>
