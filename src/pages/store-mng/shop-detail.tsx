@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
+import {Rate} from 'antd';
+import { PageContainer } from "@ant-design/pro-layout";
 import { QueryFilter, ProFormSelect, ProFormDatePicker } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import ProCard from '@ant-design/pro-card';
-import {useGetShopStoreList} from "@/api";
+import {useGetShopStoreList, useQueryShopStoreDetail} from "@/api";
+import {ShopStoreStatusMap} from '@/enums/common';
 
 const ShopDetailPage: React.FC<{}> = () => {
   const {
@@ -11,8 +14,24 @@ const ShopDetailPage: React.FC<{}> = () => {
     error: optionsError,
     isLoading: optionsLoading
   } = useGetShopStoreList();
+  const [appId, setAppId] = useState(true);
+  const [shopStoreDetail, setShopStoreDetail] = useState({});
+  function handleAppIdChange(value) {
+    setAppId(value);
+    const { data: storeDetail } = useQueryShopStoreDetail();
+    setShopStoreDetail(storeDetail);
+  }
+  const addressFormat = () => {
+    const addrInfo = [
+        shopStoreDetail.province ?? '--',
+        shopStoreDetail.city ?? '--',
+        shopStoreDetail.district ?? '',
+        shopStoreDetail.address ?? ''
+    ];
+    return addrInfo.join('-');
+};
   return (
-      <div className='shop-detail'>
+    <PageContainer>
         <ProCard style={{marginBottom: 20}}>
           <QueryFilter  defaultCollapsed split>
             <ProFormSelect
@@ -26,62 +45,75 @@ const ShopDetailPage: React.FC<{}> = () => {
                 } = useGetShopStoreList();
                 return shopStoreListResp?.data
               }}
+              onChange={handleAppIdChange}
             />
-            
           </QueryFilter>
         </ProCard>
-        <ProCard style={{  }}>
-          <ProDescriptions column={2} title="高级定义列表" tooltip="包含了从服务器请求，columns等功能">
+        <ProCard style={{}}>
+          <ProDescriptions column={2} title="门店详情" tooltip="门店详细信息">
             <ProDescriptions.Item
-              label="日期"
+              label="门店名称"
               fieldProps={{
-                format: 'YYYY.MM.DD',
+                // format: 'YYYY.MM.DD',
               }}
-              valueType="date"
+              valueType="text"
             >
-              {moment().valueOf()}
+              {shopStoreDetail.nm}
             </ProDescriptions.Item>
             <ProDescriptions.Item
-              label="日期区间"
-              fieldProps={{
-                format: 'YYYY.MM.DD HH:mm:ss',
-              }}
-              valueType="dateTimeRange"
+              label="门店编码"
+              valueType="text"
             >
-              {[moment().add(-1, 'd').valueOf(), moment().valueOf()]}
+              {shopStoreDetail.code}
             </ProDescriptions.Item>
             <ProDescriptions.Item
-              label="时间"
-              fieldProps={{
-                format: 'YYYY.MM.DD',
-              }}
-              valueType="time"
+              label="地址"
+              valueType="text"
             >
-              {moment().valueOf()}
+              {addressFormat()}
             </ProDescriptions.Item>
-
             <ProDescriptions.Item
-              label="时间日期"
-              fieldProps={{
-                format: 'YYYY.MM.DD HH:mm:SS',
-              }}
-              valueType="dateTime"
+              label="所在市"
+              valueType="text"
             >
-              {moment().valueOf()}
+              {shopStoreDetail.province}
             </ProDescriptions.Item>
-
             <ProDescriptions.Item
-              label="更新时间"
-              fieldProps={{
-                format: 'YYYY.MM.DD',
-              }}
-              valueType="fromNow"
+              label="加盟商"
+              valueType="text"
             >
-              {moment().add(-1, 'month').valueOf()}
+              {shopStoreDetail.franchisee}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label="店长"
+              valueType="text"
+            >
+              {shopStoreDetail.manager}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label="合伙人"
+              valueType="text"
+            >
+              {shopStoreDetail.partner}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item label="状态">
+              {ShopStoreStatusMap.get(shopStoreDetail.status)}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item label="评级">
+              <Rate allowHalf disabled defaultValue={shopStoreDetail.grade} />
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+                label="签约时间"
+                // fieldProps={{
+                //   format: 'YYYY.MM.DD HH:mm:SS',
+                // }}
+                valueType="dateTime"
+            >
+                {shopStoreDetail.tm}
             </ProDescriptions.Item>
           </ProDescriptions>
         </ProCard>
-      </div>
+    </PageContainer>
   );
 };
 

@@ -36,3 +36,7 @@ export interface IOption {
     label: IValue;
     value: IValue;
 }
+export interface IPCRParams {
+    provincecode?: string;
+    citycode?: string;
+};

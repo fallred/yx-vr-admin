@@ -1,12 +1,13 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
-import { Button, message, Modal, PaginationProps, Space } from "antd";
-import { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
+import { Form, Button, message, Modal, PaginationProps, Space } from "antd";
+import ProForm, { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
 import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
+import type { ProFormInstance } from '@ant-design/pro-form';
 import ProCard from '@ant-design/pro-card';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
@@ -21,6 +22,7 @@ import {
 import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store.interface";
 import ProvinceCityArea from '@/components/province-city-area';
+import { filter } from "cypress/types/lodash";
 // import OperationDrawer from "./modules/user/OperationDrawer";
 
 interface IShopListProps {
@@ -32,6 +34,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const addBtn = useRef(null);
+  const formRef = useRef<ProFormInstance<IShopStore>>();
+  const actionRef = useRef<ActionType>();
+  const pcdRef = useRef<React.Component>(null);
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [shopStoreList, setShopStoreList] = useState<IShopStore[]>();
@@ -44,7 +49,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
     pageSize: 10,
     total: 0,
   });
-  const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<IShopStore[]>([]);
 
   const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreListWithPage(pagination, filters);
@@ -93,7 +97,21 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
     setAddBtnblur();
     setVisible(false);
   };
-
+  const handleSearch = () => {
+    const payload = pcdRef?.current?.getValue();
+    setFilters({...filters, ...payload});
+    // refetch();
+  };
+  const handleReset = () => {
+    setFilters({province: '', city: '', district: '', keyword: ''});
+    // refetch();
+  };
+  const handleFilterChange = (values) => {
+    setFilters({
+      ...values,
+    });
+    // refetch();
+  };
   const addShopStore = async (data: IShopStore) => {
     await mutateAsync(data);
   };
@@ -127,10 +145,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
       return false;
     }
   };
-  /**
-   * 删除节点
-   * @param selectedRows
-   */
+
   const handleRemove = async (selectedRows: IShopStore[]) => {
     const hide = message.loading("正在删除");
     if (!selectedRows) return true;
@@ -332,8 +347,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
       },
     } : {},
   ];
-  function onFilterChange() {
-  }
   return (
     <>
       {/* {
@@ -358,10 +371,14 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
         </QueryFilter>
       } */}
       <ProCard style={{marginBottom: 20}}>
+      <ProForm<IShopStore> formRef={formRef} onFinish={handleFilterChange}>
         <div className="store-list-search">
           <ProFormText name="keyword" label="关键词" />
-          <ProvinceCityArea />
+          <ProvinceCityArea cdRef={pcdRef} />
+          {/* <Button type="primary" onClick={handleSearch}>查询</Button>
+          <Button onClick={handleReset}>重置</Button> */}
         </div>
+      </ProForm>
       </ProCard>
       <ProTable<IShopStore>
         rowKey="appId"

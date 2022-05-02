@@ -2,12 +2,12 @@ import { IMenuTree } from "@/models/menu.interface";
 import { IUser, IUserList, IUserPaginationResp } from "@/models/user.interface";
 import { ILog, ILogList, ILogPaginationResp } from "@/models/log.interface";
 import { INotice, INoticeList, INoticePaginationResp } from "@/models/notice-mng";
-import { IShopStore, IShopStorePaginationResp } from "@/models/shop-store.interface";
+import { IShopStore, IShopStoreList, IShopStorePaginationResp } from "@/models/shop-store.interface";
 import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
-import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate } from "./request";
+import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet } from "./request";
 
 const projectResource = '/projects';
 
@@ -166,16 +166,10 @@ export const useGetProvinceList = () => {
     );
 };
 export const useGetCityList = () => {
-    return useGetOne<ICity[]>(
-        "cityList",
-        "/app/area/city"
-    );
+    return useQueryGet<IPCRParams, ICity[]>('/app/area/city');
 };
 export const useGetAreaList = () => {
-    return useGetOne<IArea[]>(
-        "areaList",
-        "/app/area/area"
-    );
+    return useQueryGet<IPCRParams, IArea[]>('/app/area/area');
 };
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(

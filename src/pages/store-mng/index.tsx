@@ -1,10 +1,12 @@
 import React from 'react';
+import { PageContainer } from "@ant-design/pro-layout";
+import ShopList from "./shop-list";
 
 const StoreMngPage: React.FC<{}> = () => {
   return (
-    <div className='user'>
-        门店管理
-    </div>
+    <PageContainer>
+      <ShopList /> 
+    </PageContainer>
   );
 };
 

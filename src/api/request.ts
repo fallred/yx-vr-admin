@@ -184,24 +184,38 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
 
 }
 
-const useGetOne = <T>(key: string, url: string, params?: any, config?: any) => {
+const useGetOne = <T>(key: string, url: string, params?: any) => {
     const axios = useAxios();
 
     const service = async () => {
         const data: T = await axios.get(
             `${url}`,
-            params,
-            config
+            {
+                params
+            }
         );
 
         return data;
 
     }
     return useQuery(key, () => service());
-
 }
 
-// body
+// get query
+const useQueryGet = <T, U>(url: string) => {
+    const axios = useAxios();
+    return async (params: T) => {
+        const data: U = await axios.get(
+            `${url}`,
+            {
+                params
+            }
+        );
+        return data;
+    };
+}
+
+// post body
 const useCreate = <T, U>(url: string) => {
     const axios = useAxios();
     const queryClient = useQueryClient()
@@ -214,7 +228,7 @@ const useCreate = <T, U>(url: string) => {
     });
 }
 
-// query
+// post query
 const useCreateByQuery = <T, U>(url: string) => {
     const axios = useAxios();
     const queryClient = useQueryClient()
@@ -288,7 +302,8 @@ export {
     useCreate,
     useDelete,
     useBatch,
-    useCreateByQuery
+    useCreateByQuery,
+    useQueryGet
 };
 
 export default axios;

@@ -18,7 +18,7 @@ const NoticeMng = lazy(() => import('@/pages/system/notice'));
 
 const StoreMng = lazy(() => import('@/pages/store-mng/index'));
 const Associate = lazy(() => import('@/pages/store-mng/associate'));
-const ShopList = lazy(() => import('@/pages/store-mng/shop-list'));
+// const ShopList = lazy(() => import('@/pages/store-mng/shop-list'));
 const ShopDetail = lazy(() => import('@/pages/store-mng/shop-detail'));
 
 const BusinessMng = lazy(() => import('@/pages/business/index'));
@@ -67,7 +67,7 @@ const routeList: RouteObject[] = [
       },
       {
         path: "/storeMng/shopList",
-        element: <WrapperRouteComponent><ShopList /></WrapperRouteComponent>,
+        element: <WrapperRouteComponent><StoreMng /></WrapperRouteComponent>,
       },
       {
         path: "/storeMng/shopDetail",
