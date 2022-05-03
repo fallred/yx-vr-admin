@@ -69,7 +69,6 @@ const RoleTableList= () => {
 
   const setAddBtnblur = () => {
     if (addBtn.current) {
-      // eslint-disable-next-line react/no-find-dom-node
       const addBtnDom = findDOMNode(addBtn.current) as HTMLButtonElement;
       setTimeout(() => addBtnDom.blur(), 0);
     }
@@ -286,7 +285,7 @@ const RoleTableList= () => {
         />
         : null
       }
-      </PageContainer>
+    </PageContainer>
   );
 };
 

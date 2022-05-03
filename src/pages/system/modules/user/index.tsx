@@ -30,11 +30,8 @@ interface UserTableListProps {
 const UserTableList: FC<OperationDrawerProps> = (props) => {
     const { isAssociate } = props;
     const permissionList = useRecoilValue(permissionListState);
+    
     const { formatMessage } = useLocale();
-    const addBtn = useRef(null);
-    const [done, setDone] = useState<boolean>(false);
-    const [visible, setVisible] = useState<boolean>(false);
-    const [shopViewVisible, setShopViewVisible] = useState<boolean>(false);
     const [userList, setUserList] = useState<IUser[]>();
     const [filters, setFilters] = useState<IUser[]>();
     const [current, setCurrent] = useState<Partial<IUser> | undefined>(
@@ -45,10 +42,15 @@ const UserTableList: FC<OperationDrawerProps> = (props) => {
         pageSize: 10,
         total: 0,
     });
-    const actionRef = useRef<ActionType>();
+    const { data, error, isLoading, refetch } = useGetUserList(pagination, filters);
+
     const [selectedRowsState, setSelectedRows] = useState<IUser[]>([]);
 
-    const { data, error, isLoading, refetch } = useGetUserList(pagination, filters);
+    const [done, setDone] = useState<boolean>(false);
+    const [visible, setVisible] = useState<boolean>(false);
+    const [shopViewVisible, setShopViewVisible] = useState<boolean>(false);
+    const actionRef = useRef<ActionType>();
+    const addBtn = useRef(null);
 
     const { mutateAsync } = useAddUser();
     const { mutateAsync: update } = useUpdateUser();

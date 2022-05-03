@@ -11,7 +11,7 @@ import ProCard from '@ant-design/pro-card';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';
-import {ShopStoreStatusMap, ShopStoreStatusOptions} from '@/enums/common';
+import {ShopStoreStatusMap, ShopStoreStatusOptions, PageFuncMap} from '@/enums/common';
 import {
   useAddShopStore,
   useBatchDeleteShopStore,
