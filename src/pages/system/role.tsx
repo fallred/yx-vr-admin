@@ -17,25 +17,24 @@ import OperationDrawer from "./modules/role/OperationDrawer";
 const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
-  const addBtn = useRef(null);
-  const [done, setDone] = useState<boolean>(false);
-  const [visible, setVisible] = useState<boolean>(false);
+
   const [roles, setRole] = useState<API.IRole[]>();
-  const [filters, setFilters] = useState<API.IRole[]>();
+  const [filters, setFilters] = useState<API.IRole>();
   const [current, setCurrent] = useState<Partial<API.IRole> | undefined>(
     undefined
   );
-
-  const [showDetail, setShowDetail] = useState<boolean>(false);
-
   const [pagination, setPagination] = useState<Partial<PaginationProps>>({
     current: 1,
     pageSize: 10,
     total: 0,
   });
-  const actionRef = useRef<ActionType>();
   const [selectedRowsState, setSelectedRows] = useState<API.IRole[]>([]);
+  const [done, setDone] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
+  const addBtn = useRef(null);
+  const actionRef = useRef<ActionType>();
+  
   const { data: rolePageResp, error, isLoading, refetch } = useGetRoleList(pagination, filters);
 
   const { mutateAsync } = useAddRole();
@@ -120,11 +119,6 @@ const RoleTableList= () => {
       return false;
     }
   };
-  /**
-   * 删除节点
-   *
-   * @param selectedRows
-   */
   const handleRemove = async (selectedRows: API.IRole[]) => {
     const hide = message.loading("正在删除");
     if (!selectedRows) return true;
@@ -152,6 +146,7 @@ const RoleTableList= () => {
     );
   }
   const AuthLink = WrapAuth(YgSpan, permissionList);
+  const AuthButton = WrapAuth(Button, permissionList);
   const columns: ProColumns<API.IRole>[] = [
     {
       title: '角色名',
@@ -204,8 +199,6 @@ const RoleTableList= () => {
       },
     },
   ];
-
-  const AuthButton = WrapAuth(Button, permissionList);
 
   return (
     <PageContainer>

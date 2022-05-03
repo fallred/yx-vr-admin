@@ -4,8 +4,7 @@ import { useRecoilValue } from "recoil";
 import { Form, Button, message, Modal, PaginationProps, Space, Input } from "antd";
 import ProForm, { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
 import ProTable, {TableDropdown} from "@ant-design/pro-table";
-import { PlusOutlined } from "@ant-design/icons";
-import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
+import { FooterToolbar } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import type { ProFormInstance } from '@ant-design/pro-form';
 import ProCard from '@ant-design/pro-card';
@@ -265,7 +264,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
     {
       title: '签约时间',
       dataIndex: 'tm',
-      valueType: 'time',
+      valueType: 'dateTime',
       width: 120,
     },
     showOperate ?
