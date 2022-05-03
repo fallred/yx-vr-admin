@@ -37,6 +37,8 @@ a {
 
 .store-list-search {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding-left: 30px;
   margin-top: 30px;
 }
@@ -44,5 +46,17 @@ a {
 .storeDrawer {
   .descriptGroup {
     border: 1px solid #dddddd;
+  }
+}
+.form-item {
+  display: flex;
+  align-items: center;
+  // margin-right: 10px;
+  margin-bottom: 10px;
+  &__label {
+    flex: none;
+    width: 50px;
+    text-align: right;
+    // margin-right: 5px;
   }
 }

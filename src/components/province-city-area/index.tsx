@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "react";
-import { Cascader } from 'antd';
+import { Select } from 'antd';
 import ProForm, {ProFormSelect} from "@ant-design/pro-form";
+import FormItem from "../form-item";
 import {IOption} from '@/models/common';
 import {useGetProvinceList, useGetCityList, useGetAreaList} from '@/api/index';
 
@@ -11,16 +12,13 @@ type IFromData = {
 };
 interface IPCRProps {
 }
+const { Option } = Select;
 const ProvinceCityArea : FC<IPCRProps> = (props) => {
     const { cdRef } = props;
     const {data: provinceList} = useGetProvinceList();
     const getCityPromise = useGetCityList();
     const getAreaPromise = useGetAreaList();
     const [formData, setFormData] = React.useState<IFromData>({});
-    // const [province, setProvince] = React.useState<IFromData>();
-    // const [city, setCity] = React.useState<IFromData>();
-    // const [district, setDistrict] = React.useState<IFromData>();
-
     const [provinceOptions, setProvinceOptions] = React.useState<IOption[]>([]);
     const [cityOptions, setCityOptions] = React.useState<IOption[]>([]);
     const [areaOptions, setAreaOptions] = React.useState<IOption[]>([]);
@@ -74,13 +72,51 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
 
     return (
         <React.Fragment>
-            <ProFormSelect
+            <FormItem label="地址">
+                <Select
+                    style={{ width: 160 }}
+                    showSearch
+                    value={formData.province}
+                    placeholder="选择省"
+                    showArrow={false}
+                    filterOption={false}
+                    onChange={handleProvinceChange}
+                    notFoundContent={null}
+                >
+                    {provinceOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
+                </Select>
+                <Select
+                    style={{ width: 160 }}
+                    showSearch
+                    value={formData.city}
+                    placeholder="选择市"
+                    showArrow={false}
+                    filterOption={false}
+                    onChange={handleCityChange}
+                    notFoundContent={null}
+                >
+                    {cityOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
+                </Select>
+                <Select
+                    style={{ width: 160 }}
+                    showSearch
+                    value={formData.district}
+                    placeholder="选择区"
+                    showArrow={false}
+                    filterOption={false}
+                    onChange={handleDistrictChange}
+                    notFoundContent={null}
+                >
+                    {areaOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
+                </Select>
+            </FormItem>
+            {/* <ProFormSelect
                 value={formData.province}
                 key="province"
                 name="province"
                 label="省"
                 options={provinceOptions}
-                placeholder="选择省"
+                
                 fieldProps={{
                     fieldNames: {
                       label: 'name',
@@ -88,8 +124,6 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
                     },
                 }}
                 onChange={handleProvinceChange}
-                // width="md"
-                // colSize={4}
             />
             <ProFormSelect
                 value={formData.city}
@@ -105,8 +139,6 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
                     },
                 }}
                 onChange={handleCityChange}
-                // width="md"
-                // colSize={4}
             />
             <ProFormSelect
                 value={formData.district}
@@ -122,9 +154,7 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
                 }}
                 placeholder="选择区"
                 onChange={handleDistrictChange}
-                // width="md"
-                // colSize={4}
-            />
+            /> */}
         </React.Fragment>
     );
 };

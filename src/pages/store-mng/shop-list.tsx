@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
-import { Form, Button, message, Modal, PaginationProps, Space } from "antd";
+import { Form, Button, message, Modal, PaginationProps, Space, Input } from "antd";
 import ProForm, { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
 import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { PlusOutlined } from "@ant-design/icons";
@@ -22,6 +22,7 @@ import {
 import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store.interface";
 import ProvinceCityArea from '@/components/province-city-area';
+import FormItem from "@/components/form-item";
 import { filter } from "cypress/types/lodash";
 // import OperationDrawer from "./modules/user/OperationDrawer";
 
@@ -40,7 +41,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [shopStoreList, setShopStoreList] = useState<IShopStore[]>();
-  const [filters, setFilters] = useState<IShopStore[]>();
+  const [filters, setFilters] = useState<IShopStore[]>({});
   const [current, setCurrent] = useState<Partial<IShopStore> | undefined>(
     undefined
   );
@@ -50,6 +51,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
     total: 0,
   });
   const [selectedRowsState, setSelectedRows] = useState<IShopStore[]>([]);
+  const [keyword, setKeyword] = useState<string>('');
 
   const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreListWithPage(pagination, filters);
 
@@ -99,18 +101,17 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   };
   const handleSearch = () => {
     const payload = pcdRef?.current?.getValue();
-    setFilters({...filters, ...payload});
+    const v = keyword.target.value;
+    setFilters({keyword: v, ...payload});
     // refetch();
   };
   const handleReset = () => {
     setFilters({province: '', city: '', district: '', keyword: ''});
     // refetch();
   };
-  const handleFilterChange = (values) => {
-    setFilters({
-      ...values,
-    });
+  const handleKeywordChange = (value) => {
     // refetch();
+    setKeyword(value);
   };
   const addShopStore = async (data: IShopStore) => {
     await mutateAsync(data);
@@ -371,14 +372,17 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
         </QueryFilter>
       } */}
       <ProCard style={{marginBottom: 20}}>
-      <ProForm<IShopStore> formRef={formRef} onFinish={handleFilterChange}>
+      {/* <ProForm<IShopStore> formRef={formRef} onFinish={handleFilterChange}> */}
         <div className="store-list-search">
-          <ProFormText name="keyword" label="关键词" />
+          <FormItem label="关键词">
+            <Input placeholder="关键词" style={{ width: 160 }} onChange={handleKeywordChange} />
+          </FormItem>
+          {/* <ProFormText name="keyword" label="关键词" /> */}
           <ProvinceCityArea cdRef={pcdRef} />
-          {/* <Button type="primary" onClick={handleSearch}>查询</Button>
-          <Button onClick={handleReset}>重置</Button> */}
+          <Button type="primary" onClick={handleSearch}>查询</Button>
+          <Button onClick={handleReset}>重置</Button>
         </div>
-      </ProForm>
+      {/* </ProForm> */}
       </ProCard>
       <ProTable<IShopStore>
         rowKey="appId"
