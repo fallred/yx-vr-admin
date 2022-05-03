@@ -142,6 +142,44 @@ const mockUserMenuTree = [
         url: '/system/noticeMng',
         menuName: '公告管理',
         icon: 'smile',
+        "permission": [
+          {
+            "id": 1,
+            "mid": 2,
+            "code": "related_person:list",
+            "name": null,
+            "desc": null,
+            "url": "/api/dataInput/list",
+            "menuName": "查询"
+          },
+          {
+            "id": 2,
+            "mid": 2,
+            "code": "related_person:add",
+            "name": null,
+            "desc": null,
+            "url": "/api/dataInput/add",
+            "menuName": "新增"
+          },
+          {
+            "id": 3,
+            "mid": 2,
+            "code": "related_person:edit",
+            "name": null,
+            "desc": null,
+            "url": "/api/dataInput/edit",
+            "menuName": "编辑"
+          },
+          {
+            "id": 4,
+            "mid": 2,
+            "code": "related_person:delete",
+            "name": null,
+            "desc": null,
+            "url": "/api/dataInput/delete",
+            "menuName": "删除"
+          }
+        ]
       },
     ],
   },

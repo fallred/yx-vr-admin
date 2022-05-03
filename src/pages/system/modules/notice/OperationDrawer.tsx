@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
-import AuthTree from '../auth-tree/index';
 import ProForm, {
   ModalForm,
   ProFormText,
@@ -27,11 +26,7 @@ const formLayout = {
 const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
-  const { visible, current = {}, onCancel, onSubmit } = props;
-  const {selectedMenuTree} = current;
-  const [menuCheckedKeys, setMenuCheckedKeys] = useState<React.Key[]>([]);
-  const [funcCheckedKeys, setFuncCheckedKeys] = useState<React.Key[]>([]);
-  const authTreeRef = useRef<React.Component>(null);
+  const { visible, current, onCancel, onSubmit } = props;
   useEffect(() => {
     if (formRef.current) {
       if (!visible) {
@@ -49,18 +44,12 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     }
   }, [current]);
 
-  useEffect(() => {
-    const lCheckedKeys = [];
-  }, [selectedMenuTree]);
 
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
-    const selMenuTree = authTreeRef?.current?.getValue();
-    const powerSelected = selMenuTree ? JSON.stringify(selMenuTree) : '[]';
     form.setFieldsValue({
       ...formData,
-      powerSelected
     });
     form.submit();
   };
@@ -75,45 +64,34 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     return (
       <Form {...formLayout} form={form} ref={formRef} onFinish={handleFinish}>
         <ProFormText
-          name="name"
-          label="角色名称"
+          name="title"
+          label="公告标题"
           rules={[
             {
               required: true,
-              message: '请输入角色名称',
-            },
-          ]}
-        />
-        <ProFormText
-          name="code"
-          label="角色编码"
-          rules={[
-            {
-              required: true,
-              message: '请输入角色编码',
+              message: '请输入公告标题',
             },
           ]}
         />
         <ProFormTextArea
-          name="comment"
-          label="角色描述"
+          name="content"
+          label="公告内容"
           rules={[
             {
               required: true,
-              message: '请输入角色描述',
+              message: '请输入公告内容',
             },
           ]}
         />
         <ProFormText name="powerSelected" label="权限菜单">
-            <AuthTree cRef={authTreeRef} leftCheckedKeys={menuCheckedKeys} rightCheckedKeys={funcCheckedKeys} />
         </ProFormText>
-        </Form>
+      </Form>
     );
   };
 
   return (
     <Drawer
-        title={`角色${current ? "编辑" : "添加"}`}
+        title={`公告${current ? "编辑" : "添加"}`}
         width={800}
         onClose={onCancel}
         visible={visible}
