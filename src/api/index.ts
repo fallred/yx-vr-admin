@@ -22,14 +22,18 @@ export const useUpdatePass = () => {
 export const useGetSystemMenuTree = () => {
     return useGetOne<IMenuTree>(
         "systemMenuTree",
-        "/manage/menu/list"
+        "/manage/menu/list",
+        null,
+        {completeRes: true}
       );
 };
 
 export const useGetUserMenuTree = () => {
     return useGetOne<IMenuTree>(
         "userMenuTree",
-        "/manage/user/menu"
+        "/manage/user/menu",
+        null,
+        {completeRes: true}
       );
 };
 
@@ -46,6 +50,8 @@ export const useGetRoleListAll = () => {
     return useGetOne<API.IRoleList>(
         "RoleListAll",
         "/manage/role/list",
+        null,
+        {completeRes: true}
     );
 };
 export const useAddRole = () => {
@@ -72,7 +78,9 @@ export const useGetUserList = (pagination: any, filters: any) => {
 export const useQueryUserDetail = () => {
     return useGetOne<IUser>(
         "userDetail",
-        "/manage/user/query/one"
+        "/manage/user/query/one",
+        null,
+        {completeRes: true}
     );
 }
 export const useAddUser = () => {
@@ -102,13 +110,13 @@ export const useGetShopStoreList = () => {
     return useGetOne<IShopStoreList>(
         "StoreListAll",
         "/app/store/list",
+        null,
+        {completeRes: false}
     );
+    // return useQueryGet<{keyword: string}, IShopStoreList>('/app/store/list');
 }
 export const useQueryShopStoreDetail = () => {
-    return useGetOne<IShopStore>(
-        "storeDetail",
-        "/app/store/detial"
-    );
+    return useQueryGet<{id: string}, IShopStore>('/app/store/detial');
 }
 export const useAddShopStore = () => {
     return useCreate<IShopStore, IShopStore>('/manage/store/create');
@@ -133,7 +141,9 @@ export const useGetLogList = (pagination: any, filters: any) => {
 export const useQueryLogDetail = () => {
     return useGetOne<ILog>(
         "logDetail",
-        "/app/log/detial"
+        "/app/log/detial",
+        null,
+        {completeRes: true}
     );
 }
 
@@ -162,7 +172,9 @@ export const useBatchDeleteNotice = () => {
 export const useGetProvinceList = () => {
     return useGetOne<IProvince[]>(
         "provinceList",
-        "/app/area/province"
+        "/app/area/province",
+        null,
+        {completeRes: true}
     );
 };
 export const useGetCityList = () => {

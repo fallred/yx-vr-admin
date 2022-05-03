@@ -6,10 +6,10 @@ interface IFormItemProps {
 
 export default function FormItem(props: IFormItemProps) {
     return (
-        <div class="form-item">
-            <div class="form-item__label">{props.label}</div>
-            <span class="form-item__dot">：</span>
-            <div class="form-item__content">
+        <div className="form-item">
+            <div className="form-item__label">{props.label}</div>
+            <span className="form-item__dot">：</span>
+            <div className="form-item__content">
                 {props.children}
             </div>
         </div>

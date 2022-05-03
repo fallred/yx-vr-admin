@@ -7,6 +7,9 @@ import { useQuery, useMutation, useQueryClient } from 'react-query'
 import qs from 'qs';
 import { result, cloneDeep } from 'cypress/types/lodash';
 
+type IRequestConfig = {
+    completeRes: boolean;
+};
 const history = createBrowserHistory();
 
 console.log('baseurl:', import.meta.env.VITE_BASE_URL);
@@ -184,7 +187,7 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
 
 }
 
-const useGetOne = <T>(key: string, url: string, params?: any) => {
+const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestConfig) => {
     const axios = useAxios();
 
     const service = async () => {
@@ -194,9 +197,12 @@ const useGetOne = <T>(key: string, url: string, params?: any) => {
                 params
             }
         );
-
-        return data;
-
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     }
     return useQuery(key, () => service());
 }

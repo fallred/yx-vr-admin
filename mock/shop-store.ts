@@ -10,8 +10,8 @@ const mockQueryStoreResp = {
     {
       "appId": "vr2037_00000",
       "nm": "xxxx店",
-      "province": null,
-      "city": null,
+      "province": '湖北省',
+      "city": '武汉市',
       "district": null,
       "address": null,
       "franchisee": null,
@@ -49,7 +49,7 @@ const mockQueryStoreListAllResp = {
   "data": [
     {
       "appId": "vr2037_00000",
-      "nm": "xxxx店",
+      "nm": "xxxx店1",
       "province": null,
       "city": null,
       "district": null,
@@ -64,7 +64,7 @@ const mockQueryStoreListAllResp = {
     },
     {
       "appId": "vr2037_00001",
-      "nm": "xxxx店",
+      "nm": "xxxx店2",
       "province": null,
       "city": null,
       "district": null,
@@ -83,10 +83,10 @@ const mockQueryStoreListAllResp = {
 const mockQueryStoreInfo = {
   "appId": "vr2037_00000",
   "nm": "xxxx店",
-  "province": null,
-  "city": null,
-  "district": null,
-  "address": null,
+  "province": '湖北省',
+      "city": '武汉市',
+  "district": '东湖高新区',
+  "address": '天祥尚府',
   "franchisee": null,
   "manager": null,
   "status": null,

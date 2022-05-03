@@ -116,7 +116,6 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
                 name="province"
                 label="省"
                 options={provinceOptions}
-                
                 fieldProps={{
                     fieldNames: {
                       label: 'name',

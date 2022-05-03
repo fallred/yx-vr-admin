@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {Rate} from 'antd';
 import { PageContainer } from "@ant-design/pro-layout";
@@ -10,15 +10,15 @@ import {ShopStoreStatusMap} from '@/enums/common';
 
 const ShopDetailPage: React.FC<{}> = () => {
   const {
-    data: shopStoreListResp,
+    data: shopStoreList,
     error: optionsError,
     isLoading: optionsLoading
   } = useGetShopStoreList();
-  const [appId, setAppId] = useState(true);
+  const fetchStoreDetail = useQueryShopStoreDetail();
+  const [appId, setAppId] = useState<string>('');
   const [shopStoreDetail, setShopStoreDetail] = useState({});
-  function handleAppIdChange(value) {
-    setAppId(value);
-    const { data: storeDetail } = useQueryShopStoreDetail();
+  async function handleAppIdChange(value) {
+    const storeDetail = await fetchStoreDetail({id: value});
     setShopStoreDetail(storeDetail);
   }
   const addressFormat = () => {
@@ -29,27 +29,35 @@ const ShopDetailPage: React.FC<{}> = () => {
         shopStoreDetail.address ?? ''
     ];
     return addrInfo.join('-');
-};
+  };
+  useEffect(() => {
+    const selectedAppId = shopStoreList?.[0]?.appId;
+    setAppId(selectedAppId);
+    handleAppIdChange(selectedAppId);
+  }, [shopStoreList]);
+
   return (
     <PageContainer>
-        <ProCard style={{marginBottom: 20}}>
-          <QueryFilter  defaultCollapsed split>
+        <ProCard key="card1" style={{marginBottom: 20}}>
+          <QueryFilter
+            submitter={false}
+            split
+          >
             <ProFormSelect
-              name="area"
               label="门店"
-              request={async () => {
-                const {
-                  data: shopStoreListResp,
-                  error: optionsError,
-                  isLoading: optionsLoading
-                } = useGetShopStoreList();
-                return shopStoreListResp?.data
-              }}
+              value={appId}
+              options={shopStoreList}
               onChange={handleAppIdChange}
+              fieldProps={{
+                fieldNames: {
+                  label: 'nm',
+                  value: 'appId'
+                },
+              }}
             />
           </QueryFilter>
         </ProCard>
-        <ProCard style={{}}>
+        <ProCard key="card2">
           <ProDescriptions column={2} title="门店详情" tooltip="门店详细信息">
             <ProDescriptions.Item
               label="门店名称"
