@@ -8,7 +8,7 @@ import ProForm, {
   ProFormTextArea,
   ProFormTreeSelect
 } from "@ant-design/pro-form";
-import UEditor from '@/components/ueditor/index';
+import BraftEditor from '@/components/braft-editor/index';
 
 interface OperationDrawerProps {
   done: boolean;
@@ -94,7 +94,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
             },
           ]}
         >
-            <UEditor content={current?.content ?? ''} />
+            <BraftEditor content={current?.content ?? ''} />
         </ProFormTextArea>
       </Form>
     );
