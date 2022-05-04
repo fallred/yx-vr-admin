@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
-import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import { Modal, Form, Input, Drawer, Space, Button, Upload } from "antd";
 import ProForm, {
   ModalForm,
   ProFormText,
   ProFormTextArea,
   ProFormTreeSelect
 } from "@ant-design/pro-form";
+import UEditor from '@/components/ueditor/index';
 
 interface OperationDrawerProps {
   done: boolean;
@@ -83,27 +84,35 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
             },
           ]}
         />
-        <ProFormText name="powerSelected" label="权限菜单">
-        </ProFormText>
+        <ProFormTextArea
+          name="content"
+          label="公告内容"
+          rules={[
+            {
+              required: true,
+              message: '请输入公告内容',
+            },
+          ]}
+        >
+            <UEditor content={current?.content ?? ''} />
+        </ProFormTextArea>
       </Form>
     );
   };
 
   return (
     <Drawer
-        title={`公告${current ? "编辑" : "添加"}`}
-        width={800}
-        onClose={onCancel}
-        visible={visible}
-        bodyStyle={{ paddingBottom: 80 }}
-        extra={
+      title={`公告${current ? "编辑" : "添加"}`}
+      width={800}
+      onClose={onCancel}
+      visible={visible}
+      bodyStyle={{ paddingBottom: 80 }}
+      extra={
         <Space>
-            <Button onClick={onCancel}>取消</Button>
-            <Button onClick={handleSubmit} type="primary">
-            保存
-            </Button>
+          <Button onClick={onCancel}>取消</Button>
+          <Button onClick={handleSubmit} type="primary">保存</Button>
         </Space>
-        }
+      }
     >
       {getModalContent()}
     </Drawer>

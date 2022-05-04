@@ -9,10 +9,17 @@ const mockQueryNoticeResp = {
     "data": [
       {
         "id": 1,
-        "title": "想和你做朋友",
+        "title": "想和你做朋友1",
         "content": "测试一下1",
         "tm": "2022-04-25 21:55:55",
-        "author": "admin56789"
+        "author": "admin567891"
+      },
+      {
+        "id": 2,
+        "title": "想和你做朋友2",
+        "content": "测试一下2",
+        "tm": "2022-04-25 21:55:55",
+        "author": "admin567892"
       }
     ]
 };
