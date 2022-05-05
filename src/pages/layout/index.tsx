@@ -19,7 +19,8 @@ import {
   SettingOutlined,
   ShopOutlined,
   ProjectOutlined,
-  RadarChartOutlined
+  RadarChartOutlined,
+  HomeOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
@@ -37,6 +38,7 @@ const IconMap: { [key: string]: React.ReactNode } = {
   system: <SettingOutlined />,
   storeMng: <ShopOutlined />,
   businessMng: <RadarChartOutlined />,
+  home: <HomeOutlined />,
 
   smile: <SmileOutlined />,
   heart: <HeartOutlined />,

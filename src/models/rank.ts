@@ -6,6 +6,7 @@ export enum RankTypeEnum {
 
 
 export interface IRank {
+    id: string;
     rankNum: number;
     cityName: string;
     shopName: string;

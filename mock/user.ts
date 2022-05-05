@@ -3,6 +3,12 @@ import { MockMethod } from 'vite-plugin-mock';
 
 const mockUserMenuTree = [
   {
+    menuId: '0-4',
+    url: '/home',
+    menuName: '首页',
+    icon: 'home',
+  },
+  {
     menuId: '0-0',
     url: '/notification',
     menuName: '公告',
@@ -231,6 +237,12 @@ const mockUserMenuTree = [
   },
 ]
 const mockSystemMenuTree = [
+  {
+    menuId: '0-4',
+    url: '/home',
+    menuName: '首页',
+    icon: 'home',
+  },
   {
     menuId: '0-0',
     url: '/notification',

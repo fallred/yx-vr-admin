@@ -59,14 +59,14 @@ export default ({ command } : { command: string}) => {
         localEnabled: command === 'serve',
         logger: true,
       }),
-      // vitePluginImp({
-      //   libList: [
-      //     {
-      //       libName: "antd",
-      //       style: (name) => `antd/es/${name}/style`,
-      //     },
-      //   ],
-      // }),
+      vitePluginImp({
+        libList: [
+          {
+            libName: "antd",
+            style: (name) => `antd/es/${name}/style`,
+          },
+        ],
+      }),
       // styleImport({
       //   libs: [
       //     {

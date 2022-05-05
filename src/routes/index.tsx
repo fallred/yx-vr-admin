@@ -10,6 +10,7 @@ const NotFound = lazy(() => import('@/pages/404'));
 const Dashboard = lazy(() => import('@/pages/dashboard'));
 const Project = lazy(() => import('@/pages/project'));
 
+const Home = lazy(() => import('@/pages/home'));
 const SystemMng = lazy(() => import('@/pages/system/index'));
 const RoleMng = lazy(() => import('@/pages/system/role'));
 const UserMng = lazy(() => import('@/pages/system/user'));
@@ -41,6 +42,10 @@ const routeList: RouteObject[] = [
         element: <WrapperRouteComponent><Project /></WrapperRouteComponent>,
       },
 
+      {
+        path: "/home",
+        element: <WrapperRouteComponent><Home /></WrapperRouteComponent>,
+      },
       {
         path: "/notification",
         element: <WrapperRouteComponent><Notification /></WrapperRouteComponent>,
