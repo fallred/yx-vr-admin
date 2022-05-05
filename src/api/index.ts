@@ -7,6 +7,7 @@ import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
+import { IRankPaginationResp } from "@/models/rank";
 import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet } from "./request";
 
 const projectResource = '/projects';
@@ -183,6 +184,17 @@ export const useGetCityList = () => {
 export const useGetAreaList = () => {
     return useQueryGet<IPCRParams, IArea[]>('/app/area/area');
 };
+
+// 经营管理-排行榜
+export const useGetRankList = (pagination: any, filters: any) => {
+    return useGetList<IRankPaginationResp>(
+        "RankList",
+        '/manage/rank/query',
+        pagination,
+        filters
+    );
+}
+
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(
 //         "CurrentUser",

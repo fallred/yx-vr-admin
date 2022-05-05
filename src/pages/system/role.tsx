@@ -17,8 +17,7 @@ import OperationDrawer from "./modules/role/OperationDrawer";
 const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
-
-  const [roles, setRole] = useState<API.IRole[]>();
+  const [roleList, setRoleList] = useState<API.IRole[]>();
   const [filters, setFilters] = useState<API.IRole>();
   const [current, setCurrent] = useState<Partial<API.IRole> | undefined>(
     undefined
@@ -42,7 +41,7 @@ const RoleTableList= () => {
   const { mutateAsync: batchDelete } = useBatchDeleteRole();
 
   useEffect(() => {
-    setRole(rolePageResp?.data);
+    setRoleList(rolePageResp?.data);
     setPagination({
       ...pagination,
       total: rolePageResp?.total,
@@ -212,7 +211,7 @@ const RoleTableList= () => {
           </AuthButton>,
         ]}
         request={undefined}
-        dataSource={roles}
+        dataSource={roleList}
         columns={columns}
         pagination={pagination}
         onChange={(pagination, filters, sorter) => {

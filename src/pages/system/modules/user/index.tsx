@@ -27,7 +27,7 @@ interface UserTableListProps {
     isAssociate: boolean;
 }
 
-const UserTableList: FC<OperationDrawerProps> = (props) => {
+const UserTableList: FC<OperationDrawerProps> = props => {
     const { isAssociate } = props;
     const permissionList = useRecoilValue(permissionListState);
     
