@@ -40,7 +40,7 @@ const OperateLogList = () => {
       dataIndex: "operation",
       valueType: "text",
       ellipsis: true,
-      width: 200,
+      width: 300,
     },
     // {
     //   key: 'method',
@@ -63,6 +63,7 @@ const OperateLogList = () => {
       title: 'ip地址',
       dataIndex: "ip",
       valueType: "text",
+      width: 150,
     },
     {
       key: 'createDate',

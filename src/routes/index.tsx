@@ -3,12 +3,11 @@ import { useRoutes, RouteObject } from "react-router-dom";
 
 import LoginPage from "@/pages/login";
 import LayoutPage from "@/pages/layout";
-import Notification from "@/pages/notification";
 import WrapperRouteComponent from "./config";
 
 const NotFound = lazy(() => import('@/pages/404'));
 const Dashboard = lazy(() => import('@/pages/dashboard'));
-const Project = lazy(() => import('@/pages/project'));
+const UpdatePass = lazy(() => import('@/pages/settings/update-pass'));
 
 const Home = lazy(() => import('@/pages/home'));
 const SystemMng = lazy(() => import('@/pages/system/index'));
@@ -25,7 +24,6 @@ const ShopDetail = lazy(() => import('@/pages/store-mng/shop-detail'));
 const BusinessMng = lazy(() => import('@/pages/business/index'));
 const ReportList = lazy(() => import('@/pages/business/report-list'));
 const RankList = lazy(() => import('@/pages/business/rank-list'));
-const UpdatePass = lazy(() => import('@/pages/settings/update-pass'));
 
 const routeList: RouteObject[] = [
 
@@ -38,17 +36,8 @@ const routeList: RouteObject[] = [
         element: <WrapperRouteComponent><Dashboard /></WrapperRouteComponent>,
       },
       {
-        path: "/project/list",
-        element: <WrapperRouteComponent><Project /></WrapperRouteComponent>,
-      },
-
-      {
         path: "/home",
         element: <WrapperRouteComponent><Home /></WrapperRouteComponent>,
-      },
-      {
-        path: "/notification",
-        element: <WrapperRouteComponent><Notification /></WrapperRouteComponent>,
       },
       {
         path: "/system/role",

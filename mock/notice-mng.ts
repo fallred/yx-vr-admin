@@ -3,7 +3,7 @@ import { MockMethod } from 'vite-plugin-mock';
 const mockQueryNoticeResp = {
     "status": 200,
     "msg": "公告查询成功！",
-    "total": 1,
+    "total": 100,
     "pages": 1,
     "success": true,
     "data|9-10": [
