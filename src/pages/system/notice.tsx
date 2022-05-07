@@ -184,14 +184,8 @@ const NoticeTableList = () => {
       key: 'option',
       valueType: "option",
       fixed: 'right',
-      width: 140,
+      width: 100,
       render: (_, record) => {
-        const opMenuList = [
-          // { key: 'copy', name: '复制' },
-        ];
-        if (PageFuncEnum.DELETE) {
-          opMenuList.push({ key: PageFuncEnum.DELETE, name: '删除' });
-        }
         const btnList = [
           <AuthLink
             key={PageFuncEnum.EDIT}
@@ -209,8 +203,8 @@ const NoticeTableList = () => {
             onClick={(e) => {
               e.preventDefault();
               Modal.confirm({
-                title: "删除门店",
-                content: "确定删除该门店吗？",
+                title: "删除公告",
+                content: "确定删除该公告吗？",
                 okText: "确认",
                 cancelText: "取消",
                 onOk: async () => {
@@ -223,25 +217,6 @@ const NoticeTableList = () => {
           >
             删除
           </AuthLink>,
-          <TableDropdown
-            key="actionGroup"
-            onSelect={(key) => {
-              if (key === PageFuncEnum.DELETE) {
-                Modal.confirm({
-                  title: "删除门店",
-                  content: "确定删除该门店吗？",
-                  okText: "确认",
-                  cancelText: "取消",
-                  onOk: async () => {
-                    await handleRemove([{ ...record }]);
-                    setSelectedRows([]);
-                    refetch();
-                  },
-                });
-              }
-            }}
-            menus={opMenuList}
-          />,
         ];
         return btnList;
       },

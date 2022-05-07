@@ -6,21 +6,14 @@ const mockQueryNoticeResp = {
     "total": 1,
     "pages": 1,
     "success": true,
-    "data": [
+    "data|9-10": [
       {
-        "id": 1,
-        "title": "想和你做朋友1",
-        "content": "测试一下1",
+        "id": "@id",
+        "title": "@ctitle",
+        "content": "@ctitle",
         "tm": "2022-04-25 21:55:55",
         "author": "admin567891"
       },
-      {
-        "id": 2,
-        "title": "想和你做朋友2",
-        "content": "测试一下2",
-        "tm": "2022-04-25 21:55:55",
-        "author": "admin567892"
-      }
     ]
 };
 

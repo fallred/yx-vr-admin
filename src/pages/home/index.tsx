@@ -4,10 +4,12 @@ import homeImg from "@/assets/home.png";
 
 function Home() {
     return (
-      <Image
-        width="100%"
-        src={homeImg}
-      />
+      <div className="home">
+        <Image
+          height="500"
+          src={homeImg}
+        />
+      </div>
     );
   }
   

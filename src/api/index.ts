@@ -157,6 +157,9 @@ export const useQueryNoticeList = (pagination: any, filters: any) => {
         filters
     );
 }
+export const useQueryNoticeAll = () => {
+    return useQueryGet<any, INoticePaginationResp>('/app/notice/query');
+}
 export const useAddNotice = () => {
     return useCreate<INotice, INotice>('/app/notice/create');
 }

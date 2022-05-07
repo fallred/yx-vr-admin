@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Tag, Space, Menu, Badge } from "antd";
+import { Tag, Space, Menu } from "antd";
 import { useRecoilState } from "recoil";
-import { QuestionCircleOutlined, NotificationOutlined } from "@ant-design/icons";
 import { userState } from "@/stores/recoilState";
+import Notice from '@/pages/notification/index';
 import Avatar from "./AvatarDropdown";
 import HeaderDropdown from "../HeaderDropdown";
 import HeaderSearch from "../HeaderSearch";
@@ -34,9 +34,7 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <Space className={className}>
-      <Badge dot>
-        <NotificationOutlined style={{ fontSize: 16 }} />
-      </Badge>
+      <Notice />
       <Avatar />
       <Link to={'/setting/updatePass'}>修改密码</Link>
     </Space>

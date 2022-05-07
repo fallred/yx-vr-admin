@@ -32,6 +32,19 @@ a {
 .ant-pro-basicLayout-content .ant-pro-page-container {
   margin: 0;
 }
+.layout-page {
+  &-header {
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &-logo {
+    width: 80px;
+    height: 80px !important
+  }
+}
+
 .yx-app-loading {
   width: 100%;
   height: 500px;
@@ -100,5 +113,32 @@ a {
   .ant-ribbon.ant-ribbon-placement-start {
     left: -4px;
     top: 0;
+  }
+}
+.notification {
+  cursor: pointer;
+}
+.ant-pro-global-footer {
+  margin: 0;
+  padding: 24px 16px;
+}
+
+.ant-pro-basicLayout-content {
+  // height: calc(100% - 148px);
+}
+.ant-layout {
+  // height: 100%;
+}
+.home {
+  // height: calc(100% - 148px);
+  height: 100%;
+  .ant-image {
+    height: 100%;
+    .ant-image-img {
+      max-width: 100%;
+      height: 100%;
+      // height: auto;
+      object-fit: scale-down;
+    }
   }
 }

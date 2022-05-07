@@ -1,14 +1,8 @@
 import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { createBrowserHistory } from "history";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu.interface";
-import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
-import { userState, userMenuTreeState } from "@/stores/recoilState";
-import recoilService from '@/stores/recoilService';
-import {queryMenuNode} from '@/lib/tree-util';
-import { useGuide } from "../guide/useGuide";
-
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import type { MenuDataItem } from "@ant-design/pro-layout";
 import ProLayout from "@ant-design/pro-layout";
 import {
@@ -24,11 +18,15 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
-import { createBrowserHistory } from "history";
+import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu.interface";
+import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
+import { userState, userMenuTreeState } from "@/stores/recoilState";
+import recoilService from '@/stores/recoilService';
+import {queryMenuNode} from '@/lib/tree-util';
 import RightContent from "./components/RightContent";
 // import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
 import LogoIcon from "@/assets/logo/logo.png";
-import styles from "./index.module.less";
+import { useGuide } from "../guide/useGuide";
 import Footer from "./components/Footer";
 
 const history = createBrowserHistory();
@@ -112,9 +110,9 @@ const LayoutPage: FC = ({ children }) => {
       // onMenuHeaderClick={() => history.push("https://reactjs.org/")}
       headerTitleRender={(logo, title, props) => (
         <a
-          className={styles.layoutPageHeader}
+          className="layout-page"
         >
-          {logo ? <img className={styles.layoutPageLogo} src={LogoIcon} /> : null}
+          {logo ? <img className="layout-page-logo" src={LogoIcon} /> : null}
           {title}
         </a>
       )}
