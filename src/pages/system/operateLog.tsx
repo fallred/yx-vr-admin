@@ -10,7 +10,7 @@ import ProCard from '@ant-design/pro-card';
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum} from '@/models/common';
 import {useGetLogList} from "@/api";
-import {ILogList, ILog} from "@/models/log.interface";
+import {ILogList, ILog} from "@/models/log";
 import FormItem from "@/components/form-item";
 
 

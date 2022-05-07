@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useImperativeHandle } from 'react';
 import { useRecoilValue } from "recoil";
 import { Tree } from 'antd';
-import {IFuncMenuTree} from '@/models/menu.interface';
+import {IFuncMenuTree} from '@/models/menu';
 import { systemMenuTreeState } from "@/stores/recoilState";
 import { genFuncTree, genSelectedAuthTree } from "@/lib/tree-util";
 import { API } from '@/models/typings';

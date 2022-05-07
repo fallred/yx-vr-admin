@@ -1,51 +1,60 @@
-# React + Recoil + React Query + React Hooks + Typescript + Axios + Vite - Starter
+# 全新技术栈管理系统
 
-This Starter utilizes React, Recoil, React Query, React Hooks, Typescript, Axios And Vite.
+全新技术栈的后台管理系统
 
-## [中文文档](./README_ZH.md)
+- React
+- Recoil
+- React Query
+- React Hooks
+- Vite
+- Typescript
+
+## [Document](./README.md)
 
 
-## Screenshot
+## 截图
 
 ![](./screenshot1.png)
 ![](./screenshot2.png)
 
 
-## Installation
+## 安装使用
 
-Clone this repo and install all dependencies
+- 获取项目代码
 
 ```
  git clone https://github.com/ychengcloud/react-vite-admin.git
+ ```
 
+- 安装依赖
+
+```
  cd react-vite-admin
+ ```
 
+```
  yarn install
-```
+ ```
 
-## Development
-
-``` 
-yarn dev 
-```
-
-## Build
+- 运行
 
 ```
-yarn build
+ yarn dev
+ ```
+
+- 打包
+
 ```
+ yarn build
+ ```
 
-## Publish
+## 如何贡献
 
-```
-yarn dist
-```
+非常欢迎你的加入！提一个 Issue 或者提交一个 Pull Request。[查看如何操作](./contributing.md).
 
-## Contributing
+## 致谢
 
-Your contributions are always welcome! [Click Here to read the guidelines](./contributing.md).
-
-## Thanks
+本项目的产生离不开下列优秀项目给予的灵感和代码
 
 - [Antd Design](https://ant.design)
 - [Antd Design Pro](https://pro.ant.design/)
@@ -54,9 +63,4 @@ Your contributions are always welcome! [Click Here to read the guidelines](./con
 - [React antd admin](https://github.com/WinmezzZ/react-antd-admin.git)
 - [vue-vben-admin](https://github.com/anncwb/vue-vben-admin)
 
-## License
-
-[MIT](./LICENSE)
-
-
-https://braft.margox.cn/demos/basic
+如有遗漏，欢迎指正和补充。

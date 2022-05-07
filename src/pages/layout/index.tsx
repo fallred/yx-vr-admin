@@ -18,7 +18,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
-import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu.interface";
+import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
 import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
 import { userState, userMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';

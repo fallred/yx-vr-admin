@@ -19,7 +19,7 @@ import {
   useGetShopStoreListWithPage
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
-import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store.interface";
+import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store";
 import ProvinceCityArea from '@/components/province-city-area';
 import FormItem from "@/components/form-item";
 import { filter } from "cypress/types/lodash";

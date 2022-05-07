@@ -1,8 +1,8 @@
-import { IMenuTree } from "@/models/menu.interface";
-import { IUser, IUserList, IUserPaginationResp } from "@/models/user.interface";
-import { ILog, ILogList, ILogPaginationResp } from "@/models/log.interface";
+import { IMenuTree } from "@/models/menu";
+import { IUser, IUserList, IUserPaginationResp } from "@/models/user-mng";
+import { ILog, ILogList, ILogPaginationResp } from "@/models/log";
 import { INotice, INoticeList, INoticePaginationResp } from "@/models/notice-mng";
-import { IShopStore, IShopStoreList, IShopStorePaginationResp } from "@/models/shop-store.interface";
+import { IShopStore, IShopStoreList, IShopStorePaginationResp } from "@/models/shop-store";
 import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";

@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
-import { IMenuTree, IMenuItem, IFuncMenuTree, ICheckedAuthInfo } from "@/models/menu.interface";
+import { IMenuTree, IMenuItem, IFuncMenuTree, ICheckedAuthInfo } from "@/models/menu";
 import { API } from "@/models/typings";
 import Item from "antd/lib/list/Item";
 import { MenuItemGroupProps } from "antd/lib/menu";

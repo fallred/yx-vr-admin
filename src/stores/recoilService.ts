@@ -1,4 +1,4 @@
-import {IButtonItem} from '@/models/menu.interface';
+import {IButtonItem} from '@/models/menu';
 import defaultSubject from './defaultSubject';
 import {
   TOPIC_GET_USER_INFO,

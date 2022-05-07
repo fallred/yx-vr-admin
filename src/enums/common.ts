@@ -1,7 +1,7 @@
 
 import {PageFuncEnum, SexEnum} from '@/models/common';
-import {UserStatusEnum, IdentifyTypeEnum} from '@/models/user.interface';
-import {ShopStoreStatusEnum} from '@/models/shop-store.interface';
+import {UserStatusEnum, IdentifyTypeEnum} from '@/models/user-mng';
+import {ShopStoreStatusEnum} from '@/models/shop-store';
 import {RankTypeEnum} from '@/models/rank';
 
 export const PageFuncMap = new Map([

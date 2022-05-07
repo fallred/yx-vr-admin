@@ -18,7 +18,7 @@ import {
     useGetUserList
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
-import { IUser, UserStatusEnum } from "@/models/user.interface";
+import { IUser, UserStatusEnum } from "@/models/user-mng";
 import { UserStatusMap } from "@/enums/common";
 import OperationDrawer from "./OperationDrawer";
 import ShopListDrawer from "./storeListDrawer";
