@@ -1,20 +1,15 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import type { ReactText } from 'react';
-import { EditOutlined, DeleteOutlined, LikeOutlined } from '@ant-design/icons';
-import ProList from '@ant-design/pro-list';
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
-import { Form, Button, message, Modal, PaginationProps, Tag } from "antd";
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
-import type { ProFormInstance } from '@ant-design/pro-form';
+import { Button, message, Modal, PaginationProps, Tag } from "antd";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
-import { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
-import ProTable, {TableDropdown} from "@ant-design/pro-table";
-import ProCard from '@ant-design/pro-card';
-import { LocaleFormatter, useLocale } from "@/locales";
+import ProList from '@ant-design/pro-list';
+import { EditOutlined, DeleteOutlined, LikeOutlined } from '@ant-design/icons';
+import { LocaleFormatter } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum} from '@/models/common';
-import {ShopStoreStatusMap, ShopStoreStatusOptions, PageFuncMap} from '@/enums/common';
+import {PageFuncMap} from '@/enums/common';
 import {
   useAddNotice,
   useBatchDeleteNotice,
@@ -29,8 +24,6 @@ const types = ['top', 'inline', 'new'];
 
 const NoticeTableList = () => {
   const permissionList = useRecoilValue(permissionListState);
- 
-  const { formatMessage } = useLocale();
   const [noticeList, setNoticeList] = useState<INotice[]>([]);
   const [filters, setFilters] = useState<INotice>({});
   const [current, setCurrent] = useState<Partial<INotice> | undefined>(
@@ -42,8 +35,6 @@ const NoticeTableList = () => {
     total: 0,
   });
   const { data: noticeListPageResp, error, isLoading, refetch } = useQueryNoticeList(pagination, filters);
-  // const [selectedRowsState, setSelectedRows] = useState<INotice[]>([]);
-
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly ReactText[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<ReactText[]>([]);
   const [dataSource, setDataSource] = useState<any[]>([]);
@@ -148,14 +139,6 @@ const NoticeTableList = () => {
           type: types[index],
           avatar: 'https://gw.alipayobjects.com/zos/antfincdn/UCSiy1j6jx/xingzhuang.svg',
           content: (
-            // <div className="notice-column">
-            //   <div className="notice-col-author">
-            //   发布人：{item.author}
-            //   </div>
-            //   <div className="notice-col-tm">
-            //   发布时间：{item.dateTime}
-            //   </div>
-            // </div>
             <div className="notice-content">
               {item.content}
             </div>
@@ -246,162 +229,9 @@ const NoticeTableList = () => {
       return false;
     }
   };
-  
-  const columns: ProColumns<INotice>[] = [
-    {
-      key: 'title',
-      title: '公告标题',
-      dataIndex: 'title',
-      valueType: 'text',
-      width: 120,
-    },
-    {
-      key: 'content',
-      title: '公告内容',
-      dataIndex: "content",
-      ellipsis: true,
-      width: 300,
-      hideInSearch: true,
-    },
-    {
-      key: 'author',
-      title: '发布人',
-      dataIndex: 'author',
-      valueType: 'text',
-      width: 150,
-    },
-    {
-      title: '发布时间',
-      dataIndex: 'tm',
-      valueType: 'dateTime',
-      width: 120,
-    },
-    {
-      title: formatMessage({ id: "gloabal.tips.operation" }),
-      dataIndex: "option",
-      key: 'option',
-      valueType: "option",
-      fixed: 'right',
-      width: 100,
-      render: (_, record) => {
-        const btnList = [
-          <AuthLink
-            key={PageFuncEnum.EDIT}
-            operCode={PageFuncEnum.EDIT}
-            onClick={(e) => {
-              e.preventDefault();
-              showEditModal(record);
-            }}
-          >
-            编辑
-          </AuthLink>,
-          <AuthLink
-            key={PageFuncEnum.DELETE}
-            operCode={PageFuncEnum.DELETE}
-            onClick={(e) => {
-              e.preventDefault();
-              Modal.confirm({
-                title: "删除公告",
-                content: "确定删除该公告吗？",
-                okText: "确认",
-                cancelText: "取消",
-                onOk: async () => {
-                  await handleRemove([{ ...record }]);
-                  setSelectedRows([]);
-                  refetch();
-                },
-              });
-            }}
-          >
-            删除
-          </AuthLink>,
-        ];
-        return btnList;
-      },
-    },
-  ];
-  
+
   return (
     <PageContainer className="notice-mng">
-      {/* <ProTable<INotice>
-        rowKey="id"
-        headerTitle="公告管理"
-        defaultSize="small"
-        scroll={{ x: 1000 }}
-        bordered={false}
-        options={{reload: false}}
-        toolBarRender={() => {
-          const toolBtns = [
-            <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
-              {PageFuncMap.get(PageFuncEnum.ADD)}
-            </AuthButton>,
-          ];
-          return toolBtns;
-        }}
-        request={undefined}
-        dataSource={noticeList}
-        columns={columns}
-        pagination={pagination}
-        hideOnSinglePage={true}
-        onChange={(pagination, filters, sorter) => {
-          setPagination(pagination);
-        }}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
-        search={{
-          defaultCollapsed: false,
-          optionRender: ({ searchText, resetText }, { form }) => [
-            <Button
-              key="search"
-              type="primary"
-              onClick={() => {
-                // form?.submit();
-                console.log("search submit");
-                setFilters(form?.getFieldsValue());
-              }}
-            >
-              {searchText}
-            </Button>,
-            <Button
-              key="reset"
-              onClick={() => {
-                form?.resetFields();
-              }}
-            >
-              {resetText}
-            </Button>,
-          ],
-        }}
-        footer={false}
-      />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              <LocaleFormatter id="app.project.chosen" defaultMessage="已选择" />{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              <LocaleFormatter id="app.project.item" defaultMessage="项" />
-            </div>
-          }
-        >
-          <AuthButton
-              type="primary"
-              key="primary"
-              onClick={async () => {
-                await handleRemove(selectedRowsState);
-                setSelectedRows([]);
-                refetch();
-              }}
-              operCode={PageFuncEnum.DELETE}
-            >
-                {PageFuncMap.get(PageFuncEnum.DELETE)}
-          </AuthButton>
-        </FooterToolbar>
-      )} */}
-      
         <ProList<INotice>
           toolBarRender={() => {
             return [
