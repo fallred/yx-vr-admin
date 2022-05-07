@@ -1,7 +1,7 @@
 export enum RankTypeEnum {
-    'SUMMARY' = 0,
-    'GOOD_COMMENT' = 1,
-    'MEMBER_CONVERT' = 2
+    'SUMMARY' = '0',
+    'GOOD_COMMENT' = '1',
+    'MEMBER_CONVERT' = '2'
 }
 
 

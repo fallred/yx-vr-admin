@@ -42,7 +42,7 @@ const LoginForm: FC = () => {
       localStorage.setItem("appId", result.appId);
       localStorage.setItem("identity_type", result.identity_type);
 
-      const from = location.state?.from || { pathname: "/notification" };
+      const from = location.state?.from || { pathname: "/home" };
       navigate(from);
     }
   };

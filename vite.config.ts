@@ -16,7 +16,7 @@ function pathResolve(dir: string) {
 
 // https://vitejs.dev/config/
 export default ({ command } : { command: string}) => {
-  console.log('command:',)
+  console.log('command:')
   return {
     resolve: {
       // alias: aliases,

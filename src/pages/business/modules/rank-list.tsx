@@ -12,69 +12,87 @@ interface RankTableListProps {
 
 const RankList: React.FC<RankTableListProps> = props => {
     const { type } = props;
-    const [filters, setFilters] = useState<IRank>();
-    const [rankList, setRankList] = useState<IRank[]>();
+    const [filters, setFilters] = useState<IRank>({});
+    const [rankList, setRankList] = useState<IRank[]>([]);
     const [pagination, setPagination] = useState<Partial<PaginationProps>>({
         current: 1,
         pageSize: 10,
         total: 0,
     });
-  const { data: rankResp, isLoading, refetch } = useGetRankList(pagination, filters);
-  const columns: ProColumns<IRank>[] = [
-    {
-        title: '排名',
-        dataIndex: "rankNum",
-    },
-    {
-        title: '城市',
-        dataIndex: "cityName",
-        valueType: "text",
-    },
-    {
-        title: '门店',
-        dataIndex: "shopName",
-        valueType: "text",
-    },
-    {
-        title: '店长',
-        dataIndex: "shoperManagerName",
-        valueType: "text",
-    },
-    {
-        title: '',
-        dataIndex: 'shoperManagerAvatar',
-        key: 'shoperManagerAvatar',
-        valueType: 'avatar',
-        width: 150,
-        render: (dom) => (
-          <Space>
-            <span>{dom}</span>
-            <a href="https://github.com/chenshuai2144" target="_blank" rel="noopener noreferrer">
-              chenshuai2144
-            </a>
-          </Space>
-        ),
-    },
-];
-  useEffect(() => {
-    setRankList(rankResp?.data);
-    setPagination({
-      ...pagination,
-      total: rankResp?.total,
-      showQuickJumper: true,
-    });
-  }, [rankResp]);
+    const getRankListPromise = useGetRankList();
+    const columns: ProColumns<IRank>[] = [
+      {
+          title: '排名',
+          dataIndex: "rankNum",
+      },
+      {
+          title: '城市',
+          dataIndex: "cityName",
+          valueType: "text",
+      },
+      {
+          title: '门店',
+          dataIndex: "shopName",
+          valueType: "text",
+      },
+      {
+          title: '店长',
+          dataIndex: "shoperManagerName",
+          valueType: "text",
+      },
+      {
+          title: '',
+          dataIndex: 'shoperManagerAvatar',
+          key: 'shoperManagerAvatar',
+          valueType: 'avatar',
+          width: 150,
+          render: (dom) => (
+            <Space>
+              <span>{dom}</span>
+              <a href="https://github.com/chenshuai2144" target="_blank" rel="noopener noreferrer">
+                chenshuai2144
+              </a>
+            </Space>
+          ),
+      },
+    ];
+    const fetchRank = async (page: number, isReset: boolean) => {
+      const rankResp = await getRankListPromise({
+        page,
+        rows: pagination.pageSize,
+        ...filters,
+      });
+      let rList = [];
+      if (isReset) {
+        rList = rankResp?.data;
+      }
+      else {
+        rList = rankList?.concat(rankResp?.data);
+      }
+      rList.sort((a, b) => {
+        if (a.rankNum < b.rankNum) {
+          return -1;
+        } else if (a.rankNum == b.rankNum) {
+          return 0;
+        } else {
+          return 1;
+        }
+      });
+      setRankList(rList);
+      setPagination({
+        ...pagination,
+        total: rankResp?.total,
+        current: page,
+        showQuickJumper: true,
+      });
+    };
+    useEffect(() => {
+      fetchRank(1, true);
+    }, [type]);
 
-  useEffect(() => {
-    refetch();
-  }, [pagination.current, pagination.pageSize, filters]);
-  function handleNext() {
-    // setPagination({
-    //   ...pagination,
-    //   current: 1,
-    //   showQuickJumper: true,
-    // });
-  }
+    function handleNext() {
+      fetchRank(pagination.current + 1, false);
+    }
   return (
     <div className="rank-list" id="scrollableDiv">
         {/* <ProTable<IRank>
@@ -91,28 +109,33 @@ const RankList: React.FC<RankTableListProps> = props => {
         <InfiniteScroll
             dataLength={rankList?.length ?? 0}
             next={handleNext}
-            hasMore={rankList?.length < 10}
+            hasMore={true}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+            endMessage={<Divider plain>没有更多 🤐</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
               dataSource={rankList}
-              renderItem={item => (
-                // <Badge.Ribbon text={`排名：${item.rankNum}`} color="red">
-                    <List.Item key={item.id}>
-                        <List.Item.Meta
-                            title={<span>店名：{item.shopName}</span>}
-                            description={`城市名：${item.cityName}`}
-                        />
-                        <List.Item.Meta
-                            avatar={<Avatar src={item.shoperManagerAvatar} />}
-                            title={<span>店长：{item.shoperManagerName}</span>}
-                            description={`排名：${item.rankNum}`}
-                        />
-                    </List.Item>
-                // </Badge.Ribbon>
-              )}
+              renderItem={item => {
+                const listItemTpl = (
+                  <List.Item key={item.id}>
+                      <List.Item.Meta
+                          avatar={<Avatar size={48} src={item.shoperManagerAvatar} />}
+                          title={<div className="rank-item-title"><span className="shopName">店名:{item.shopName}</span><span className="shoperManagerName">店长:{item.shoperManagerName}</span></div>}
+                          description={<div className="rank-item-desp"><span className="cityName">城市名:{item.cityName}</span><span className="rankName">排名:{item.rankNum}</span></div>}
+                      />
+                  </List.Item>
+                );
+                let tpl = listItemTpl;
+                if(item.rankNum <=3) {
+                  tpl = (
+                    <Badge.Ribbon text={`排名：${item.rankNum}`} color="red" placement="start">
+                      {listItemTpl}
+                    </Badge.Ribbon>
+                  );
+                }
+                return tpl;
+              }}
             />
         </InfiniteScroll>
     </div>

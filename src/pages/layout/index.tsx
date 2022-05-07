@@ -86,7 +86,7 @@ const LayoutPage: FC = ({ children }) => {
   };
   useEffect(() => {
     if (location.pathname === "/") {
-      navigate("/notification");
+      navigate("/home");
     }
   }, [navigate, location]);
   useEffect(() => {

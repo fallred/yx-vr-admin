@@ -2,6 +2,7 @@
 import {PageFuncEnum, SexEnum} from '@/models/common';
 import {UserStatusEnum, IdentifyTypeEnum} from '@/models/user.interface';
 import {ShopStoreStatusEnum} from '@/models/shop-store.interface';
+import {RankTypeEnum} from '@/models/rank';
 
 export const PageFuncMap = new Map([
     [PageFuncEnum.LIST, '查询'],
@@ -73,5 +74,26 @@ export const ShopStoreStatusOptions = [
     {
         label: ShopStoreStatusMap.get(ShopStoreStatusEnum.DISABLED),
         value: ShopStoreStatusEnum.DISABLED,
+    },
+];
+
+export const RankTypeMap = new Map([
+    [RankTypeEnum.SUMMARY, '营业额总榜'],
+    [RankTypeEnum.GOOD_COMMENT, '好评能力榜'],
+    [RankTypeEnum.MEMBER_CONVERT, '会员转化能力榜'],
+]);
+
+export const RankTypeOptions = [
+    {
+        tab: RankTypeMap.get(RankTypeEnum.SUMMARY),
+        key: RankTypeEnum.SUMMARY,
+    },
+    {
+        tab: RankTypeMap.get(RankTypeEnum.GOOD_COMMENT),
+        key: RankTypeEnum.GOOD_COMMENT,
+    },
+    {
+        tab: RankTypeMap.get(RankTypeEnum.MEMBER_CONVERT),
+        key: RankTypeEnum.MEMBER_CONVERT,
     },
 ];

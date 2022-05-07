@@ -186,13 +186,8 @@ export const useGetAreaList = () => {
 };
 
 // 经营管理-排行榜
-export const useGetRankList = (pagination: any, filters: any) => {
-    return useGetList<IRankPaginationResp>(
-        "RankList",
-        '/manage/rank/query',
-        pagination,
-        filters
-    );
+export const useGetRankList = () => {
+    return useQueryGet<any, IRankPaginationResp>('/manage/rank/query');
 }
 
 // export const useGetCurrentUser = () => {
