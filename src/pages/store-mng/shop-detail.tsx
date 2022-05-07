@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {Rate} from 'antd';
 import { PageContainer } from "@ant-design/pro-layout";
-import { QueryFilter, ProFormSelect, ProFormDatePicker } from '@ant-design/pro-form';
+import { QueryFilter, ProFormSelect } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import ProCard from '@ant-design/pro-card';
 import {useGetShopStoreList, useQueryShopStoreDetail} from "@/api";
