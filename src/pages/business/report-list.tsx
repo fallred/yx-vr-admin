@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import RcResizeObserver from 'rc-resize-observer';
 import { PageContainer } from "@ant-design/pro-layout";
 import ProCard, { StatisticCard } from '@ant-design/pro-card';
-import { QueryFilter, ProFormSelect, ProFormDatePicker } from '@ant-design/pro-form';
-import RcResizeObserver from 'rc-resize-observer';
-import {useGetShopStoreList} from "@/api";
+import { QueryFilter, ProFormSelect, ProFormDateRangePicker } from '@ant-design/pro-form';
+import {IReportList} from '@/models/report-list';
+import {useGetShopStoreList, useGetReportList} from "@/api";
 
 const { Statistic } = StatisticCard;
 
 const reportListPage: React.FC<{}> = () => {
   const {data: shopStoreList} = useGetShopStoreList();
+  const getReportListPromise = useGetReportList();
   const [responsive, setResponsive] = useState(false);
   const [appId, setAppId] = useState<string>('');
+  const [reportList, setReportList] = useState<IReportList>([]);
   function handleAppIdChange(value) {
   }
   useEffect(() => {
@@ -18,15 +21,37 @@ const reportListPage: React.FC<{}> = () => {
     setAppId(selectedAppId);
     // handleAppIdChange(selectedAppId);
   }, [shopStoreList]);
+  useEffect(async () => {
+    const repList = await getReportListPromise({appId});
+    setReportList(repList);
+  }, [appId]);
+  const cardListTpl = reportList?.map(item => {
+    const catdItemTpl = item?.list?.map(cardItem => (
+      <StatisticCard
+        key={cardItem.key}
+        statistic={{
+          title: cardItem.name,
+          value: cardItem.value,
+          description: <Statistic title="环比" value={item.link_relative_ratio} trend={item.link_relative_ratio > 0 ? 'up' : 'down'} />,
+        }}
+      />
+    ));
+    return (
+      <ProCard
+          key={item.key}
+          title={item.name}
+          extra="2019年9月28日"
+          split="vertical"
+          headerBordered
+          bordered
+      >
+        {catdItemTpl}
+      </ProCard>
+    );
+  });
   return (
     <PageContainer className="report-list">
-      {/* <RcResizeObserver
-        key="resize-observer"
-        onResize={(offset) => {
-          setResponsive(offset.width < 1000);
-        }}
-      > */}
-        <ProCard  key="card1" style={{marginBottom: 20}}>
+      <ProCard key="card1" style={{marginBottom: 20}}>
           <QueryFilter
             submitter={false}
             split
@@ -43,173 +68,10 @@ const reportListPage: React.FC<{}> = () => {
                 },
               }}
             />
+            <ProFormDateRangePicker name="dateRange" label="日期范围:" />
           </QueryFilter>
         </ProCard>
-        <ProCard
-          key="card2"
-          title="业绩数据"
-          extra="2019年9月28日"
-          split="horizontal"
-          headerBordered
-          bordered
-        >
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '昨日全部流量',
-                  value: 234,
-                  description: <Statistic title="较本月平均流量" value="8.04%" trend="down" />,
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '本月累计流量',
-                  value: 234,
-                  description: <Statistic title="月同比" value="8.04%" trend="up" />,
-                }}
-              />
-            </ProCard>
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '运行中实验',
-                  value: '12/56',
-                  suffix: '个',
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '历史实验总数',
-                  value: '134',
-                  suffix: '个',
-                }}
-              />
-            </ProCard>
-        </ProCard>
-
-        <ProCard
-          title="会员数据"
-          extra="2019年9月28日"
-          split="horizontal"
-          headerBordered
-          bordered
-        >
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '昨日全部流量',
-                  value: 234,
-                  description: <Statistic title="较本月平均流量" value="8.04%" trend="down" />,
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '本月累计流量',
-                  value: 234,
-                  description: <Statistic title="月同比" value="8.04%" trend="up" />,
-                }}
-              />
-            </ProCard>
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '运行中实验',
-                  value: '12/56',
-                  suffix: '个',
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '历史实验总数',
-                  value: '134',
-                  suffix: '个',
-                }}
-              />
-            </ProCard>
-        </ProCard>
-        
-        <ProCard
-          title="评价数据"
-          extra="2019年9月28日"
-          split="horizontal"
-          headerBordered
-          bordered
-        >
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '昨日全部流量',
-                  value: 234,
-                  description: <Statistic title="较本月平均流量" value="8.04%" trend="down" />,
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '本月累计流量',
-                  value: 234,
-                  description: <Statistic title="月同比" value="8.04%" trend="up" />,
-                }}
-              />
-            </ProCard>
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '运行中实验',
-                  value: '12/56',
-                  suffix: '个',
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '历史实验总数',
-                  value: '134',
-                  suffix: '个',
-                }}
-              />
-            </ProCard>
-        </ProCard>
-
-        <ProCard
-          title="转化数据"
-          extra="2019年9月28日"
-          split="horizontal"
-          headerBordered
-          bordered
-        >
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '昨日全部流量',
-                  value: 234,
-                  description: <Statistic title="较本月平均流量" value="8.04%" trend="down" />,
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '本月累计流量',
-                  value: 234,
-                  description: <Statistic title="月同比" value="8.04%" trend="up" />,
-                }}
-              />
-            </ProCard>
-            <ProCard split="vertical">
-              <StatisticCard
-                statistic={{
-                  title: '运行中实验',
-                  value: '12/56',
-                  suffix: '个',
-                }}
-              />
-              <StatisticCard
-                statistic={{
-                  title: '历史实验总数',
-                  value: '134',
-                  suffix: '个',
-                }}
-              />
-            </ProCard>
-        </ProCard>
-      {/* </RcResizeObserver> */}
+      {cardListTpl}
     </PageContainer>
   );
 };

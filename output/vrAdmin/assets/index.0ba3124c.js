@@ -1,0 +1,1 @@
+import{R as e}from"./index.d85f42cd.js";import{_ as m}from"./index.eea1bc09.js";var t="/vrAdmin/assets/home.496be2c2.png";function a(){return e.createElement("div",{className:"home"},e.createElement(m,{height:"500",src:t}))}var o=()=>e.createElement(a,null);export{o as default};

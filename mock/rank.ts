@@ -1,22 +1,21 @@
 import { MockMethod } from 'vite-plugin-mock';
-const rankList = [];
-for (let i = 0; i < 8; i++) {
-  rankList.push({
-    "id": i,
-    "rankNum": i,
-    "cityName": `武汉${i}`,
-    "shopName": `江汉路店${i}`,
-    "shoperManagerName": `张秋红${i}`,
-    "shoperManagerAvatar": "http://gh-fe.gsxcdn.com/static/image/book-video/wenzhang.png",
-  });
-}
+// const rankList = [];
+// for (let i = 0; i < 8; i++) {
+//   rankList.push({
+//     "id": i,
+//     "rankNum": i,
+//     "cityName": `武汉${i}`,
+//     "shopName": `江汉路店${i}`,
+//     "shoperManagerName": `张秋红${i}`,
+//     "shoperManagerAvatar": "http://gh-fe.gsxcdn.com/static/image/book-video/wenzhang.png",
+//   });
+// }
 const mockQueryRankResp = {
     "status": 200,
     "msg": null,
     "total": 1000,
     "pages": 1,
     "success": true,
-    // data: rankList,
     "data|9-10": [
       {
         "id": "@id",

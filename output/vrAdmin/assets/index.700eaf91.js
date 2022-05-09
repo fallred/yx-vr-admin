@@ -1,0 +1,1 @@
+import{R as e,cf as s,W as d}from"./index.d85f42cd.js";import{g as i}from"./index.72710f81.js";var P=["fieldProps","proFieldProps"],l=function(r,o){var t=r.fieldProps,a=r.proFieldProps,p=s(r,P);return e.createElement(i,d({ref:o,mode:"edit",valueType:"textarea",fieldProps:t,proFieldProps:a},p))},x=e.forwardRef(l);export{x as P};

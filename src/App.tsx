@@ -8,38 +8,41 @@ import { useRecoilState } from "recoil";
 import enUS from "antd/es/locale/en_US";
 import zhCN from "antd/es/locale/zh_CN";
 import moment from "moment";
-import "moment/locale/zh-cn";
+import "moment/dist/locale/zh-cn";
 import { localeConfig } from "@/config/locale";
 import { useGetCurrentUser } from "@/api";
 import { userState } from "@/stores/recoilState";
 import RenderRouter from "./routes";
 import "./App.less";
 
+moment.locale("zh-cn");
+
 const history = createBrowserHistory();
 
 const App: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
-  const { locale } = user;
-
+  // const { locale } = user;
+ 
   useEffect(() => {
-    if (locale.toLowerCase() === "en-us") {
-      moment.locale("en");
-    } else if (locale.toLowerCase() === "zh-cn") {
-      moment.locale("zh");
-    }
-  }, [locale]);
+    debugger;
+    console.log('user.locale:', user.locale);
+    console.log('user.locale.toLowerCase:', user.locale.toLowerCase());
+    const lang = user?.locale?.toLowerCase();
+    moment.locale(lang);
+  }, [user.locale]);
 
   const getAntdLocale = () => {
-    if (locale.toLowerCase() === "en-us") {
+    const lang = user?.locale?.toLowerCase();
+    if (lang === "en-us") {
       return enUS;
-    } else if (locale.toLowerCase() === "zh-cn") {
+    } else if (lang === "zh-cn") {
       return zhCN;
     }
   };
 
   const getLocale = () => {
     const lang = localeConfig.find((item) => {
-      return item.key === locale.toLowerCase();
+      return item.key === user.locale.toLowerCase();
     });
 
     return lang?.messages;
@@ -47,8 +50,8 @@ const App: React.FC = () => {
 
   return (
     <ConfigProvider locale={getAntdLocale()} componentSize="middle">
-      <IntlProvider locale={locale.split("-")[0]} messages={getLocale()}>
-        <BrowserRouter>
+      <IntlProvider locale={user.locale.split("-")[0]} messages={getLocale()}>
+        <BrowserRouter basename="/vrAdmin">
           <RenderRouter />
         </BrowserRouter>
       </IntlProvider>

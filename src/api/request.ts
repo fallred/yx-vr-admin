@@ -187,7 +187,7 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
 
 }
 
-const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestConfig) => {
+const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestConfig = {completeRes: true}) => {
     const axios = useAxios();
 
     const service = async () => {
@@ -208,7 +208,7 @@ const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestC
 }
 
 // get query
-const useQueryGet = <T, U>(url: string) => {
+const useQueryGet = <T, U>(url: string, config?: IRequestConfig = {completeRes: true}) => {
     const axios = useAxios();
     return async (params: T) => {
         const data: U = await axios.get(
@@ -217,7 +217,12 @@ const useQueryGet = <T, U>(url: string) => {
                 params
             }
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     };
 }
 

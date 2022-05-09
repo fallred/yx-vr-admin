@@ -8,6 +8,7 @@ import svgr from 'vite-plugin-svgr';
 import { getAliases } from "vite-aliases";
 import styleImport from 'vite-plugin-style-import';
 
+const projectName = 'vrAdmin';
 const aliases = getAliases();
 
 function pathResolve(dir: string) {
@@ -15,9 +16,11 @@ function pathResolve(dir: string) {
 }
 
 // https://vitejs.dev/config/
-export default ({ command } : { command: string}) => {
+export default ({ command, mode } : { command: string, mode: string}) => {
+  const isProduction = mode === 'production';
   console.log('command:')
   return {
+    base: isProduction ? '/' : `/${projectName}/`,
     resolve: {
       // alias: aliases,
       alias: [
@@ -40,15 +43,6 @@ export default ({ command } : { command: string}) => {
         '@ant-design/pro-card',
       ],
     },
-    // server: {
-    //   proxy: {
-    //     '/api': {
-    //       target: 'http://1.13.20.201:9090',
-    //       changeOrigin: true,
-    //       rewrite: path => path.replace(/^\/api/, '')
-    //     }
-    //   },
-    // },
     plugins: [
       reactRefresh(),
       svgr(),
@@ -91,6 +85,20 @@ export default ({ command } : { command: string}) => {
           },
         },
       },
+    },
+    // server: {
+    //   proxy: {
+    //     '/api': {
+    //       target: 'http://1.13.20.201:9090',
+    //       changeOrigin: true,
+    //       rewrite: path => path.replace(/^\/api/, '')
+    //     }
+    //   },
+    // },
+   
+    build: {
+      outDir: `output/${projectName}`,
+      minify: isProduction
     },
   }
 }

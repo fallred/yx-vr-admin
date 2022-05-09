@@ -7,10 +7,7 @@ import { getGlobalState } from '@/models';
 const initialState: User = {
     ...getGlobalState(),
     noticeCount: 0,
-    locale: (
-        localStorage.getItem('locale')! 
-        || (navigator.languages && navigator.languages[0]) 
-        || navigator.language ||'en-us') as Locale,
+    locale: 'zh-cn',
     newUser: JSON.parse(localStorage.getItem('newUser')!) ?? true,
     logged: false,
     menuList: [],

@@ -29,12 +29,11 @@ const LoginForm: FC = () => {
   const onFinished = async (form: LoginParams) => {
     const result = await loginMutation.mutateAsync(form);
     console.log("result: ", result);
-
     if (result) {
       setUser({
         ...user,
         ...result,
-        logged: true
+        logged: true,
       });
       localStorage.setItem("accessToken", result.token.accessToken);
       localStorage.setItem("userName", result.userName);

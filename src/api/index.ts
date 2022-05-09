@@ -8,6 +8,7 @@ import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
 import { IRankPaginationResp } from "@/models/rank";
+import { IReport, IReportList, IReportPayload } from "@/models/report-list";
 import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet } from "./request";
 
 const projectResource = '/projects';
@@ -192,6 +193,12 @@ export const useGetAreaList = () => {
 export const useGetRankList = () => {
     return useQueryGet<any, IRankPaginationResp>('/manage/rank/query');
 }
+
+// 经营管理-报表
+export const useGetReportList = () => {
+    return useQueryGet<IReportPayload, IReportList>('/manage/report/query', {completeRes: false});
+}
+
 
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(
