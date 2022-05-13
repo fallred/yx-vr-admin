@@ -42,21 +42,21 @@ function getText(type: TimeRangeEnum) {
     }
 }
 function getRange(type: TimeRangeEnum, offset = 1) {
-    const baseStartDate = dayjs().add(1, 'day')
+    const baseStartDate = moment().add(1, 'day')
         .subtract(offset, 'day');
-    const baseEndDate = dayjs().subtract(offset, 'day');
+    const baseEndDate = moment().subtract(offset, 'day');
 
     switch (type) {
         case TimeRangeEnum.TODAY:
             return [
-                dayjs().format('YYYY-MM-DD'),
-                dayjs().format('YYYY-MM-DD'),
+                moment().format('YYYY-MM-DD'),
+                moment().format('YYYY-MM-DD'),
             ];
         case TimeRangeEnum.YESTERDAY:
             return [
-                dayjs().subtract(1, 'day')
+                moment().subtract(1, 'day')
                     .format('YYYY-MM-DD'),
-                dayjs().subtract(1, 'day')
+                moment().subtract(1, 'day')
                     .format('YYYY-MM-DD'),
             ];
         case TimeRangeEnum.LAST1WEEK:
