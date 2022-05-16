@@ -1,18 +1,18 @@
 import moment from 'moment';
+import {TimeRangeEnum} from '@/models/common';
 
-
-enum TimeRangeEnum {
-    TODAY = 'today',
-    YESTERDAY = 'yesterday',
-    LAST1WEEK = 'last-one-week',
-    LAST1MONTH = 'last-one-month',
-    LAST3MONTH = 'last-three-month',
-    LAST6MONTH = 'last-six-month',
-    LAST1YEAR = 'last-one-year',
-    LAST2YEAR = 'last-two-year',
-    LAST3YEAR = 'last-three-year',
-    LAST30DAYS = 'last-thirty-days',
-}
+// enum TimeRangeEnum {
+//     TODAY = 'today',
+//     YESTERDAY = 'yesterday',
+//     LAST1WEEK = 'last-one-week',
+//     LAST1MONTH = 'last-one-month',
+//     LAST3MONTH = 'last-three-month',
+//     LAST6MONTH = 'last-six-month',
+//     LAST1YEAR = 'last-one-year',
+//     LAST2YEAR = 'last-two-year',
+//     LAST3YEAR = 'last-three-year',
+//     LAST30DAYS = 'last-thirty-days',
+// }
 
 
 function getText(type: TimeRangeEnum) {
@@ -121,7 +121,7 @@ function getRange(type: TimeRangeEnum, offset = 1) {
 }
 
 export const timeRange = {
-    TimeRangeEnum,
+    // TimeRangeEnum,
     getText,
     getRange
 };
