@@ -49,71 +49,54 @@ function getRange(type: TimeRangeEnum, offset = 1) {
     switch (type) {
         case TimeRangeEnum.TODAY:
             return [
-                moment().format('YYYY-MM-DD'),
-                moment().format('YYYY-MM-DD'),
+                moment(),
+                moment(),
             ];
         case TimeRangeEnum.YESTERDAY:
             return [
-                moment().subtract(1, 'day')
-                    .format('YYYY-MM-DD'),
-                moment().subtract(1, 'day')
-                    .format('YYYY-MM-DD'),
+                moment().subtract(1, 'day'),
+                moment().subtract(1, 'day'),
             ];
         case TimeRangeEnum.LAST1WEEK:
             return [
-                baseStartDate.subtract(1, 'week')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(1, 'week'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST1MONTH:
             return [
-                baseStartDate.subtract(1, 'month')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                // moment().startOf('month'), moment().endOf('month')
+                baseStartDate.subtract(1, 'month'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST3MONTH:
             return [
-                baseStartDate.subtract(3, 'month')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(3, 'month'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST6MONTH:
             return [
-                baseStartDate.subtract(6, 'month')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(6, 'month'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST1YEAR:
             return [
-                baseStartDate.subtract(1, 'year')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(1, 'year'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST2YEAR:
             return [
-                baseStartDate.subtract(2, 'year')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(2, 'year'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST3YEAR:
             return [
-                baseStartDate.subtract(3, 'year')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(3, 'year'),
+                baseEndDate,
             ];
         case TimeRangeEnum.LAST30DAYS:
             return [
-                baseStartDate.subtract(30, 'day')
-                    .format('YYYY-MM-DD'),
-                baseEndDate
-                    .format('YYYY-MM-DD'),
+                baseStartDate.subtract(30, 'day'),
+                baseEndDate,
             ];
         default:
             throw new Error('错误的时间区间');

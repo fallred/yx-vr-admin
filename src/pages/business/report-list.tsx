@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RcResizeObserver from 'rc-resize-observer';
 import { DatePicker, Space } from 'antd';
 import moment from 'moment';
+import 'moment/locale/zh-cn';
 import { PageContainer } from "@ant-design/pro-layout";
 import ProCard, { StatisticCard } from '@ant-design/pro-card';
 import { QueryFilter, ProFormSelect, ProFormDateRangePicker } from '@ant-design/pro-form';
@@ -10,6 +11,8 @@ import {useGetShopStoreList, useGetReportList} from "@/api";
 import {TimeRangeEnum} from '@/models/common';
 import {timeRange} from '@/lib/time-range';
 
+moment.locale("zh-cn");
+
 const { Statistic } = StatisticCard;
 const { RangePicker } = DatePicker;
 
@@ -17,6 +20,9 @@ const reportListPage: React.FC<{}> = () => {
   const {data: shopStoreList} = useGetShopStoreList();
   const getReportListPromise = useGetReportList();
   const [responsive, setResponsive] = useState(false);
+  const [dates, setDates] = useState([]);
+  const [hackValue, setHackValue] = useState();
+  const [dateRangeValue, setDateRangeValue] = useState();
   const [appId, setAppId] = useState<string>('');
   const [reportList, setReportList] = useState<IReportList>([]);
   const ranges = {
@@ -33,13 +39,29 @@ const reportListPage: React.FC<{}> = () => {
     if (!dates || dates.length === 0) {
       return false;
     }
-    const tooLate7 = dates[0] && current.diff(dates[0], 'days') < 7;
-    const tooEarly7 = dates[1] && dates[1].diff(current, 'days') < 7;
+    const startDate =  dates[0] && current.diff(dates[0], 'days');
+    const endDate = dates[1] && dates[1].diff(current, 'days');
 
-    const tooLate30 = dates[0] && current.diff(dates[0], 'days') > 30;
-    const tooEarly30 = dates[1] && dates[1].diff(current, 'days') > 30;
+    // const tooEarly7 = startDate < 7;
+    // const tooLate7 = endDate < 7;
 
-    return (tooLate7 || tooEarly7) && (tooLate30 || tooEarly30);
+    const tooLate30 = startDate > 30;
+    const tooEarly30 = endDate > 30;
+    // if (tooLate7) {
+    //   return true;
+    // }
+    if (tooEarly30 || tooLate30) {
+      return true;
+    }
+    return false;
+  };
+  const onOpenChange = open => {
+    if (open) {
+      setHackValue([]);
+      setDates([]);
+    } else {
+      setHackValue(undefined);
+    }
   };
   useEffect(() => {
     const selectedAppId = shopStoreList?.[0]?.appId;
@@ -95,16 +117,21 @@ const reportListPage: React.FC<{}> = () => {
             />
             <RangePicker
               ranges={ranges}
+              // disabledDate={disabledDate}
+              // onChange={onChange}
+              value={hackValue || dateRangeValue}
               disabledDate={disabledDate}
-              onChange={onChange}
+              onCalendarChange={val => setDates(val)}
+              onChange={val => setDateRangeValue(val)}
+              onOpenChange={onOpenChange}
             />
-            <ProFormDateRangePicker
+            {/* <ProFormDateRangePicker
               name="dateRange"
               label="日期范围:"
               ranges={ranges}
               format="YYYY/MM/DD"
               onChange={onChange}
-            />
+            /> */}
           </QueryFilter>
         </ProCard>
       {cardListTpl}

@@ -8,7 +8,9 @@ import { useRecoilState } from "recoil";
 import enUS from "antd/es/locale/en_US";
 import zhCN from "antd/es/locale/zh_CN";
 import moment from "moment";
-import "moment/dist/locale/zh-cn";
+import 'moment/locale/zh-cn';
+import 'antd/dist/antd.css';
+
 import { localeConfig } from "@/config/locale";
 import { useGetCurrentUser } from "@/api";
 import { userState } from "@/stores/recoilState";
@@ -49,13 +51,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <ConfigProvider locale={getAntdLocale()} componentSize="middle">
-      <IntlProvider locale={user.locale.split("-")[0]} messages={getLocale()}>
-        <BrowserRouter basename="/vrAdmin">
-          <RenderRouter />
-        </BrowserRouter>
-      </IntlProvider>
-    </ConfigProvider>
+      <ConfigProvider locale={getAntdLocale()} componentSize="middle">
+        <IntlProvider locale={user.locale.split("-")[0]} messages={getLocale()}>
+          <BrowserRouter basename="/vrAdmin">
+            <RenderRouter />
+          </BrowserRouter>
+        </IntlProvider>
+      </ConfigProvider>
   );
 };
 
