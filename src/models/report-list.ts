@@ -32,7 +32,9 @@ export interface IPerformance {
     taskAmountProp: number;
 };
 export type IIPerformanceList = IPerformance[];
-
+// export enum MemberEnum {
+//     'memberNum' = 'memberNum',
+// }
 // 查询会员数据
 export interface IMember {
     memberNum: number;
@@ -66,22 +68,6 @@ export interface IEvaluate {
     featureRate: number;
 };
 
-// 查询评价数据
-export interface IEvaluate {
-    weekEvalNum: number;
-    evalTotal: number;
-    evalTotalRate: number;
-    popleNum: number;
-    popleNumRate: number;
-    goodTotal: number;
-    goodNumRate: number;
-    badTotal: number;
-    badNumRate: number;
-    goodProp: number;
-    goodPropRate: number;
-    featureNum: number;
-    featureRate: number;
-};
 // 查询转化数据
 export interface IConvert {
     exposureNum: number;

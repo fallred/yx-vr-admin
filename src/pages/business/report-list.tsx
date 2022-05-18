@@ -6,10 +6,11 @@ import 'moment/locale/zh-cn';
 import { PageContainer } from "@ant-design/pro-layout";
 import ProCard, { StatisticCard } from '@ant-design/pro-card';
 import { QueryFilter, ProFormSelect, ProFormDateRangePicker } from '@ant-design/pro-form';
-import {IReportList} from '@/models/report-list';
-import {useGetShopStoreList, useGetReportList} from "@/api";
+import {IPerformance, IMember, IEvaluate, IConvert} from '@/models/report-list';
+import {useGetShopStoreList} from "@/api";
 import {TimeRangeEnum} from '@/models/common';
 import {timeRange} from '@/lib/time-range';
+import useReportList from './use-hooks/useReportList';
 
 moment.locale("zh-cn");
 
@@ -18,13 +19,18 @@ const { RangePicker } = DatePicker;
 
 const reportListPage: React.FC<{}> = () => {
   const {data: shopStoreList} = useGetShopStoreList();
-  const getReportListPromise = useGetReportList();
+  const {
+    convertList,
+    evaluateList,
+    memberList,
+    performanceList,
+    fetchData
+  } = useReportList();
   const [responsive, setResponsive] = useState(false);
   const [dates, setDates] = useState([]);
   const [hackValue, setHackValue] = useState();
   const [dateRangeValue, setDateRangeValue] = useState();
   const [appId, setAppId] = useState<string>('');
-  const [reportList, setReportList] = useState<IReportList>([]);
   const ranges = {
     [timeRange.getText(TimeRangeEnum.YESTERDAY)]: timeRange.getRange(TimeRangeEnum.YESTERDAY),
     [timeRange.getText(TimeRangeEnum.LAST1MONTH)]: timeRange.getRange(TimeRangeEnum.LAST1MONTH),
@@ -68,12 +74,11 @@ const reportListPage: React.FC<{}> = () => {
     setAppId(selectedAppId);
     // handleAppIdChange(selectedAppId);
   }, [shopStoreList]);
-  useEffect(async () => {
-    const repList = await getReportListPromise({appId});
-    setReportList(repList);
+  useEffect(() => {
+    fetchData([appId]);
   }, [appId]);
-  const cardListTpl = reportList?.map(item => {
-    const catdItemTpl = item?.list?.map(cardItem => (
+  const convertTpl = () => {
+    const convertListTpl = convertList.map(cardItem => (
       <StatisticCard
         key={cardItem.key}
         statistic={{
@@ -85,17 +90,19 @@ const reportListPage: React.FC<{}> = () => {
     ));
     return (
       <ProCard
-          key={item.key}
-          title={item.name}
+          key="1"
+          title="转化数据"
           extra="2019年9月28日"
           split="vertical"
           headerBordered
           bordered
       >
-        {catdItemTpl}
+        {convertListTpl}
       </ProCard>
     );
-  });
+  };
+
+    
   return (
     <PageContainer className="report-list">
       <ProCard key="card1" style={{marginBottom: 20}}>

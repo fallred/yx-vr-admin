@@ -198,7 +198,7 @@ export const useGetRankList = () => {
 }
 
 // 经营管理-报表-转化数据
-export const useGetPerformanceList = () => {
+export const useGetConvertList = () => {
     return useQueryGet<IReportPayload, IConvert[]>('/app/business/convert/list', {completeRes: false});
 }
 // 经营管理-报表-评价数据
