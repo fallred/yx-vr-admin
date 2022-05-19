@@ -115,6 +115,41 @@ export const PerformanceMap = new Map([
     ['taskAmountProp', '本周完成率'],
 ]);
 
+export const PerformanceConfigList = [
+    {
+        key: 'mtConsumeAmount',
+        name: '美团验券金额',
+        value: '',
+        ratio: ''
+    },
+    {
+        key: 'mtTradeAmount',
+        name: '美团收单金额',
+        value: '',
+        ratio: ''
+    },
+    {
+        key: 'tkConsumeAmount',
+        name: '抖音验券金额',
+    },
+    {
+        key: 'kbConsumeAmount',
+        name: '口碑验券金额',
+    },
+    {
+        key: 'total',
+        name: '销售金额',
+    },
+    {
+        key: 'holiday',
+        name: '节假日销售金额',
+    },
+    {
+        key: 'taskAmount',
+        name: '本周任务',
+    },
+];
+
 export const MemberMap = new Map([
     ['memberNum', '新增会员数'],
     ['memberNumRate', '新增会员数-环比'],
@@ -129,7 +164,36 @@ export const MemberMap = new Map([
     ['rechargeAmountProp', '会员业绩占比'],
     ['rechargeAmountPropRate', '会员业绩占比-环比'],
 ]);
-
+export const MemberConfigList = [
+    {
+        key: 'memberNum',
+        name: '新增会员数',
+        value: '',
+        ratio: ''
+    },
+    {
+        key: 'memberConv',
+        name: '会员人数转化率',
+        value: '',
+        ratio: ''
+    },
+    {
+        key: 'consumeNum',
+        name: '会员消费人数',
+    },
+    {
+        key: 'consumeAmount',
+        name: '会员消费金额',
+    },
+    {
+        key: 'rechargeAmount',
+        name: '会员业绩',
+    },
+    {
+        key: 'rechargeAmountProp',
+        name: '会员业绩占比',
+    },
+];
 export const EvaluateMap = new Map([
     ['weekEvalNum', '周评价数据'],
     ['evalTotal', '评价数'],
@@ -145,6 +209,36 @@ export const EvaluateMap = new Map([
     ['featureNum', '精选数'],
     ['featureRate', '精选数-环比'],
 ]);
+export const MemberConfigList = [
+    {
+        key: 'memberNum',
+        name: '周评价数据',
+        value: '',
+        ratio: ''
+    },
+    {
+        key: 'evalTotal',
+        name: '评价数',
+        value: '',
+        ratio: ''
+    },
+    {
+        key: 'popleNum',
+        name: '来客数',
+    },
+    {
+        key: 'consumeAmount',
+        name: '会员消费金额',
+    },
+    {
+        key: 'rechargeAmount',
+        name: '会员业绩',
+    },
+    {
+        key: 'rechargeAmountProp',
+        name: '会员业绩占比',
+    },
+];
 
 export const ConvertMap = new Map([
     ['exposureNum', '曝光人数'],
