@@ -77,8 +77,8 @@ const reportListPage: React.FC<{}> = () => {
   useEffect(() => {
     fetchData([appId]);
   }, [appId]);
-  const convertTpl = () => {
-    const convertListTpl = convertList.map(cardItem => (
+  const cardListTpl = reportList?.map(item => {
+    const catdItemTpl = item?.list?.map(cardItem => (
       <StatisticCard
         key={cardItem.key}
         statistic={{
@@ -90,19 +90,17 @@ const reportListPage: React.FC<{}> = () => {
     ));
     return (
       <ProCard
-          key="1"
-          title="转化数据"
+          key={item.key}
+          title={item.name}
           extra="2019年9月28日"
           split="vertical"
           headerBordered
           bordered
       >
-        {convertListTpl}
+        {catdItemTpl}
       </ProCard>
     );
-  };
-
-    
+  });
   return (
     <PageContainer className="report-list">
       <ProCard key="card1" style={{marginBottom: 20}}>

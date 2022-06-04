@@ -40,3 +40,16 @@ export interface IPCRParams {
     provincecode?: string;
     citycode?: string;
 };
+
+export enum TimeRangeEnum {
+    TODAY = 'today',
+    YESTERDAY = 'yesterday',
+    LAST1WEEK = 'last-one-week',
+    LAST1MONTH = 'last-one-month',
+    LAST3MONTH = 'last-three-month',
+    LAST6MONTH = 'last-six-month',
+    LAST1YEAR = 'last-one-year',
+    LAST2YEAR = 'last-two-year',
+    LAST3YEAR = 'last-three-year',
+    LAST30DAYS = 'last-thirty-days',
+}

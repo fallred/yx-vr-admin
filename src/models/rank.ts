@@ -14,6 +14,16 @@ export interface IRank {
     shoperManagerAvatar: string;
 };
 
+export interface IRank1 {
+    appId: string;
+    store: string;
+    city: string;
+    rank: number;
+    rankValue: number;
+    manager: string;
+    imageUrl: string;
+}
+
 export type IRankList = IRank[];
 
 export interface IRankPaginationResp {

@@ -8,7 +8,10 @@ import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult } from "@/models/user";
 import { IRankPaginationResp } from "@/models/rank";
-import { IReport, IReportList, IReportPayload } from "@/models/report-list";
+import {
+    IReport, IReportList, IReportPayload,
+    IConvert, IEvaluate, IPerformance, IMember,
+} from "@/models/report-list";
 import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet } from "./request";
 
 const projectResource = '/projects';
@@ -204,11 +207,22 @@ export const useGetRankList = (type: string) => {
     return useQueryGet<any, IRankPaginationResp>(url);
 }
 
-// 经营管理-报表
-export const useGetReportList = () => {
-    return useQueryGet<IReportPayload, IReportList>('/manage/report/query', {completeRes: false});
+// 经营管理-报表-转化数据
+export const useGetConvertList = () => {
+    return useQueryGet<IReportPayload, IConvert[]>('/app/business/convert/list', {completeRes: false});
 }
-
+// 经营管理-报表-评价数据
+export const useGetEvaluateList = () => {
+    return useQueryGet<IReportPayload, IEvaluate[]>('/app/business/evaluate/list', {completeRes: false});
+}
+// 经营管理-报表-会员数据
+export const useGetMemberList = () => {
+    return useQueryGet<IReportPayload, IMember[]>('/app/business/member/list', {completeRes: false});
+}
+// 经营管理-报表-会员数据
+export const useGetPerformanceList = () => {
+    return useQueryGet<IReportPayload, IPerformance[]>('/app/business/performance/list', {completeRes: false});
+}
 
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(
