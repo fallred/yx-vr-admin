@@ -189,9 +189,19 @@ export const useGetAreaList = () => {
     return useQueryGet<IPCRParams, IArea[]>('/app/area/area');
 };
 
-// 经营管理-排行榜
-export const useGetRankList = () => {
-    return useQueryGet<any, IRankPaginationResp>('/manage/rank/query');
+// 查询营业额总榜
+export const useGetRankList = (type: string) => {
+    let url = '';
+    if (type == 1) {
+        url = '/app/leaderboard/turnover/list';
+    }
+    else if (type == 2) {
+        url = '/app/leaderboard/praise/list';
+    }
+    else if (type == 3 ) {
+        url = '/app/leaderboard/memberconversion/list';
+    }
+    return useQueryGet<any, IRankPaginationResp>(url);
 }
 
 // 经营管理-报表

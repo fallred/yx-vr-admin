@@ -5,8 +5,8 @@ import { IntlProvider } from "react-intl";
 import { createBrowserHistory } from "history";
 import { useRecoilState } from "recoil";
 
-import enUS from "antd/es/locale/en_US";
-import zhCN from "antd/es/locale/zh_CN";
+import enUS from "antd/lib/locale/en_US";
+import zhCN from "antd/lib/locale/zh_CN";
 import moment from "moment";
 import "moment/dist/locale/zh-cn";
 import { localeConfig } from "@/config/locale";

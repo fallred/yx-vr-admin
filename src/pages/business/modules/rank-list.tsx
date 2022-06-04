@@ -19,7 +19,8 @@ const RankList: React.FC<RankTableListProps> = props => {
         pageSize: 10,
         total: 0,
     });
-    const getRankListPromise = useGetRankList();
+    const getRankListPromise = useGetRankList(type);
+    
     const columns: ProColumns<IRank>[] = [
       {
           title: '排名',
