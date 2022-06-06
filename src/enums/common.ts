@@ -120,36 +120,60 @@ export const PerformanceMap = new Map([
 
 export const PerformanceConfigList = [
     {
-        key: 'mtConsumeAmount',
-        name: '美团验券金额',
+        key: 'holiday',
+        name: '节假日销售金额',
+        valueKey: 'holiday',
+        rateKey: 'holidayProp',
         value: '',
-        ratio: ''
-    },
-    {
-        key: 'mtTradeAmount',
-        name: '美团收单金额',
-        value: '',
-        ratio: ''
-    },
-    {
-        key: 'tkConsumeAmount',
-        name: '抖音验券金额',
+        rate: ''
     },
     {
         key: 'kbConsumeAmount',
         name: '口碑验券金额',
+        valueKey: 'kbConsumeAmount',
+        rateKey: 'kbConsumeAmountRate',
+        value: '',
+        rate: ''
     },
     {
-        key: 'total',
-        name: '销售金额',
+        key: 'mtConsumeAmount',
+        name: '美团验券金额',
+        valueKey: 'mtConsumeAmount',
+        rateKey: 'mtConsumeAmountRate',
+        value: '',
+        rate: ''
     },
     {
-        key: 'holiday',
-        name: '节假日销售金额',
+        key: 'mtTradeAmount',
+        name: '美团收单金额',
+        valueKey: 'mtTradeAmount',
+        rateKey: 'mtTradeAmountRate',
+        value: '',
+        rate: ''
     },
     {
         key: 'taskAmount',
         name: '本周任务',
+        valueKey: 'taskAmount',
+        rateKey: 'taskAmountProp',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'tkConsumeAmount',
+        name: '抖音验券金额',
+        valueKey: 'tkConsumeAmount',
+        rateKey: 'tkConsumeAmountRate',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'total',
+        name: '销售金额',
+        valueKey: 'total',
+        rateKey: 'totalRate',
+        value: '',
+        rate: ''
     },
 ];
 
@@ -170,32 +194,52 @@ export const MemberMap = new Map([
 ]);
 export const MemberConfigList = [
     {
+        key: 'consumeAmount',
+        valueKey: 'consumeAmount',
+        rateKey: 'consumeAmountRate',
+        name: '会员消费金额',
+        value: '',
+        rate: ''
+    },
+    {
         key: 'memberNum',
+        valueKey: 'memberNum',
+        rateKey: 'memberNumRate',
         name: '新增会员数',
         value: '',
-        ratio: ''
+        rate: ''
     },
     {
         key: 'memberConv',
+        valueKey: 'memberConv',
+        rateKey: 'memberConvRate',
         name: '会员人数转化率',
         value: '',
-        ratio: ''
+        rate: ''
     },
     {
         key: 'consumeNum',
+        valueKey: 'consumeNum',
+        rateKey: 'consumeNumRate',
         name: '会员消费人数',
-    },
-    {
-        key: 'consumeAmount',
-        name: '会员消费金额',
+        value: '',
+        rate: ''
     },
     {
         key: 'rechargeAmount',
+        valueKey: 'rechargeAmount',
+        rateKey: 'rechargeAmountRate',
         name: '会员业绩',
+        value: '',
+        rate: ''
     },
     {
         key: 'rechargeAmountProp',
+        valueKey: 'rechargeAmountProp',
+        rateKey: 'rechargeAmountPropRate',
         name: '会员业绩占比',
+        value: '',
+        rate: ''
     },
 ];
 // 评价数据
@@ -216,32 +260,52 @@ export const EvaluateMap = new Map([
 ]);
 export const EvaluateConfigList = [
     {
-        key: 'memberNum',
-        name: '周评价数据',
+        key: 'badTotal',
+        valueKey: 'badTotal',
+        rateKey: 'badNumRate',
+        name: '差评总数',
         value: '',
-        ratio: ''
+        rate: ''
     },
     {
         key: 'evalTotal',
+        valueKey: 'evalTotal',
+        rateKey: 'evalTotalRate',
         name: '评价数',
         value: '',
-        ratio: ''
+        rate: ''
+    },
+    {
+        key: 'featureNum',
+        valueKey: 'featureNum',
+        rateKey: 'featureRate',
+        name: '精选数',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'goodTotal',
+        valueKey: 'goodTotal',
+        rateKey: 'goodNumRate',
+        name: '好评总数',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'goodProp',
+        valueKey: 'goodProp',
+        rateKey: 'goodPropRate',
+        name: '好评率',
+        value: '',
+        rate: ''
     },
     {
         key: 'popleNum',
+        valueKey: 'popleNum',
+        rateKey: 'popleNumRate',
         name: '来客数',
-    },
-    {
-        key: 'consumeAmount',
-        name: '会员消费金额',
-    },
-    {
-        key: 'rechargeAmount',
-        name: '会员业绩',
-    },
-    {
-        key: 'rechargeAmountProp',
-        name: '会员业绩占比',
+        value: '',
+        rate: ''
     },
 ];
 
@@ -264,3 +328,53 @@ export const ConvertMap = new Map([
     ['visitorNum', '访客人数'],
     ['visitorNumRate', '访客人数-环比'],
 ]);
+export const ConvertConfigList = [
+    {
+        key: 'exposureNum',
+        valueKey: 'exposureNum',
+        rateKey: 'exposureNumRate',
+        name: '曝光人数',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'orderNum',
+        valueKey: 'orderNum',
+        rateKey: 'orderNumRate',
+        name: '下单人数',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'orderNumConv',
+        valueKey: 'orderNumConv',
+        rateKey: 'orderNumConvRate',
+        name: '下单转化率',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'storeNum',
+        valueKey: 'storeNum',
+        rateKey: 'storeNumRate',
+        name: '到店人数',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'visitorConv',
+        valueKey: 'visitorConv',
+        rateKey: 'visitorConvRate',
+        name: '访客转化率',
+        value: '',
+        rate: ''
+    },
+    {
+        key: 'visitorNum',
+        valueKey: 'visitorNum',
+        rateKey: 'visitorNumRate',
+        name: '访客人数',
+        value: '',
+        rate: ''
+    },
+];

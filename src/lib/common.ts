@@ -9,14 +9,16 @@
 //     return dataList;
 // }
 
-export function formatObjectToListByKeyMap(dataObj, dataMap) {
-    const dataList = Object.keys(dataObj).map(key => {
-        const item = {
-            key,
-            name: dataMap.get(key),
-            value: dataObj[key],
+export function formatObjectToListByKeyMap(dataObj, dataConfigList) {
+    const dataList = [];
+    dataConfigList.forEach(item => {
+        const {valueKey, rateKey, ...rest} = item;
+        const itemTemp = {
+            ...rest,
+            value: dataObj[valueKey],
+            rate: dataObj[rateKey],
         };
-        return item;
+        dataList.push(itemTemp);
     });
     return dataList;
 }

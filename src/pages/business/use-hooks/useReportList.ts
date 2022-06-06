@@ -7,7 +7,10 @@ import {
   useGetPerformanceList
 } from "@/api";
 import {IOption, IDataStastic} from '@/models/common';
-import {PerformanceMap, MemberMap, EvaluateMap, ConvertMap} from '@/enums/common';
+import {
+  PerformanceMap, MemberMap, EvaluateMap, ConvertMap,
+  PerformanceConfigList, MemberConfigList, EvaluateConfigList, ConvertConfigList
+} from '@/enums/common';
 import {formatObjectToListByKeyMap} from '@/lib/common';
 
 export default function useReportList() {
@@ -22,13 +25,13 @@ export default function useReportList() {
   async function fetchData(appIdArr) {
     const appIds = appIdArr.join(',');
     const convertInfo = await getConvertListPromise({appIds});
-    const convertList = formatObjectToListByKeyMap(convertInfo, ConvertMap);
+    const convertList = formatObjectToListByKeyMap(convertInfo, ConvertConfigList);
     const evaluateInfo = await getEvaluateListPromise({appIds});
-    const evaluateList = formatObjectToListByKeyMap(evaluateInfo, EvaluateMap);
+    const evaluateList = formatObjectToListByKeyMap(evaluateInfo, EvaluateConfigList);
     const memberInfo = await getMemberListPromise({appIds});
-    const memberList = formatObjectToListByKeyMap(memberInfo, MemberMap);
+    const memberList = formatObjectToListByKeyMap(memberInfo, MemberConfigList);
     const performanceInfo = await getPerformanceListPromise({appIds});
-    const performanceList = formatObjectToListByKeyMap(performanceInfo, PerformanceMap);
+    const performanceList = formatObjectToListByKeyMap(performanceInfo, PerformanceConfigList);
     setConvertList(convertList);
     setEvaluateList(evaluateList);
     setMemberList(memberList);

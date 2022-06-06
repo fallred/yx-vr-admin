@@ -85,7 +85,7 @@ const reportListPage: React.FC<{}> = () => {
         statistic={{
           title: cardItem.name,
           value: cardItem.value,
-          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+          description: <Statistic title="环比" value={cardItem.rate} trend={cardItem.rate > 0 ? 'up' : 'down'} />,
         }}
       />
     ));
@@ -111,7 +111,7 @@ const reportListPage: React.FC<{}> = () => {
         statistic={{
           title: cardItem.name,
           value: cardItem.value,
-          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+          description: <Statistic title="环比" value={cardItem.rate} trend={cardItem.rate > 0 ? 'up' : 'down'} />,
         }}
       />
     ));
@@ -137,7 +137,7 @@ const reportListPage: React.FC<{}> = () => {
         statistic={{
           title: cardItem.name,
           value: cardItem.value,
-          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+          description: <Statistic title="环比" value={cardItem.rate} trend={cardItem.rate > 0 ? 'up' : 'down'} />,
         }}
       />
     ));
@@ -163,7 +163,7 @@ const reportListPage: React.FC<{}> = () => {
         statistic={{
           title: cardItem.name,
           value: cardItem.value,
-          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+          description: <Statistic title="环比" value={cardItem.rate} trend={cardItem.rate > 0 ? 'up' : 'down'} />,
         }}
       />
     ));
