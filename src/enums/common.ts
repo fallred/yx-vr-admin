@@ -98,21 +98,24 @@ export const RankTypeOptions = [
     },
 ];
 
+// 业绩数据
 export const PerformanceMap = new Map([
+    ['holiday', '节假日销售金额'],
+    ['holidayProp', '节假日销售金额-环比'],
+    ['kbConsumeAmount', '口碑验券金额'],
+    ['kbConsumeAmountRate', '口碑验券金额-环比'],
     ['mtConsumeAmount', '美团验券金额'],
     ['mtConsumeAmountRate', '美团验券金额-环比'],
     ['mtTradeAmount', '美团收单金额'],
     ['mtTradeAmountRate', '美团收单金额-环比'],
-    ['tkConsumeAmount', '抖音验券金额'],
-    ['tkConsumeAmountRate', '抖音验券金额-环比'],
-    ['kbConsumeAmount', '口碑验券金额'],
-    ['kbConsumeAmountRate', '口碑验券金额-环比'],
-    ['total', '销售金额'],
-    ['totalRate', '销售金额-环比'],
-    ['holiday', '节假日销售金额'],
-    ['holidayProp', '节假日销售金额-环比'],
     ['taskAmount', '本周任务'],
     ['taskAmountProp', '本周完成率'],
+    ['tkConsumeAmount', '抖音验券金额'],
+    ['tkConsumeAmountRate', '抖音验券金额-环比'],
+    ['total', '销售金额'],
+    ['totalRate', '销售金额-环比'],
+   
+   
 ]);
 
 export const PerformanceConfigList = [
@@ -150,15 +153,16 @@ export const PerformanceConfigList = [
     },
 ];
 
+// 会员数据
 export const MemberMap = new Map([
+    ['consumeAmount', '会员消费金额'],
+    ['consumeAmountRate', '会员消费金额-环比'],
     ['memberNum', '新增会员数'],
     ['memberNumRate', '新增会员数-环比'],
     ['memberConv', '会员人数转化率'],
     ['memberConvRate', '会员人数转化率-环比'],
     ['consumeNum', '会员消费人数'],
     ['consumeNumRate', '会员消费人数-环比'],
-    ['consumeAmount', '会员消费金额'],
-    ['consumeAmountRate', '会员消费金额-环比'],
     ['rechargeAmount', '会员业绩'],
     ['rechargeAmountRate', '会员业绩-环比'],
     ['rechargeAmountProp', '会员业绩占比'],
@@ -194,22 +198,23 @@ export const MemberConfigList = [
         name: '会员业绩占比',
     },
 ];
+// 评价数据
 export const EvaluateMap = new Map([
-    ['weekEvalNum', '周评价数据'],
-    ['evalTotal', '评价数'],
-    ['evalTotalRate', '评价数-环比'],
-    ['popleNum', '来客数'],
-    ['popleNumRate', '来客数-环比'],
-    ['goodTotal', '好评总数'],
-    ['goodNumRate', '好评总数-环比'],
     ['badTotal', '差评总数'],
     ['badNumRate', '差评总数-环比'],
-    ['goodProp', '好评率'],
-    ['goodPropRate', '好评率-环比'],
+    ['evalTotal', '评价数'],
+    ['evalTotalRate', '评价数-环比'],
     ['featureNum', '精选数'],
     ['featureRate', '精选数-环比'],
+    ['goodTotal', '好评总数'],
+    ['goodNumRate', '好评总数-环比'],
+    ['goodProp', '好评率'],
+    ['goodPropRate', '好评率-环比'],
+    ['popleNum', '来客数'],
+    ['popleNumRate', '来客数-环比'],
+    ['weekEvalNum', '周评价数据'], 
 ]);
-export const MemberConfigList = [
+export const EvaluateConfigList = [
     {
         key: 'memberNum',
         name: '周评价数据',
@@ -240,17 +245,22 @@ export const MemberConfigList = [
     },
 ];
 
+// 转化数据
 export const ConvertMap = new Map([
     ['exposureNum', '曝光人数'],
     ['exposureNumRate', '曝光人数-环比'],
-    ['visitorNum', '访客人数'],
-    ['visitorNumRate', '访客人数-环比'],
-    ['visitorConv', '访客转化率'],
-    ['visitorConvRate', '访客转化率-环比'],
+
     ['orderNum', '下单人数'],
     ['orderNumRate', '下单人数-环比'],
+
     ['orderNumConv', '下单转化率'],
     ['orderNumConvRate', '下单转化率-环比'],
+
     ['storeNum', '到店人数'],
     ['storeNumRate', '到店人数-环比'],
-])
+    ['visitorConv', '访客转化率'],
+    ['visitorConvRate', '访客转化率-环比'],
+
+    ['visitorNum', '访客人数'],
+    ['visitorNumRate', '访客人数-环比'],
+]);

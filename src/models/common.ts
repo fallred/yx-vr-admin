@@ -36,6 +36,13 @@ export interface IOption {
     label: IValue;
     value: IValue;
 }
+
+export interface IDataStastic {
+    key: string;
+    value: string;
+    name: string;
+    radio: number;
+}
 export interface IPCRParams {
     provincecode?: string;
     citycode?: string;

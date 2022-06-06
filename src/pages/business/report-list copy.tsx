@@ -104,41 +104,41 @@ const reportListPage: React.FC<{}> = () => {
   return (
     <PageContainer className="report-list">
       <ProCard key="card1" style={{marginBottom: 20}}>
-          <QueryFilter
-            submitter={false}
-            split
-          >
-            <ProFormSelect
-              label="门店"
-              value={appId}
-              options={shopStoreList}
-              onChange={handleAppIdChange}
-              fieldProps={{
-                fieldNames: {
-                  label: 'nm',
-                  value: 'appId'
-                },
-              }}
-            />
-            <RangePicker
-              ranges={ranges}
-              // disabledDate={disabledDate}
-              // onChange={onChange}
-              value={hackValue || dateRangeValue}
-              disabledDate={disabledDate}
-              onCalendarChange={val => setDates(val)}
-              onChange={val => setDateRangeValue(val)}
-              onOpenChange={onOpenChange}
-            />
-            {/* <ProFormDateRangePicker
-              name="dateRange"
-              label="日期范围:"
-              ranges={ranges}
-              format="YYYY/MM/DD"
-              onChange={onChange}
-            /> */}
-          </QueryFilter>
-        </ProCard>
+        <QueryFilter
+          submitter={false}
+          split
+        >
+          <ProFormSelect
+            label="门店"
+            value={appId}
+            options={shopStoreList}
+            onChange={handleAppIdChange}
+            fieldProps={{
+              fieldNames: {
+                label: 'nm',
+                value: 'appId'
+              },
+            }}
+          />
+          <RangePicker
+            ranges={ranges}
+            // disabledDate={disabledDate}
+            // onChange={onChange}
+            value={hackValue || dateRangeValue}
+            disabledDate={disabledDate}
+            onCalendarChange={val => setDates(val)}
+            onChange={val => setDateRangeValue(val)}
+            onOpenChange={onOpenChange}
+          />
+          {/* <ProFormDateRangePicker
+            name="dateRange"
+            label="日期范围:"
+            ranges={ranges}
+            format="YYYY/MM/DD"
+            onChange={onChange}
+          /> */}
+        </QueryFilter>
+      </ProCard>
       {cardListTpl}
     </PageContainer>
   );

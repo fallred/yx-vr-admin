@@ -77,14 +77,15 @@ const reportListPage: React.FC<{}> = () => {
   useEffect(() => {
     fetchData([appId]);
   }, [appId]);
-  const convertTpl = () => {
+  const renderConvertTpl = () => {
     const convertListTpl = convertList.map(cardItem => (
       <StatisticCard
         key={cardItem.key}
+        className="card-item"
         statistic={{
           title: cardItem.name,
           value: cardItem.value,
-          description: <Statistic title="环比" value={item.link_relative_ratio} trend={item.link_relative_ratio > 0 ? 'up' : 'down'} />,
+          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
         }}
       />
     ));
@@ -96,52 +97,133 @@ const reportListPage: React.FC<{}> = () => {
           split="vertical"
           headerBordered
           bordered
+          className="card-list"
       >
         {convertListTpl}
       </ProCard>
     );
   };
-
-    
+  const renderEvaluateTpl = () => {
+    const evaluateListTpl = evaluateList.map((cardItem, index) => (
+      <StatisticCard
+        key={cardItem.key}
+        className="card-item"
+        statistic={{
+          title: cardItem.name,
+          value: cardItem.value,
+          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+        }}
+      />
+    ));
+    return (
+      <ProCard
+          key="2"
+          title="评价数据"
+          extra="2019年9月28日"
+          split="vertical"
+          className="card-list"
+          headerBordered
+          bordered
+      >
+        {evaluateListTpl}
+      </ProCard>
+    );
+  };
+  const renderMemberTpl = () => {
+    const memberListTpl = memberList.map(cardItem => (
+      <StatisticCard
+        key={cardItem.key}
+        className="card-item"
+        statistic={{
+          title: cardItem.name,
+          value: cardItem.value,
+          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+        }}
+      />
+    ));
+    return (
+      <ProCard
+          key="2"
+          title="会员数据"
+          extra="2019年9月28日"
+          split="vertical"
+          className="card-list"
+          headerBordered
+          bordered
+      >
+        {memberListTpl}
+      </ProCard>
+    );
+  };
+  const renderPerformanceTpl = () => {
+    const performanceListTpl = performanceList.map(cardItem => (
+      <StatisticCard
+        key={cardItem.key}
+        className="card-item"
+        statistic={{
+          title: cardItem.name,
+          value: cardItem.value,
+          description: <Statistic title="环比" value={cardItem.value} trend={cardItem.value > 0 ? 'up' : 'down'} />,
+        }}
+      />
+    ));
+    return (
+      <ProCard
+          key="2"
+          title="业绩数据"
+          extra="2019年9月28日"
+          split="vertical"
+          className="card-list"
+          headerBordered
+          bordered
+      >
+        {performanceListTpl}
+      </ProCard>
+    );
+  };
   return (
     <PageContainer className="report-list">
       <ProCard key="card1" style={{marginBottom: 20}}>
-          <QueryFilter
-            submitter={false}
-            split
-          >
-            <ProFormSelect
-              label="门店"
-              value={appId}
-              options={shopStoreList}
-              onChange={handleAppIdChange}
-              fieldProps={{
-                fieldNames: {
-                  label: 'nm',
-                  value: 'appId'
-                },
-              }}
-            />
-            <RangePicker
-              ranges={ranges}
-              // disabledDate={disabledDate}
-              // onChange={onChange}
-              value={hackValue || dateRangeValue}
-              disabledDate={disabledDate}
-              onCalendarChange={val => setDates(val)}
-              onChange={val => setDateRangeValue(val)}
-              onOpenChange={onOpenChange}
-            />
-            {/* <ProFormDateRangePicker
-              name="dateRange"
-              label="日期范围:"
-              ranges={ranges}
-              format="YYYY/MM/DD"
-              onChange={onChange}
-            /> */}
-          </QueryFilter>
-        </ProCard>
-      {cardListTpl}
+        <QueryFilter
+          submitter={false}
+          split
+        >
+          <ProFormSelect
+            label="门店"
+            value={appId}
+            options={shopStoreList}
+            onChange={handleAppIdChange}
+            fieldProps={{
+              fieldNames: {
+                label: 'nm',
+                value: 'appId'
+              },
+            }}
+          />
+          <RangePicker
+            ranges={ranges}
+            // onChange={onChange}
+            value={hackValue || dateRangeValue}
+            disabledDate={disabledDate}
+            onCalendarChange={val => setDates(val)}
+            onChange={val => setDateRangeValue(val)}
+            onOpenChange={onOpenChange}
+          />
+          {/* <ProFormDateRangePicker
+            name="dateRange"
+            label="日期范围:"
+            ranges={ranges}
+            format="YYYY/MM/DD"
+            onCalendarChange={val => setDates(val)}
+            onChange={val => setDateRangeValue(val)}
+            onOpenChange={onOpenChange}
+          /> */}
+        </QueryFilter>
+      </ProCard>
+      {renderConvertTpl()}
+      {renderEvaluateTpl()}
+      {renderMemberTpl()}
+      {renderPerformanceTpl()}
     </PageContainer>
   );
 };
