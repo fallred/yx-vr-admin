@@ -32,6 +32,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const {selectedMenuTree = []} = current;
   const [menuCheckedKeys, setMenuCheckedKeys] = useState<React.Key[]>([]);
   const [funcCheckedKeys, setFuncCheckedKeys] = useState<React.Key[]>([]);
+  const [halfCheckedKeys, setHalfCheckedKeys] = useState<React.Key[]>([]);
   const authTreeRef = useRef<React.Component>(null);
   useEffect(() => {
     if (formRef.current) {
@@ -53,9 +54,10 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   useEffect(() => {
     debugger;
     if (selectedMenuTree?.length > 0) {
-      const {menuNodes, funcNodes} = queryMenuAndFuncNodes(selectedMenuTree);
+      const {menuNodes, funcNodes, halfIds} = queryMenuAndFuncNodes(selectedMenuTree);
       setMenuCheckedKeys(menuNodes);
       setFuncCheckedKeys(funcNodes);
+      setHalfCheckedKeys(halfIds);
     }
   }, [selectedMenuTree]);
 
@@ -115,7 +117,12 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
           ]}
         />
         <ProFormText name="powerSelected" label="权限菜单">
-            <AuthTree cRef={authTreeRef} leftCheckedKeys={menuCheckedKeys} rightCheckedKeys={funcCheckedKeys} />
+            <AuthTree
+              cRef={authTreeRef}
+              leftCheckedKeys={menuCheckedKeys}
+              rightCheckedKeys={funcCheckedKeys}
+              halfCheckedKeys={halfCheckedKeys}
+            />
         </ProFormText>
         </Form>
     );

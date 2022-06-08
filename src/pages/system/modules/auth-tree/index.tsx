@@ -11,10 +11,11 @@ import styles from "./index.module.less";
 interface AuthTreeProps {
     leftCheckedKeys: API.IId[];
     rightCheckedKeys: API.IId[];
+    halfCheckedKeys: API.IId[];
 }
 
 const AuthTree: FC<AuthTreeProps> = (props) => {
-    const { leftCheckedKeys, rightCheckedKeys, cRef } = props;
+    const { leftCheckedKeys, rightCheckedKeys, halfCheckedKeys, cRef } = props;
     const systemMenuTree = useRecoilValue(systemMenuTreeState);
     const [funcMenuTree, setFuncMenuTree] = useState<IFuncMenuTree>([]);
     const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
@@ -79,8 +80,9 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     useEffect(() => {
         debugger;
         setCheckedKeys(leftCheckedKeys);
-        updateFuncMenuTree(leftCheckedKeys);
-    }, [leftCheckedKeys]);
+        // 根据leftCheckedKeys，计算出 左边树选中/半选的节点。
+        updateFuncMenuTree(halfCheckedKeys);
+    }, [leftCheckedKeys, halfCheckedKeys]);
     useEffect(() => {
         setCheckedKeys1(rightCheckedKeys);
     }, [rightCheckedKeys]);

@@ -100,22 +100,35 @@ export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): IMe
 export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuthInfo {
     let menuNodes = [];
     let funcNodes = [];
+    let halfIds = [];
     for(let temp of selectedMenuTree) {
         if (temp.selected) {
             menuNodes.push(temp.menuId);
+            halfIds.push(temp.menuId);
         }
+        // if (temp.selected || hasChildrenSelected()) {
+        //     halfIds.push(temp.menuId);
+        // }
         if (temp.permission && temp.permission.length > 0) {
             for(let btemp of temp.permission) {
                 funcNodes.push(btemp.id);
             }
         }
         if (temp.children) {
-            const {menuNodes: menuCheckedIds, funcNodes: funcCheckedIds} = queryMenuAndFuncNodes(temp.children);
+            const {
+                menuNodes: menuCheckedIds,
+                funcNodes: funcCheckedIds,
+                halfIds: halfTempIds
+            } = queryMenuAndFuncNodes(temp.children);
             menuNodes = menuNodes.concat(menuCheckedIds);
             funcNodes = funcNodes.concat(funcCheckedIds);
+            if (!temp.selected && menuCheckedIds.length > 0) {
+                halfIds.push(temp.menuId);
+            }
+            halfIds = halfIds.concat(halfTempIds);
         }
     }
-    return {menuNodes, funcNodes};
+    return {menuNodes, funcNodes, halfIds};
 }
 
 /**
@@ -161,7 +174,7 @@ export function genFuncTree(pname: String = '', systemMenuTree: IMenuTree, menuC
             });
         }
     }
-    return funcMenuTree
+    return funcMenuTree;
 }
 
 /**
