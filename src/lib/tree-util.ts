@@ -228,29 +228,45 @@ export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: A
 }
 
 /**
- * 传入系统原始菜单树，和选中的菜单keys。返回选中/半选的菜单keys
- * @param systemMenuTree
- * @param menuIds 不包含半选菜单id
- * @return menuIds
+ * 传入功能菜单树，查找节点key，查找节点key的值
+ * @param funcMenuTree
+ * @param key
+ * @param value
+ * @return menuNode 
  */
-export function genHalfAndAllSelectedMenuIds(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[]) {
-    for(let i = 0; i < systemMenuTree.length; i++) {
-        let temp = cloneDeep(systemMenuTree[i]);
-        if (menuCheckedIds.includes(temp.menuId)) {
+ export function queryFuncNode(funcMenuTree: IFuncMenuTree, key: API.IId, value: any) {
+    let resultTree = null;
+    for(let i = 0; i < funcMenuTree.length; i++) {
+        const item = funcMenuTree[i];
+        console.log('item:', item)
+        if (item?.[key] === value) {
+            resultTree = item;
+            break;
+        }
+        if (!item?.children || item?.children?.length === 0) {
+            continue;
+        }
+        resultTree = queryFuncNode(item?.children, key, value);
+        if (resultTree) {
+            break;
         }
     }
-
-    let menuNodes = [];
-    for(let temp of selectedMenuTree) {
-        if (temp.selected) {
-            menuNodes.push(temp.menuId);
-        }
-        else {
-        }
-        if (temp.children) {
-            const {menuNodes: menuCheckedIds, } = queryMenuAndFuncNodes(temp.children);
-            menuNodes = menuNodes.concat(menuCheckedIds);
+    return resultTree;
+}
+/**
+ * 传入系统原始菜单树，和选中的菜单keys。返回选中/半选的菜单keys
+ * @param funcMenuTree
+ * @param checkedIds
+ * @return checkedFuncIds
+ */
+export function genFuncCheckedKeys(funcMenuTree: IMenuTree, checkedIds: API.IID[]) {
+    const list = [];
+    for(let i = 0; i < checkedIds.length; i++) {
+        const menuKey = checkedIds[i];
+        const item = queryFuncNode(funcMenuTree, 'id', menuKey);
+        if (item) {
+            list.push(menuKey);
         }
     }
-    return menuNodes;
+    return list;
 }

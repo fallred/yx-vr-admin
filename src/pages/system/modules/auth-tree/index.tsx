@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { Tree } from 'antd';
 import {IFuncMenuTree} from '@/models/menu';
 import { systemMenuTreeState } from "@/stores/recoilState";
-import { genFuncTree, genSelectedAuthTree } from "@/lib/tree-util";
+import { genFuncTree, genSelectedAuthTree, genFuncCheckedKeys } from "@/lib/tree-util";
 import { API } from '@/models/typings';
 import WithCompLoad from '@/components/with-load/index';
 import styles from "./index.module.less";
@@ -31,6 +31,7 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     const updateFuncMenuTree = (menuIds: API.IId[]) => {
         const computedTree = genFuncTree('', systemMenuTree, menuIds);
         setFuncMenuTree(computedTree);
+        return computedTree;
     };
     const onExpand = (expandedKeysValue: React.Key[]) => {
         // console.log('onExpand', expandedKeysValue);
@@ -41,11 +42,15 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     };
 
     const onCheck = (checkedKeysValue: React.Key[], info: any) => {
-        debugger;
         // console.log('onCheck', checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
         const selectedKeys = info.halfCheckedKeys.concat(checkedKeysValue);
-        updateFuncMenuTree(selectedKeys);
+        const funcMTree = updateFuncMenuTree(selectedKeys);
+        console.log('funcMTree:', funcMTree);
+        console.log('checkedKeys1:', checkedKeys1);
+        const funcCheckedKeys = genFuncCheckedKeys(funcMTree, checkedKeys1);
+        console.log('funcCheckedKeys:', funcCheckedKeys);
+        setSelectedKeys1(funcCheckedKeys);
     };
 
     const onSelect = (selectedKeysValue: React.Key[], info: any) => {
