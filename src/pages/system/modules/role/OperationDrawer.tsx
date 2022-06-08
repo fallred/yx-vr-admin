@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import {queryMenuAndFuncNodes} from '@/lib/tree-util';
 import AuthTree from '../auth-tree/index';
 import ProForm, {
   ModalForm,
@@ -28,7 +29,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current = {}, onCancel, onSubmit } = props;
-  const {selectedMenuTree} = current;
+  const {selectedMenuTree = []} = current;
   const [menuCheckedKeys, setMenuCheckedKeys] = useState<React.Key[]>([]);
   const [funcCheckedKeys, setFuncCheckedKeys] = useState<React.Key[]>([]);
   const authTreeRef = useRef<React.Component>(null);
@@ -50,19 +51,28 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   }, [current]);
 
   useEffect(() => {
-    const lCheckedKeys = [];
+    debugger;
+    if (selectedMenuTree?.length > 0) {
+      const {menuNodes, funcNodes} = queryMenuAndFuncNodes(selectedMenuTree);
+      setMenuCheckedKeys(menuNodes);
+      setFuncCheckedKeys(funcNodes);
+    }
   }, [selectedMenuTree]);
 
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
     const selMenuTree = authTreeRef?.current?.getValue();
+    const selMenuTreeJSON = JSON.stringify(selMenuTree);
+    console.log('selMenuTreeJSON:', selMenuTreeJSON);
+    console.log('selMenuTree:', selMenuTree);
+    debugger;
     const powerSelected = selMenuTree ? JSON.stringify(selMenuTree) : '[]';
-    form.setFieldsValue({
-      ...formData,
-      powerSelected
-    });
-    form.submit();
+    // form.setFieldsValue({
+    //   ...formData,
+    //   powerSelected
+    // });
+    // form.submit();
   };
 
   const handleFinish = async (values: { [key: string]: any }) => {

@@ -298,45 +298,45 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 >
                     查看数据权限
                 </AuthLink>,
-                // <AuthLink
-                //   key={PageFuncEnum.DELETE}
-                //   operCode={PageFuncEnum.DELETE}
-                //   onClick={(e) => {
-                //     e.preventDefault();
-                //     Modal.confirm({
-                //       title: "删除用户",
-                //       content: "确定删除该用户吗？",
-                //       okText: "确认",
-                //       cancelText: "取消",
-                //       onOk: async () => {
-                //         await handleRemove([{ ...record }]);
-                //         setSelectedRows([]);
-                //         refetch();
-                //       },
-                //     });
-                //   }}
-                // >
-                //   删除
-                // </AuthLink>,
-                <TableDropdown
-                    key="actionGroup"
-                    onSelect={(key) => {
-                        if (key === PageFuncEnum.DELETE) {
-                            Modal.confirm({
-                                title: "删除用户",
-                                content: "确定删除该用户吗？",
-                                okText: "确认",
-                                cancelText: "取消",
-                                onOk: async () => {
-                                    await handleRemove([{ ...record }]);
-                                    setSelectedRows([]);
-                                    refetch();
-                                },
-                            });
-                        }
-                    }}
-                    menus={opMenuList}
-                />,
+                <AuthLink
+                  key={PageFuncEnum.DELETE}
+                  operCode={PageFuncEnum.DELETE}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    Modal.confirm({
+                      title: "删除用户",
+                      content: "确定删除该用户吗？",
+                      okText: "确认",
+                      cancelText: "取消",
+                      onOk: async () => {
+                        await handleRemove([{ ...record }]);
+                        setSelectedRows([]);
+                        refetch();
+                      },
+                    });
+                  }}
+                >
+                  删除
+                </AuthLink>,
+                // <TableDropdown
+                //     key="actionGroup"
+                //     onSelect={(key) => {
+                //         if (key === PageFuncEnum.DELETE) {
+                //             Modal.confirm({
+                //                 title: "删除用户",
+                //                 content: "确定删除该用户吗？",
+                //                 okText: "确认",
+                //                 cancelText: "取消",
+                //                 onOk: async () => {
+                //                     await handleRemove([{ ...record }]);
+                //                     setSelectedRows([]);
+                //                     refetch();
+                //                 },
+                //             });
+                //         }
+                //     }}
+                //     menus={opMenuList}
+                // />,
             ];
             return btnList;
         },
@@ -396,9 +396,9 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 <FooterToolbar
                     extra={
                         <div>
-                            <LocaleFormatter id="app.project.chosen" defaultMessage="已选择" />{' '}
-                            <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-                            <LocaleFormatter id="app.project.item" defaultMessage="项" />
+                            <span>已选择</span>
+                            <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>
+                            <span>项</span>
                         </div>
                     }
                 >

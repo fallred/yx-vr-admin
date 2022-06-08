@@ -52,7 +52,7 @@ const FuncTree = () => {
   const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
   const onExpand = (expandedKeysValue: React.Key[]) => {
-    console.log('onExpand', expandedKeysValue);
+    // console.log('onExpand', expandedKeysValue);
     // if not set autoExpandParent to false, if children expanded, parent can not collapse.
     // or, you can remove all expanded children keys.
     setExpandedKeys(expandedKeysValue);
@@ -60,12 +60,12 @@ const FuncTree = () => {
   };
 
   const onCheck = (checkedKeysValue: React.Key[], info: any) => {
-    console.log('onCheck', checkedKeysValue);
+    // console.log('onCheck', checkedKeysValue);
     setCheckedKeys(checkedKeysValue);
   };
 
   const onSelect = (selectedKeysValue: React.Key[], info: any) => {
-    console.log('onSelect', info);
+    // console.log('onSelect', info);
     setSelectedKeys(selectedKeysValue);
   };
 

@@ -4,6 +4,7 @@ import { API } from "@/models/typings";
 import Item from "antd/lib/list/Item";
 import { MenuItemGroupProps } from "antd/lib/menu";
 import { POINT_CONVERSION_COMPRESSED } from "constants";
+import { debug } from 'console';
 // 传入选中的树形菜单
 
 /**
@@ -34,6 +35,7 @@ export function transToSelectedIds(selectedMenuTree: IMenuTree) {
  * @return selectedMenuTree
  */
 export function transToSelectedTree(menuTree: IMenuTree, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
+    debugger;
     const tempTree = [];
     for(let item of menuTree) {
         const {
@@ -71,16 +73,23 @@ export function transToSelectedTree(menuTree: IMenuTree, selectedMenuIdList: num
  * @return menuNode
  */
 export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): IMenuItem {
+    let resultTree = null;
     for(let i = 0; i < menuTree.length; i++) {
         const item = menuTree[i];
+        console.log('item:', item)
         if (item?.[key] === value) {
-            return item;
+            resultTree = item;
+            break;
         }
         if (!item?.children || item?.children?.length === 0) {
             continue;
         }
-        return queryMenuNode(item?.children, key, value);
+        resultTree = queryMenuNode(item?.children, key, value);
+        if (resultTree) {
+            break;
+        }
     }
+    return resultTree;
 }
 
 /**
@@ -96,12 +105,12 @@ export function queryMenuAndFuncNodes(selectedMenuTree: IMenuTree): ICheckedAuth
             menuNodes.push(temp.menuId);
         }
         if (temp.permission && temp.permission.length > 0) {
-            for(btemp of temp.permission) {
+            for(let btemp of temp.permission) {
                 funcNodes.push(btemp.id);
             }
         }
         if (temp.children) {
-            const {menuCheckedIds, funcCheckedIds} = queryMenuAndFuncNodes(temp.children);
+            const {menuNodes: menuCheckedIds, funcNodes: funcCheckedIds} = queryMenuAndFuncNodes(temp.children);
             menuNodes = menuNodes.concat(menuCheckedIds);
             funcNodes = funcNodes.concat(funcCheckedIds);
         }
@@ -163,32 +172,72 @@ export function genFuncTree(pname: String = '', systemMenuTree: IMenuTree, menuC
  * @return selectedMenuTree
  */
 export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[], funcCheckedIds: API.IID[]): IMenuTree {
+    console.log('genSelectedAuthTree systemMenuTree:', systemMenuTree);
+    console.log('genSelectedAuthTree menuCheckedIds:', menuCheckedIds);
+    console.log('genSelectedAuthTree funcCheckedIds:', funcCheckedIds);
     const checkedTree = [];
     for(let i = 0; i < systemMenuTree.length; i++) {
         let temp = cloneDeep(systemMenuTree[i]);
+        let selected = false;
         if (menuCheckedIds.includes(temp.menuId)) {
             temp.selected = true;
+            selected = true;
+            if (temp?.children?.length > 0) {
+                const childrenTree = temp?.children?.map(item => ({...item, selected: true}));
+                temp.children = childrenTree;
+            }
         }
         else if (!menuCheckedIds.includes(temp.menuId)
             && temp?.children?.length > 0) {
             const childrenTree = genSelectedAuthTree(temp.children, menuCheckedIds, funcCheckedIds);
-            if (childrenTree?.length === 0) {
-                continue;
+            if (childrenTree?.length > 0) {
+                temp.children = childrenTree;
+                selected = true;
             }
-            temp.children = childrenTree;
-            checkedTree.push(temp);
         }
         if (temp?.permission?.length > 0) {
             const pList = [];
             for(let pTemp of temp.permission) {
-                if (!funcCheckedIds.includes(pTemp.id)) {
-                    continue;
+                if (funcCheckedIds.includes(pTemp.id)) { 
+                    pList.push(pTemp);
                 }
-                pList.push(pTemp);
             }
-            temp.permission = pList;
-            checkedTree.push(temp);
+            if(pList.length > 0) {
+                temp.permission = pList;
+                selected = true;
+            }    
+        }
+        if(selected) {
+            checkedTree.push(temp)
         }
     }
     return checkedTree;
+}
+
+/**
+ * 传入系统原始菜单树，和选中的菜单keys。返回选中/半选的菜单keys
+ * @param systemMenuTree
+ * @param menuIds 不包含半选菜单id
+ * @return menuIds
+ */
+export function genHalfAndAllSelectedMenuIds(systemMenuTree: IMenuTree, menuCheckedIds: API.IID[]) {
+    for(let i = 0; i < systemMenuTree.length; i++) {
+        let temp = cloneDeep(systemMenuTree[i]);
+        if (menuCheckedIds.includes(temp.menuId)) {
+        }
+    }
+
+    let menuNodes = [];
+    for(let temp of selectedMenuTree) {
+        if (temp.selected) {
+            menuNodes.push(temp.menuId);
+        }
+        else {
+        }
+        if (temp.children) {
+            const {menuNodes: menuCheckedIds, } = queryMenuAndFuncNodes(temp.children);
+            menuNodes = menuNodes.concat(menuCheckedIds);
+        }
+    }
+    return menuNodes;
 }

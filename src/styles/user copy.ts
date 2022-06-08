@@ -8,12 +8,50 @@ const mockUserMenuTree = [
     menuName: '首页',
     icon: 'home',
   },
-  {
-    menuId: '0-0',
-    url: '/notification',
-    menuName: '公告',
-    icon: 'notification',
-  },
+  // {
+  //   menuId: '0-0',
+  //   url: '/notification',
+  //   menuName: '公告',
+  //   icon: 'notification',
+  //   "permission": [
+  //     {
+  //       "id": 1,
+  //       "mid": 2,
+  //       "code": "list",
+  //       "name": null,
+  //       "desc": null,
+  //       "url": "/api/dataInput/list",
+  //       "menuName": "查询"
+  //     },
+  //     {
+  //       "id": 2,
+  //       "mid": 2,
+  //       "code": "add",
+  //       "name": null,
+  //       "desc": null,
+  //       "url": "/api/dataInput/add",
+  //       "menuName": "新增"
+  //     },
+  //     {
+  //       "id": 3,
+  //       "mid": 2,
+  //       "code": "edit",
+  //       "name": null,
+  //       "desc": null,
+  //       "url": "/api/dataInput/edit",
+  //       "menuName": "编辑"
+  //     },
+  //     {
+  //       "id": 4,
+  //       "mid": 2,
+  //       "code": "delete",
+  //       "name": null,
+  //       "desc": null,
+  //       "url": "/api/dataInput/delete",
+  //       "menuName": "删除"
+  //     }
+  //   ]
+  // },
   {
     menuId: '0-1',
     url: '/system',
@@ -29,7 +67,7 @@ const mockUserMenuTree = [
           {
             "id": 5,
             "mid": 2,
-            "code": "related_person:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
@@ -38,7 +76,7 @@ const mockUserMenuTree = [
           {
             "id": 6,
             "mid": 2,
-            "code": "related_person:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
@@ -47,7 +85,7 @@ const mockUserMenuTree = [
           {
             "id": 7,
             "mid": 2,
-            "code": "related_person:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
@@ -56,7 +94,7 @@ const mockUserMenuTree = [
           {
             "id": 8,
             "mid": 2,
-            "code": "related_person:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/delete",
@@ -73,7 +111,7 @@ const mockUserMenuTree = [
           {
             "id": 9,
             "mid": 2,
-            "code": "related_person:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
@@ -82,7 +120,7 @@ const mockUserMenuTree = [
           {
             "id": 10,
             "mid": 2,
-            "code": "related_person:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
@@ -91,7 +129,7 @@ const mockUserMenuTree = [
           {
             "id": 7,
             "mid": 2,
-            "code": "related_person:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
@@ -114,7 +152,7 @@ const mockUserMenuTree = [
           {
             "id": 1,
             "mid": 2,
-            "code": "related_person:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
@@ -123,7 +161,7 @@ const mockUserMenuTree = [
           {
             "id": 2,
             "mid": 2,
-            "code": "related_person:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
@@ -132,7 +170,7 @@ const mockUserMenuTree = [
           {
             "id": 3,
             "mid": 2,
-            "code": "related_person:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
@@ -141,7 +179,7 @@ const mockUserMenuTree = [
           {
             "id": 4,
             "mid": 2,
-            "code": "related_person:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/delete",
@@ -164,36 +202,36 @@ const mockUserMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": 5,
+            "id": 1,
             "mid": 2,
-            "code": "related_person:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
             "menuName": "查询"
           },
           {
-            "id": 6,
+            "id": 2,
             "mid": 2,
-            "code": "related_person:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
             "menuName": "新增"
           },
           {
-            "id": 7,
+            "id": 3,
             "mid": 2,
-            "code": "related_person:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
             "menuName": "编辑"
           },
           {
-            "id": 8,
+            "id": 4,
             "mid": 2,
-            "code": "related_person:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/delete",
@@ -206,88 +244,12 @@ const mockUserMenuTree = [
         url: '/storeMng/shopList',
         menuName: '门店管理',
         icon: 'smile',
-        "permission": [
-          {
-            "id": 35,
-            "mid": 3,
-            "code": "store_manage:list",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/list",
-            "menuName": "查询"
-          },
-          {
-            "id": 36,
-            "mid": 3,
-            "code": "store_manage:add",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/add",
-            "menuName": "新增"
-          },
-          {
-            "id": 37,
-            "mid": 3,
-            "code": "store_manage:edit",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/edit",
-            "menuName": "编辑"
-          },
-          {
-            "id": 38,
-            "mid": 3,
-            "code": "store_manage:delete",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/delete",
-            "menuName": "删除"
-          }
-        ]
       },
       {
         menuId: '0-2-2',
         url: '/storeMng/shopDetail',
         menuName: '门店信息',
         icon: 'smile',
-        "permission": [
-          {
-            "id": 39,
-            "mid": 4,
-            "code": "store_info:list",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/list",
-            "menuName": "查询"
-          },
-          {
-            "id": 40,
-            "mid": 4,
-            "code": "store_info:add",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/add",
-            "menuName": "新增"
-          },
-          {
-            "id": 41,
-            "mid": 4,
-            "code": "store_info:edit",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/edit",
-            "menuName": "编辑"
-          },
-          {
-            "id": 42,
-            "mid": 4,
-            "code": "store_info:delete",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataInput/delete",
-            "menuName": "删除"
-          }
-        ],
       },
     ],
   },
@@ -302,34 +264,12 @@ const mockUserMenuTree = [
         url: '/businessMng/reportList',
         menuName: '经营报表',
         icon: 'smile',
-        "permission": [
-          {
-            "id": 10,
-            "mid": 6,
-            "code": "business_report:list",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataTag/list",
-            "menuName": "查询"
-          }
-        ]
       },
       {
         menuId: '0-3-1',
         url: '/businessMng/rankList',
         menuName: '排行榜',
         icon: 'smile',
-        "permission": [
-          {
-            "id": 11,
-            "mid": 7,
-            "code": "ranking_list:list",
-            "name": null,
-            "desc": null,
-            "url": "/api/dataTag/list",
-            "menuName": "查询"
-          }
-        ]
       },
     ],
   },
@@ -360,27 +300,27 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0100',
+            "id": 30,
             "mid": 18,
-            "code": "role_info:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/userrole/list",
             "menuName": "查询"
           },
           {
-            "id": '0101',
+            "id": 31,
             "mid": 18,
-            "code": "role_info:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/userrole/edit",
             "menuName": "编辑"
           },
           {
-            "id": '0102',
+            "id": 32,
             "mid": 18,
-            "code": "role_info:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/userrole/delete",
@@ -395,7 +335,7 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0110',
+            "id": 27,
             "mid": 17,
             "code": "user_info:list",
             "name": null,
@@ -404,7 +344,7 @@ const mockSystemMenuTree = [
             "menuName": "查询"
           },
           {
-            "id": '0111',
+            "id": 28,
             "mid": 17,
             "code": "user_info:edit",
             "name": null,
@@ -413,7 +353,7 @@ const mockSystemMenuTree = [
             "menuName": "编辑"
           },
           {
-            "id": '0112',
+            "id": 29,
             "mid": 17,
             "code": "user_info:delete",
             "name": null,
@@ -430,9 +370,9 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0120',
+            "id": 33,
             "mid": 19,
-            "code": "log_info:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/registerlist/list",
@@ -447,9 +387,9 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0130',
+            "id": 34,
             "mid": 20,
-            "code": "notice_info:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/registerlist/list",
@@ -472,36 +412,36 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0201',
+            "id": 1,
             "mid": 2,
-            "code": "related_person:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
             "menuName": "查询"
           },
           {
-            "id": '0202',
+            "id": 2,
             "mid": 2,
-            "code": "related_person:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
             "menuName": "新增"
           },
           {
-            "id": '0203',
+            "id": 3,
             "mid": 2,
-            "code": "related_person:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
             "menuName": "编辑"
           },
           {
-            "id": '0204',
+            "id": 4,
             "mid": 2,
-            "code": "related_person:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/delete",
@@ -516,36 +456,36 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0210',
+            "id": 35,
             "mid": 3,
-            "code": "store_manage:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
             "menuName": "查询"
           },
           {
-            "id": '0211',
+            "id": 36,
             "mid": 3,
-            "code": "store_manage:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
             "menuName": "新增"
           },
           {
-            "id": '0212',
+            "id": 37,
             "mid": 3,
-            "code": "store_manage:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
             "menuName": "编辑"
           },
           {
-            "id": '0213',
+            "id": 38,
             "mid": 3,
-            "code": "store_manage:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/delete",
@@ -560,36 +500,36 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0220',
+            "id": 39,
             "mid": 4,
-            "code": "store_info:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/list",
             "menuName": "查询"
           },
           {
-            "id": '0221',
+            "id": 40,
             "mid": 4,
-            "code": "store_info:add",
+            "code": "add",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/add",
             "menuName": "新增"
           },
           {
-            "id": '0222',
+            "id": 41,
             "mid": 4,
-            "code": "store_info:edit",
+            "code": "edit",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/edit",
             "menuName": "编辑"
           },
           {
-            "id": '0223',
+            "id": 42,
             "mid": 4,
-            "code": "store_info:delete",
+            "code": "delete",
             "name": null,
             "desc": null,
             "url": "/api/dataInput/delete",
@@ -612,9 +552,9 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0301',
+            "id": 10,
             "mid": 6,
-            "code": "business_report:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataTag/list",
@@ -629,9 +569,9 @@ const mockSystemMenuTree = [
         icon: 'smile',
         "permission": [
           {
-            "id": '0310',
+            "id": 11,
             "mid": 7,
-            "code": "ranking_list:list",
+            "code": "list",
             "name": null,
             "desc": null,
             "url": "/api/dataTag/list",

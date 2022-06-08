@@ -79,6 +79,7 @@ const LayoutPage: FC = ({ children }) => {
   };
   const handlePageChange = (location: Location) => {
     const menuNode = queryMenuNode(userMenuTree, 'url', location.pathname);
+    console.log('menuNode:', menuNode);
     const {permission = []} = menuNode ?? {};
     recoilService.getPermissionList(permission);
   };

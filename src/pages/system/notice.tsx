@@ -327,9 +327,9 @@ const NoticeTableList = () => {
         <FooterToolbar
           extra={
             <div>
-              <LocaleFormatter id="app.project.chosen" defaultMessage="已选择" />{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a>{' '}
-              <LocaleFormatter id="app.project.item" defaultMessage="项" />
+              <span>已选择</span>
+              <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a>
+              <span>项</span>
             </div>
           }
         >

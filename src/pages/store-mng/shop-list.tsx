@@ -420,9 +420,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
         <FooterToolbar
           extra={
             <div>
-              <LocaleFormatter id="app.project.chosen" defaultMessage="已选择" />{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              <LocaleFormatter id="app.project.item" defaultMessage="项" />
+              <span>已选择</span>
+              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>
+              <span>项</span>
             </div>
           }
         >

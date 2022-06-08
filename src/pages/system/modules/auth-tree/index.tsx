@@ -32,7 +32,7 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
         setFuncMenuTree(computedTree);
     };
     const onExpand = (expandedKeysValue: React.Key[]) => {
-        console.log('onExpand', expandedKeysValue);
+        // console.log('onExpand', expandedKeysValue);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys(expandedKeysValue);
@@ -40,19 +40,20 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     };
 
     const onCheck = (checkedKeysValue: React.Key[], info: any) => {
-        console.log('onCheck', checkedKeysValue);
+        debugger;
+        // console.log('onCheck', checkedKeysValue);
         setCheckedKeys(checkedKeysValue);
         const selectedKeys = info.halfCheckedKeys.concat(checkedKeysValue);
         updateFuncMenuTree(selectedKeys);
     };
 
     const onSelect = (selectedKeysValue: React.Key[], info: any) => {
-        console.log('onSelect', info);
+        // console.log('onSelect', info);
         setSelectedKeys(selectedKeysValue);
     };
 
     const onExpand1 = (expandedKeysValue: React.Key[]) => {
-        console.log('onExpand1', expandedKeysValue);
+        // console.log('onExpand1', expandedKeysValue);
         // if not set autoExpandParent to false, if children expanded, parent can not collapse.
         // or, you can remove all expanded children keys.
         setExpandedKeys1(expandedKeysValue);
@@ -60,12 +61,12 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
     };
 
     const onCheck1 = (checkedKeysValue: React.Key[], info: any) => {
-        console.log('onCheck', checkedKeysValue);
+        // console.log('onCheck', checkedKeysValue);
         setCheckedKeys1(checkedKeysValue);
     };
 
     const onSelect1 = (selectedKeysValue: React.Key[], info: any) => {
-        console.log('onSelect', info);
+        // console.log('onSelect', info);
         setSelectedKeys1(selectedKeysValue);
     };
     useImperativeHandle(cRef, () => ({
@@ -76,6 +77,7 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
         },
     }));
     useEffect(() => {
+        debugger;
         setCheckedKeys(leftCheckedKeys);
         updateFuncMenuTree(leftCheckedKeys);
     }, [leftCheckedKeys]);

@@ -60,6 +60,7 @@ const RoleTableList= () => {
 
   const showEditModal = (item: API.IRole) => {
     setVisible(true);
+    debugger;
     item.selectedMenuTree = JSON.parse(item.powerSelected);
     // item.selectedMenuCodeList = transToSelectedIds(item.selectedMenuTree);
     // const selectedTree = transToSelectedTree(menuTree, selectedMenuCodeList)
@@ -252,9 +253,9 @@ const RoleTableList= () => {
         <FooterToolbar
           extra={
             <div>
-              <LocaleFormatter id="app.role.chosen" defaultMessage="已选择" />{' '}
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
-              <LocaleFormatter id="app.role.item" defaultMessage="项" />
+              <span>已选择</span>
+              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>
+              <span>项</span>
             </div>
           }
         >
