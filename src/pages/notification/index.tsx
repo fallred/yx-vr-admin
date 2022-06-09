@@ -37,8 +37,8 @@ const Notification: React.FC<{}> = () => {
     setNotice(noticeList?.[index]);
   }, [index]);
   useEffect(async () => {
-    const dataResp = await queryNoticeAllPromise();
-    setNoticeList(dataResp?.data);
+    const nList = await queryNoticeAllPromise();
+    setNoticeList(nList);
   }, []);
   return (
     <div className="notification">

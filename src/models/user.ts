@@ -45,3 +45,7 @@ export interface User {
   settings: PureSettings;
   avatar: string;
 }
+
+export interface IGetUserMenuPayload {
+  username: string;
+};

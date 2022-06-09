@@ -15,7 +15,7 @@ import {IShopTaskList, IShopTask} from '@/models/shop-task';
 import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
-import { CurrentUserResult } from "@/models/user";
+import { CurrentUserResult, IGetUserMenuPayload } from "@/models/user";
 import { IRankPaginationResp } from "@/models/rank";
 import {
     IReport, IReportList, IReportPayload,
@@ -27,7 +27,7 @@ const projectResource = '/projects';
 
 // 登陆
 export const useLogin = () => {
-    return useCreate<LoginParams, LoginResult>("/login");
+    return useCreate<LoginParams, LoginResult>("/auth/loginWithAccount", {completeRes: false});
 }
 export const useUpdatePass = () => {
     return useCreate<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd");
@@ -38,16 +38,18 @@ export const useGetSystemMenuTree = () => {
         "systemMenuTree",
         "/manage/menu/list",
         null,
-        {completeRes: true}
+        {completeRes: false}
       );
 };
 
-export const useGetUserMenuTree = () => {
+export const useGetUserMenuTree = (payload?: IGetUserMenuPayload = {}) => {
+    const userName = localStorage.getItem('userName');
+    const params = {username: userName, ...payload};
     return useGetOne<IMenuTree>(
         "userMenuTree",
         "/manage/user/menu",
-        null,
-        {completeRes: true}
+        params,
+        {completeRes: false}
       );
 };
 
@@ -65,7 +67,7 @@ export const useGetRoleListAll = () => {
         "RoleListAll",
         "/manage/role/list",
         null,
-        {completeRes: true}
+        {completeRes: false}
     );
 };
 export const useAddRole = () => {

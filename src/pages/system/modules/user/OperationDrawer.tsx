@@ -33,13 +33,13 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const [form] = Form.useForm();
   const { visible, current = {}, onCancel, onSubmit } = props;
   const {selectedMenuTree} = current;
-  const { data: roleListAllResp, error, isLoading, refetch } = useGetRoleListAll();
+  const { data: roleListAll, error, isLoading, refetch } = useGetRoleListAll();
   const [roleOptions, setRoleOptions] = useState<IRole[]>();
   const fieldNames = {label: 'name', value: 'id', key: 'id'};
   useEffect(() => {
-    const options = roleListAllResp.data?.map(item => ({value: item?.id, label: item?.name}));
+    const options = roleListAll?.map(item => ({value: item?.id, label: item?.name}));
     setRoleOptions(options);
-  }, [roleListAllResp]);
+  }, [roleListAll]);
 
   useEffect(() => {
     if (formRef.current) {

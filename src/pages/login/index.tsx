@@ -36,7 +36,7 @@ const LoginForm: FC = () => {
         logged: true,
       });
       localStorage.setItem("accessToken", result.token.accessToken);
-      localStorage.setItem("userName", result.userName);
+      localStorage.setItem("userName", result.userAccount);
       localStorage.setItem("userAccount", result.userAccount);
       localStorage.setItem("appId", result.appId);
       localStorage.setItem("identity_type", result.identity_type);

@@ -1,15 +1,14 @@
-import { createContext, ReactNode } from 'react';
-import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
+import { createContext, ReactNode, useContext } from 'react';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { notification } from 'antd';
-import { useContext } from 'react';
+import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
 import { createBrowserHistory } from 'history';
-import { useQuery, useMutation, useQueryClient } from 'react-query'
 import qs from 'qs';
-import { result, cloneDeep } from 'cypress/types/lodash';
 
 type IRequestConfig = {
     completeRes: boolean;
 };
+const errorPath = '/vrAdmin/login';
 const history = createBrowserHistory();
 
 console.log('baseurl:', import.meta.env.VITE_BASE_URL);
@@ -25,7 +24,7 @@ axios.interceptors.request.use((config) => {
     // Read token for anywhere, in this case directly from localStorage
     const token = localStorage.getItem('accessToken');
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.accessToken = token;
     }
 
     return config;
@@ -46,7 +45,7 @@ axios.interceptors.response.use(
         });
 
         if (response.status === 401) {
-            window.location.href = '/login';
+            window.location.href = errorPath;
         }
 
         return Promise.reject(new Error(response.statusText || 'Error'));
@@ -60,7 +59,7 @@ axios.interceptors.response.use(
                 // 未登录则跳转登录页面，并携带当前页面的路径                
                 // 在登录成功后返回当前页面，这一步需要在登录页操作。 
                 case 401:
-                    window.location.href = '/login';
+                    window.location.href = errorPath;
 
                     break;
                 // 403 token过期                    
@@ -68,7 +67,7 @@ axios.interceptors.response.use(
                 // 清除本地token和清空vuex中token对象                    
                 // 跳转登录页面   
                 case 403:
-                    window.location.href = '/login';
+                    window.location.href = errorPath;
                     break;
                 // 404请求不存在                
                 case 404:
@@ -187,7 +186,7 @@ const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any
 
 }
 
-const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestConfig = {completeRes: true}) => {
+const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
 
     const service = async () => {
@@ -208,7 +207,7 @@ const useGetOne = <T>(key: string, url: string, params?: any, config?: IRequestC
 }
 
 // get query
-const useQueryGet = <T, U>(url: string, config?: IRequestConfig = {completeRes: true}) => {
+const useQueryGet = <T, U>(url: string, config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return async (params: T) => {
         const data: U = await axios.get(
@@ -227,19 +226,24 @@ const useQueryGet = <T, U>(url: string, config?: IRequestConfig = {completeRes: 
 }
 
 // post body
-const useCreate = <T, U>(url: string) => {
+const useCreate = <T, U>(url: string, config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return useMutation(async (params: T) => {
         const data: U = await axios.post(
             `${url}`,
             params
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     });
 }
 
 // post query
-const useCreateByQuery = <T, U>(url: string) => {
+const useCreateByQuery = <T, U>(url: string, config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return useMutation(async (params: T) => {
         const data: U = await axios.post(
@@ -249,43 +253,63 @@ const useCreateByQuery = <T, U>(url: string) => {
                 params
             }
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     });
 }
 
-const useUpdate = <T>(url: string) => {
+const useUpdate = <T>(url: string,  config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return useMutation(async (item: T) => {
         const data: T = await axios.patch(
             `${url}`,
             item
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     });
 }
 
-const useDelete = <T>(url: string) => {
+const useDelete = <T>(url: string, config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return useMutation(async (id: number) => {
         const data: T = await axios.delete(
             `${url}?id=${id}`,
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     });
 }
 
-const useBatch = (url: string) => {
+const useBatch = (url: string,  config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return useMutation(async (ids: number[]) => {
         const data = await axios.post(
             `${url}`,
             { idList: ids },
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     });
 }
 
-const useUpload = (url: string) => {
+const useUpload = (url: string,  config?: IRequestConfig = {completeRes: false}) => {
     const axios = useAxios();
     return useMutation(async (file: File) => {
         const data = await axios.post(
@@ -297,7 +321,12 @@ const useUpload = (url: string) => {
                 }
             }
         );
-        return data;
+        if (config?.completeRes) {
+            return data;
+        }
+        else {
+            return data?.data;
+        }
     });
 }
 

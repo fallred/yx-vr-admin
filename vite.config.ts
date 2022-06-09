@@ -87,13 +87,16 @@ export default ({ command, mode } : { command: string, mode: string}) => {
       },
     },
     server: {
-      proxy: {
-        '/mock': {
-          target: 'http://1.13.20.201:9000',
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, '')
-        }
-      },
+      host: true,
+      port: 10016,
+      strictPort: true,
+      // proxy: {
+      //   '/mock': {
+      //     target: 'http://1.13.20.201:9090/',
+      //     changeOrigin: true,
+      //     rewrite: path => path.replace(/^\/mock/, '')
+      //   }
+      // },
     },
    
     build: {
