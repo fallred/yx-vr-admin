@@ -8,6 +8,7 @@ import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
+import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 import {PageFuncEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
 import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@/api";
@@ -17,9 +18,9 @@ import OperationDrawer from "./modules/role/OperationDrawer";
 const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
-  const [roleList, setRoleList] = useState<API.IRole[]>();
-  const [filters, setFilters] = useState<API.IRole>();
-  const [current, setCurrent] = useState<Partial<API.IRole> | undefined>(
+  const [roleList, setRoleList] = useState<IRole[]>();
+  const [filters, setFilters] = useState<IRole>();
+  const [current, setCurrent] = useState<Partial<IRole> | undefined>(
     undefined
   );
   const [pagination, setPagination] = useState<Partial<PaginationProps>>({
@@ -27,7 +28,7 @@ const RoleTableList= () => {
     pageSize: 10,
     total: 0,
   });
-  const [selectedRowsState, setSelectedRows] = useState<API.IRole[]>([]);
+  const [selectedRowsState, setSelectedRows] = useState<IRole[]>([]);
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -58,7 +59,7 @@ const RoleTableList= () => {
     setCurrent(undefined);
   };
 
-  const showEditModal = (item: API.IRole) => {
+  const showEditModal = (item: IRole) => {
     setVisible(true);
     item.selectedMenuTree = JSON.parse(item.powerSelected);
     // item.selectedMenuCodeList = transToSelectedIds(item.selectedMenuTree);
@@ -84,13 +85,13 @@ const RoleTableList= () => {
     setVisible(false);
   };
 
-  const addRole = async (data: API.IRole) => {
+  const addRole = async (data: IRole) => {
     await mutateAsync(data);
   };
-  const updateRole = async (data: API.IRole) => {
+  const updateRole = async (data: IRole) => {
     await update(data);
   };
-  const handleSubmit = async (values: API.IRole) => {
+  const handleSubmit = async (values: IRole) => {
     values.id = current && current.id ? current.id : 0;
 
     setAddBtnblur();
@@ -117,7 +118,7 @@ const RoleTableList= () => {
       return false;
     }
   };
-  const handleRemove = async (selectedRows: API.IRole[]) => {
+  const handleRemove = async (selectedRows: IRole[]) => {
     const hide = message.loading("正在删除");
     if (!selectedRows) return true;
     try {
@@ -145,7 +146,7 @@ const RoleTableList= () => {
   }
   const AuthLink = WrapAuth(YgSpan, permissionList);
   const AuthButton = WrapAuth(Button, permissionList);
-  const columns: ProColumns<API.IRole>[] = [
+  const columns: ProColumns<IRole>[] = [
     {
       title: '角色名',
       dataIndex: "name",
@@ -200,7 +201,7 @@ const RoleTableList= () => {
 
   return (
     <PageContainer>
-      <ProTable<API.IRole>
+      <ProTable<IRole>
         headerTitle="角色管理"
         actionRef={actionRef}
         rowKey="id"

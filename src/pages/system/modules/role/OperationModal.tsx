@@ -9,14 +9,16 @@ import ProForm, {
   ProFormTreeSelect
 } from "@ant-design/pro-form";
 import { userMenuTreeState } from "@/stores/recoilState";
+import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
+
 const { SHOW_PARENT } = ProFormTreeSelect;
 
 interface OperationModalProps {
   done: boolean;
   visible: boolean;
-  current: Partial<API.IRole> | undefined;
+  current: Partial<IRole> | undefined;
   onDone: () => void;
-  onSubmit: (values: API.IRole) => void;
+  onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }
 
@@ -55,7 +57,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
 
   const handleFinish = async (values: { [key: string]: any }) => {
     if (onSubmit) {
-      onSubmit(values as API.IRole);
+      onSubmit(values as IRole);
     }
   };
 

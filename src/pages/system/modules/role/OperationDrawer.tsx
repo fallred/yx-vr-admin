@@ -3,20 +3,21 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
 import {queryMenuAndFuncNodes} from '@/lib/tree-util';
-import AuthTree from '../auth-tree/index';
+import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 import ProForm, {
   ModalForm,
   ProFormText,
   ProFormTextArea,
   ProFormTreeSelect
 } from "@ant-design/pro-form";
+import AuthTree from '../auth-tree/index';
 
 interface OperationDrawerProps {
   done: boolean;
   visible: boolean;
-  current: Partial<API.IRole> | undefined;
+  current: Partial<IRole> | undefined;
   onDone: () => void;
-  onSubmit: (values: API.IRole) => void;
+  onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }
 
@@ -77,7 +78,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
 
   const handleFinish = async (values: { [key: string]: any }) => {
     if (onSubmit) {
-      onSubmit(values as API.IRole);
+      onSubmit(values as IRole);
     }
   };
 

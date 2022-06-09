@@ -14,13 +14,14 @@ import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import {useGetRoleListAll} from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
 import ShopStoreTable from '@/pages/store-mng/shop-list';
+import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 
 interface OperationDrawerProps {
   done: boolean;
   visible: boolean;
-  current: Partial<API.IRole> | undefined;
+  current: Partial<IRole> | undefined;
   onDone: () => void;
-  onSubmit: (values: API.IRole) => void;
+  onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }
 
@@ -35,7 +36,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const { visible, current = {}, onCancel, onSubmit } = props;
   const {selectedMenuTree} = current;
   const { data: roleListAllResp, error, isLoading, refetch } = useGetRoleListAll();
-  const [roleOptions, setRoleOptions] = useState<API.IRole[]>();
+  const [roleOptions, setRoleOptions] = useState<IRole[]>();
   const fieldNames = {label: 'name', value: 'id', key: 'id'};
   useEffect(() => {
     const options = roleListAllResp.data?.map(item => ({value: item?.id, label: item?.name}));
@@ -70,7 +71,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
 
   const handleFinish = async (values: { [key: string]: any }) => {
     if (onSubmit) {
-      onSubmit(values as API.IRole);
+      onSubmit(values as IRole);
     }
   };
 

@@ -1,6 +1,7 @@
 import { IMenuTree } from "@/models/menu";
 import { IUser, IUserList, IUserPaginationResp } from "@/models/user-mng";
 import { ILog, ILogList, ILogPaginationResp } from "@/models/log";
+import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 import { INotice, INoticeList, INoticePaginationResp } from "@/models/notice-mng";
 import {
     IShopStore,
@@ -52,7 +53,7 @@ export const useGetUserMenuTree = () => {
 
 // 角色
 export const useGetRoleList = (pagination: any, filters: any) => {
-    return useGetList<API.IRolePaginationResp>(
+    return useGetList<IRolePaginationResp>(
         "RolesListPage",
         '/manage/role/query',
         pagination,
@@ -60,7 +61,7 @@ export const useGetRoleList = (pagination: any, filters: any) => {
     );
 }
 export const useGetRoleListAll = () => {
-    return useGetOne<API.IRoleList>(
+    return useGetOne<IRoleList>(
         "RoleListAll",
         "/manage/role/list",
         null,
@@ -68,11 +69,11 @@ export const useGetRoleListAll = () => {
     );
 };
 export const useAddRole = () => {
-    return useCreate<API.IRole, API.IRole>('/manage/role/create');
+    return useCreate<IRole, IRole>('/manage/role/create');
 }
 
 export const useUpdateRole = () => {
-    return useCreate<API.IRole>('/manage/role/edit');
+    return useCreate<IRole>('/manage/role/edit');
 }
 
 export const useBatchDeleteRole = () => {
@@ -269,35 +270,3 @@ export const useBatchDeleteShopTask = () => {
     return useCreateByQuery('/app/store/delete');
 }
 
-// export const useGetCurrentUser = () => {
-//     return useGetOne<CurrentUserResult>(
-//         "CurrentUser",
-//         "/current/user"
-//       );
-// }
-
-// export const useGetCurrentMenus = () => {
-//     return useGetList<IMenuTree>("CurrentMenuList",
-//         "/current/menu"
-//     );
-// }
-
-export const useGetProjects = (pagination: any, filters: any) => {
-    return useGetList<API.ProjectPagination>(
-        "Projects",
-        projectResource,
-        pagination,
-        filters
-    );
-}
-export const useAddProject = () => {
-    return useCreate<API.Project, API.Project>(projectResource);
-}
-
-export const useUpdateProject = () => {
-    return useUpdate<API.Project>(projectResource);
-}
-
-export const useBatchDeleteProject = () => {
-    return useBatch(projectResource + ':batchDelete');
-}
