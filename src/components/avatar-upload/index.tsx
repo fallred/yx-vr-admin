@@ -60,7 +60,7 @@ class AvatarUpload extends React.Component {
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
-        action="/api/v1/app/file/upload"
+        action="/mock/app/file/upload"
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >

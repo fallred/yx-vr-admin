@@ -19,14 +19,14 @@ const mockProjects = {
 
 export default [
   {
-    url: '/api/v1/projects',
+    url: '/mock/projects',
     method: 'get',
     response: ({ query }) => {
       return mockProjects;
     },
   },
   {
-    url: '/api/v1/projects',
+    url: '/mock/projects',
     method: 'post',
     response: ({ body }) => {
       let project = body;
@@ -46,7 +46,7 @@ export default [
     },
   },
   {
-    url: '/api/v1/projects',
+    url: '/mock/projects',
     method: 'patch',
     response: ({ body }) => {
       let project = body;
@@ -63,7 +63,7 @@ export default [
     },
   },
   {
-    url: '/api/v1/projects:batchDelete',
+    url: '/mock/projects:batchDelete',
     method: 'post',
     response: ({ body }) => {
       let idList = body.idList;

@@ -86,15 +86,15 @@ export default ({ command, mode } : { command: string, mode: string}) => {
         },
       },
     },
-    // server: {
-    //   proxy: {
-    //     '/api': {
-    //       target: 'http://1.13.20.201:9090',
-    //       changeOrigin: true,
-    //       rewrite: path => path.replace(/^\/api/, '')
-    //     }
-    //   },
-    // },
+    server: {
+      proxy: {
+        '/mock': {
+          target: 'http://1.13.20.201:9000',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, '')
+        }
+      },
+    },
    
     build: {
       outDir: `output/${projectName}`,

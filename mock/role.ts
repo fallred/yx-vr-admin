@@ -81,35 +81,35 @@ const editResp = {
 
 export default [
   {
-      url: '/api/v1/manage/role/query',
+      url: '/mock/manage/role/query',
       method: 'GET',
       response: ({ body }) => {
         return roleListPage;
       },
   },
   {
-    url: '/api/v1/manage/role/list',
+    url: '/mock/manage/role/list',
     method: 'GET',
     response: ({ body }) => {
       return roleListAll;
     },
   },
   {
-      url: '/api/v1/manage/role/edit',
+      url: '/mock/manage/role/edit',
       method: 'POST',
       response: ({ body }) => {
         return editResp;
       },
   },
   {
-      url: '/api/v1/manage/role/create',
+      url: '/mock/manage/role/create',
       method: 'POST',
       response: ({ body }) => {
         return editResp;
       },
   },
   {
-      url: '/api/v1/manage/role/delete',
+      url: '/mock/manage/role/delete',
       method: 'POST',
       response: ({ body, query }) => {
         return delResp;

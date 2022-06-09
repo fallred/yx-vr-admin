@@ -37,21 +37,21 @@ const mockQueryRankResp = {
 };
 export default [
     {
-      url: '/api/v1/app/leaderboard/turnover/list',
+      url: '/mock/app/leaderboard/turnover/list',
       method: 'GET',
       response: ({ body }) => {
         return mockQueryRankResp;
       },
     },
     {
-      url: '/api/v1/app/leaderboard/praise/list',
+      url: '/mock/app/leaderboard/praise/list',
       method: 'GET',
       response: ({ body }) => {
         return mockQueryRankResp;
       },
     },
     {
-      url: '/api/v1/app/leaderboard/memberconversion/list',
+      url: '/mock/app/leaderboard/memberconversion/list',
       method: 'GET',
       response: ({ body }) => {
         return mockQueryRankResp;

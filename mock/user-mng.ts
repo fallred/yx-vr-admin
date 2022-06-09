@@ -137,35 +137,35 @@ const mockCreateUserResp = {
 
 export default [
   {
-    url: '/api/v1/manage/user/query',
+    url: '/mock/manage/user/query',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryUserResp;
     },
   },
   {
-    url: '/api/v1/manage/user/query/one',
+    url: '/mock/manage/user/query/one',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryUserInfo;
     },
   },
   {
-    url: '/api/v1/manage/user/edit',
+    url: '/mock/manage/user/edit',
     method: 'POST',
     response: ({ body }) => {
       return mockUpdateUserResp;
     },
   },
   {
-    url: '/api/v1/manage/user/create',
+    url: '/mock/manage/user/create',
     method: 'POST',
     response: ({ body }) => {
       return mockCreateUserResp;
     },
   },
   {
-    url: '/api/v1/manage/user/delete',
+    url: '/mock/manage/user/delete',
     method: 'POST',
     response: ({ body }) => {
        return {
@@ -177,7 +177,7 @@ export default [
     },
   },
   {
-    url: '/api/v1/manage/user/app',
+    url: '/mock/manage/user/app',
     method: 'POST',
     response: ({ body }) => {
         return {

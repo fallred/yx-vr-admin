@@ -1,11 +1,11 @@
 // 权限菜单数据从接口获得，该配置文件已废弃
 export const systemMenuList = [
-  {
-    code: 'notification',
-    name: '公告',
-    path: '/notification',
-    icon: 'notification',
-  },
+  // {
+  //   code: 'notification',
+  //   name: '公告',
+  //   path: '/notification',
+  //   icon: 'notification',
+  // },
   {
     code: 'systemMng',
     name: '系统管理',
@@ -89,5 +89,4 @@ export const systemMenuList = [
     name: '404',
     icon: 'frown',
   }
-
 ];

@@ -220,7 +220,7 @@ const performanceListResp = {
 };
 export default [
     {
-      url: '/api/v1/manage/report/query',
+      url: '/mock/manage/report/query',
       method: 'GET',
       response: ({ body }) => {
         return mockQueryReportListResp;
@@ -228,28 +228,28 @@ export default [
     },
 
     {
-        url: '/api/v1/app/business/convert/list',
+        url: '/mock/app/business/convert/list',
         method: 'GET',
         response: ({ body }) => {
           return convertListResp;
         },
     },
     {
-        url: '/api/v1/app/business/evaluate/list',
+        url: '/mock/app/business/evaluate/list',
         method: 'GET',
         response: ({ body }) => {
           return evaluateListResp;
         },
     },
     {
-        url: '/api/v1/app/business/member/list',
+        url: '/mock/app/business/member/list',
         method: 'GET',
         response: ({ body }) => {
           return memberListResp;
         },
     },
     {
-        url: '/api/v1/app/business/performance/list',
+        url: '/mock/app/business/performance/list',
         method: 'GET',
         response: ({ body }) => {
           return performanceListResp;

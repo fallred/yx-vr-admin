@@ -351,28 +351,28 @@ const mockUploadResp = {
 };
 export default [
     {
-        url: '/api/v1/app/area/province',
+        url: '/mock/app/area/province',
         method: 'GET',
         response: ({ body }) => {
             return mockQueryProvinceList;
         },
     },
     {
-        url: '/api/v1/app/area/city',
+        url: '/mock/app/area/city',
         method: 'GET',
         response: ({ body }) => {
             return mockQueryCityList;
         },
     },
     {
-        url: '/api/v1/app/area/area',
+        url: '/mock/app/area/area',
         method: 'GET',
         response: ({ body }) => {
         return mockQueryAreaList;
         },
     },
     {
-      url: '/api/v1/app/file/upload',
+      url: '/mock/app/file/upload',
       method: 'POST',
       response: ({ body }) => {
         return mockUploadResp;

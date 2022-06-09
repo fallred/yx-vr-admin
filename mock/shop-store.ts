@@ -131,63 +131,63 @@ const mockExportStoreResp = {
 
 export default [
   {
-    url: '/api/v1/app/store/query',
+    url: '/mock/app/store/query',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryStoreResp;
     },
   },
   {
-    url: '/api/v1/app/store/list',
+    url: '/mock/app/store/list',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryStoreListAllResp;
     },
   },
   {
-    url: '/api/v1/app/store/detial',
+    url: '/mock/app/store/detial',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryStoreInfo;
     },
   },
   {
-    url: '/api/v1/manage/store/edit',
+    url: '/mock/manage/store/edit',
     method: 'POST',
     response: ({ body }) => {
       return mockSubmitStoreResp;
     },
   },
   {
-    url: '/api/v1/manage/store/create',
+    url: '/mock/manage/store/create',
     method: 'POST',
     response: ({ body }) => {
       return mockSubmitStoreResp;
     },
   },
   {
-    url: '/api/v1/manage/store/delete',
+    url: '/mock/manage/store/delete',
     method: 'POST',
     response: ({ body }) => {
        return mockSubmitStoreResp;
     },
   },
   {
-    url: '/api/v1/app/store/template',
+    url: '/mock/app/store/template',
     method: 'GET',
     response: ({ body }) => {
        return mockImportTplLink;
     },
   },
   {
-    url: '/api/v1/app/store/import',
+    url: '/mock/app/store/import',
     method: 'POST',
     response: ({ body }) => {
        return mockImportStoreResp;
     },
   },
   {
-    url: '/api/v1/app/store/export',
+    url: '/mock/app/store/export',
     method: 'GET',
     response: ({ body }) => {
        return mockExportStoreResp;

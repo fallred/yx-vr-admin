@@ -763,7 +763,7 @@ const mockPermissionCodeList = [
 
 export default [
   {
-    url: '/api/v1/login',
+    url: '/mock/login',
     method: 'POST',
     response: ({ body }) => {
       return {
@@ -778,7 +778,7 @@ export default [
     },
   },
   {
-    url: '/api/v1/auth/upatepwd',
+    url: '/mock/auth/upatepwd',
     method: 'POST',
     response: ({ body }) => {
       return {
@@ -787,21 +787,21 @@ export default [
     },
   },
   {
-    url: '/api/v1/manage/menu/list',
+    url: '/mock/manage/menu/list',
     method: 'get',
     response: ({ body }) => {
       return mockSystemMenuTree;
     },
   },
   {
-    url: '/api/v1/manage/user/menu',
+    url: '/mock/manage/user/menu',
     method: 'get',
     response: ({ body }) => {
       return mockUserMenuTree;
     },
   },
   // {
-  //   url: '/api/v1/current/user',
+  //   url: '/mock/current/user',
   //   method: 'get',
   //   response: ({ body }) => {
   //     return {
@@ -811,7 +811,7 @@ export default [
   //   },
   // },
   {
-    url: '/api/v1/current/notice',
+    url: '/mock/current/notice',
     method: 'get',
     response: ({ body }) => {
       return mockNoticeList;

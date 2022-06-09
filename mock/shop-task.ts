@@ -30,21 +30,21 @@ const mockSubmitShopTaskResp = {
 
 export default [
   {
-    url: '/api/v1/app/store/task/list',
+    url: '/mock/app/store/task/list',
     method: 'GET',
     response: ({ body }) => {
       return mockQueryShopTaskListPageResp;
     },
   },
   {
-    url: '/api/v1/app/store/task/edit',
+    url: '/mock/app/store/task/edit',
     method: 'POST',
     response: ({ body }) => {
       return mockSubmitShopTaskResp;
     },
   },
   {
-    url: '/api/v1/app/store/task/create',
+    url: '/mock/app/store/task/create',
     method: 'POST',
     response: ({ body }) => {
       return mockSubmitShopTaskResp;
