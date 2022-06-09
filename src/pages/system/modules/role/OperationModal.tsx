@@ -14,10 +14,8 @@ import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 const { SHOW_PARENT } = ProFormTreeSelect;
 
 interface OperationModalProps {
-  done: boolean;
   visible: boolean;
   current: Partial<IRole> | undefined;
-  onDone: () => void;
   onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }

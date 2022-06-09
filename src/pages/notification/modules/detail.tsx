@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Result, Badge } from 'antd';
 import { NotificationOutlined } from "@ant-design/icons";
 import NoticeView from '@/pages/notification/index';
 

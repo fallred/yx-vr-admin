@@ -14,6 +14,7 @@ import {PageFuncMap} from '@/enums/common';
 import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
 import OperationDrawer from "./modules/role/OperationDrawer";
+import { add } from "cypress/types/lodash";
 
 const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
@@ -29,17 +30,12 @@ const RoleTableList= () => {
     total: 0,
   });
   const [selectedRowsState, setSelectedRows] = useState<IRole[]>([]);
-  const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-
-  const addBtn = useRef(null);
   const actionRef = useRef<ActionType>();
-  
   const { data: rolePageResp, error, isLoading, refetch } = useGetRoleList(pagination, filters);
-
-  const { mutateAsync } = useAddRole();
-  const { mutateAsync: update } = useUpdateRole();
-  const { mutateAsync: batchDelete } = useBatchDeleteRole();
+  const { mutateAsync: addMutate } = useAddRole();
+  const { mutateAsync: updateMutate } = useUpdateRole();
+  const { mutateAsync: batchDeleteMutate } = useBatchDeleteRole();
 
   useEffect(() => {
     setRoleList(rolePageResp?.data);
@@ -54,7 +50,7 @@ const RoleTableList= () => {
     refetch();
 }, [pagination.current, pagination.pageSize, filters]);
 
-  const showModal = () => {
+  const showAddModal = () => {
     setVisible(true);
     setCurrent(undefined);
   };
@@ -67,50 +63,30 @@ const RoleTableList= () => {
     setCurrent(item);
   };
 
-  const setAddBtnblur = () => {
-    if (addBtn.current) {
-      const addBtnDom = findDOMNode(addBtn.current) as HTMLButtonElement;
-      setTimeout(() => addBtnDom.blur(), 0);
-    }
-  };
-
-  const handleDone = () => {
-    setAddBtnblur();
-
-    setVisible(false);
-  };
-
   const handleCancel = () => {
-    setAddBtnblur();
     setVisible(false);
   };
 
   const addRole = async (data: IRole) => {
-    await mutateAsync(data);
+    await addMutate(data);
   };
   const updateRole = async (data: IRole) => {
-    await update(data);
+    await updateMutate(data);
   };
-  const handleSubmit = async (values: IRole) => {
-    values.id = current && current.id ? current.id : 0;
-
-    setAddBtnblur();
+  const handleSubmit = async (row: IRole) => {
+    row.id = current && current.id ? current.id : 0;
     setVisible(false);
-
     const hide = message.loading("正在添加/更新");
     try {
-      if (values.id === 0) {
-        await addRole(values);
+      if (row.id === 0) {
+        await addRole(row);
       }
       else {
-        await updateRole(values);
+        await updateRole(row);
       }
-
       hide();
-
       message.success("操作成功");
       refetch();
-
       return true;
     } catch (error) {
       hide();
@@ -124,7 +100,7 @@ const RoleTableList= () => {
     try {
       const ids = selectedRows.map((row) => row.id) ?? [];
       const idsStr = ids.join(',');
-      await batchDelete({ids: idsStr});
+      await batchDeleteMutate({ids: idsStr});
       setPagination({...pagination, current: 1});
       hide();
       message.success("删除成功，即将刷新");
@@ -207,7 +183,7 @@ const RoleTableList= () => {
         rowKey="id"
         options={{reload: false}}
         toolBarRender={() => [
-          <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
+          <AuthButton type="primary" key="primary" onClick={showAddModal} operCode={PageFuncEnum.ADD}>
             {PageFuncMap.get(PageFuncEnum.ADD)}
           </AuthButton>,
         ]}
@@ -265,7 +241,7 @@ const RoleTableList= () => {
             onClick={async () => {
               await handleRemove(selectedRowsState);
               setSelectedRows([]);
-                  refetch();
+              refetch();
             }}
             operCode={PageFuncEnum.DELETE}
           >
@@ -276,10 +252,8 @@ const RoleTableList= () => {
       {
         visible
         ? <OperationDrawer
-          done={done}
           current={current}
           visible={visible}
-          onDone={handleDone}
           onCancel={handleCancel}
           onSubmit={handleSubmit}
         />

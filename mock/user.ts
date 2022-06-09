@@ -8,12 +8,12 @@ const mockUserMenuTree = [
     menuName: '首页',
     icon: 'home',
   },
-  {
-    menuId: '0-0',
-    url: '/notification',
-    menuName: '公告',
-    icon: 'notification',
-  },
+  // {
+  //   menuId: '0-0',
+  //   url: '/notification',
+  //   menuName: '公告',
+  //   icon: 'notification',
+  // },
   {
     menuId: '0-1',
     url: '/system',
@@ -341,12 +341,12 @@ const mockSystemMenuTree = [
     menuName: '首页',
     icon: 'home',
   },
-  {
-    menuId: '0-0',
-    url: '/notification',
-    menuName: '公告',
-    icon: 'notification',
-  },
+  // {
+  //   menuId: '0-0',
+  //   url: '/notification',
+  //   menuName: '公告',
+  //   icon: 'notification',
+  // },
   {
     menuId: '0-1',
     url: '/system',

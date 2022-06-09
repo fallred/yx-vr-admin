@@ -16,10 +16,8 @@ import ProvinceCityArea from '@/components/province-city-area';
 import AvatarUpload from '@/components/avatar-upload';
 
 interface ShopFormProps {
-  done: boolean;
   visible: boolean;
   current: Partial<IShopStore> | undefined;
-  onDone: () => void;
   onSubmit: (values: IShopStore) => void;
   onCancel: () => void;
 }

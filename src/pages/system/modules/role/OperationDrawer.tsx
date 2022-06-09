@@ -13,10 +13,8 @@ import ProForm, {
 import AuthTree from '../auth-tree/index';
 
 interface OperationDrawerProps {
-  done: boolean;
   visible: boolean;
   current: Partial<IRole> | undefined;
-  onDone: () => void;
   onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }

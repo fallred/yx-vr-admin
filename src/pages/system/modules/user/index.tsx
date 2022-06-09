@@ -26,7 +26,6 @@ import ShopListDrawer from "./storeListDrawer";
 interface UserTableListProps {
     isAssociate: boolean;
 }
-
 const UserTableList: FC<OperationDrawerProps> = props => {
     const { isAssociate } = props;
     const permissionList = useRecoilValue(permissionListState);
@@ -44,17 +43,16 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     });
     const { data, error, isLoading, refetch } = useGetUserList(pagination, filters);
 
-    const [selectedRowsState, setSelectedRows] = useState<IUser[]>([]);
+    const [selectedRowKeys, setSelectedRows] = useState<IUser[]>([]);
 
     const [done, setDone] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
     const [shopViewVisible, setShopViewVisible] = useState<boolean>(false);
     const actionRef = useRef<ActionType>();
-    const addBtn = useRef(null);
 
-    const { mutateAsync } = useAddUser();
-    const { mutateAsync: update } = useUpdateUser();
-    const { mutateAsync: batchDelete } = useBatchDeleteUser();
+    const { mutateAsync: addMutate } = useAddUser();
+    const { mutateAsync: updateMutate } = useUpdateUser();
+    const { mutateAsync: batchDeleteMutate } = useBatchDeleteUser();
 
     useEffect(() => {
         setUserList(data?.data);
@@ -69,7 +67,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         refetch();
     }, [pagination.current, pagination.pageSize, filters]);
 
-    const showModal = () => {
+    const showAddModal = () => {
         setVisible(true);
         setCurrent(undefined);
     };
@@ -86,51 +84,29 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     const hideViewDrawer = () => {
         setShopViewVisible(false);
     };
-
-    const setAddBtnblur = () => {
-        if (addBtn.current) {
-            // eslint-disable-next-line react/no-find-dom-node
-            const addBtnDom = findDOMNode(addBtn.current) as HTMLButtonElement;
-            setTimeout(() => addBtnDom.blur(), 0);
-        }
-    };
-
-    const handleDone = () => {
-        setAddBtnblur();
-        setVisible(false);
-    };
-
     const handleCancel = () => {
-        setAddBtnblur();
         setVisible(false);
     };
-
     const addUser = async (data: IUser) => {
-        await mutateAsync(data);
+        await addMutate(data);
     };
     const updateUser = async (data: IUser) => {
-        await update(data);
+        await updateMutate(data);
     };
-    const handleSubmit = async (values: IUser) => {
-        values.id = current && current.id ? current.id : 0;
-
-        setAddBtnblur();
+    const handleSubmit = async (row: IUser) => {
+        row.id = current && current.id ? current.id : 0;
         setVisible(false);
-
         const hide = message.loading("正在添加/更新");
         try {
-            if (values.id === 0) {
-                await addUser(values);
+            if (row.id === 0) {
+                await addUser(row);
             }
             else {
-                await updateUser(values);
+                await updateUser(row);
             }
-
             hide();
-
             message.success("操作成功");
             refetch();
-
             return true;
         } catch (error) {
             hide();
@@ -144,7 +120,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         try {
             const ids = selectedRows.map((row) => row.id) ?? [];
             const idsStr = ids.join(',');
-            await batchDelete({ ids: idsStr });
+            await batchDeleteMutate({ ids: idsStr });
             setPagination({ ...pagination, current: 1 });
             hide();
             message.success("删除成功，即将刷新");
@@ -271,12 +247,6 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         fixed: 'right',
         width: 200,
         render: (_, record) => {
-            const opMenuList = [
-                // { key: 'copy', name: '复制' },
-            ];
-            if (PageFuncEnum.DELETE) {
-                opMenuList.push({ key: PageFuncEnum.DELETE, name: '删除' });
-            }
             const btnList = [
                 <AuthLink
                     key={PageFuncEnum.EDIT}
@@ -318,25 +288,6 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 >
                   删除
                 </AuthLink>,
-                // <TableDropdown
-                //     key="actionGroup"
-                //     onSelect={(key) => {
-                //         if (key === PageFuncEnum.DELETE) {
-                //             Modal.confirm({
-                //                 title: "删除用户",
-                //                 content: "确定删除该用户吗？",
-                //                 okText: "确认",
-                //                 cancelText: "取消",
-                //                 onOk: async () => {
-                //                     await handleRemove([{ ...record }]);
-                //                     setSelectedRows([]);
-                //                     refetch();
-                //                 },
-                //             });
-                //         }
-                //     }}
-                //     menus={opMenuList}
-                // />,
             ];
             return btnList;
         },
@@ -350,7 +301,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 scroll={{ x: 1300 }}
                 options={{ reload: false }}
                 toolBarRender={() => [
-                    <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
+                    <AuthButton type="primary" key="primary" onClick={showAddModal} operCode={PageFuncEnum.ADD}>
                         {PageFuncMap.get(PageFuncEnum.ADD)}
                     </AuthButton>,
                 ]}
@@ -392,12 +343,12 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 }}
             />
 
-            {selectedRowsState?.length > 0 && (
+            {selectedRowKeys?.length > 0 && (
                 <FooterToolbar
                     extra={
                         <div>
                             <span>已选择</span>
-                            <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>
+                            <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a>
                             <span>项</span>
                         </div>
                     }
@@ -406,7 +357,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                         type="primary"
                         key="primary"
                         onClick={async () => {
-                            await handleRemove(selectedRowsState);
+                            await handleRemove(selectedRowKeys);
                             setSelectedRows([]);
                             refetch();
                         }}
@@ -417,10 +368,8 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 </FooterToolbar>
             )}
             <OperationDrawer
-                done={done}
                 current={current}
                 visible={visible}
-                onDone={handleDone}
                 onCancel={handleCancel}
                 onSubmit={handleSubmit}
             />

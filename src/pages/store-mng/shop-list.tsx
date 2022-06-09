@@ -34,11 +34,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
   const {showOperate} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
-  const addBtn = useRef(null);
   const formRef = useRef<ProFormInstance<IShopStore>>();
   const actionRef = useRef<ActionType>();
   const pcdRef = useRef<React.Component>(null);
-  const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [shopStoreList, setShopStoreList] = useState<IShopStore[]>();
   const [filters, setFilters] = useState<IShopStore[]>({});
@@ -55,9 +53,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
 
   const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreListWithPage(pagination, filters);
 
-  const { mutateAsync } = useAddShopStore();
-  const { mutateAsync: update } = useUpdateShopStore();
-  const { mutateAsync: batchDelete } = useBatchDeleteShopStore();
+  const { mutateAsync: addMutate } = useAddShopStore();
+  const { mutateAsync: updateMutate } = useUpdateShopStore();
+  const { mutateAsync: batchDeleteMutate } = useBatchDeleteShopStore();
   const getImpLinkPromise = useGetStoreImportTplLink();
   const exportStorePromise = useExportStoreList();
   useEffect(() => {
@@ -73,7 +71,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
     refetch();
   }, [pagination.current, pagination.pageSize, filters]);
 
-  const showModal = () => {
+  const showAddModal = () => {
     setVisible(true);
     setCurrent(undefined);
   };
@@ -83,21 +81,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
     setCurrent(item);
   };
 
-  const setAddBtnblur = () => {
-    if (addBtn.current) {
-      // eslint-disable-next-line react/no-find-dom-node
-      const addBtnDom = findDOMNode(addBtn.current) as HTMLButtonElement;
-      setTimeout(() => addBtnDom.blur(), 0);
-    }
-  };
-
-  const handleDone = () => {
-    setAddBtnblur();
-    setVisible(false);
-  };
-
   const handleCancel = () => {
-    setAddBtnblur();
     setVisible(false);
   };
   const handleSearch = () => {
@@ -115,24 +99,26 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
     setKeyword(value);
   };
   const addShopStore = async (data: IShopStore) => {
-    await mutateAsync(data);
+    await addMutate(data);
   };
   const updateShopStore = async (data: IShopStore) => {
-    await update(data);
+    await updateMutate(data);
   };
-  const handleSubmit = async (values: IShopStore) => {
-    values.id = current && current.id ? current.id : 0;
-
-    setAddBtnblur();
+  const handleSubmit = async (row: IShopStore) => {
+    row.id = current && current.id ? current.id : 0;
+    const {province, city, district} = row.provinceCityDistrict;
+    row.province = province;
+    row.city = city;
+    row.district = district;
     setVisible(false);
 
     const hide = message.loading("正在添加/更新");
     try {
-      if (values.id === 0) {
-        await addShopStore(values);
+      if (row.id === 0) {
+        await addShopStore(row);
       }
       else {
-        await updateShopStore(values);
+        await updateShopStore(row);
       }
 
       hide();
@@ -154,7 +140,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
     try {
       const ids = selectedRows.map((row) => row.appId) ?? [];
       const idsStr = ids.join(',');
-      await batchDelete({ids: idsStr});
+      await batchDeleteMutate({ids: idsStr});
       setPagination({...pagination, current: 1});
       hide();
       message.success("删除成功，即将刷新");
@@ -393,7 +379,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
             >
               导出
             </AuthButton>,
-            <AuthButton type="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
+            <AuthButton type="primary" onClick={showAddModal} operCode={PageFuncEnum.ADD}>
               {PageFuncMap.get(PageFuncEnum.ADD)}
             </AuthButton>,
           ] : [];
@@ -444,10 +430,8 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
         </FooterToolbar>
       )}
       <ShopFormDrawer
-        done={done}
         current={current}
         visible={visible}
-        onDone={handleDone}
         onCancel={handleCancel}
         onSubmit={handleSubmit}
       />

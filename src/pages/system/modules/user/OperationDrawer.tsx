@@ -17,10 +17,8 @@ import ShopStoreTable from '@/pages/store-mng/shop-list';
 import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 
 interface OperationDrawerProps {
-  done: boolean;
   visible: boolean;
   current: Partial<IRole> | undefined;
-  onDone: () => void;
   onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }

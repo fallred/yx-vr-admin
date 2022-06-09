@@ -21,8 +21,6 @@ const LoginForm: FC = () => {
   const navigate = useNavigate();
   const location = useLocation() as Location<{ from: string }>;
   const [user, setUser] = useRecoilState(userState);
-  // const dispatch = useAppDispatch();
-
   const onFinished = async (form: IUpdatePassParams) => {
     const result = await updatePassMutation.mutateAsync(form);
     console.log("result: ", result);
@@ -38,15 +36,6 @@ const LoginForm: FC = () => {
 
   return (
     <div className={styles.container}>
-      {/* <div className={styles.top}>
-        <div className={styles.header}>
-          <Link to="/">
-            <img className={styles.logo} src={LogoIcon} />
-            <span className={styles.title}>影行科技</span>
-          </Link>
-        </div>
-        <div className={styles.desc}>是一家VR游戏公司</div>
-      </div> */}
       <div className={styles.main}>
         <Form<IUpdatePassParams> onFinish={onFinished} initialValues={initialValues}>
           <Form.Item

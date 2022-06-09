@@ -35,11 +35,12 @@ const NoticeTableList = () => {
     total: 0,
   });
   const { data: noticeListPageResp, error, isLoading, refetch } = useQueryNoticeList(pagination, filters);
+  const [selectedRowsState, setSelectedRows] = useState<IUser[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly ReactText[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<ReactText[]>([]);
   const [dataSource, setDataSource] = useState<any[]>([]);
   const rowSelection = {
-    selectedRowKeys,
+    // selectedRowKeys,
     onChange: (keys: ReactText[]) => setSelectedRowKeys(keys),
   };
   const pageConfig = {
@@ -49,13 +50,11 @@ const NoticeTableList = () => {
     }
   };
 
-  const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const addBtn = useRef(null);
 
-  const { mutateAsync } = useAddNotice();
-  const { mutateAsync: update } = useUpdateNotice();
-  const { mutateAsync: batchDelete } = useBatchDeleteNotice();
+  const { mutateAsync: addMutate } = useAddNotice();
+  const { mutateAsync: updateMutate } = useUpdateNotice();
+  const { mutateAsync: batchDeleteMutate } = useBatchDeleteNotice();
 
   function YgSpan(props1) {
     return (
@@ -123,7 +122,7 @@ const NoticeTableList = () => {
                   okText: "确认",
                   cancelText: "取消",
                   onOk: async () => {
-                    await handleRemove([{ ...item }]);
+                    await handleRemove([item.content]);
                     setSelectedRows([]);
                     refetch();
                   },
@@ -161,46 +160,27 @@ const NoticeTableList = () => {
     setCurrent(item);
   };
 
-  const setAddBtnblur = () => {
-    if (addBtn.current) {
-      const addBtnDom = findDOMNode(addBtn.current) as HTMLButtonElement;
-      setTimeout(() => addBtnDom.blur(), 0);
-    }
-  };
-
-  const handleDone = () => {
-    setAddBtnblur();
-    setVisible(false);
-  };
-
   const handleCancel = () => {
-    setAddBtnblur();
     setVisible(false);
   };
-
   const addNotice = async (data: INotice) => {
-    await mutateAsync(data);
+    await addMutate(data);
   };
   const updateNotice = async (data: INotice) => {
-    await update(data);
+    await updateMutate(data);
   };
-  const handleSubmit = async (values: INotice) => {
-    values.id = current && current.id ? current.id : 0;
-
-    setAddBtnblur();
+  const handleSubmit = async (row: INotice) => {
+    row.id = current && current.id ? current.id : 0;
     setVisible(false);
-
     const hide = message.loading("正在添加/更新");
     try {
-      if (values.id === 0) {
-        await addNotice(values);
+      if (row.id === 0) {
+        await addNotice(row);
       }
       else {
-        await updateNotice(values);
+        await updateNotice(row);
       }
-
       hide();
-
       message.success("操作成功");
       refetch();
 
@@ -212,13 +192,13 @@ const NoticeTableList = () => {
     }
   };
 
-  const handleRemove = async (selectedRows: INotice[]) => {
+  const handleRemove = async (selectedRows: number[]) => {
     const hide = message.loading("正在删除");
     if (!selectedRows) return true;
     try {
-      const ids = selectedRows.map((row) => row.id) ?? [];
-      const idsStr = ids.join(',');
-      await batchDelete({ids: idsStr});
+      // const ids = selectedRows.map((row) => row.id) ?? [];
+      const idsStr = selectedRows.join(',');
+      await batchDeleteMutate({ids: idsStr});
       setPagination({...pagination, current: 1});
       hide();
       message.success("删除成功，即将刷新");
@@ -256,72 +236,6 @@ const NoticeTableList = () => {
             actions: {},
           }}
           pagination={pagination}
-          // metas={{
-          //   title: {},
-          //   description: {
-          //     render: () => (
-          //       <>
-          //         <Tag>语雀专栏</Tag>
-          //         <Tag>设计语言</Tag>
-          //         <Tag>蚂蚁金服</Tag>
-          //       </>
-          //     ),
-          //   },
-          //   actions: {
-          //     render: () => [
-          //       <AuthIconText
-          //         key={PageFuncEnum.EDIT}
-          //         operCode={PageFuncEnum.EDIT}
-          //         icon={<DeleteOutlined />}
-          //         text="编辑"
-          //         key="list-vertical-star-o"
-          //         onClick={(e) => {
-          //           e.preventDefault();
-          //           showEditModal(record);
-          //         }}
-          //       />,
-          //       <AuthIconText
-          //         icon={LikeOutlined}
-          //         text="删除"
-          //         key="list-vertical-like-o"
-          //         onClick={(e) => {
-          //           e.preventDefault();
-          //           Modal.confirm({
-          //             title: "删除公告",
-          //             content: "确定删除该公告吗？",
-          //             okText: "确认",
-          //             cancelText: "取消",
-          //             onOk: async () => {
-          //               await handleRemove([{ ...record }]);
-          //               setSelectedRows([]);
-          //               refetch();
-          //             },
-          //           });
-          //         }}
-          //       />,
-          //     ],
-          //   },
-          //   extra: {
-          //     render: () => (
-          //       <img
-          //         width={272}
-          //         alt="logo"
-          //         src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-          //       />
-          //     ),
-          //   },
-          //   content: {
-          //     render: () => {
-          //       return (
-          //         <div>
-          //           段落示意：蚂蚁金服设计平台
-          //           design.alipay.com，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台
-          //           design.alipay.com，用最小的工作量，无缝接入蚂蚁金服生态提供跨越设计与开发的体验解决方案。
-          //         </div>
-          //       );
-          //     },
-          //   },
-          // }}
         />
         {selectedRowKeys?.length > 0 && (
         <FooterToolbar
@@ -348,10 +262,8 @@ const NoticeTableList = () => {
         </FooterToolbar>
         )}
       <OperationDrawer
-        done={done}
         current={current}
         visible={visible}
-        onDone={handleDone}
         onCancel={handleCancel}
         onSubmit={handleSubmit}
       />

@@ -12,10 +12,8 @@ import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 import BraftEditor from '@/components/braft-editor/index';
 
 interface OperationDrawerProps {
-  done: boolean;
   visible: boolean;
   current: Partial<IRole> | undefined;
-  onDone: () => void;
   onSubmit: (values: IRole) => void;
   onCancel: () => void;
 }

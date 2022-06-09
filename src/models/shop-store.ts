@@ -2,6 +2,13 @@ export enum ShopStoreStatusEnum {
     'NORMAL' = 1,
     'DISABLED' = 2
 }
+type IProvinceCityDistrict = {
+    "province": string;
+    // 市
+    "city": string;
+    // 区
+    "district": string;
+};
 export interface IShopStore {
     // 门店编号
     "appId": string;
@@ -29,6 +36,7 @@ export interface IShopStore {
     "tm": string;
     // 门店编码
     "code": string;
+    provinceCityDistrict: IProvinceCityDistrict;
 }
 
 export type IShopStoreList = IShopStore[];

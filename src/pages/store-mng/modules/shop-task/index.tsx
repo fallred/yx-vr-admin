@@ -34,7 +34,6 @@ interface IShopTaskListProps {
 const ShopTaskTableList: FC<IShopTaskListProps> = props => {
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
-  const addBtn = useRef(null);
   const formRef = useRef<ProFormInstance<IShopTask>>();
   const actionRef = useRef<ActionType>();
   const pcdRef = useRef<React.Component>(null);
@@ -84,17 +83,17 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
   const updateShopTask = async (data: IShopTask) => {
     await updateShopTaskMutate(data);
   };
-  const handleDrawerFormSubmit = async (values: IShopTask) => {
-    values.id = current && current.id ? current.id : 0;
-    values.tm = current.tm ? moment(current.tm) : null;
+  const handleDrawerFormSubmit = async (row: IShopTask) => {
+    row.id = current && current.id ? current.id : 0;
+    row.tm = current.tm ? moment(current.tm) : null;
     setVisible(false);
     const hide = message.loading("正在添加/更新");
     try {
-      if (values.id === 0) {
-        await addShopTask(values);
+      if (row.id === 0) {
+        await addShopTask(row);
       }
       else {
-        await updateShopTask(values);
+        await updateShopTask(row);
       }
       hide();
       message.success("操作成功");

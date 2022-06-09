@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Badge, notification, Modal, Button } from 'antd';
 import { NotificationOutlined } from "@ant-design/icons";
 import {useQueryNoticeAll} from '@/api';
-import { data } from 'cypress/types/jquery';
-import Item from 'antd/lib/list/Item';
 
 const Notification: React.FC<{}> = () => {
   const queryNoticeAllPromise = useQueryNoticeAll();
@@ -43,7 +41,7 @@ const Notification: React.FC<{}> = () => {
     setNoticeList(dataResp?.data);
   }, []);
   return (
-    <div className='notification'>
+    <div className="notification">
         <Badge dot onClick={showModal}>
           <NotificationOutlined style={{ fontSize: 16 }} />
         </Badge>
