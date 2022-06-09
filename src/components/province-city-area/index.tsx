@@ -11,10 +11,13 @@ type IFromData = {
     district: string
 };
 interface IPCRProps {
+    cdRef: any;
+    hasFormItemWrap: boolean;
+    pcaData: IFromData;
 }
 const { Option } = Select;
-const ProvinceCityArea : FC<IPCRProps> = (props) => {
-    const { cdRef } = props;
+const ProvinceCityArea : FC<IPCRProps> = props => {
+    const { cdRef, hasFormItemWrap = true, pcaData = {}} = props;
     const {data: provinceList} = useGetProvinceList();
     const getCityPromise = useGetCityList();
     const getAreaPromise = useGetAreaList();
@@ -58,7 +61,7 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
         });
     };
     const getValue = () => {
-        return formData
+        return formData;
     };
     useImperativeHandle(cdRef, () => ({
         // changeVal 就是暴露给父组件的方法
@@ -69,91 +72,104 @@ const ProvinceCityArea : FC<IPCRProps> = (props) => {
     useEffect(() => {
         setProvinceOptions(provinceList);
     }, [provinceList]);
-
+    useEffect(() => {
+        const {province, city, district} = pcaData ?? {};
+        // setFormData({...pcaData});
+        // updateCityData(province);
+        // updateAreaData(city);
+    }, [pcaData]);
+    const selectTpl = (
+        <>
+        <Select
+            style={{ width: 160 }}
+            showSearch
+            value={formData.province}
+            placeholder="选择省"
+            showArrow={false}
+            filterOption={false}
+            onChange={handleProvinceChange}
+            notFoundContent={null}
+        >
+            {provinceOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
+        </Select>
+        <Select
+            style={{ width: 160 }}
+            showSearch
+            value={formData.city}
+            placeholder="选择市"
+            showArrow={false}
+            filterOption={false}
+            onChange={handleCityChange}
+            notFoundContent={null}
+        >
+            {cityOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
+        </Select>
+        <Select
+            style={{ width: 160 }}
+            showSearch
+            value={formData.district}
+            placeholder="选择区"
+            showArrow={false}
+            filterOption={false}
+            onChange={handleDistrictChange}
+            notFoundContent={null}
+        >
+            {areaOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
+        </Select>
+        {/* <ProFormSelect
+            value={formData.province}
+            key="province"
+            name="province"
+            label="省"
+            options={provinceOptions}
+            fieldProps={{
+                fieldNames: {
+                    label: 'name',
+                    value: 'code'
+                },
+            }}
+            onChange={handleProvinceChange}
+        />
+        <ProFormSelect
+            value={formData.city}
+            key="city"
+            name="city"
+            label="市"
+            options={cityOptions}
+            placeholder="选择市"
+            fieldProps={{
+                fieldNames: {
+                    label: 'name',
+                    value: 'code'
+                },
+            }}
+            onChange={handleCityChange}
+        />
+        <ProFormSelect
+            value={formData.district}
+            key="district"
+            name="district"
+            label="区"
+            options={areaOptions}
+            fieldProps={{
+                fieldNames: {
+                    label: 'name',
+                    value: 'code'
+                },
+            }}
+            placeholder="选择区"
+            onChange={handleDistrictChange}
+        /> */}
+        </>
+    );
+    const groupSelectTpl = (
+        <FormItem label="地址">
+            {selectTpl}
+        </FormItem>
+    );
     return (
         <React.Fragment>
-            <FormItem label="地址">
-                <Select
-                    style={{ width: 160 }}
-                    showSearch
-                    value={formData.province}
-                    placeholder="选择省"
-                    showArrow={false}
-                    filterOption={false}
-                    onChange={handleProvinceChange}
-                    notFoundContent={null}
-                >
-                    {provinceOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
-                </Select>
-                <Select
-                    style={{ width: 160 }}
-                    showSearch
-                    value={formData.city}
-                    placeholder="选择市"
-                    showArrow={false}
-                    filterOption={false}
-                    onChange={handleCityChange}
-                    notFoundContent={null}
-                >
-                    {cityOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
-                </Select>
-                <Select
-                    style={{ width: 160 }}
-                    showSearch
-                    value={formData.district}
-                    placeholder="选择区"
-                    showArrow={false}
-                    filterOption={false}
-                    onChange={handleDistrictChange}
-                    notFoundContent={null}
-                >
-                    {areaOptions.map(d => <Option key={d.code}>{d.name}</Option>)}
-                </Select>
-            </FormItem>
-            {/* <ProFormSelect
-                value={formData.province}
-                key="province"
-                name="province"
-                label="省"
-                options={provinceOptions}
-                fieldProps={{
-                    fieldNames: {
-                      label: 'name',
-                      value: 'code'
-                    },
-                }}
-                onChange={handleProvinceChange}
-            />
-            <ProFormSelect
-                value={formData.city}
-                key="city"
-                name="city"
-                label="市"
-                options={cityOptions}
-                placeholder="选择市"
-                fieldProps={{
-                    fieldNames: {
-                      label: 'name',
-                      value: 'code'
-                    },
-                }}
-                onChange={handleCityChange}
-            />
-            <ProFormSelect
-                value={formData.district}
-                key="district"
-                name="district"
-                label="区"
-                options={areaOptions}
-                fieldProps={{
-                    fieldNames: {
-                      label: 'name',
-                      value: 'code'
-                    },
-                }}
-                placeholder="选择区"
-                onChange={handleDistrictChange}
-            /> */}
+            {hasFormItemWrap ? groupSelectTpl : selectTpl}
         </React.Fragment>
     );
 };

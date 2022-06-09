@@ -22,11 +22,14 @@ function beforeUpload(file) {
   return isJpgOrPng && isLt2M;
 }
 
-class Avatar extends React.Component {
+class AvatarUpload extends React.Component {
   state = {
     loading: false,
+    imageUrl: '',
   };
-
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return {imageUrl: nextProps.value};
+  }
   handleChange = info => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
@@ -66,5 +69,4 @@ class Avatar extends React.Component {
     );
   }
 }
-
-export default Avatar;
+export default AvatarUpload;

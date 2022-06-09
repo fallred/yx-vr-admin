@@ -40,4 +40,27 @@ export interface IShopStorePaginationResp {
     pages: number;
     success: boolean;
     data: IShopStoreList;
-  }
+};
+
+export interface IImportStorePayload {
+};
+export interface IImportStoreResp {
+    status: number;
+    msg: string;
+    total: number;
+    pages: number;
+    success: boolean;
+    data: boolean;
+};
+
+export interface IExportStorePayload {
+    keyword: string;
+};
+export interface IExportStoreResp {
+    status: number;
+    msg: string;
+    total: number;
+    pages: number;
+    success: boolean;
+    data: boolean;
+};

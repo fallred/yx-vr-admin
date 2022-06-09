@@ -5,7 +5,7 @@ import ShopList from "./shop-list";
 const StoreMngPage: React.FC<{}> = () => {
   return (
     <PageContainer>
-      <ShopList /> 
+      <ShopList showOperate={true} /> 
     </PageContainer>
   );
 };

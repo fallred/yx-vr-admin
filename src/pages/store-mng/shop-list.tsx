@@ -16,21 +16,22 @@ import {
   useAddShopStore,
   useBatchDeleteShopStore,
   useUpdateShopStore,
-  useGetShopStoreListWithPage
+  useGetShopStoreListWithPage,
+  useGetStoreImportTplLink,
+  useExportStoreList
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store";
 import ProvinceCityArea from '@/components/province-city-area';
 import FormItem from "@/components/form-item";
-import { filter } from "cypress/types/lodash";
-// import OperationDrawer from "./modules/user/OperationDrawer";
+import AutoUploadFile from "./modules/auto-upload-file";
+import ShopFormDrawer from "./modules/shop-form";
 
 interface IShopListProps {
-  filterType?: string;
   showOperate?: boolean;
 }
-const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterType: ''}) => {
-  const {showOperate, filterType} = props;
+const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
+  const {showOperate} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const addBtn = useRef(null);
@@ -57,7 +58,8 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   const { mutateAsync } = useAddShopStore();
   const { mutateAsync: update } = useUpdateShopStore();
   const { mutateAsync: batchDelete } = useBatchDeleteShopStore();
-
+  const getImpLinkPromise = useGetStoreImportTplLink();
+  const exportStorePromise = useExportStoreList();
   useEffect(() => {
     setShopStoreList(shopStorePageResp?.data);
     setPagination({
@@ -150,7 +152,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
     const hide = message.loading("正在删除");
     if (!selectedRows) return true;
     try {
-      const ids = selectedRows.map((row) => row.id) ?? [];
+      const ids = selectedRows.map((row) => row.appId) ?? [];
       const idsStr = ids.join(',');
       await batchDelete({ids: idsStr});
       setPagination({...pagination, current: 1});
@@ -163,6 +165,15 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
       return false;
     }
   };
+  const handleGetDownloadTemplate = async () => {
+    const importLink = await getImpLinkPromise({});
+    window.open(importLink, '_blank');
+  };
+  const handleImportTemplate = () => {
+  };
+  const handleExportTemplate = async () => {
+     await exportStorePromise({keyword: ''});
+  };
   function YgSpan(props1) {
     return (
      <a
@@ -174,6 +185,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   }
   const AuthLink = WrapAuth(YgSpan, permissionList);
   const AuthButton = WrapAuth(Button, permissionList);
+  const AuthAutoUploadFileButton = WrapAuth(AutoUploadFile, permissionList);
   const columns: ProColumns<IShopStore>[] = [
     {
       key: 'appId',
@@ -276,9 +288,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
       fixed: 'right',
       width: 140,
       render: (_, record) => {
-        const opMenuList = [
-          // { key: 'copy', name: '复制' },
-        ];
+        const opMenuList = [];
         if (PageFuncEnum.DELETE) {
           opMenuList.push({ key: PageFuncEnum.DELETE, name: '删除' });
         }
@@ -292,16 +302,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
             }}
           >
             编辑
-          </AuthLink>,
-          <AuthLink
-            key={PageFuncEnum.EDIT}
-            operCode={PageFuncEnum.EDIT}
-            onClick={(e) => {
-              e.preventDefault();
-              // showViewDrawer(record);
-            }}
-          >
-            禁用
           </AuthLink>,
           <AuthLink
             key={PageFuncEnum.DELETE}
@@ -323,25 +323,25 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
           >
             删除
           </AuthLink>,
-          <TableDropdown
-            key="actionGroup"
-            onSelect={(key) => {
-              if (key === PageFuncEnum.DELETE) {
-                Modal.confirm({
-                  title: "删除门店",
-                  content: "确定删除该门店吗？",
-                  okText: "确认",
-                  cancelText: "取消",
-                  onOk: async () => {
-                    await handleRemove([{ ...record }]);
-                    setSelectedRows([]);
-                    refetch();
-                  },
-                });
-              }
-            }}
-            menus={opMenuList}
-          />,
+          // <TableDropdown
+          //   key="actionGroup"
+          //   onSelect={(key) => {
+          //     if (key === PageFuncEnum.DELETE) {
+          //       Modal.confirm({
+          //         title: "删除门店",
+          //         content: "确定删除该门店吗？",
+          //         okText: "确认",
+          //         cancelText: "取消",
+          //         onOk: async () => {
+          //           await handleRemove([{ ...record }]);
+          //           setSelectedRows([]);
+          //           refetch();
+          //         },
+          //       });
+          //     }
+          //   }}
+          //   menus={opMenuList}
+          // />,
         ];
         return btnList;
       },
@@ -349,27 +349,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
   ];
   return (
     <>
-      {/* {
-        props.filterType === 'light' ? 
-        <LightFilter
-          initialValues={{
-          }}
-          footerRender={false}
-          onFinish={async (values) => console.log(values)}
-        >
-          <ProFormText name="keyword" size="md" label="关键词" />
-          <ProvinceCityArea />
-        </LightFilter>
-        :
-        <QueryFilter
-          submitter={false}
-          onChange={onFilterChange}
-          span={12}
-        >
-          <ProFormText name="keyword" label="关键词" />
-          <ProvinceCityArea />
-        </QueryFilter>
-      } */}
       <ProCard style={{marginBottom: 20}}>
       {/* <ProForm<IShopStore> formRef={formRef} onFinish={handleFilterChange}> */}
         <div className="store-list-search">
@@ -393,7 +372,28 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
         options={{reload: false}}
         toolBarRender={() => {
           const toolBtns = showOperate ? [
-            <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
+            <AuthLink
+              key={PageFuncEnum.IMPORT}
+              operCode={PageFuncEnum.EDIT}
+              onClick={handleGetDownloadTemplate}
+            >
+              下载导入模版
+            </AuthLink>,
+            <AuthAutoUploadFileButton
+              key={PageFuncEnum.IMPORT}
+              operCode={PageFuncEnum.EDIT}
+              btnText="导入"
+              apiUrl="http://1.13.20.201:9000/app/store/import"
+              maxCount={1}
+            />,
+            <AuthButton
+              key={PageFuncEnum.IMPORT}
+              operCode={PageFuncEnum.EDIT}
+              onClick={handleExportTemplate}
+            >
+              导出
+            </AuthButton>,
+            <AuthButton type="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
               {PageFuncMap.get(PageFuncEnum.ADD)}
             </AuthButton>,
           ] : [];
@@ -430,7 +430,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
             showOperate ? 
               <AuthButton
                 type="primary"
-                key="primary"
                 onClick={async () => {
                   await handleRemove(selectedRowsState);
                   setSelectedRows([]);
@@ -444,14 +443,14 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, filterTy
           }
         </FooterToolbar>
       )}
-      {/* <OperationDrawer
+      <ShopFormDrawer
         done={done}
         current={current}
         visible={visible}
         onDone={handleDone}
         onCancel={handleCancel}
         onSubmit={handleSubmit}
-      /> */}
+      />
     </>
   );
 };

@@ -2,7 +2,14 @@ import { IMenuTree } from "@/models/menu";
 import { IUser, IUserList, IUserPaginationResp } from "@/models/user-mng";
 import { ILog, ILogList, ILogPaginationResp } from "@/models/log";
 import { INotice, INoticeList, INoticePaginationResp } from "@/models/notice-mng";
-import { IShopStore, IShopStoreList, IShopStorePaginationResp } from "@/models/shop-store";
+import {
+    IShopStore,
+    IShopStoreList,
+    IShopStorePaginationResp,
+    IImportStorePayload,
+    IExportStorePayload,
+    IExportStoreResp
+} from "@/models/shop-store";
 import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
@@ -223,6 +230,21 @@ export const useGetMemberList = () => {
 export const useGetPerformanceList = () => {
     return useQueryGet<IReportPayload, IPerformance[]>('/app/business/performance/list', {completeRes: false});
 }
+
+// 获取导入模版地址
+export const useGetStoreImportTplLink = () => {
+    return useQueryGet<IImportStorePayload, string>('/app/store/template', {completeRes: false});
+};
+
+// 导入门店excel
+export const useImportStoreList = () => {
+    return useCreate<IImportStorePayload, IImportStoreResp>('/app/store/import');
+};
+
+// 导出门店excel
+export const useExportStoreList = () => {
+    return useQueryGet<IExportStorePayload, IExportStoreResp>('/app/store/export');
+};
 
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(

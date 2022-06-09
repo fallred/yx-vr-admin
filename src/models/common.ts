@@ -4,6 +4,7 @@ export enum PageFuncEnum {
     'ADD' = 'add',
     'EDIT' = 'edit',
     'DELETE' = 'delete',
+    'IMPORT' = 'import'
 }
 
 export enum StatusEnum {

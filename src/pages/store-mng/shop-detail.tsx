@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import moment from 'moment';
-import {Rate} from 'antd';
+import {Rate, Form} from 'antd';
 import { PageContainer } from "@ant-design/pro-layout";
 import { QueryFilter, ProFormSelect } from '@ant-design/pro-form';
 import ProDescriptions from '@ant-design/pro-descriptions';
@@ -15,7 +15,14 @@ const ShopDetailPage: React.FC<{}> = () => {
     isLoading: optionsLoading
   } = useGetShopStoreList();
   const fetchStoreDetail = useQueryShopStoreDetail();
-  const [appId, setAppId] = useState<string>('');
+  const [searchForm] = Form.useForm();
+  const searchFormRef = useRef(null);
+  const searchFormLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 8 },
+  };
+  
+  // const [appId, setAppId] = useState<string>('');
   const [shopStoreDetail, setShopStoreDetail] = useState({});
   async function handleAppIdChange(value) {
     const storeDetail = await fetchStoreDetail({id: value});
@@ -32,20 +39,28 @@ const ShopDetailPage: React.FC<{}> = () => {
   };
   useEffect(() => {
     const selectedAppId = shopStoreList?.[0]?.appId;
-    setAppId(selectedAppId);
+    searchForm.setFieldsValue({
+      appId: selectedAppId
+    });
     handleAppIdChange(selectedAppId);
   }, [shopStoreList]);
 
   return (
     <PageContainer>
         <ProCard key="card1" style={{marginBottom: 20}}>
-          <QueryFilter
+          {/* <QueryFilter
             submitter={false}
             split
+          > */}
+          <Form
+            {...searchFormLayout}
+            form={searchForm}
+            ref={searchFormRef}
           >
             <ProFormSelect
+              key="appId"
+              name="appId"
               label="门店"
-              value={appId}
               options={shopStoreList}
               onChange={handleAppIdChange}
               fieldProps={{
@@ -55,7 +70,8 @@ const ShopDetailPage: React.FC<{}> = () => {
                 },
               }}
             />
-          </QueryFilter>
+          </Form>
+          {/* </QueryFilter> */}
         </ProCard>
         <ProCard key="card2">
           <ProDescriptions column={2} title="门店详情" tooltip="门店详细信息">

@@ -229,7 +229,6 @@ const useQueryGet = <T, U>(url: string, config?: IRequestConfig = {completeRes: 
 // post body
 const useCreate = <T, U>(url: string) => {
     const axios = useAxios();
-    const queryClient = useQueryClient()
     return useMutation(async (params: T) => {
         const data: U = await axios.post(
             `${url}`,
@@ -242,7 +241,6 @@ const useCreate = <T, U>(url: string) => {
 // post query
 const useCreateByQuery = <T, U>(url: string) => {
     const axios = useAxios();
-    const queryClient = useQueryClient()
     return useMutation(async (params: T) => {
         const data: U = await axios.post(
             `${url}`,
@@ -257,7 +255,6 @@ const useCreateByQuery = <T, U>(url: string) => {
 
 const useUpdate = <T>(url: string) => {
     const axios = useAxios();
-    const queryClient = useQueryClient()
     return useMutation(async (item: T) => {
         const data: T = await axios.patch(
             `${url}`,
@@ -269,7 +266,6 @@ const useUpdate = <T>(url: string) => {
 
 const useDelete = <T>(url: string) => {
     const axios = useAxios();
-    const queryClient = useQueryClient()
     return useMutation(async (id: number) => {
         const data: T = await axios.delete(
             `${url}?id=${id}`,
@@ -280,7 +276,6 @@ const useDelete = <T>(url: string) => {
 
 const useBatch = (url: string) => {
     const axios = useAxios();
-    const queryClient = useQueryClient()
     return useMutation(async (ids: number[]) => {
         const data = await axios.post(
             `${url}`,

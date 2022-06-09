@@ -11,7 +11,7 @@ import ProForm, {
   ProFormSelect
 } from "@ant-design/pro-form";
 import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
-import { useGetRoleListAll } from "@/api";
+import {useGetRoleListAll} from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
 import ShopStoreTable from '@/pages/store-mng/shop-list';
 
