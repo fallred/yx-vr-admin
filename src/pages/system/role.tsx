@@ -60,7 +60,6 @@ const RoleTableList= () => {
 
   const showEditModal = (item: API.IRole) => {
     setVisible(true);
-    debugger;
     item.selectedMenuTree = JSON.parse(item.powerSelected);
     // item.selectedMenuCodeList = transToSelectedIds(item.selectedMenuTree);
     // const selectedTree = transToSelectedTree(menuTree, selectedMenuCodeList)

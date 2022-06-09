@@ -35,7 +35,6 @@ export function transToSelectedIds(selectedMenuTree: IMenuTree) {
  * @return selectedMenuTree
  */
 export function transToSelectedTree(menuTree: IMenuTree, selectedMenuIdList: number[], halfCheckedIdList: number[]) {
-    debugger;
     const tempTree = [];
     for(let item of menuTree) {
         const {

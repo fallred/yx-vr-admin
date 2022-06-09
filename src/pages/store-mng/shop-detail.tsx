@@ -7,6 +7,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import ProCard from '@ant-design/pro-card';
 import {useGetShopStoreList, useQueryShopStoreDetail} from "@/api";
 import {ShopStoreStatusMap} from '@/enums/common';
+import ShopTask from './modules/shop-task/index';
 
 const ShopDetailPage: React.FC<{}> = () => {
   const {
@@ -22,9 +23,10 @@ const ShopDetailPage: React.FC<{}> = () => {
     wrapperCol: { span: 8 },
   };
   
-  // const [appId, setAppId] = useState<string>('');
+  const [appId, setAppId] = useState<string>('');
   const [shopStoreDetail, setShopStoreDetail] = useState({});
   async function handleAppIdChange(value) {
+    setAppId(value);
     const storeDetail = await fetchStoreDetail({id: value});
     setShopStoreDetail(storeDetail);
   }
@@ -39,6 +41,7 @@ const ShopDetailPage: React.FC<{}> = () => {
   };
   useEffect(() => {
     const selectedAppId = shopStoreList?.[0]?.appId;
+    setAppId(selectedAppId);
     searchForm.setFieldsValue({
       appId: selectedAppId
     });
@@ -136,6 +139,9 @@ const ShopDetailPage: React.FC<{}> = () => {
                 {shopStoreDetail.tm}
             </ProDescriptions.Item>
           </ProDescriptions>
+        </ProCard>
+        <ProCard key="card3">
+            <ShopTask appId={appId} id="" />
         </ProCard>
     </PageContainer>
   );

@@ -10,6 +10,7 @@ import {
     IExportStorePayload,
     IExportStoreResp
 } from "@/models/shop-store";
+import {IShopTaskList, IShopTask} from '@/models/shop-task';
 import { IOption, IProvince, ICity, IArea } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
@@ -245,6 +246,28 @@ export const useImportStoreList = () => {
 export const useExportStoreList = () => {
     return useQueryGet<IExportStorePayload, IExportStoreResp>('/app/store/export');
 };
+
+
+// 门店月度任务
+export const useGetShopTaskList = (pagination: any, filters: any) => {
+    return useGetList<IShopTaskList>(
+        "ShopTaskListPage",
+        '/app/store/task/list',
+        pagination,
+        filters
+    );
+}
+export const useAddShopTask = () => {
+    return useCreate<IShopTask, IShopTask>('/app/store/task/create');
+}
+
+export const useUpdateShopTask = () => {
+    return useCreate<IShopTask>('/app/store/task/edit');
+}
+
+export const useBatchDeleteShopTask = () => {
+    return useCreateByQuery('/app/store/delete');
+}
 
 // export const useGetCurrentUser = () => {
 //     return useGetOne<CurrentUserResult>(

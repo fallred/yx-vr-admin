@@ -83,7 +83,6 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
         },
     }));
     useEffect(() => {
-        debugger;
         setCheckedKeys(leftCheckedKeys);
         // 根据leftCheckedKeys，计算出 左边树选中/半选的节点。
         updateFuncMenuTree(halfCheckedKeys);

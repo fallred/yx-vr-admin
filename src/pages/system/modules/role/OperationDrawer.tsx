@@ -52,7 +52,6 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   }, [current]);
 
   useEffect(() => {
-    debugger;
     if (selectedMenuTree?.length > 0) {
       const {menuNodes, funcNodes, halfIds} = queryMenuAndFuncNodes(selectedMenuTree);
       setMenuCheckedKeys(menuNodes);
@@ -68,7 +67,6 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     const selMenuTreeJSON = JSON.stringify(selMenuTree);
     console.log('selMenuTreeJSON:', selMenuTreeJSON);
     console.log('selMenuTree:', selMenuTree);
-    debugger;
     const powerSelected = selMenuTree ? JSON.stringify(selMenuTree) : '[]';
     // form.setFieldsValue({
     //   ...formData,
