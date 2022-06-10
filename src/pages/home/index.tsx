@@ -5,8 +5,8 @@ import homeImg from "@/assets/home.png";
 function Home() {
     return (
       <div className="home">
-        <Image
-          height="500"
+        <img
+          className="home-img"
           src={homeImg}
         />
       </div>

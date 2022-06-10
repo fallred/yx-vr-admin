@@ -73,8 +73,8 @@ const ShopDetailPage: React.FC<{}> = () => {
               />
             </QueryFilter>
         </ProCard>
-        <ProCard key="card2">
-          <ProDescriptions column={2} title="门店详情" tooltip="门店详细信息">
+        <ProCard key="card2" style={{marginBottom: 20}}>
+          <ProDescriptions column={4} title="门店详情" tooltip="门店详细信息">
             <ProDescriptions.Item
               label="门店名称"
               fieldProps={{

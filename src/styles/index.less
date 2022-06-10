@@ -39,7 +39,9 @@ ul::-webkit-scrollbar-thumb {
 ul::-webkit-scrollbar-track {
   display: none;
 }
-
+.ant-page-header-heading {
+  display: none;
+}
 .ant-pro-global-header-layout-mix {
   background-color: #fff;
   .ant-pro-global-header-logo h1 {
@@ -51,6 +53,8 @@ ul::-webkit-scrollbar-track {
 }
 .ant-pro-basicLayout-content {
   margin: 0;
+  min-width: 900px;
+  background-color: #f0f2f5;
 }
 .ant-pro-basicLayout-content .ant-pro-page-container {
   margin: 0;
@@ -64,7 +68,7 @@ ul::-webkit-scrollbar-track {
   height: 100%;
 }
 .ant-pro-grid-content {
-  height: calc(100% - 124px);
+  height: calc(100% - 50px);
   overflow: hidden;
   overflow-y: auto;
 }
@@ -72,6 +76,7 @@ ul::-webkit-scrollbar-track {
   margin: 24px;
 }
 .ant-layout-footer {
+  display: none;
   background-color: #fff;
 }
 .layout-page {
@@ -124,7 +129,7 @@ ul::-webkit-scrollbar-track {
 }
 
 .rank-list {
-  height: 540px;
+  height: 500px;
   overflow: auto;
   padding: 0;
   border: 1px solid rgba(140, 140, 140, 0.35);
@@ -161,10 +166,8 @@ ul::-webkit-scrollbar-track {
 }
 
 .home {
-  // height: calc(100% - 148px);
   height: 100%;
   width: 100%;
-  // min-width: 1400px;
   .ant-image {
     width: 100%;
     height: 100%;
@@ -174,6 +177,11 @@ ul::-webkit-scrollbar-track {
       // height: auto;
       object-fit: scale-down;
     }
+  }
+  .home-img {
+      max-width: 100%;
+      height: 100%;
+      object-fit: scale-down;
   }
 }
 .notice-mng {

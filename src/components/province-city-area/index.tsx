@@ -120,7 +120,7 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             value={formData.province}
             key="province"
             name="province"
-            label="省"
+            label=""
             options={provinceOptions}
             fieldProps={{
                 fieldNames: {
@@ -134,7 +134,7 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             value={formData.city}
             key="city"
             name="city"
-            label="市"
+            label=""
             options={cityOptions}
             placeholder="选择市"
             fieldProps={{
@@ -149,7 +149,7 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             value={formData.district}
             key="district"
             name="district"
-            label="区"
+            label=""
             options={areaOptions}
             fieldProps={{
                 fieldNames: {

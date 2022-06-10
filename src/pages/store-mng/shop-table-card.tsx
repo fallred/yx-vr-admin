@@ -30,6 +30,10 @@ import ShopFormDrawer from "./modules/shop-form";
 interface IShopListProps {
   showOperate?: boolean;
 }
+const searchFormLayout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 16 },
+};
 const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
   const {showOperate} = props;
   const permissionList = useRecoilValue(permissionListState);
@@ -336,17 +340,21 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
   return (
     <>
       <ProCard style={{marginBottom: 20}}>
-      {/* <ProForm<IShopStore> formRef={formRef} onFinish={handleFilterChange}> */}
-        <div className="store-list-search">
-          <FormItem label="关键词">
-            <Input placeholder="关键词" style={{ width: 160 }} onChange={handleKeywordChange} />
-          </FormItem>
-          {/* <ProFormText name="keyword" label="关键词" /> */}
-          <ProvinceCityArea cdRef={pcdRef} />
-          <Button type="primary" onClick={handleSearch}>查询</Button>
-          <Button onClick={handleReset}>重置</Button>
-        </div>
-      {/* </ProForm> */}
+        <ProForm<IShopStore>
+            {...searchFormLayout}
+            formRef={formRef}
+            onFinish={handleSearch}
+        >
+            <ProFormText width="md" name="keyword" label="关键词" />
+            <ProForm.Item
+                name="dateRange"
+                width="md"
+                label="地址"
+                placeholder="请选择地址"
+            >
+              <ProvinceCityArea hasFormItemWrap={false} cdRef={pcdRef} />
+            </ProForm.Item>
+        </ProForm>
       </ProCard>
       <ProTable<IShopStore>
         rowKey="appId"
