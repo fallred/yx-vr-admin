@@ -67,11 +67,11 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     console.log('selMenuTreeJSON:', selMenuTreeJSON);
     console.log('selMenuTree:', selMenuTree);
     const powerSelected = selMenuTree ? JSON.stringify(selMenuTree) : '[]';
-    // form.setFieldsValue({
-    //   ...formData,
-    //   powerSelected
-    // });
-    // form.submit();
+    form.setFieldsValue({
+      ...formData,
+      powerSelected
+    });
+    form.submit();
   };
 
   const handleFinish = async (values: { [key: string]: any }) => {

@@ -18,6 +18,7 @@ import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
+import {dateFormat} from '@/lib/common';
 import {
     useGetShopTaskList,
     useAddShopTask,
@@ -85,7 +86,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
   };
   const handleDrawerFormSubmit = async (row: IShopTask) => {
     row.id = current && current.id ? current.id : 0;
-    row.tm = current.tm ? moment(current.tm) : null;
+    row.tm = current.tm ? dateFormat(current.tm) : null;
     setVisible(false);
     const hide = message.loading("正在添加/更新");
     try {
@@ -134,6 +135,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
         key: 'tm',
         dataIndex: 'tm',
         valueType: 'dateTime',
+        format: dateFormat,
         ellipsis: true,
         hideInSearch: false,
     },

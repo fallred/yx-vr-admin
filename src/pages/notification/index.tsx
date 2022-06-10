@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import { Badge, notification, Modal, Button } from 'antd';
 import { NotificationOutlined } from "@ant-design/icons";
-import {useQueryNoticeAll} from '@/api';
+import {useQueryNoticeAll, useQueryNoticeList} from '@/api';
 
 const Notification: React.FC<{}> = () => {
-  const queryNoticeAllPromise = useQueryNoticeAll();
+  // const queryNoticeAllPromise = useQueryNoticeAll();
+  const { data: noticeListPageResp} = useQueryNoticeList({
+    current: 1,
+    pageSize: 10,
+  }, {});
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [index, setIndex] = useState(0);
   const [noticeList, setNoticeList] = useState([]);
@@ -36,10 +40,13 @@ const Notification: React.FC<{}> = () => {
   useEffect(() => {
     setNotice(noticeList?.[index]);
   }, [index]);
+  // useEffect(async () => {
+  //   const nList = await queryNoticeAllPromise();
+  //   setNoticeList(nList);
+  // }, []);
   useEffect(async () => {
-    const nList = await queryNoticeAllPromise();
-    setNoticeList(nList);
-  }, []);
+    setNoticeList(noticeListPageResp?.data);
+  }, [noticeListPageResp]);
   return (
     <div className="notification">
         <Badge dot onClick={showModal}>

@@ -1,3 +1,4 @@
+import moment from "moment";
 // export function formatObjectToListByKeyMap(dataObj, dataMap) {
 //     const dataList = Object.keys(dataObj).map(key => {
 //         const item = {
@@ -21,4 +22,9 @@ export function formatObjectToListByKeyMap(dataObj, dataConfigList) {
         dataList.push(itemTemp);
     });
     return dataList;
+}
+
+export const dateFormat = (tm: string) => {
+    const dateFormatStr= moment(tm).format('YYYY-MM-DD');
+    return dateFormatStr;
 }

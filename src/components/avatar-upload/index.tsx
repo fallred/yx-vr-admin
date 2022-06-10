@@ -57,6 +57,20 @@ class AvatarUpload extends React.Component {
   };
 
   render() {
+    const accessToken = localStorage.getItem('accessToken');
+    const uploadProps = {
+        name: 'file',
+        className: "avatar-uploader",
+        action: "/mock/app/file/upload",
+        listType: "picture-card",
+        className: "avatar-uploader",
+        showUploadList: false,
+        beforeUpload,
+        onChange: this.handleChange,
+        headers: {
+          accessToken,
+        },
+    };
     const { loading, imageUrl } = this.state;
     const uploadButton = (
       <div>
@@ -65,15 +79,7 @@ class AvatarUpload extends React.Component {
       </div>
     );
     return (
-      <Upload
-        name="file"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        action="/mock/app/file/upload"
-        beforeUpload={beforeUpload}
-        onChange={this.handleChange}
-      >
+      <Upload {...uploadProps}>
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
     );

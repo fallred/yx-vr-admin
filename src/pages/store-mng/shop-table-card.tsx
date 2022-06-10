@@ -29,13 +29,14 @@ import ShopFormDrawer from "./modules/shop-form";
 
 interface IShopListProps {
   showOperate?: boolean;
+  showSearch?: boolean;
 }
 const searchFormLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 16 },
 };
 const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
-  const {showOperate} = props;
+  const {showOperate, showSearch} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const formRef = useRef<ProFormInstance<IShopStore>>();
@@ -190,7 +191,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
       dataIndex: "nm",
       valueType: "text",
       ellipsis: true,
-      width: 150,
+      width: 250,
     },
     {
       key: 'code',
@@ -204,28 +205,28 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
       title: '省',
       dataIndex: "province",
       valueType: "text",
-      width: 100,
+      width: 80,
     },
     {
       key: 'city',
       title: '市',
       dataIndex: "city",
       valueType: "text",
-      width: 100,
+      width: 80,
     },
     {
       key: 'district',
       title: '区',
       dataIndex: "district",
       valueType: "text",
-      width: 100,
+      width: 80,
     },
     {
       key: 'address',
       title: '详细地址',
       dataIndex: "address",
       valueType: "textarea",
-      width: 100,
+      width: 120,
     },
     {
       key: 'franchisee',
@@ -254,7 +255,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
       title: '门店评级',
       dataIndex: "grade",
       valueType: "rate",
-      width: 150,
+      width: 100,
       // copyable: true,
     },
     {
@@ -339,7 +340,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
   ];
   return (
     <>
-      <ProCard style={{marginBottom: 20}}>
+      {showSearch ? (<ProCard style={{marginBottom: 20}}>
         <ProForm<IShopStore>
             {...searchFormLayout}
             formRef={formRef}
@@ -355,7 +356,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
               <ProvinceCityArea hasFormItemWrap={false} cdRef={pcdRef} />
             </ProForm.Item>
         </ProForm>
-      </ProCard>
+      </ProCard>) : null}
       <ProTable<IShopStore>
         rowKey="appId"
         headerTitle="门店管理"
