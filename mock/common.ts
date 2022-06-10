@@ -351,7 +351,9 @@ const mockQueryAreaList = {
 };
 
 const mockUploadResp = {
-	"data": {},
+	"data": {
+    imgUrl: 'https://gh-fe.oss-cn-beijing.aliyuncs.com/static/image/cms/banner-category.png'
+  },
 	"msg": "",
 	"pages": 0,
 	"status": 0,

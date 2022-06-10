@@ -17,6 +17,29 @@ a {
   cursor: pointer;
 }
 
+// 整体滚动条样式
+div::-webkit-scrollbar {
+  width: 3px;
+  height: 6px;
+  background: hsla(0, 0%, 100%, 0.6);
+}
+div::-webkit-scrollbar-thumb {
+  background-color: rgba(95,95,95,.4);
+}
+div::-webkit-scrollbar-track {
+  display: none;
+}
+ul::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+ul::-webkit-scrollbar-thumb {
+  background-color: rgba(95,95,95,.4);
+}
+ul::-webkit-scrollbar-track {
+  display: none;
+}
+
 .ant-pro-global-header-layout-mix {
   background-color: #fff;
   .ant-pro-global-header-logo h1 {
@@ -31,6 +54,25 @@ a {
 }
 .ant-pro-basicLayout-content .ant-pro-page-container {
   margin: 0;
+}
+.ant-pro-global-footer {
+  margin: 0;
+  padding: 24px 16px;
+}
+
+.ant-pro-page-container {
+  height: 100%;
+}
+.ant-pro-grid-content {
+  height: calc(100% - 124px);
+  overflow: hidden;
+  overflow-y: auto;
+}
+.ant-pro-page-container-children-content {
+  margin: 24px;
+}
+.ant-layout-footer {
+  background-color: #fff;
 }
 .layout-page {
   &-header {
@@ -53,6 +95,20 @@ a {
   justify-content: center;
 }
 
+
+.form-item {
+  display: flex;
+  align-items: center;
+  // margin-right: 10px;
+  margin-bottom: 10px;
+  &__label {
+    flex: none;
+    width: 50px;
+    text-align: right;
+    // margin-right: 5px;
+  }
+}
+
 .store-list-search {
   display: flex;
   flex-direction: row;
@@ -64,18 +120,6 @@ a {
 .storeDrawer {
   .descriptGroup {
     border: 1px solid #dddddd;
-  }
-}
-.form-item {
-  display: flex;
-  align-items: center;
-  // margin-right: 10px;
-  margin-bottom: 10px;
-  &__label {
-    flex: none;
-    width: 50px;
-    text-align: right;
-    // margin-right: 5px;
   }
 }
 
@@ -115,20 +159,7 @@ a {
     top: 0;
   }
 }
-.notification {
-  cursor: pointer;
-}
-.ant-pro-global-footer {
-  margin: 0;
-  padding: 24px 16px;
-}
 
-.ant-pro-basicLayout-content {
-  // height: calc(100% - 148px);
-}
-.ant-layout {
-  // height: 100%;
-}
 .home {
   // height: calc(100% - 148px);
   height: 100%;
@@ -183,4 +214,7 @@ a {
 
 .auto-upload-box {
   display: flex;
+}
+.notification {
+  cursor: pointer;
 }

@@ -20,15 +20,16 @@ const ShopDetailPage: React.FC<{}> = () => {
   const searchFormRef = useRef(null);
   const searchFormLayout = {
     labelCol: { span: 4 },
-    wrapperCol: { span: 8 },
+    wrapperCol: { span: 16 },
   };
-  
   const [appId, setAppId] = useState<string>('');
   const [shopStoreDetail, setShopStoreDetail] = useState({});
-  async function handleAppIdChange(value) {
-    setAppId(value);
-    const storeDetail = await fetchStoreDetail({id: value});
+  const handleSearch = async searchData => {
+    const storeDetail = await fetchStoreDetail({id: searchData.appId});
     setShopStoreDetail(storeDetail);
+  };
+  function handleAppIdChange(value) {
+    setAppId(value);
   }
   const addressFormat = () => {
     const addrInfo = [
@@ -45,20 +46,17 @@ const ShopDetailPage: React.FC<{}> = () => {
     searchForm.setFieldsValue({
       appId: selectedAppId
     });
-    handleAppIdChange(selectedAppId);
   }, [shopStoreList]);
 
   return (
     <PageContainer>
         <ProCard key="card1" style={{marginBottom: 20}}>
-          <Form
-            {...searchFormLayout}
-            form={searchForm}
-            ref={searchFormRef}
-          >
             <QueryFilter
-                submitter={false}
+                {...searchFormLayout}
+                form={searchForm}
+                submitter={true}
                 split
+                onFinish={handleSearch}
             >
               <ProFormSelect
                 key="appId"
@@ -74,7 +72,6 @@ const ShopDetailPage: React.FC<{}> = () => {
                 }}
               />
             </QueryFilter>
-          </Form>
         </ProCard>
         <ProCard key="card2">
           <ProDescriptions column={2} title="门店详情" tooltip="门店详细信息">

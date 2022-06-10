@@ -9,25 +9,25 @@ const mockQueryReportListResp = {
            name: '客流分析',
            list: [
             {
-                "key": "1",
+                "key": "11",
                 "name": "曝光人数",
                 "value": 29000,
                 "link_relative_ratio": 5,
               },
               {
-                "key": "2",
+                "key": "12",
                 "name": "访问人数",
                 "value": 2713,
                 "link_relative_ratio": -16,
               },
               {
-                "key": "3",
+                "key": "13",
                 "name": "下单人数",
                 "value": 1200,
                 "link_relative_ratio": -16,
               },
               {
-                "key": "4",
+                "key": "14",
                 "name": "到店消费人数",
                 "value": 1500,
                 "link_relative_ratio": -14,
@@ -68,30 +68,30 @@ const mockQueryReportListResp = {
             key: '3',
             name: '会员数据',
             list: [
-            {
-                "key": "1",
-                "name": "曝光人数",
-                "value": 29000,
-                "link_relative_ratio": 5,
-            },
-            {
-                "key": "2",
-                "name": "访问人数",
-                "value": 2713,
-                "link_relative_ratio": -16,
-            },
-            {
-                "key": "3",
-                "name": "下单人数",
-                "value": 1200,
-                "link_relative_ratio": -16,
-            },
-            {
-                "key": "4",
-                "name": "到店消费人数",
-                "value": 1500,
-                "link_relative_ratio": -14,
-            },
+              {
+                  "key": "31",
+                  "name": "曝光人数",
+                  "value": 29000,
+                  "link_relative_ratio": 5,
+              },
+              {
+                  "key": "32",
+                  "name": "访问人数",
+                  "value": 2713,
+                  "link_relative_ratio": -16,
+              },
+              {
+                  "key": "33",
+                  "name": "下单人数",
+                  "value": 1200,
+                  "link_relative_ratio": -16,
+              },
+              {
+                  "key": "34",
+                  "name": "到店消费人数",
+                  "value": 1500,
+                  "link_relative_ratio": -14,
+              },
             ]
         },
         {
@@ -99,25 +99,25 @@ const mockQueryReportListResp = {
             name: '评价数据',
             list: [
             {
-                "key": "1",
+                "key": "41",
                 "name": "曝光人数",
                 "value": 29000,
                 "link_relative_ratio": 5,
             },
             {
-                "key": "2",
+                "key": "42",
                 "name": "访问人数",
                 "value": 2713,
                 "link_relative_ratio": -16,
             },
             {
-                "key": "3",
+                "key": "43",
                 "name": "下单人数",
                 "value": 1200,
                 "link_relative_ratio": -16,
             },
             {
-                "key": "4",
+                "key": "44",
                 "name": "到店消费人数",
                 "value": 1500,
                 "link_relative_ratio": -14,

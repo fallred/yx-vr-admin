@@ -86,17 +86,17 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
   };
   const handleSearch = () => {
     const payload = pcdRef?.current?.getValue();
-    const v = keyword.target.value;
-    setFilters({keyword: v, ...payload});
+    setFilters({keyword, ...payload});
     // refetch();
   };
   const handleReset = () => {
     setFilters({province: '', city: '', district: '', keyword: ''});
     // refetch();
   };
-  const handleKeywordChange = (value) => {
+  const handleKeywordChange = (event) => {
+    // console.log('handleKeywordChange:', value);
     // refetch();
-    setKeyword(value);
+    setKeyword(event.target.value);
   };
   const addShopStore = async (data: IShopStore) => {
     await addMutate(data);

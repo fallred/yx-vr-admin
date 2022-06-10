@@ -22,15 +22,16 @@ export default function useReportList() {
   const [evaluateList, setEvaluateList] = useState<IDataStastic[]>([]);
   const [memberList, setMemberList] = useState<IDataStastic[]>([]);
   const [performanceList, setPerformanceList] = useState<IDataStastic[]>([]);
-  async function fetchData(appIdArr) {
+  async function fetchData(payload) {
+    const {appIdArr, dateRange} = payload;
     const appIds = appIdArr.join(',');
-    const convertInfo = await getConvertListPromise({appIds});
+    const convertInfo = await getConvertListPromise({appIds, dateRange});
     const convertList = formatObjectToListByKeyMap(convertInfo, ConvertConfigList);
-    const evaluateInfo = await getEvaluateListPromise({appIds});
+    const evaluateInfo = await getEvaluateListPromise({appIds, dateRange});
     const evaluateList = formatObjectToListByKeyMap(evaluateInfo, EvaluateConfigList);
-    const memberInfo = await getMemberListPromise({appIds});
+    const memberInfo = await getMemberListPromise({appIds, dateRange});
     const memberList = formatObjectToListByKeyMap(memberInfo, MemberConfigList);
-    const performanceInfo = await getPerformanceListPromise({appIds});
+    const performanceInfo = await getPerformanceListPromise({appIds, dateRange});
     const performanceList = formatObjectToListByKeyMap(performanceInfo, PerformanceConfigList);
     setConvertList(convertList);
     setEvaluateList(evaluateList);

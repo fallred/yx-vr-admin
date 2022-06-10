@@ -34,12 +34,13 @@ import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
 import { userState, userMenuTreeState, systemMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
-import RightContent from "./components/RightContent";
+import RenderRouter from '@/routes/index';
+import {userMenuTree} from '@/config/menu-config';
 // import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
 import LogoIcon from "@/assets/logo/logo.png";
 import { useGuide } from "../guide/useGuide";
 import Footer from "./components/Footer";
-import RenderRouter from '@/routes/index';
+import RightContent from "./components/RightContent";
 
 const history = createBrowserHistory();
 
@@ -69,7 +70,7 @@ const LayoutPage: FC = ({ children }) => {
   // const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
   // const fetchUserMenuTree1 = useGetUserMenuTree1();
   // const fetchSystemMenuTree1 = useGetSystemMenuTree1();
-  const userMenuTree = useRecoilValue(userMenuTreeState);
+  // const userMenuTree = useRecoilValue(userMenuTreeState);
   const systemMenuTree = useRecoilValue(systemMenuTreeState);
   const [pathname, setPathname] = useState("/welcome");
   const [openMenuKeys, setOpenMenuKeys] = useState([]);
@@ -88,13 +89,13 @@ const LayoutPage: FC = ({ children }) => {
   const loopMenuItem = (menus?: IMenuTree): MenuDataItem[] => {
     if (!menus || menus.length === 0) return [];
 
-    const m = menus.map(({ icon, children, ...item }) => ({
+    const m = menus.map(({ icon, children: child, ...item }) => ({
       ...item,
       key: item.menuId,
       name: item.menuName,
       path: item.url,
       icon: icon && IconMap[icon as string],
-      children: children && loopMenuItem(children),
+      children: child && loopMenuItem(child),
     }));
 
     return m;
@@ -134,6 +135,9 @@ const LayoutPage: FC = ({ children }) => {
   // useEffect(() => {
   //   recoilService.getUserMenuTree(userMenuTree);
   // }, [userMenuTree]);
+
+  // openKeys={openMenuKeys}
+  // onOpenChange={onOpenChange}
   return (
     <ProLayout
       fixSiderbar
@@ -142,8 +146,6 @@ const LayoutPage: FC = ({ children }) => {
         pathname: location.pathname,
       }}
       {...settings}
-      openKeys={openMenuKeys}
-      onOpenChange={onOpenChange}
       waterMarkProps={{
         content: '影行科技',
       }}

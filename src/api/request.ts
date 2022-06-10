@@ -2,7 +2,6 @@ import { createContext, ReactNode, useContext } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { notification } from 'antd';
 import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
-import { createBrowserHistory } from 'history';
 import qs from 'qs';
 
 type IRequestConfig = {
@@ -10,7 +9,6 @@ type IRequestConfig = {
 };
 // const errorPath = '/vrAdmin/login';
 const errorPath = '/login';
-const history = createBrowserHistory();
 
 console.log('baseurl:', import.meta.env.VITE_BASE_URL);
 const axios = Axios.create({

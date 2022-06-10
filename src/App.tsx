@@ -2,7 +2,6 @@ import React, { Suspense, useEffect, useMemo } from "react";
 import { BrowserRouter, Route, Routes, HashRouter } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { IntlProvider } from "react-intl";
-import { createBrowserHistory } from "history";
 import { useRecoilState } from "recoil";
 
 import enUS from "antd/lib/locale/en_US";
@@ -19,8 +18,6 @@ import RenderRouter from "./routes";
 import "./App.less";
 
 moment.locale("zh-cn");
-
-const history = createBrowserHistory();
 
 const App: React.FC = () => {
   const { data: userMenuTree, error: error1 } = useGetUserMenuTree();

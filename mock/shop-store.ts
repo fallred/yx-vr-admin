@@ -67,7 +67,7 @@ const mockQueryStoreListAllResp = {
       "managerImage": "https://gtbg-materialcenter-dev.oss-cn-beijing.aliyuncs.com/bf6577cf-fcf6-48f4-b2b0-6ad61a33ba0c.jpg"
     },
     {
-      "appId": "vr2037_00001",
+      "appId": "vr2038_00001",
       "nm": "xxxx店2",
       "province": null,
       "city": null,

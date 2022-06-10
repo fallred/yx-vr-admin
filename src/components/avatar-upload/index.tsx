@@ -1,5 +1,6 @@
 import React from 'react';
 import { Upload, message } from 'antd';
+import type { RcFile, UploadProps } from 'antd/es/upload';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 const env = import.meta.env.VITE_NODE_ENV;
@@ -27,22 +28,31 @@ class AvatarUpload extends React.Component {
     loading: false,
     imageUrl: '',
   };
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return {imageUrl: nextProps.value};
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   return {imageUrl: nextProps.value ?? ''};
+  // }
   handleChange = info => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
     }
     if (info.file.status === 'done') {
+      // const getBase64 = (file: RcFile): Promise<string> =>
+      // new Promise((resolve, reject) => {
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(file);
+      //   reader.onload = () => resolve(reader.result as string);
+      //   reader.onerror = error => reject(error);
+      // });
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl =>
+      console.log('info.file.originFileObj:', info.file.originFileObj);
+      getBase64(info.file.originFileObj, imgUrl => {
+        console.log('imageUrl:', imgUrl);
         this.setState({
-          imageUrl,
+          imageUrl: imgUrl,
           loading: false,
-        }),
-      );
+        });
+      });
     }
   };
 
