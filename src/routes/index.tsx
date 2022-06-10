@@ -34,7 +34,7 @@ const routeList: RouteObject[] = [
       children: [
         {
           path: "home",
-          element: <WrapperRouteComponent><Home /></WrapperRouteComponent>,
+          element: <WrapperRouteComponent auth={true}><Home /></WrapperRouteComponent>,
         },
         {
           path: "dashboard",
@@ -68,41 +68,41 @@ const routeList: RouteObject[] = [
         },
         {
           path: "storeMng",
-          element: <WrapperRouteComponent><SubLayout /></WrapperRouteComponent>,
+          element: <WrapperRouteComponent auth={true}><SubLayout /></WrapperRouteComponent>,
           children: [
             {
               path: "/storeMng",
-              element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><Associate /></WrapperRouteComponent>,
             },
             {
               path: "associate",
-              element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><Associate /></WrapperRouteComponent>,
             },
             {
               path: "shopList",
-              element: <WrapperRouteComponent><ShopList /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><ShopList /></WrapperRouteComponent>,
             },
             {
               path: "shopDetail",
-              element: <WrapperRouteComponent><ShopDetail /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><ShopDetail /></WrapperRouteComponent>,
             },
           ],
         },
         {
           path: "businessMng",
-          element: <WrapperRouteComponent><SubLayout /></WrapperRouteComponent>,
+          element: <WrapperRouteComponent auth={true}><SubLayout /></WrapperRouteComponent>,
           children: [
             {
               path: "/businessMng",
-              element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><ReportList /></WrapperRouteComponent>,
             },
             {
               path: "reportList",
-              element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><ReportList /></WrapperRouteComponent>,
             },
             {
               path: "rankList",
-              element: <WrapperRouteComponent><RankList /></WrapperRouteComponent>,
+              element: <WrapperRouteComponent auth={true}><RankList /></WrapperRouteComponent>,
             },
           ]
         },
@@ -118,7 +118,7 @@ const routeList: RouteObject[] = [
     },
     {
       path: "*",
-      element: <WrapperRouteComponent><NotFound /></WrapperRouteComponent>,
+      element: <WrapperRouteComponent ><NotFound /></WrapperRouteComponent>,
     },
 ];
 

@@ -5,7 +5,6 @@ import { RouteProps } from 'react-router';
 import PrivateRoute from './pravateRoute';
 
 export interface WrapperRouteProps extends RouteProps {
-  /** authorization？ */
   auth?: boolean;
 }
 
