@@ -8,7 +8,8 @@ import qs from 'qs';
 type IRequestConfig = {
     completeRes: boolean;
 };
-const errorPath = '/vrAdmin/login';
+// const errorPath = '/vrAdmin/login';
+const errorPath = '/login';
 const history = createBrowserHistory();
 
 console.log('baseurl:', import.meta.env.VITE_BASE_URL);

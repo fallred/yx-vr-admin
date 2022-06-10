@@ -2,7 +2,7 @@ import React from 'react';
 
 const SystemPage: React.FC<{}> = () => {
   return (
-    <div className='notification'>
+    <div className='system-mng'>
       系统管理
     </div>
   );

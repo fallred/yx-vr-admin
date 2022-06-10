@@ -78,7 +78,7 @@ const mockUserMenuTree = {
           menuId: 20,
           url: '/system/role',
           menuName: '角色管理',
-          icon: 'smile',
+          icon: 'aimout',
           "permission": [
             {
               "id": 201,
@@ -106,7 +106,7 @@ const mockUserMenuTree = {
           menuId: 21,
           url: '/system/user',
           menuName: '用户管理',
-          icon: 'smile',
+          icon: 'user',
           "permission": [
             {
               "id": 211,
@@ -134,13 +134,13 @@ const mockUserMenuTree = {
           menuId: 22,
           url: '/system/operateLog',
           menuName: '操作日志',
-          icon: 'smile',
+          icon: 'log',
         },
         {
           menuId: 23,
           url: '/system/noticeMng',
           menuName: '公告管理',
-          icon: 'smile',
+          icon: 'notification',
           "permission": [
             {
               "id": 231,
@@ -176,7 +176,7 @@ const mockUserMenuTree = {
           menuId: 30,
           url: '/storeMng/associate',
           menuName: '关联人管理',
-          icon: 'smile',
+          icon: 'userGroup',
           "permission": [
             {
               "id": 301,
@@ -204,7 +204,7 @@ const mockUserMenuTree = {
           menuId: 31,
           url: '/storeMng/shopList',
           menuName: '门店管理',
-          icon: 'smile',
+          icon: 'shopList',
           "permission": [
             {
               "id": 311,
@@ -232,7 +232,7 @@ const mockUserMenuTree = {
           menuId: 32,
           url: '/storeMng/shopDetail',
           menuName: '门店信息',
-          icon: 'smile',
+          icon: 'shopDetail',
           "permission": [
             {
               "id": 321,
@@ -268,7 +268,7 @@ const mockUserMenuTree = {
           menuId: 40,
           url: '/businessMng/reportList',
           menuName: '经营报表',
-          icon: 'smile',
+          icon: 'table',
           "permission": [
             {
               "id": 401,
@@ -296,7 +296,7 @@ const mockUserMenuTree = {
           menuId: 41,
           url: '/businessMng/rankList',
           menuName: '排行榜',
-          icon: 'smile',
+          icon: 'rank',
           "permission": [
             {
               "id": 411,

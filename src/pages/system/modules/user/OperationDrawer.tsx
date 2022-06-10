@@ -13,7 +13,7 @@ import ProForm, {
 import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import {useGetRoleListAll} from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
-import ShopStoreTable from '@/pages/store-mng/shop-list';
+import ShopTableCard from '@/pages/store-mng/shop-table-card';
 import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 
 interface OperationDrawerProps {
@@ -180,7 +180,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
               }}
           >
           </ProCard> */}
-          <ShopStoreTable filterType="" />
+          <ShopTableCard filterType="" />
       </Form>
     );
   };

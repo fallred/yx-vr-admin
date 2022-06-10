@@ -14,13 +14,24 @@ import {
   ShopOutlined,
   ProjectOutlined,
   RadarChartOutlined,
-  HomeOutlined
+  HomeOutlined,
+  UserOutlined,
+  AimOutlined,
+  TableOutlined,
+  ToTopOutlined,
+  InboxOutlined,
+  AppstoreOutlined,
+  UserSwitchOutlined,
+  FileSearchOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
 import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
-import { useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
-import { userState, userMenuTreeState } from "@/stores/recoilState";
+// import {
+//   useGetSystemMenuTree, useGetUserMenuTree,
+//   useGetSystemMenuTree1, useGetUserMenuTree1,
+// } from "@/api";
+import { userState, userMenuTreeState, systemMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
 import RightContent from "./components/RightContent";
@@ -28,25 +39,40 @@ import RightContent from "./components/RightContent";
 import LogoIcon from "@/assets/logo/logo.png";
 import { useGuide } from "../guide/useGuide";
 import Footer from "./components/Footer";
+import RenderRouter from '@/routes/index';
 
 const history = createBrowserHistory();
 
 const IconMap: { [key: string]: React.ReactNode } = {
-  notification: <NotificationOutlined />,
-  system: <SettingOutlined />,
-  storeMng: <ShopOutlined />,
-  businessMng: <RadarChartOutlined />,
   home: <HomeOutlined />,
+  system: <SettingOutlined />,
+  storeMng: <AppstoreOutlined />,
+  businessMng: <RadarChartOutlined />,
+  notification: <NotificationOutlined />,
 
   smile: <SmileOutlined />,
   heart: <HeartOutlined />,
   frown: <FrownOutlined />,
+  user: <UserOutlined />,
+  userGroup:  <UserSwitchOutlined />,
+  aimout: <AimOutlined />,
+  table: <TableOutlined />,
+  rank: <ToTopOutlined />,
+  
+  shopDetail: <ShopOutlined />,
+  shopList: <InboxOutlined />,
+  log: <FileSearchOutlined />,
 };
 
 const LayoutPage: FC = ({ children }) => {
-  const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
-  const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
+  // const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
+  // const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
+  // const fetchUserMenuTree1 = useGetUserMenuTree1();
+  // const fetchSystemMenuTree1 = useGetSystemMenuTree1();
+  const userMenuTree = useRecoilValue(userMenuTreeState);
+  const systemMenuTree = useRecoilValue(systemMenuTreeState);
   const [pathname, setPathname] = useState("/welcome");
+  const [openMenuKeys, setOpenMenuKeys] = useState([]);
   const [user, setUser] = useRecoilState(userState);
   const { device, collapsed, newUser, settings } = user;
   const isMobile = device === "MOBILE";
@@ -83,21 +109,31 @@ const LayoutPage: FC = ({ children }) => {
     const {permission = []} = menuNode ?? {};
     recoilService.getPermissionList(permission);
   };
+  const onOpenChange = openKeys => {
+    //  const latestOpenKey = openKeys.find(key => openMenuKeys.indexOf(key) === -1);
+    //  if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //    this.setState({ openKeys });
+    //   } else {
+    //    this.setState({
+    //      openKeys: latestOpenKey ? [latestOpenKey] : [],
+    //     });
+    //   }
+    setOpenMenuKeys(openKeys);
+  };
   useEffect(() => {
     if (location.pathname === "/") {
       navigate("/home");
     }
   }, [navigate, location]);
   useEffect(() => {
-    recoilService.getSystemMenuTree(systemMenuTree);
-  }, [systemMenuTree]);
-  useEffect(() => {
-    recoilService.getUserMenuTree(userMenuTree);
-  }, [userMenuTree]);
-  useEffect(() => {
     newUser && driverStart();
   }, [newUser]);
-
+  // useEffect(() => {
+  //   recoilService.getSystemMenuTree(systemMenuTree);
+  // }, [systemMenuTree]);
+  // useEffect(() => {
+  //   recoilService.getUserMenuTree(userMenuTree);
+  // }, [userMenuTree]);
   return (
     <ProLayout
       fixSiderbar
@@ -106,6 +142,11 @@ const LayoutPage: FC = ({ children }) => {
         pathname: location.pathname,
       }}
       {...settings}
+      openKeys={openMenuKeys}
+      onOpenChange={onOpenChange}
+      waterMarkProps={{
+        content: '影行科技',
+      }}
       onCollapse={toggle}
       onPageChange={handlePageChange}
       // onMenuHeaderClick={() => history.push("https://reactjs.org/")}
@@ -126,8 +167,7 @@ const LayoutPage: FC = ({ children }) => {
         ) {
           return defaultDom;
         }
-
-        return <Link to={menuItemProps.url}>{defaultDom}</Link>;
+        return <Link to={menuItemProps.url} onClick={setPathname(menuItemProps.url || '')}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [
         {
@@ -144,8 +184,14 @@ const LayoutPage: FC = ({ children }) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      menuDataRender={() => generateMenuList()}
-      // menuDataRender={() => m}
+      // menu={{ request: async () => {
+      //   console.log('menu render:', tree);
+      //   const tree = await fetchSystemMenuTree1();
+      //   const treeTrans = loopMenuItem(tree);
+      //   return treeTrans;
+      // }}}
+      menuDataRender={() => loopMenuItem(userMenuTree)}
+      // postMenuData={() => generateMenuList()}
       rightContentRender={() => <RightContent />}
       footerRender={() => <Footer />}
       collapsedButtonRender={() => {

@@ -46,6 +46,10 @@ export const useGetSystemMenuTree = () => {
       );
 };
 
+export const useGetSystemMenuTree1 = () => {
+    return useQueryGet<{id: string}, IMenuTree>('/manage/menu/list');
+};
+
 export const useGetUserMenuTree = (payload?: IGetUserMenuPayload = {}) => {
     const userName = localStorage.getItem('userName');
     const params = {username: userName, ...payload};
@@ -55,6 +59,12 @@ export const useGetUserMenuTree = (payload?: IGetUserMenuPayload = {}) => {
         params,
         {completeRes: false}
       );
+};
+
+export const useGetUserMenuTree1 = (payload?: IGetUserMenuPayload = {}) => {
+    const userName = localStorage.getItem('userName');
+    const params = {username: userName, ...payload};
+    return useQueryGet<{username: string}, IMenuTree>('/manage/user/menu');
 };
 
 // 角色

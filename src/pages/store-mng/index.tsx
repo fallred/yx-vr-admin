@@ -1,13 +1,11 @@
 import React from 'react';
-import { PageContainer } from "@ant-design/pro-layout";
-import ShopList from "./shop-list";
 
-const StoreMngPage: React.FC<{}> = () => {
+const SystemPage: React.FC<{}> = () => {
   return (
-    <PageContainer>
-      <ShopList showOperate={true} /> 
-    </PageContainer>
+    <div className='store-mng'>
+      门店管理
+    </div>
   );
 };
 
-export default StoreMngPage;
+export default SystemPage;

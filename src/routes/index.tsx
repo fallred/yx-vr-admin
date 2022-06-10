@@ -1,9 +1,9 @@
 import React, { lazy, FC } from "react";
 import { useRoutes, RouteObject } from "react-router-dom";
 
-import LoginPage from "@/pages/login";
 import LayoutPage from "@/pages/layout";
-import WrapperRouteComponent from "./config";
+import SubLayout from "@/pages/layout/sub-layout";
+import LoginPage from "@/pages/login";
 
 const NotFound = lazy(() => import('@/pages/404'));
 const Dashboard = lazy(() => import('@/pages/dashboard'));
@@ -18,77 +18,108 @@ const NoticeMng = lazy(() => import('@/pages/system/notice'));
 
 const StoreMng = lazy(() => import('@/pages/store-mng/index'));
 const Associate = lazy(() => import('@/pages/store-mng/associate'));
-// const ShopList = lazy(() => import('@/pages/store-mng/shop-list'));
+const ShopList = lazy(() => import('@/pages/store-mng/shop-list'));
 const ShopDetail = lazy(() => import('@/pages/store-mng/shop-detail'));
 
 const BusinessMng = lazy(() => import('@/pages/business/index'));
 const ReportList = lazy(() => import('@/pages/business/report-list'));
 const RankList = lazy(() => import('@/pages/business/rank-list'));
 
-const routeList: RouteObject[] = [
+import WrapperRouteComponent from "./config";
 
-  {
-    path: "/",
-    element: <WrapperRouteComponent auth={true} ><LayoutPage /></WrapperRouteComponent>,
-    children: [
-      {
-        path: "/dashboard",
-        element: <WrapperRouteComponent><Dashboard /></WrapperRouteComponent>,
-      },
-      {
-        path: "/home",
-        element: <WrapperRouteComponent><Home /></WrapperRouteComponent>,
-      },
-      {
-        path: "/system/role",
-        element: <WrapperRouteComponent><RoleMng /></WrapperRouteComponent>,
-      },
-      {
-        path: "/system/user",
-        element: <WrapperRouteComponent><UserMng /></WrapperRouteComponent>,
-      },
-      {
-        path: "/system/operateLog",
-        element: <WrapperRouteComponent><OperateLog /></WrapperRouteComponent>,
-      },
-      {
-        path: "/system/noticeMng",
-        element: <WrapperRouteComponent><NoticeMng /></WrapperRouteComponent>,
-      },
-      {
-        path: "/storeMng/associate",
-        element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
-      },
-      {
-        path: "/storeMng/shopList",
-        element: <WrapperRouteComponent><StoreMng /></WrapperRouteComponent>,
-      },
-      {
-        path: "/storeMng/shopDetail",
-        element: <WrapperRouteComponent><ShopDetail /></WrapperRouteComponent>,
-      },
-      {
-        path: "/businessMng/reportList",
-        element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
-      },
-      {
-        path: "/businessMng/rankList",
-        element: <WrapperRouteComponent><RankList /></WrapperRouteComponent>,
-      },
-      {
-        path: "/setting/updatePass",
-        element: <WrapperRouteComponent auth={true}><UpdatePass /></WrapperRouteComponent>,
-      },
-      {
-        path: "*",
-        element: <WrapperRouteComponent><NotFound /></WrapperRouteComponent>,
-      },
-    ],
-  },
-  {
-    path: "login",
-    element: <LoginPage />,
-  },
+const routeList: RouteObject[] = [
+    {
+      path: "/",
+      element: <WrapperRouteComponent auth={true} ><LayoutPage /></WrapperRouteComponent>,
+      children: [
+        {
+          path: "home",
+          element: <WrapperRouteComponent><Home /></WrapperRouteComponent>,
+        },
+        {
+          path: "dashboard",
+          element: <WrapperRouteComponent auth={true}><Dashboard /></WrapperRouteComponent>,
+        },
+        {
+          path: "system",
+          element: <WrapperRouteComponent auth={true}><SubLayout /></WrapperRouteComponent>,
+          children: [
+            {
+              path: "/system",
+              element: <WrapperRouteComponent auth={true}><RoleMng /></WrapperRouteComponent>,
+            },
+            {
+              path: "role",
+              element: <WrapperRouteComponent auth={true}><RoleMng /></WrapperRouteComponent>,
+            },
+            {
+              path: "user",
+              element: <WrapperRouteComponent auth={true}><UserMng /></WrapperRouteComponent>,
+            },
+            {
+              path: "operateLog",
+              element: <WrapperRouteComponent auth={true}><OperateLog /></WrapperRouteComponent>,
+            },
+            {
+              path: "noticeMng",
+              element: <WrapperRouteComponent auth={true}><NoticeMng /></WrapperRouteComponent>,
+            },
+          ]
+        },
+        {
+          path: "storeMng",
+          element: <WrapperRouteComponent><SubLayout /></WrapperRouteComponent>,
+          children: [
+            {
+              path: "/storeMng",
+              element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
+            },
+            {
+              path: "associate",
+              element: <WrapperRouteComponent><Associate /></WrapperRouteComponent>,
+            },
+            {
+              path: "shopList",
+              element: <WrapperRouteComponent><ShopList /></WrapperRouteComponent>,
+            },
+            {
+              path: "shopDetail",
+              element: <WrapperRouteComponent><ShopDetail /></WrapperRouteComponent>,
+            },
+          ],
+        },
+        {
+          path: "businessMng",
+          element: <WrapperRouteComponent><SubLayout /></WrapperRouteComponent>,
+          children: [
+            {
+              path: "/businessMng",
+              element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
+            },
+            {
+              path: "reportList",
+              element: <WrapperRouteComponent><ReportList /></WrapperRouteComponent>,
+            },
+            {
+              path: "rankList",
+              element: <WrapperRouteComponent><RankList /></WrapperRouteComponent>,
+            },
+          ]
+        },
+        {
+          path: "/setting/updatePass",
+          element: <WrapperRouteComponent auth={true}><UpdatePass /></WrapperRouteComponent>,
+        },
+      ],
+    },
+    {
+      path: "login",
+      element: <LoginPage />,
+    },
+    {
+      path: "*",
+      element: <WrapperRouteComponent><NotFound /></WrapperRouteComponent>,
+    },
 ];
 
 const RenderRouter: FC = () => {

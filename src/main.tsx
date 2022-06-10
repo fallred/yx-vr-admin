@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { RecoilRoot } from "recoil";
-import axios, { AxiosContext } from "./api/request";
-import RecoilObserver from './stores/RecoilObserver.tsx';
+import axios, { AxiosContext } from "@/api/request";
+import RecoilObserver from '@/stores/RecoilObserver.tsx';
+import SuspendFallbackLoading from "@/pages/layout/suspendFallbackLoading";
 
-import "./index.css";
 import App from "./App";
-import SuspendFallbackLoading from "./pages/layout/suspendFallbackLoading";
+import "./index.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {

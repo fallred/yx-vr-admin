@@ -8,20 +8,15 @@ import { userState } from "@/stores/recoilState";
 import { createBrowserHistory } from "history";
 
 const PrivateRoute: FC<RouteProps> = ({children}) => {
-const history = createBrowserHistory();
-
+  const history = createBrowserHistory();
   const [user, setUser] = useRecoilState(userState);
-
   console.log('user: ', user);
   const logged = user.userName? true: false;
   console.log('userName: ', user.userName, logged);
   const navigate = useNavigate();
   const { formatMessage } = useLocale();
   const location = useLocation();
-
-  return logged ? (
-    <div>{children}</div>
-  ) : <Navigate to="/login" />
+  return logged ? <>{children}</> : <Navigate to="/login" />
 };
 
 export default PrivateRoute;
