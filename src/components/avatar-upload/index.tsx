@@ -60,7 +60,6 @@ class AvatarUpload extends React.Component {
     const accessToken = localStorage.getItem('accessToken');
     const uploadProps = {
         name: 'file',
-        className: "avatar-uploader",
         action: "/mock/app/file/upload",
         listType: "picture-card",
         className: "avatar-uploader",
