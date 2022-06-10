@@ -11,6 +11,7 @@ interface IAutoUploadFileProps {
 };
 
 const AutoUploadFile: FC<IAutoUploadFileProps> = props => {
+    const accessToken = localStorage.getItem('accessToken');
     const uploadProps = {
         name: 'file',
         className: "auto-upload-box",
@@ -18,7 +19,7 @@ const AutoUploadFile: FC<IAutoUploadFileProps> = props => {
         maxCount: props.maxCount,
         multiple: props.maxCount > 1,
         headers: {
-          authorization: 'authorization-text',
+          accessToken,
         },
         onChange(info) {
           if (info.file.status !== 'uploading') {

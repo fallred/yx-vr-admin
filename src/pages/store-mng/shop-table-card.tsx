@@ -378,7 +378,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
               key={PageFuncEnum.IMPORT}
               operCode={PageFuncEnum.EDIT}
               btnText="导入"
-              apiUrl="http://1.13.20.201:9000/app/store/import"
+              apiUrl="/mock/app/store/import"
               maxCount={1}
             />,
             <AuthButton
