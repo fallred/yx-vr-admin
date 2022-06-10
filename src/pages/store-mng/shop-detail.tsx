@@ -25,7 +25,7 @@ const ShopDetailPage: React.FC<{}> = () => {
   const [appId, setAppId] = useState<string>('');
   const [shopStoreDetail, setShopStoreDetail] = useState({});
   const handleSearch = async searchData => {
-    const storeDetail = await fetchStoreDetail({id: searchData.appId});
+    const storeDetail = await fetchStoreDetail(searchData);
     setShopStoreDetail(storeDetail);
   };
   function handleAppIdChange(value) {

@@ -24,27 +24,27 @@ const RankList: React.FC<RankTableListProps> = props => {
     const columns: ProColumns<IRank>[] = [
       {
           title: '排名',
-          dataIndex: "rankNum",
+          dataIndex: "rank",
       },
       {
           title: '城市',
-          dataIndex: "cityName",
+          dataIndex: "city",
           valueType: "text",
       },
       {
           title: '门店',
-          dataIndex: "shopName",
+          dataIndex: "store",
           valueType: "text",
       },
       {
           title: '店长',
-          dataIndex: "shoperManagerName",
+          dataIndex: "manager",
           valueType: "text",
       },
       {
           title: '',
-          dataIndex: 'shoperManagerAvatar',
-          key: 'shoperManagerAvatar',
+          dataIndex: 'city',
+          key: 'city',
           valueType: 'avatar',
           width: 150,
           render: (dom) => (
@@ -71,9 +71,9 @@ const RankList: React.FC<RankTableListProps> = props => {
         rList = rankList?.concat(rankResp?.data);
       }
       rList.sort((a, b) => {
-        if (a.rankNum < b.rankNum) {
+        if (a.rank < b.rank) {
           return -1;
-        } else if (a.rankNum == b.rankNum) {
+        } else if (a.rank == b.rank) {
           return 0;
         } else {
           return 1;
@@ -121,16 +121,21 @@ const RankList: React.FC<RankTableListProps> = props => {
                 const listItemTpl = (
                   <List.Item key={item.id}>
                       <List.Item.Meta
-                          avatar={<Avatar size={48} src={item.shoperManagerAvatar} />}
-                          title={<div className="rank-item-title"><span className="shopName">店名:{item.shopName}</span><span className="shoperManagerName">店长:{item.shoperManagerName}</span></div>}
-                          description={<div className="rank-item-desp"><span className="cityName">城市名:{item.cityName}</span><span className="rankName">排名:{item.rankNum}</span></div>}
+                          avatar={<Avatar size={48} src={item.city} />}
+                          title={
+                            <div className="rank-item-title">
+                              <span className="store">店名:{item.store}</span>
+                              <span className="manager">店长:{item.manager || '--'}</span>
+                            </div>
+                          }
+                          description={<div className="rank-item-desp"><span className="city">城市名:{item.city || '--'}</span><span className="rankName">排名:{item.rank}</span></div>}
                       />
                   </List.Item>
                 );
                 let tpl = listItemTpl;
-                if(item.rankNum <=3) {
+                if(item.rank <=3) {
                   tpl = (
-                    <Badge.Ribbon text={`排名：${item.rankNum}`} color="red" placement="start">
+                    <Badge.Ribbon text={`排名：${item.rank}`} color="red" placement="start">
                       {listItemTpl}
                     </Badge.Ribbon>
                   );

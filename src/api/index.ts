@@ -21,7 +21,7 @@ import {
     IReport, IReportList, IReportPayload,
     IConvert, IEvaluate, IPerformance, IMember,
 } from "@/models/report-list";
-import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet } from "./request";
+import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet, useExport } from "./request";
 
 const projectResource = '/projects';
 
@@ -261,7 +261,7 @@ export const useImportStoreList = () => {
 
 // 导出门店excel
 export const useExportStoreList = () => {
-    return useQueryGet<IExportStorePayload, IExportStoreResp>('/app/store/export');
+    return useExport<IExportStorePayload, IExportStoreResp>('/app/store/export');
 };
 
 

@@ -27,10 +27,6 @@ import {
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
 import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
-// import {
-//   useGetSystemMenuTree, useGetUserMenuTree,
-//   useGetSystemMenuTree1, useGetUserMenuTree1,
-// } from "@/api";
 import { userState, userMenuTreeState, systemMenuTreeState } from "@/stores/recoilState";
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
@@ -66,10 +62,6 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
-  // const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
-  // const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
-  // const fetchUserMenuTree1 = useGetUserMenuTree1();
-  // const fetchSystemMenuTree1 = useGetSystemMenuTree1();
   // const userMenuTree = useRecoilValue(userMenuTreeState);
   const systemMenuTree = useRecoilValue(systemMenuTreeState);
   const [pathname, setPathname] = useState("/welcome");
@@ -129,13 +121,6 @@ const LayoutPage: FC = ({ children }) => {
   useEffect(() => {
     newUser && driverStart();
   }, [newUser]);
-  // useEffect(() => {
-  //   recoilService.getSystemMenuTree(systemMenuTree);
-  // }, [systemMenuTree]);
-  // useEffect(() => {
-  //   recoilService.getUserMenuTree(userMenuTree);
-  // }, [userMenuTree]);
-
   // openKeys={openMenuKeys}
   // onOpenChange={onOpenChange}
   return (
@@ -186,14 +171,7 @@ const LayoutPage: FC = ({ children }) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      // menu={{ request: async () => {
-      //   console.log('menu render:', tree);
-      //   const tree = await fetchSystemMenuTree1();
-      //   const treeTrans = loopMenuItem(tree);
-      //   return treeTrans;
-      // }}}
       menuDataRender={() => loopMenuItem(userMenuTree)}
-      // postMenuData={() => generateMenuList()}
       rightContentRender={() => <RightContent />}
       footerRender={() => <Footer />}
       collapsedButtonRender={() => {

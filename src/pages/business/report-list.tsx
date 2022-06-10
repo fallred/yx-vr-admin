@@ -17,6 +17,7 @@ moment.locale("zh-cn");
 const { Statistic } = StatisticCard;
 const { RangePicker } = DatePicker;
 
+const LASTWEEK_RANGE = timeRange.getRange(TimeRangeEnum.LAST1MONTH);
 const reportListPage: React.FC<{}> = () => {
   const {data: shopStoreList} = useGetShopStoreList();
   const {
@@ -37,17 +38,17 @@ const reportListPage: React.FC<{}> = () => {
   const [dateRangeValue, setDateRangeValue] = useState();
   const ranges = {
     [timeRange.getText(TimeRangeEnum.YESTERDAY)]: timeRange.getRange(TimeRangeEnum.YESTERDAY),
-    [timeRange.getText(TimeRangeEnum.LAST1MONTH)]: timeRange.getRange(TimeRangeEnum.LAST1MONTH),
+    [timeRange.getText(TimeRangeEnum.LAST1MONTH)]: LASTWEEK_RANGE,
   };
   function handleAppIdChange(value) {
   }
   function handleDateRangeChange(dates, dateStrings) {
     console.log('From: ', dates[0], ', to: ', dates[1]);
     console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-    setDateRangeValue(dates);
-    searchForm.setFieldsValue({
-      dateRange: dates
-    });
+    // setDateRangeValue(dates);
+    // searchForm.setFieldsValue({
+    //   dateRange: dates
+    // });
   }
   const disabledDate = current => {
     if (!dates || dates.length === 0) {
@@ -81,17 +82,20 @@ const reportListPage: React.FC<{}> = () => {
     const {appId, dateRange} = searchData;
     fetchData({
       appIdArr: [appId],
-      dateRange,
+      dateRange
     });
   };
   useEffect(() => {
     const selectedAppId = shopStoreList?.[0]?.appId;
+    // setDateRangeValue(LASTWEEK_RANGE);
+    console.log('LASTWEEK_RANGE:', LASTWEEK_RANGE);
     searchForm.setFieldsValue({
-      appId: selectedAppId
+      appId: selectedAppId,
+      dateRange: LASTWEEK_RANGE,
     });
     fetchData({
       appIdArr: [selectedAppId],
-      dateRange: dateRangeValue,
+      dateRange: LASTWEEK_RANGE
     });
   }, [shopStoreList]);
   const renderConvertTpl = () => {
@@ -228,11 +232,12 @@ const reportListPage: React.FC<{}> = () => {
           >
               <RangePicker
                   ranges={ranges}
-                  value={hackValue || dateRangeValue}
                   disabledDate={disabledDate}
                   onCalendarChange={val => setDates(val)}
                   onOpenChange={onOpenChange}
                   onChange={handleDateRangeChange}
+                  format="YYYY-MM-DD"
+                  showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
               />
               {/* <ProFormDateRangePicker
                 name="dateRange"

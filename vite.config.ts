@@ -46,13 +46,13 @@ export default ({ command, mode } : { command: string, mode: string}) => {
     plugins: [
       reactRefresh(),
       svgr(),
-      viteMockServe({
-        mockPath: 'mock',
-        supportTs: true,
-        watchFiles: true,
-        localEnabled: command === 'serve',
-        logger: true,
-      }),
+      // viteMockServe({
+      //   mockPath: 'mock',
+      //   supportTs: true,
+      //   watchFiles: true,
+      //   localEnabled: command === 'serve',
+      //   logger: true,
+      // }),
       vitePluginImp({
         libList: [
           {
@@ -90,13 +90,13 @@ export default ({ command, mode } : { command: string, mode: string}) => {
       host: true,
       port: 10016,
       strictPort: true,
-      // proxy: {
-      //   '/mock': {
-      //     target: 'http://1.13.20.201:9090/',
-      //     changeOrigin: true,
-      //     rewrite: path => path.replace(/^\/mock/, '')
-      //   }
-      // },
+      proxy: {
+        '/mock': {
+          target: 'http://1.13.20.201:9090/',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/mock/, '')
+        }
+      },
     },
    
     build: {

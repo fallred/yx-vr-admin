@@ -3,11 +3,11 @@ import { MockMethod } from 'vite-plugin-mock';
 // for (let i = 0; i < 8; i++) {
 //   rankList.push({
 //     "id": i,
-//     "rankNum": i,
-//     "cityName": `武汉${i}`,
-//     "shopName": `江汉路店${i}`,
-//     "shoperManagerName": `张秋红${i}`,
-//     "shoperManagerAvatar": "http://gh-fe.gsxcdn.com/static/image/book-video/wenzhang.png",
+//     "rank": i,
+//     "city": `武汉${i}`,
+//     "store": `江汉路店${i}`,
+//     "manager": `张秋红${i}`,
+//     "imageUrl": "http://gh-fe.gsxcdn.com/static/image/book-video/wenzhang.png",
 //   });
 // }
 const mockQueryRankResp = {
@@ -19,19 +19,19 @@ const mockQueryRankResp = {
     "data|9-10": [
       {
         "id": "@id",
-        "rankNum|+1": 1,
-        "cityName": "@city",
-        "shopName": "@region",
-        "shoperManagerName": "@cname",
-        "shoperManagerAvatar": "@image",
+        "rank|+1": 1,
+        "city": "@city",
+        "store": "@region",
+        "manager": "@cname",
+        "imageUrl": "@image",
       },
       // {
       //   "id": 2,
-      //   "rankNum": 3,
-      //   "cityName": "无锡",
-      //   "shopName": "中心城店",
-      //   "shoperManagerName": "全力",
-      //   "shoperManagerAvatar": "http://gh-fe.gsxcdn.com/static/image/book-video/wenzhang.png",
+      //   "rank": 3,
+      //   "city": "无锡",
+      //   "store": "中心城店",
+      //   "manager": "全力",
+      //   "imageUrl": "http://gh-fe.gsxcdn.com/static/image/book-video/wenzhang.png",
       // }
     ]
 };

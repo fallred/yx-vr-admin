@@ -6,6 +6,7 @@ import {
   useGetMemberList,
   useGetPerformanceList
 } from "@/api";
+import moment from 'moment';
 import {IOption, IDataStastic} from '@/models/common';
 import {
   PerformanceMap, MemberMap, EvaluateMap, ConvertMap,
@@ -23,15 +24,18 @@ export default function useReportList() {
   const [memberList, setMemberList] = useState<IDataStastic[]>([]);
   const [performanceList, setPerformanceList] = useState<IDataStastic[]>([]);
   async function fetchData(payload) {
-    const {appIdArr, dateRange} = payload;
+    const {appIdArr, dateRange = []} = payload;
     const appIds = appIdArr.join(',');
-    const convertInfo = await getConvertListPromise({appIds, dateRange});
+    const [start = 0, end = 0] = dateRange ?? [];
+    const stm = moment(start).format('YYYY-MM-DD');
+    const etm = moment(end).format('YYYY-MM-DD');
+    const convertInfo = await getConvertListPromise({appIds, stm, etm});
     const convertList = formatObjectToListByKeyMap(convertInfo, ConvertConfigList);
-    const evaluateInfo = await getEvaluateListPromise({appIds, dateRange});
+    const evaluateInfo = await getEvaluateListPromise({appIds, stm, etm});
     const evaluateList = formatObjectToListByKeyMap(evaluateInfo, EvaluateConfigList);
-    const memberInfo = await getMemberListPromise({appIds, dateRange});
+    const memberInfo = await getMemberListPromise({appIds, stm, etm});
     const memberList = formatObjectToListByKeyMap(memberInfo, MemberConfigList);
-    const performanceInfo = await getPerformanceListPromise({appIds, dateRange});
+    const performanceInfo = await getPerformanceListPromise({appIds, stm, etm});
     const performanceList = formatObjectToListByKeyMap(performanceInfo, PerformanceConfigList);
     setConvertList(convertList);
     setEvaluateList(evaluateList);

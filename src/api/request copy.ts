@@ -4,20 +4,12 @@ import { notification } from 'antd';
 import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
 import qs from 'qs';
 import {downloadData} from '@/lib/export';
-import $axios, {useAxios, opt} from './config';
 
 type IRequestConfig = {
     completeRes: boolean;
 };
 // const errorPath = '/vrAdmin/login';
 const errorPath = '/login';
-
-type IListParams = {
-    limit?: number;
-    offset?: number;
-    filter?: string[];
-    order?: string;
-}
 
 console.log('baseurl:', import.meta.env.VITE_BASE_URL);
 const axios = Axios.create({
@@ -41,10 +33,13 @@ axios.interceptors.request.use((config) => {
 // response interceptor
 axios.interceptors.response.use(
     (response) => {
+        // const {code, data, msg} = response.data;
+        // const {completeRes, alertOnError = true} = response.config;
         const data = response.data;
         console.log('response:', response);
         if (response.status === 200) {
             return data;
+            // return completeRes ? response.data : data;
         }
 
         notification.error({
@@ -124,6 +119,12 @@ const transformPagination = (pagination: any) => {
 
     const page = pagination.current ? pagination.current : pagination.defaultCurrent;
     const pageSize = pagination.pageSize ? pagination.pageSize : pagination.defaultPageSize;
+
+    // let offset = 0;
+    // if (current && pageSize) {
+    //     offset = (current - 1) * pageSize;
+    // }
+
     return {
         page,
         rows: pageSize,
@@ -153,11 +154,17 @@ const transformSorter = (sorter: any) => {
     return result;
 }
 
+type listParams = {
+    limit?: number;
+    offset?: number;
+    filter?: string[];
+    order?: string;
+}
 const useGetList = <T>(key: string, url: string, pagination?: any, filters?: any, sorter?: any) => {
     const axios = useAxios();
 
     const service = async () => {
-        let params: IListParams = {};
+        let params: listParams = {};
         const pageTemp = transformPagination(pagination);
         // const filters = transformFilters(filters);
         params = { ...pageTemp, ...filters  };
@@ -329,28 +336,18 @@ const useUpload = (url: string,  config?: IRequestConfig = {completeRes: false})
 const useExport = (url: string,  config?: IRequestConfig = {completeRes: true}) => {
     const axios = useAxios();
     return async (params: T) => {
-        // const $axios = Axios.create(opt);
-        const response: U = await  $axios.get(
+        const response: U = await axios.get(
             `${url}`,
             {
                 params,
                 headers: {
                     responseType: 'blob',
-                },
+                }
             }
         );
-        // const accessToken = localStorage.getItem('accessToken');
-        // const response = $axios({
-        //     url,
-        //     method: 'get',
-        //     params,
-        //     headers: {
-        //         responseType: 'blob',
-        //         accessToken
-        //     }
-        // });
-        // downloadData(response);
+        downloadData(response);
         // console.log('useExport response:', response);
+        /*
         console.log('useExport data:', response.data);
         let headerContentType = '';
         if (response) {
@@ -383,6 +380,13 @@ const useExport = (url: string,  config?: IRequestConfig = {completeRes: true}) 
         else {
             throw response;
         }
+        */
+        // if (config?.completeRes) {
+        //     return response;
+        // }
+        // else {
+        //     return response?.data;
+        // }
     };
 }
 
@@ -397,4 +401,5 @@ export {
     useQueryGet,
     useExport
 };
+
 export default axios;
