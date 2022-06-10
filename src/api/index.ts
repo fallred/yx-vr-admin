@@ -25,6 +25,10 @@ import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate
 
 const projectResource = '/projects';
 
+type IRequestConfig = {
+    completeRes: boolean;
+};
+
 // 登陆
 export const useLogin = () => {
     return useCreate<LoginParams, LoginResult>("/auth/loginWithAccount", {completeRes: false});
@@ -193,7 +197,7 @@ export const useGetProvinceList = () => {
         "provinceList",
         "/app/area/province",
         null,
-        {completeRes: true}
+        {completeRes: false}
     );
 };
 export const useGetCityList = () => {
@@ -204,7 +208,7 @@ export const useGetAreaList = () => {
 };
 
 // 查询营业额总榜
-export const useGetRankList = (type: string) => {
+export const useGetRankList = (type: string, config?: IRequestConfig) => {
     let url = '';
     if (type == 1) {
         url = '/app/leaderboard/turnover/list';
@@ -215,7 +219,7 @@ export const useGetRankList = (type: string) => {
     else if (type == 3 ) {
         url = '/app/leaderboard/memberconversion/list';
     }
-    return useQueryGet<any, IRankPaginationResp>(url);
+    return useQueryGet<any, IRankPaginationResp>(url, config);
 }
 
 // 经营管理-报表-转化数据

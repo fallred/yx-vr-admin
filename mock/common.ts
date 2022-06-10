@@ -1,6 +1,8 @@
 import { MockMethod } from 'vite-plugin-mock';
 
-const mockQueryProvinceList = [
+const mockQueryProvinceList = {
+  sttus: 200,
+  data:  [
     {
       "id": 1,
       "code": "110000",
@@ -171,9 +173,12 @@ const mockQueryProvinceList = [
       "code": "820000",
       "name": "澳  门"
     }
-];
+  ]
+}
 
-const mockQueryCityList = [
+const mockQueryCityList = {
+  status: 200,
+  data: [
     {
       "id": 169,
       "code": "420100",
@@ -258,9 +263,12 @@ const mockQueryCityList = [
       "name": "省直辖行政单位",
       "provincecode": "420000"
     }
-];
+  ]
+};
 
-const mockQueryAreaList = [
+const mockQueryAreaList = {
+  status: 200,
+  data: [
     {
       "id": 1682,
       "code": "420102",
@@ -339,7 +347,8 @@ const mockQueryAreaList = [
       "name": "新洲区",
       "citycode": "420100"
     }
-];
+  ]
+};
 
 const mockUploadResp = {
 	"data": {},

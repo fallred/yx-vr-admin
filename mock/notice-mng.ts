@@ -18,11 +18,14 @@ const mockQueryNoticeResp = {
 };
 
 const mockQueryNoticeInfo = {
-    "id": 1,
-    "title": "想和你做朋友",
-    "content": "测试一下1",
-    "tm": "2022-04-25 21:55:55",
-    "author": "admin56789"
+    status: 200,
+    data: {
+        "id": 1,
+        "title": "想和你做朋友",
+        "content": "测试一下1",
+        "tm": "2022-04-25 21:55:55",
+        "author": "admin56789"
+    }
 };
 const mockSubmitResp = {
     "data": {},

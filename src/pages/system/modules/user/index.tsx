@@ -8,18 +8,18 @@ import { FooterToolbar } from "@ant-design/pro-layout";
 import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
-import { SexEnum } from '@/models/common';
-import { PageFuncEnum } from '@/models/common';
-import { PageFuncMap, UserStatusMap } from '@/enums/common';
+import { SexEnum, PageFuncEnum } from '@/models/common';
+import { IRole } from "@/models/role";
+import { PageFuncMap, UserStatusMap, SexMap } from '@/enums/common';
 import {
     useAddUser,
     useBatchDeleteUser,
     useUpdateUser,
-    useGetUserList
+    useGetUserList,
+    useGetRoleListAll
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
 import { IUser, UserStatusEnum } from "@/models/user-mng";
-import { UserStatusMap } from "@/enums/common";
 import OperationDrawer from "./OperationDrawer";
 import ShopListDrawer from "./storeListDrawer";
 
@@ -31,6 +31,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     const permissionList = useRecoilValue(permissionListState);
     
     const { formatMessage } = useLocale();
+    const { data: roleListAll } = useGetRoleListAll();
     const [userList, setUserList] = useState<IUser[]>();
     const [filters, setFilters] = useState<IUser[]>();
     const [current, setCurrent] = useState<Partial<IUser> | undefined>(
@@ -48,12 +49,24 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     const [done, setDone] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
     const [shopViewVisible, setShopViewVisible] = useState<boolean>(false);
+    const [roleOptions, setRoleOptions] = useState<IRole[]>();
+    const [roleMap, setroleMap] = useState<object>();
     const actionRef = useRef<ActionType>();
 
     const { mutateAsync: addMutate } = useAddUser();
     const { mutateAsync: updateMutate } = useUpdateUser();
     const { mutateAsync: batchDeleteMutate } = useBatchDeleteUser();
 
+    useEffect(() => {
+        // const options = roleListAll?.map(item => ({value: item?.id, label: item?.name}));
+        // setRoleOptions(options);
+        const map = {};
+        roleListAll?.forEach(item => {
+            const {id, name} = item;
+            map[id] = {id, text: name};
+        });
+        setroleMap(map);
+    }, [roleListAll]);
     useEffect(() => {
         setUserList(data?.data);
         setPagination({
@@ -145,8 +158,8 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     let columns: ProColumns<IUser>[] = [
         {
             title: '用户昵称',
-            dataIndex: 'imageUrl',
-            key: 'imageUrl',
+            dataIndex: 'username',
+            key: 'username',
             valueType: 'avatar',
             width: 150,
             render: (dom, row, index, action) => (
@@ -169,8 +182,8 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             width: 80,
             dataIndex: "sex",
             valueEnum: {
-                [SexEnum.MALE]: { text: UserStatusMap.get(SexEnum.MALE) },
-                [SexEnum.FEMALE]: { text: UserStatusMap.get(SexEnum.FEMALE) },
+                [SexEnum.MALE]: { text: SexMap.get(SexEnum.MALE) },
+                [SexEnum.FEMALE]: { text: SexMap.get(SexEnum.FEMALE) },
             },
         },
         {
@@ -180,9 +193,10 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         },
         {
             title: isAssociate ? '关联人角色' : '角色',
-            dataIndex: 'roleNm',
-            valueType: 'text',
+            dataIndex: 'roleId',
+            valueType: 'select',
             with: 100,
+            valueEnum: roleMap
             // sorter: true,
             // hideInSearch: true,
         },
@@ -190,7 +204,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             title: '状态',
             width: 120,
             dataIndex: 'status',
-            initialValue: 'all',
+            initialValue: `${UserStatusEnum.NORMAL}`,
             valueEnum: {
                 [UserStatusEnum.NORMAL]: { text: UserStatusMap.get(UserStatusEnum.NORMAL), status: 'Success' },
                 [UserStatusEnum.FREEZE]: { text: UserStatusMap.get(UserStatusEnum.FREEZE), status: 'Error' },

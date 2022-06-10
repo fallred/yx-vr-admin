@@ -19,7 +19,7 @@ const RankList: React.FC<RankTableListProps> = props => {
         pageSize: 10,
         total: 0,
     });
-    const getRankListPromise = useGetRankList(type);
+    const getRankListPromise = useGetRankList(type,  {completeRes: true});
     
     const columns: ProColumns<IRank>[] = [
       {

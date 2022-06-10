@@ -695,21 +695,24 @@ const mockNoticeList = {
   ]
 };
 
-const mockPermissionCodeList = [
-  'notification',
-  'systemMng',
-  'roleMng',
-  'userMng',
-  'operateLog',
-  'noticeMng',
-  'storeMng',
-  'associate',
-  'shopList',
-  'shopDetail',
-  'businessMng',
-  'reportList',
-  'rankList'
-];
+const mockPermissionCodeList = {
+  "status": 200,
+  "data": [
+    'notification',
+    'systemMng',
+    'roleMng',
+    'userMng',
+    'operateLog',
+    'noticeMng',
+    'storeMng',
+    'associate',
+    'shopList',
+    'shopDetail',
+    'businessMng',
+    'reportList',
+    'rankList'
+  ]
+};
 
 export default [
   {

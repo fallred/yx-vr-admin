@@ -51,30 +51,30 @@ const ShopDetailPage: React.FC<{}> = () => {
   return (
     <PageContainer>
         <ProCard key="card1" style={{marginBottom: 20}}>
-          {/* <QueryFilter
-            submitter={false}
-            split
-          > */}
           <Form
             {...searchFormLayout}
             form={searchForm}
             ref={searchFormRef}
           >
-            <ProFormSelect
-              key="appId"
-              name="appId"
-              label="门店"
-              options={shopStoreList}
-              onChange={handleAppIdChange}
-              fieldProps={{
-                fieldNames: {
-                  label: 'nm',
-                  value: 'appId'
-                },
-              }}
-            />
+            <QueryFilter
+                submitter={false}
+                split
+            >
+              <ProFormSelect
+                key="appId"
+                name="appId"
+                label="门店"
+                options={shopStoreList}
+                onChange={handleAppIdChange}
+                fieldProps={{
+                  fieldNames: {
+                    label: 'nm',
+                    value: 'appId'
+                  },
+                }}
+              />
+            </QueryFilter>
           </Form>
-          {/* </QueryFilter> */}
         </ProCard>
         <ProCard key="card2">
           <ProDescriptions column={2} title="门店详情" tooltip="门店详细信息">

@@ -85,19 +85,22 @@ const mockQueryStoreListAllResp = {
 };
 
 const mockQueryStoreInfo = {
-  "appId": "vr2037_00000",
-  "nm": "xxxx店",
-  "province": '湖北省',
-  "city": '武汉市',
-  "district": '东湖高新区',
-  "address": '天祥尚府',
-  "franchisee": null,
-  "manager": null,
-  "status": null,
-  "grade": null,
-  "partner": null,
-  "tm": "2022-04-12 10:46:59",
-  "code": "vr_0000"
+  "status": 200,
+  "data": {
+    "appId": "vr2037_00000",
+    "nm": "xxxx店",
+    "province": '湖北省',
+    "city": '武汉市',
+    "district": '东湖高新区',
+    "address": '天祥尚府',
+    "franchisee": null,
+    "manager": null,
+    "status": null,
+    "grade": null,
+    "partner": null,
+    "tm": "2022-04-12 10:46:59",
+    "code": "vr_0000"
+  }
 };
 const mockSubmitStoreResp = {
     "data": {},

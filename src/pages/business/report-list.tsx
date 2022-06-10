@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RcResizeObserver from 'rc-resize-observer';
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, Form } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { PageContainer } from "@ant-design/pro-layout";
 import ProCard, { StatisticCard } from '@ant-design/pro-card';
-import { QueryFilter, ProFormSelect, ProFormDateRangePicker } from '@ant-design/pro-form';
+import ProForm, { QueryFilter, ProFormSelect, ProFormDateRangePicker } from '@ant-design/pro-form';
 import {IPerformance, IMember, IEvaluate, IConvert} from '@/models/report-list';
 import {useGetShopStoreList} from "@/api";
 import {TimeRangeEnum} from '@/models/common';
@@ -26,6 +26,12 @@ const reportListPage: React.FC<{}> = () => {
     performanceList,
     fetchData
   } = useReportList();
+  const [searchForm] = Form.useForm();
+  const searchFormRef = useRef(null);
+  const searchFormLayout = {
+    labelCol: { span: 4 },
+    wrapperCol: { span: 8 },
+  };
   const [responsive, setResponsive] = useState(false);
   const [dates, setDates] = useState([]);
   const [hackValue, setHackValue] = useState();
@@ -72,6 +78,9 @@ const reportListPage: React.FC<{}> = () => {
   useEffect(() => {
     const selectedAppId = shopStoreList?.[0]?.appId;
     setAppId(selectedAppId);
+    searchForm.setFieldsValue({
+      appId: selectedAppId
+    });
     // handleAppIdChange(selectedAppId);
   }, [shopStoreList]);
   useEffect(() => {
@@ -184,31 +193,48 @@ const reportListPage: React.FC<{}> = () => {
   return (
     <PageContainer className="report-list">
       <ProCard key="card1" style={{marginBottom: 20}}>
-        <QueryFilter
-          submitter={false}
-          split
-        >
-          <ProFormSelect
-            label="门店"
-            value={appId}
-            options={shopStoreList}
-            onChange={handleAppIdChange}
-            fieldProps={{
-              fieldNames: {
-                label: 'nm',
-                value: 'appId'
-              },
-            }}
-          />
-          <RangePicker
-            ranges={ranges}
-            // onChange={onChange}
-            value={hackValue || dateRangeValue}
-            disabledDate={disabledDate}
-            onCalendarChange={val => setDates(val)}
-            onChange={val => setDateRangeValue(val)}
-            onOpenChange={onOpenChange}
-          />
+          <Form
+            {...searchFormLayout}
+            form={searchForm}
+            ref={searchFormRef}
+          >
+            <QueryFilter
+              submitter={false}
+              split
+            >
+              <ProFormSelect
+                  key="appId"
+                  name="appId"
+                  label="门店"
+                  value={appId}
+                  options={shopStoreList}
+                  onChange={handleAppIdChange}
+                  fieldProps={{
+                    fieldNames: {
+                      label: 'nm',
+                      value: 'appId'
+                    },
+                  }}
+              />
+              <ProForm.Item
+                  key="dateRange"
+                  name="dateRange"
+                  width="md"
+                  label="日期"
+                  placeholder="请选择日期"
+              >
+                  <RangePicker
+                      ranges={ranges}
+                      // onChange={onChange}
+                      value={hackValue || dateRangeValue}
+                      disabledDate={disabledDate}
+                      onCalendarChange={val => setDates(val)}
+                      onChange={val => setDateRangeValue(val)}
+                      onOpenChange={onOpenChange}
+                  />
+              </ProForm.Item>
+            </QueryFilter>
+          
           {/* <ProFormDateRangePicker
             name="dateRange"
             label="日期范围:"
@@ -218,7 +244,7 @@ const reportListPage: React.FC<{}> = () => {
             onChange={val => setDateRangeValue(val)}
             onOpenChange={onOpenChange}
           /> */}
-        </QueryFilter>
+        </Form>
       </ProCard>
       {renderConvertTpl()}
       {renderEvaluateTpl()}
