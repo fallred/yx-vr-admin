@@ -11,8 +11,6 @@ import 'moment/locale/zh-cn';
 import 'antd/dist/antd.css';
 
 import { localeConfig } from "@/config/locale";
-import { useGetCurrentUser, useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
-import recoilService from '@/stores/recoilService';
 import { userState } from "@/stores/recoilState";
 import RenderRouter from "./routes";
 import "./App.less";
@@ -20,8 +18,6 @@ import "./App.less";
 moment.locale("zh-cn");
 
 const App: React.FC = () => {
-  const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
-  const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
   const [user, setUser] = useRecoilState(userState);
   // const { locale } = user;
  
@@ -31,13 +27,6 @@ const App: React.FC = () => {
     const lang = user?.locale?.toLowerCase();
     moment.locale(lang);
   }, [user.locale]);
-
-  useEffect(() => {
-    recoilService.getSystemMenuTree(systemMenuTree);
-  }, [systemMenuTree]);
-  useEffect(() => {
-    recoilService.getUserMenuTree(userMenuTree);
-  }, [userMenuTree]);
 
   const getAntdLocale = () => {
     const lang = user?.locale?.toLowerCase();

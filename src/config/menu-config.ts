@@ -92,7 +92,7 @@ export const systemMenuList = [
 ];
 
 
-export const userMenuTree = [
+export const userMenuTree1 = [
   {
     menuId: 1,
     url: '/home',

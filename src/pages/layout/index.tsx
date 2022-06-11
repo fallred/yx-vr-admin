@@ -27,11 +27,12 @@ import {
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
 import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
-import { userState, userMenuTreeState, systemMenuTreeState } from "@/stores/recoilState";
+import { userState } from "@/stores/recoilState";
+import { useGetCurrentUser, useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
 import RenderRouter from '@/routes/index';
-import {userMenuTree} from '@/config/menu-config';
+import {userMenuTree1} from '@/config/menu-config';
 // import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
 import LogoIcon from "@/assets/logo/logo.png";
 import { useGuide } from "../guide/useGuide";
@@ -62,8 +63,8 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
-  // const userMenuTree = useRecoilValue(userMenuTreeState);
-  const systemMenuTree = useRecoilValue(systemMenuTreeState);
+  const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
+  const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
   const [pathname, setPathname] = useState("/welcome");
   const [openMenuKeys, setOpenMenuKeys] = useState([]);
   const [user, setUser] = useRecoilState(userState);
@@ -97,7 +98,7 @@ const LayoutPage: FC = ({ children }) => {
     return list;
   };
   const handlePageChange = (location: Location) => {
-    const menuNode = queryMenuNode(userMenuTree, 'url', location.pathname);
+    const menuNode = queryMenuNode(userMenuTree1, 'url', location.pathname);
     console.log('menuNode:', menuNode);
     const {permission = []} = menuNode ?? {};
     recoilService.getPermissionList(permission);
@@ -121,6 +122,12 @@ const LayoutPage: FC = ({ children }) => {
   useEffect(() => {
     newUser && driverStart();
   }, [newUser]);
+  useEffect(() => {
+    recoilService.getSystemMenuTree(systemMenuTree);
+  }, [systemMenuTree]);
+  useEffect(() => {
+    recoilService.getUserMenuTree(userMenuTree);
+  }, [userMenuTree]);
   // openKeys={openMenuKeys}
   // onOpenChange={onOpenChange}
   return (
@@ -171,7 +178,7 @@ const LayoutPage: FC = ({ children }) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      menuDataRender={() => loopMenuItem(userMenuTree)}
+      menuDataRender={() => loopMenuItem(userMenuTree1)}
       rightContentRender={() => <RightContent />}
       footerRender={() => <Footer />}
       collapsedButtonRender={() => {
