@@ -104,10 +104,10 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
     setKeyword(event.target.value);
   };
   const addShopStore = async (data: IShopStore) => {
-    await addMutate(data);
+    await addMutate({appInfo: data});
   };
   const updateShopStore = async (data: IShopStore) => {
-    await updateMutate(data);
+    await updateMutate({appInfo: data});
   };
   const handleSubmit = async (row: IShopStore) => {
     row.id = current && current.id ? current.id : 0;

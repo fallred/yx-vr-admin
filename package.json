@@ -17,7 +17,7 @@
     "@ant-design/pro-layout": "^6.26.5",
     "@ant-design/pro-list": "^1.21.58",
     "@ant-design/pro-table": "^2.56.3",
-    "antd": "^4.12.3",
+    "antd": "^4.13.0",
     "autoprefixer": "^10.2.4",
     "axios": "^0.21.0",
     "braft-editor": "^2.3.9",

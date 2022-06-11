@@ -30,9 +30,10 @@ const formLayout = {
 
 const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const formRef = useRef(null);
+  const avatarRef = useRef(null);
   const [form] = Form.useForm();
-  const { visible, current = {}, onCancel, onSubmit } = props;
-  const {selectedMenuTree} = current;
+  const { visible, current, onCancel, onSubmit } = props;
+  const {selectedMenuTree} = current ?? {};
   const { data: roleListAll, error, isLoading, refetch } = useGetRoleListAll();
   const [roleOptions, setRoleOptions] = useState<IRole[]>();
   const fieldNames = {label: 'name', value: 'id', key: 'id'};
@@ -41,13 +42,13 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     setRoleOptions(options);
   }, [roleListAll]);
 
-  useEffect(() => {
-    if (formRef.current) {
-      if (!visible) {
-        form.resetFields();
-      }
-    }
-  }, [formRef, visible]);
+  // useEffect(() => {
+  //   if (formRef.current) {
+  //     if (!visible) {
+  //       form.resetFields();
+  //     }
+  //   }
+  // }, [formRef, visible]);
 
   useEffect(() => {
     if (current) {
@@ -56,13 +57,19 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
         createdAt: current.createdAt ? moment(current.createdAt) : null,
       });
     }
+    else {
+      form.resetFields();
+    }
   }, [current]);
 
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
+    const imageUrl = avatarRef.current?.getValue();
+    console.log('imageUrl:', imageUrl);
     form.setFieldsValue({
       ...formData,
+      imageUrl,
     });
     form.submit();
   };
@@ -148,7 +155,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 rules={[{ required: true }]}
             />
             <ProFormText key="imgUrl" name="imgUrl" label="头像设置">
-              <AvatarUpload />
+              <AvatarUpload ref={avatarRef} />
             </ProFormText>
             <ProFormSelect
                 key="identityType"

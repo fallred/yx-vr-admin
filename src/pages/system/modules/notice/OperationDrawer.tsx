@@ -83,7 +83,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
             },
           ]}
         />
-        <ProFormTextArea
+        {/* <ProFormTextArea
           name="content"
           label="公告内容"
           rules={[
@@ -94,7 +94,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
           ]}
         >
             <BraftEditor content={current?.content ?? ''} />
-        </ProFormTextArea>
+        </ProFormTextArea> */}
       </Form>
     );
   };

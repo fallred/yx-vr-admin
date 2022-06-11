@@ -149,14 +149,14 @@ export const useQueryShopStoreDetail = () => {
     return useQueryGet<{id: string}, IShopStore>('/app/store/detial');
 }
 export const useAddShopStore = () => {
-    return useCreate<IShopStore, IShopStore>('/manage/store/create');
+    return useCreate<IShopStore, IShopStore>('/app/store/create');
 }
 
 export const useUpdateShopStore = () => {
-    return useCreate<IShopStore>('/manage/store/edit');
+    return useCreate<IShopStore>('/app/store/edit');
 }
 export const useBatchDeleteShopStore = () => {
-    return useCreateByQuery('/manage/store/delete');
+    return useCreateByQuery('/app/store/delete');
 }
 
 // 日志管理

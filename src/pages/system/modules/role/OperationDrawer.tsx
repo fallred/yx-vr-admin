@@ -27,8 +27,8 @@ const formLayout = {
 const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
-  const { visible, current = {}, onCancel, onSubmit } = props;
-  const {selectedMenuTree = []} = current;
+  const { visible, current, onCancel, onSubmit } = props;
+  const {selectedMenuTree = []} = current ?? {};
   const [menuCheckedKeys, setMenuCheckedKeys] = useState<React.Key[]>([]);
   const [funcCheckedKeys, setFuncCheckedKeys] = useState<React.Key[]>([]);
   const [halfCheckedKeys, setHalfCheckedKeys] = useState<React.Key[]>([]);

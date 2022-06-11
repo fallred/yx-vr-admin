@@ -26,31 +26,31 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
     const [cityOptions, setCityOptions] = React.useState<IOption[]>([]);
     const [areaOptions, setAreaOptions] = React.useState<IOption[]>([]);
 
-    const updateCityData = async (provinceCode: string) => {
-        const cityList = await getCityPromise({provinceCode});
+    const updateCityData = async (provincecode: string) => {
+        const cityList = await getCityPromise({provincecode});
         setCityOptions(cityList);
     };
-    const updateAreaData = async (cityCode: string) => {
-        const areaList = await getAreaPromise({cityCode});
+    const updateAreaData = async (citycode: string) => {
+        const areaList = await getAreaPromise({citycode});
         setAreaOptions(areaList);
     };
 
-    const handleProvinceChange = (provinceCode: string) => {
-        updateCityData(provinceCode);
+    const handleProvinceChange = (provincecode: string) => {
+        updateCityData(provincecode);
         setFormData({
             ...formData,
-            province: provinceCode,
+            province: provincecode,
             city: undefined,
             district: undefined
         });
         // updateAreaData([]);
         setAreaOptions([]);
     };
-    const handleCityChange = (cityCode: string) => {
-        updateAreaData(cityCode);
+    const handleCityChange = (citycode: string) => {
+        updateAreaData(citycode);
         setFormData({
             ...formData,
-            city: cityCode,
+            city: citycode,
             district: undefined
         });
     };

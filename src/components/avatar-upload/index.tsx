@@ -2,6 +2,7 @@ import React from 'react';
 import { Upload, message } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import type { UploadFile } from 'antd/es/upload/interface';
 
 const env = import.meta.env.VITE_NODE_ENV;
 
@@ -27,11 +28,41 @@ class AvatarUpload extends React.Component {
   state = {
     loading: false,
     imageUrl: '',
+    fileList: [
+      // {
+      //   uid: '-1',
+      //   name: 'xxx.png',
+      //   status: 'done',
+      //   url: 'http://www.baidu.com/xxx.png',
+      // },
+    ],
   };
   // static getDerivedStateFromProps(nextProps, prevState) {
   //   return {imageUrl: nextProps.value ?? ''};
   // }
   handleChange = info => {
+    const {fileList} = this.state;
+    let newFileList = [...info.fileList];
+    console.log('file info:', info);
+    console.log('fileList:', fileList);
+    // 1. Limit the number of uploaded files
+    // Only to show two recent uploaded files, and old ones will be replaced by the new
+    newFileList = fileList.slice(-2);
+
+    // 2. Read from response and show file link
+    newFileList = fileList.map(file => {
+      if (file.response) {
+        // Component will show file.url as link
+        file.url = file.response.data;
+      }
+      return file;
+    });
+
+    this.setState({
+      fileList: newFileList
+    });
+  };
+  handleChange1 = info => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
@@ -55,15 +86,19 @@ class AvatarUpload extends React.Component {
       });
     }
   };
-
+  getValue = () => {
+    return this.state.fileList?.[0]?.url;
+  };
   render() {
     const accessToken = localStorage.getItem('accessToken');
     const uploadProps = {
-        name: 'file',
+        // name: 'file',
         action: "/mock/app/file/upload",
         listType: "picture-card",
         className: "avatar-uploader",
-        showUploadList: false,
+        showUploadList: true,
+        fileList: this.state.fileList,
+        multiple: false,
         beforeUpload,
         onChange: this.handleChange,
         headers: {
@@ -79,7 +114,8 @@ class AvatarUpload extends React.Component {
     );
     return (
       <Upload {...uploadProps}>
-        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        {/* {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton} */}
+        {uploadButton}
       </Upload>
     );
   }
