@@ -266,8 +266,8 @@ const StoreTable: FC<OperationDrawerProps> = (props) => {
     );
 };
 const StoreListDrawer: FC<OperationDrawerProps> = (props) => {
-    const { visible, current = {}, onClose } = props;
-    const {apps = []} = current;
+    const { visible, current, onClose } = props;
+    const {apps = []} = current ?? {};
     // const getStoreList = () => {
     //     const list = [];
     //     for(let store of apps) {

@@ -5,7 +5,7 @@ import UserList from "../system/modules/user/index";
 const AssociateMngPage: React.FC<{}> = () => {
   return (
     <PageContainer>
-      <UserList isAssociate={true} /> 
+      <UserList identityType={2} /> 
     </PageContainer>
   );
 };

@@ -12,7 +12,7 @@ import {
     IExportStoreResp
 } from "@/models/shop-store";
 import {IShopTaskList, IShopTask} from '@/models/shop-task';
-import { IOption, IProvince, ICity, IArea } from "@/models/common";
+import { IOption, IProvince, ICity, IArea, IUploadResp } from "@/models/common";
 import { LoginParams, LoginResult } from "@/models/login";
 import { IUpdatePassParams, IUpdatePassResult } from "@/models/setting";
 import { CurrentUserResult, IGetUserMenuPayload } from "@/models/user";
@@ -21,7 +21,7 @@ import {
     IReport, IReportList, IReportPayload,
     IConvert, IEvaluate, IPerformance, IMember,
 } from "@/models/report-list";
-import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet, useExport } from "./request";
+import { useBatch, useCreate, useCreateByQuery, useGetList, useGetOne, useUpdate, useQueryGet, useExport, useUpload } from "./request";
 
 const projectResource = '/projects';
 
@@ -51,7 +51,7 @@ export const useGetSystemMenuTree1 = () => {
 };
 
 export const useGetUserMenuTree = (payload?: IGetUserMenuPayload = {}) => {
-    const userName = localStorage.getItem('userName');
+    const userName = localStorage.getItem('userAccount');
     const params = {username: userName, ...payload};
     return useGetOne<IMenuTree>(
         "userMenuTree",
@@ -62,7 +62,7 @@ export const useGetUserMenuTree = (payload?: IGetUserMenuPayload = {}) => {
 };
 
 export const useGetUserMenuTree1 = (payload?: IGetUserMenuPayload = {}) => {
-    const userName = localStorage.getItem('userName');
+    const userName = localStorage.getItem('userAccount');
     const params = {username: userName, ...payload};
     return useQueryGet<{username: string}, IMenuTree>('/manage/user/menu');
 };
@@ -261,9 +261,13 @@ export const useImportStoreList = () => {
 
 // 导出门店excel
 export const useExportStoreList = () => {
-    return useExport<IExportStorePayload, IExportStoreResp>('/app/store/export');
+    return useExport<IExportStorePayload, IUploadResp>('/app/store/export');
 };
 
+// 上传
+export const useUploadFile = () => {
+    return useUpload<any, IUploadResp>('/app/file/upload', {completeRes: true});
+};
 
 // 门店月度任务
 export const useGetShopTaskList = (pagination: any, filters: any) => {

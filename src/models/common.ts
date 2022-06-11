@@ -4,7 +4,8 @@ export enum PageFuncEnum {
     'ADD' = 'add',
     'EDIT' = 'edit',
     'DELETE' = 'delete',
-    'IMPORT' = 'import'
+    'IMPORT' = 'import',
+    'SHOPSET' = 'shopSet'
 }
 
 export enum StatusEnum {
@@ -61,3 +62,12 @@ export enum TimeRangeEnum {
     LAST3YEAR = 'last-three-year',
     LAST30DAYS = 'last-thirty-days',
 }
+
+export interface IUploadResp {
+    status: number;
+    msg: string;
+    total: number;
+    pages: number;
+    success: boolean;
+    data: string;
+};

@@ -122,7 +122,7 @@ const NoticeTableList = () => {
                   okText: "确认",
                   cancelText: "取消",
                   onOk: async () => {
-                    await handleRemove([item.content]);
+                    await handleRemove([item.id]);
                     setSelectedRows([]);
                     refetch();
                   },

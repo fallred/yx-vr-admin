@@ -7,12 +7,14 @@ import cloneDeep from 'lodash/cloneDeep';
 
 // const errorPath = '/vrAdmin/login';
 const errorPath = '/login';
-console.log('baseurl:', import.meta.env.VITE_BASE_URL);
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+console.log('baseurl:', BASE_URL);
 export const opt = {
-    timeout: 10000,
+    timeout: 20000,
     method: 'post',
     withCredentials: true,
-    baseURL: import.meta.env.VITE_BASE_URL + '',
+    baseURL: BASE_URL + '',
     headers: {
         'content-type': 'application/json;charset=UTF-8',
     },

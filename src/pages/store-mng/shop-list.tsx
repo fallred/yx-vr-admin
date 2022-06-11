@@ -5,7 +5,7 @@ import ShopTableCard from "./shop-table-card";
 const StoreMngPage: React.FC<{}> = () => {
   return (
     <PageContainer>
-      <ShopTableCard showOperate={true} /> 
+      <ShopTableCard showOperate={true} showSearch={true} /> 
     </PageContainer>
   );
 };

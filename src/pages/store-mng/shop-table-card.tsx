@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
 import { Form, Button, message, Modal, PaginationProps, Space, Input } from "antd";
@@ -30,13 +30,16 @@ import ShopFormDrawer from "./modules/shop-form";
 interface IShopListProps {
   showOperate?: boolean;
   showSearch?: boolean;
+  showTableTitle?: boolean;
+  shopTableRef: any;
 }
 const searchFormLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 16 },
 };
-const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
-  const {showOperate, showSearch} = props;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTableTitle: true}) => {
+  const {showOperate, showSearch, shopTableRef, showTableTitle} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const formRef = useRef<ProFormInstance<IShopStore>>();
@@ -162,8 +165,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
   };
   const handleImportTemplate = () => {
   };
-  const handleExportTemplate = async () => {
-     await exportStorePromise({keyword: ''});
+  const handleExportTemplate = () => {
+    //  await exportStorePromise({keyword: ''});
+    window.location.href = `http://1.13.20.201:9090${BASE_URL}/app/store/export?keyword=${keyword}`;
   };
   function YgSpan(props1) {
     return (
@@ -338,6 +342,15 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
       },
     } : {},
   ];
+  const getValue = () => {
+      return selectedRowsState;
+  };
+  useImperativeHandle(shopTableRef, () => ({
+      // changeVal 就是暴露给父组件的方法
+      getValue: () => {
+          return selectedRowsState;
+      },
+  }));
   return (
     <>
       {showSearch ? (<ProCard style={{marginBottom: 20}}>
@@ -359,10 +372,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
       </ProCard>) : null}
       <ProTable<IShopStore>
         rowKey="appId"
-        headerTitle="门店管理"
-        defaultSize="small"
+        headerTitle={showTableTitle ? '门店管理' : ''}
         actionRef={actionRef}
-        scroll={{ x: 1000 }}
+        scroll={{ x: 1300 }}
         bordered={false}
         options={{reload: false}}
         toolBarRender={() => {
@@ -378,7 +390,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
               key={PageFuncEnum.IMPORT}
               operCode={PageFuncEnum.EDIT}
               btnText="导入"
-              apiUrl="/mock/app/store/import"
+              apiUrl={`${BASE_URL}/app/store/import`}
               maxCount={1}
             />,
             <AuthButton
@@ -410,7 +422,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false}) => {
         search={false}
         footer={false}
       />
-      
       {selectedRowsState?.length > 0 && (
         <FooterToolbar
           extra={

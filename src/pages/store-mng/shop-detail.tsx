@@ -46,6 +46,7 @@ const ShopDetailPage: React.FC<{}> = () => {
     searchForm.setFieldsValue({
       appId: selectedAppId
     });
+    handleSearch({appId: selectedAppId});
   }, [shopStoreList]);
 
   return (

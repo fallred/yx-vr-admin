@@ -9,27 +9,30 @@ import type { ProColumns, ActionType } from "@ant-design/pro-table";
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import { SexEnum, PageFuncEnum } from '@/models/common';
-import { IRole } from "@/models/role";
+import { IUser } from "@/models/user";
 import { PageFuncMap, UserStatusMap, SexMap } from '@/enums/common';
 import {
     useAddUser,
     useBatchDeleteUser,
     useUpdateUser,
     useGetUserList,
-    useGetRoleListAll
+    useGetRoleListAll,
+    useSetUserApps
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
-import { IUser, UserStatusEnum } from "@/models/user-mng";
+import { IUser, UserStatusEnum, IdentifyTypeEnum } from "@/models/user-mng";
+import { IShopStore } from "@/models/shop-store";
 import OperationDrawer from "./OperationDrawer";
 import ShopListDrawer from "./storeListDrawer";
+import ShopSetDrawer from "./shop-set-form";
 
 interface UserTableListProps {
-    isAssociate: boolean;
+    identityType: IdentifyTypeEnum;
 }
 const UserTableList: FC<OperationDrawerProps> = props => {
-    const { isAssociate } = props;
+    const { identityType = IdentifyTypeEnum.PLATFORM } = props;
     const permissionList = useRecoilValue(permissionListState);
-    
+    const actionRef = useRef<ActionType>();
     const { formatMessage } = useLocale();
     const { data: roleListAll } = useGetRoleListAll();
     const [userList, setUserList] = useState<IUser[]>();
@@ -42,20 +45,20 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         pageSize: 10,
         total: 0,
     });
-    const { data, error, isLoading, refetch } = useGetUserList(pagination, filters);
-
+    const { data, error, isLoading, refetch } = useGetUserList(pagination, {...filters, identityType});
     const [selectedRowKeys, setSelectedRows] = useState<IUser[]>([]);
-
     const [done, setDone] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
     const [shopViewVisible, setShopViewVisible] = useState<boolean>(false);
-    const [roleOptions, setRoleOptions] = useState<IRole[]>();
+    const [shopSetVisible, setShopSetVisible] = useState<boolean>(false);
+    const [roleOptions, setRoleOptions] = useState<IUser[]>();
     const [roleMap, setroleMap] = useState<object>();
-    const actionRef = useRef<ActionType>();
+    
 
     const { mutateAsync: addMutate } = useAddUser();
     const { mutateAsync: updateMutate } = useUpdateUser();
     const { mutateAsync: batchDeleteMutate } = useBatchDeleteUser();
+    const { mutateAsync: setUserAppsMutate } = useSetUserApps();
 
     useEffect(() => {
         // const options = roleListAll?.map(item => ({value: item?.id, label: item?.name}));
@@ -100,14 +103,9 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     const handleCancel = () => {
         setVisible(false);
     };
-    const addUser = async (data: IUser) => {
-        await addMutate(data);
-    };
-    const updateUser = async (data: IUser) => {
-        await updateMutate(data);
-    };
     const handleSubmit = async (row: IUser) => {
         row.id = current && current.id ? current.id : 0;
+        row.identityType = identityType;
         setVisible(false);
         const hide = message.loading("正在添加/更新");
         try {
@@ -127,13 +125,19 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             return false;
         }
     };
+    const addUser = async (data: IUser) => {
+        await addMutate({...data, identityType});
+    };
+    const updateUser = async (data: IUser) => {
+        await updateMutate({...data, identityType});
+    };
     const handleRemove = async (selectedRows: IUser[]) => {
         const hide = message.loading("正在删除");
         if (!selectedRows) return true;
         try {
             const ids = selectedRows.map((row) => row.id) ?? [];
             const idsStr = ids.join(',');
-            await batchDeleteMutate({ ids: idsStr });
+            await batchDeleteMutate({ ids: idsStr, identityType });
             setPagination({ ...pagination, current: 1 });
             hide();
             message.success("删除成功，即将刷新");
@@ -141,6 +145,28 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         } catch (error) {
             hide();
             message.error("删除失败，请重试");
+            return false;
+        }
+    };
+    const showShopSetDrawer = () => {
+        setShopSetVisible(true);
+    };
+    const handleShopSetCancel = () => {
+        setShopSetVisible(false);
+    };
+    const handleSopSetSubmit = async (info: {appIds: string[], userId: string}) => {
+        const {appIds, userId} = info;
+        const hide = message.loading("正在设置");
+        try {
+            await setUserAppsMutate({...info, identityType});
+            setShopSetVisible(false);
+            hide();
+            message.success("操作成功");
+            refetch();
+            return true;
+        } catch (error) {
+            hide();
+            message.error("操作失败请重试！");
             return false;
         }
     };
@@ -158,8 +184,8 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     let columns: ProColumns<IUser>[] = [
         {
             title: '用户昵称',
-            dataIndex: 'username',
-            key: 'username',
+            dataIndex: 'imageUrl',
+            key: 'imageUrl',
             valueType: 'avatar',
             width: 150,
             render: (dom, row, index, action) => (
@@ -192,7 +218,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             // copyable: true,
         },
         {
-            title: isAssociate ? '关联人角色' : '角色',
+            title: identityType === IdentifyTypeEnum.RELATION ? '关联人角色' : '角色',
             dataIndex: 'roleId',
             valueType: 'select',
             with: 100,
@@ -212,7 +238,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             },
         },
     ];
-    if (isAssociate) {
+    if (identityType) {
         columns = columns.concat([
             {
                 title: '门店ID',
@@ -259,8 +285,13 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         key: 'option',
         valueType: "option",
         fixed: 'right',
-        width: 200,
+        width: 150,
         render: (_, record) => {
+            const opMenuList = [];
+            if (PageFuncEnum.EDIT) {
+                opMenuList.push({ key: 'viewShop', name: '查看数据权限' });
+                opMenuList.push({ key: 'setShop', name: '设置数据权限' });
+            }
             const btnList = [
                 <AuthLink
                     key={PageFuncEnum.EDIT}
@@ -272,16 +303,26 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 >
                     编辑
                 </AuthLink>,
-                <AuthLink
-                    key={PageFuncEnum.LIST}
-                    operCode={PageFuncEnum.LIST}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        showViewDrawer(record);
-                    }}
-                >
-                    查看数据权限
-                </AuthLink>,
+                // <AuthLink
+                //     key={PageFuncEnum.LIST}
+                //     operCode={PageFuncEnum.LIST}
+                //     onClick={(e) => {
+                //         e.preventDefault();
+                //         showViewDrawer(record);
+                //     }}
+                // >
+                //     查看数据权限
+                // </AuthLink>,
+                // <AuthLink
+                //     key="shopSet"
+                //     operCode={PageFuncEnum.EDIT}
+                //     onClick={(e) => {
+                //         e.preventDefault();
+                //         showShopSetDrawer();
+                //     }}
+                // >
+                //     设置数据权限
+                // </AuthLink>,
                 <AuthLink
                   key={PageFuncEnum.DELETE}
                   operCode={PageFuncEnum.DELETE}
@@ -302,6 +343,18 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 >
                   删除
                 </AuthLink>,
+                <TableDropdown
+                  key="actionGroup"
+                  onSelect={(key) => {
+                    if (key === 'viewShop') {
+                        showViewDrawer(record);
+                    }
+                    if (key === 'setShop') {
+                        showShopSetDrawer();
+                    }
+                  }}
+                  menus={opMenuList}
+                />,
             ];
             return btnList;
         },
@@ -388,9 +441,16 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 onSubmit={handleSubmit}
             />
             <ShopListDrawer
+                key="shopListDrawer"
                 current={current}
                 visible={shopViewVisible}
                 onClose={hideViewDrawer}
+            />
+            <ShopSetDrawer
+                key="shopSetDrawer"
+                visible={shopSetVisible}
+                onCancel={handleShopSetCancel}
+                onSubmit={handleSopSetSubmit}
             />
         </>
     );

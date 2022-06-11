@@ -13,11 +13,11 @@ type IFromData = {
 interface IPCRProps {
     cdRef: any;
     hasFormItemWrap: boolean;
-    pcaData: IFromData;
+    pcdData: IFromData;
 }
 const { Option } = Select;
 const ProvinceCityArea : FC<IPCRProps> = props => {
-    const { cdRef, hasFormItemWrap = true, pcaData = {}} = props;
+    const { cdRef, hasFormItemWrap = true, pcdData = {}} = props;
     const {data: provinceList} = useGetProvinceList();
     const getCityPromise = useGetCityList();
     const getAreaPromise = useGetAreaList();
@@ -43,7 +43,11 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             city: undefined,
             district: undefined
         });
-        // updateAreaData([]);
+        // props.change({
+        //     province: provincecode,
+        //     city: undefined,
+        //     district: undefined
+        // });
         setAreaOptions([]);
     };
     const handleCityChange = (citycode: string) => {
@@ -53,6 +57,11 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             city: citycode,
             district: undefined
         });
+        // props.change({
+        //     province: provincecode,
+        //     city: citycode,
+        //     district: undefined
+        // });
     };
     const handleDistrictChange = (district: string) => {
         setFormData({
@@ -73,11 +82,11 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
         setProvinceOptions(provinceList);
     }, [provinceList]);
     useEffect(() => {
-        const {province, city, district} = pcaData ?? {};
-        // setFormData({...pcaData});
+        const {province, city, district} = pcdData ?? {};
+        // setFormData({...pcdData});
         // updateCityData(province);
         // updateAreaData(city);
-    }, [pcaData]);
+    }, [pcdData]);
     const selectTpl = (
         <>
         <Select

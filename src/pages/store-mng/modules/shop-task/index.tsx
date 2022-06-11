@@ -18,7 +18,7 @@ import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
-import {dateFormat} from '@/lib/common';
+import {dateFormat, dateMonthFormat} from '@/lib/common';
 import {
     useGetShopTaskList,
     useAddShopTask,
@@ -130,12 +130,11 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
     //   valueType: "textarea",
     },
     {
-        title: '月份',
+        title: '日期',
         width: 180,
         key: 'tm',
         dataIndex: 'tm',
-        valueType: 'dateTime',
-        format: dateFormat,
+        valueType: 'date',
         ellipsis: true,
         hideInSearch: false,
     },
@@ -181,7 +180,10 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
         dataSource={shopTaskList}
         columns={columns}
         pagination={pagination}
-        dateFormatter="string"
+        dateFormatter={(value, valueType) => {
+          // console.log('====>', value, valueType);
+          return dateMonthFormat(value);
+        }}
         onChange={(pagination, filters, sorter) => {
           setPagination(pagination);
         }}

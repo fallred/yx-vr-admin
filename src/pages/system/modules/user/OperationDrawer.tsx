@@ -14,12 +14,12 @@ import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import {useGetRoleListAll} from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';
-import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
+import { IUser } from "@/models/user";
 
 interface OperationDrawerProps {
   visible: boolean;
-  current: Partial<IRole> | undefined;
-  onSubmit: (values: IRole) => void;
+  current: Partial<IUser> | undefined;
+  onSubmit: (values: IUser) => void;
   onCancel: () => void;
 }
 
@@ -31,11 +31,13 @@ const formLayout = {
 const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const formRef = useRef(null);
   const avatarRef = useRef(null);
+  const shopTableRef = useRef<React.Component>(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
   const {selectedMenuTree} = current ?? {};
   const { data: roleListAll, error, isLoading, refetch } = useGetRoleListAll();
-  const [roleOptions, setRoleOptions] = useState<IRole[]>();
+  const [roleOptions, setRoleOptions] = useState<IUser[]>();
+  const [avatarUrl, setAvatarUrl] = useState<string>('');
   const fieldNames = {label: 'name', value: 'id', key: 'id'};
   useEffect(() => {
     const options = roleListAll?.map(item => ({value: item?.id, label: item?.name}));
@@ -51,38 +53,53 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   // }, [formRef, visible]);
 
   useEffect(() => {
+    form.resetFields();
     if (current) {
       form.setFieldsValue({
         ...current,
         createdAt: current.createdAt ? moment(current.createdAt) : null,
       });
+      setAvatarUrl(current.imageUrl);
     }
-    else {
-      form.resetFields();
-    }
+    // else {
+    //   form.resetFields();
+    // }
   }, [current]);
 
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
-    const imageUrl = avatarRef.current?.getValue();
-    console.log('imageUrl:', imageUrl);
+    // const imageUrl = avatarRef.current?.getValue();
+    const shopListSelectedRows = shopTableRef?.current?.getValue();
+    // console.log('imageUrl:', imageUrl);
+    console.log('shopListSelectedRows:', shopListSelectedRows);
     form.setFieldsValue({
       ...formData,
-      imageUrl,
+      imageUrl: avatarUrl,
+      apps: shopListSelectedRows,
     });
     form.submit();
   };
-
+  const handleAvatarChange = url => {
+    setAvatarUrl(url);
+    form.setFieldsValue({
+      imageUrl: url,
+    });
+  };
   const handleFinish = async (values: { [key: string]: any }) => {
     if (onSubmit) {
-      onSubmit(values as IRole);
+      onSubmit(values as IUser);
     }
   };
 
   const getModalContent = () => {
     return (
-      <Form {...formLayout} form={form} ref={formRef} onFinish={handleFinish}>
+      <Form
+        {...formLayout}
+        form={form}
+        ref={formRef}
+        onFinish={handleFinish}
+      >
           <ProCard
             title="基本信息"
             bordered
@@ -154,8 +171,12 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 placeholder="请输入用途"
                 rules={[{ required: true }]}
             />
-            <ProFormText key="imgUrl" name="imgUrl" label="头像设置">
-              <AvatarUpload ref={avatarRef} />
+            <ProFormText key="imageUrl" name="imageUrl" label="头像设置">
+              <AvatarUpload
+                ref={avatarRef}
+                imageUrl={avatarUrl}
+                handleAvatarChange={handleAvatarChange}
+              />
             </ProFormText>
             <ProFormSelect
                 key="identityType"
@@ -175,19 +196,34 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 placeholder="选择角色"
               />
           </ProCard>
-          {/* <ProCard
-              title="数据设置"
-              bordered
-              headerBordered
-              collapsible
-              style={{
-                marginBottom: 16,
-                minWidth: 200,
-                maxWidth: '100%',
-              }}
+          {
+            visible && !current ? 
+            <ProCard
+                title="数据设置"
+                bordered
+                headerBordered
+                collapsible
+                style={{
+                  marginBottom: 16,
+                  minWidth: 200,
+                  maxWidth: '100%',
+                }}
+            >
+              <ShopTableCard
+                filterType=""
+                showSearch={false}
+                showTableTitle={false}
+                shopTableRef={shopTableRef}
+              />
+            </ProCard>
+            : null
+          }
+          <ProForm.Item
+              name="apps"
+              width="md"
+              label=""
           >
-          </ProCard> */}
-          <ShopTableCard filterType="" />
+          </ProForm.Item>
       </Form>
     );
   };

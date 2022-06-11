@@ -10,10 +10,10 @@ type IRequestConfig = {
 };
 // const errorPath = '/vrAdmin/login';
 const errorPath = '/login';
-
-console.log('baseurl:', import.meta.env.VITE_BASE_URL);
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log('baseurl:', BASE_URL;
 const axios = Axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL + '',
+    baseURL: BASE_URL + '',
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json',

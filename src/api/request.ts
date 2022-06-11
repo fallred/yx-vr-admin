@@ -19,10 +19,11 @@ type IListParams = {
     order?: string;
 }
 
-console.log('baseurl:', import.meta.env.VITE_BASE_URL);
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+console.log('baseurl:', BASE_URL);
 const axios = Axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL + '',
-    timeout: 1000,
+    baseURL: BASE_URL + '',
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -395,6 +396,7 @@ export {
     useBatch,
     useCreateByQuery,
     useQueryGet,
-    useExport
+    useExport,
+    useUpload
 };
 export default axios;

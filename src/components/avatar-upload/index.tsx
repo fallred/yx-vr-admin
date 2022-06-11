@@ -3,8 +3,10 @@ import { Upload, message } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
+import $axios, {useAxios, opt} from '@/api/config';
 
 const env = import.meta.env.VITE_NODE_ENV;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -37,9 +39,17 @@ class AvatarUpload extends React.Component {
       // },
     ],
   };
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   return {imageUrl: nextProps.value ?? ''};
-  // }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps nextProps:', nextProps);
+    console.log('getDerivedStateFromProps prevState:', prevState);
+    if (nextProps.imageUrl !== prevState.imageUrl) {
+      // 通过对比nextProps和prevState，返回一个用于更新状态的对象
+      return {
+        imageUrl: nextProps.imageUrl
+      }
+    }
+    return null;
+  }
   handleChange = info => {
     const {fileList} = this.state;
     let newFileList = [...info.fileList];
@@ -87,22 +97,65 @@ class AvatarUpload extends React.Component {
     }
   };
   getValue = () => {
-    return this.state.fileList?.[0]?.url;
+    return this.state.imageUrl;
   };
   render() {
     const accessToken = localStorage.getItem('accessToken');
     const uploadProps = {
-        // name: 'file',
-        action: "/mock/app/file/upload",
+        name: "avatar",
+        showUploadList: false,
+        // action: `${BASE_URL}/app/file/upload`,
+        // multiple: false,
         listType: "picture-card",
         className: "avatar-uploader",
-        showUploadList: true,
-        fileList: this.state.fileList,
-        multiple: false,
         beforeUpload,
-        onChange: this.handleChange,
+        // onChange: this.handleChange,
         headers: {
           accessToken,
+        },
+        customRequest:  async info => {
+          //手动上传
+          const formData = new FormData();
+          // 名字和后端接口名字对应
+          formData.append('file', info.file);
+          console.log('formData:', formData);
+          // try {
+              const response = await $axios.post(
+                `/app/file/upload`,
+                formData,
+                {
+                    headers: {
+                      'Content-type': 'application/x-www-form-urlencoded'
+                    }
+                }
+             );
+             console.log('upload success response:', response);
+              // const response = await uploadFilePromise(formData);
+              //上传成功回调
+              if (response.status === 200) {
+                const imgUrl = response.data?.data ?? '';
+                console.log('upload success imgUrl:', imgUrl);
+                // this.setState({
+                //   imageUrl: imgUrl,
+                // });
+                this.props.handleAvatarChange(imgUrl);
+                message.success('上传成功！');
+              }
+          // }
+          // catch (error) {
+          //   message.error('上传失败！');
+          // }
+        },
+        onRemove: file => {
+          //删除图片调用
+          this.setState(state => {
+            const index = state.fileList.indexOf(file);
+            const newFileList = state.fileList.slice();
+            newFileList.splice(index, 1);
+            return {
+              fileList: newFileList,
+            };
+          });
         },
     };
     const { loading, imageUrl } = this.state;
@@ -114,8 +167,7 @@ class AvatarUpload extends React.Component {
     );
     return (
       <Upload {...uploadProps}>
-        {/* {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton} */}
-        {uploadButton}
+        {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
     );
   }

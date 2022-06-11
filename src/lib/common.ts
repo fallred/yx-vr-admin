@@ -28,3 +28,7 @@ export const dateFormat = (tm: string) => {
     const dateFormatStr= moment(tm).format('YYYY-MM-DD');
     return dateFormatStr;
 }
+export const dateMonthFormat = (tm: string) => {
+    const dateFormatStr= moment(tm).format('YYYY-MM');
+    return dateFormatStr;
+}
