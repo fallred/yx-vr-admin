@@ -114,7 +114,7 @@ const reportListPage: React.FC<{}> = () => {
       <ProCard
           key="1"
           title="转化数据"
-          extra="2019年9月28日"
+          extra=""
           split="vertical"
           headerBordered
           bordered
@@ -140,7 +140,7 @@ const reportListPage: React.FC<{}> = () => {
       <ProCard
           key="2"
           title="评价数据"
-          extra="2019年9月28日"
+          extra=""
           split="vertical"
           className="card-list"
           headerBordered
@@ -166,7 +166,7 @@ const reportListPage: React.FC<{}> = () => {
       <ProCard
           key="3"
           title="会员数据"
-          extra="2019年9月28日"
+          extra=""
           split="vertical"
           className="card-list"
           headerBordered
@@ -192,7 +192,7 @@ const reportListPage: React.FC<{}> = () => {
       <ProCard
           key="4"
           title="业绩数据"
-          extra="2019年9月28日"
+          extra=""
           split="vertical"
           className="card-list"
           headerBordered

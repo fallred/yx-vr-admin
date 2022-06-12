@@ -43,9 +43,16 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
     (response) => {
         const data = response.data;
-        console.log('response:', response);
+        console.log('response11:', response);
         if (response.status === 200) {
-            return data;
+            if (data.status === 200) {
+                return data;
+            }
+            notification.error({
+                message: data.msg,
+                description: data.status || 'Error',
+            });
+            return Promise.reject(new Error(data.status || 'Error'));
         }
 
         notification.error({

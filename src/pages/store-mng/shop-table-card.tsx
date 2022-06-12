@@ -165,9 +165,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   };
   const handleImportTemplate = () => {
   };
-  const handleExportTemplate = () => {
-    //  await exportStorePromise({keyword: ''});
-    window.location.href = `http://1.13.20.201:9090${BASE_URL}/app/store/export?keyword=${keyword}`;
+  const handleExportTemplate = async () => {
+      await exportStorePromise({keyword});
+      // window.location.href = `http://1.13.20.201:9090${BASE_URL}/app/store/export?keyword=${keyword}`;
   };
   function YgSpan(props1) {
     return (
