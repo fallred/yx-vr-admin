@@ -40,7 +40,7 @@ const LoginForm: FC = () => {
       localStorage.setItem("userAccount", result.userAccount);
       localStorage.setItem("appId", result.appId);
       localStorage.setItem("identity_type", result.identity_type);
-
+      // localStorage.setItem("apps", JSON.stringify(result.apps));
       const from = location.state?.from || { pathname: "/home" };
       navigate(from);
     }

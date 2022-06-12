@@ -85,12 +85,12 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
     await updateShopTaskMutate(data);
   };
   const handleDrawerFormSubmit = async (row: IShopTask) => {
-    row.id = current && current.id ? current.id : 0;
+    row.id = current && current.id ? current.id : void 0;
     row.tm = current.tm ? dateFormat(current.tm) : null;
     setVisible(false);
     const hide = message.loading("正在添加/更新");
     try {
-      if (row.id === 0) {
+      if (!row.id) {
         await addShopTask(row);
       }
       else {

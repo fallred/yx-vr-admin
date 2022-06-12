@@ -71,3 +71,15 @@ export interface IUploadResp {
     success: boolean;
     data: string;
 };
+
+export interface IProvinceCityDistrict {
+    province: string;
+    // 市
+    city: string;
+    // 区
+    district: string;
+
+    provinceName: string;
+    cityName: string;
+    districtName: string;
+};

@@ -74,11 +74,11 @@ const RoleTableList= () => {
     await updateMutate(data);
   };
   const handleSubmit = async (row: IRole) => {
-    row.id = current && current.id ? current.id : 0;
+    row.id = current && current.id ? current.id : void 0;
     setVisible(false);
     const hide = message.loading("正在添加/更新");
     try {
-      if (row.id === 0) {
+      if (!row.id) {
         await addRole(row);
       }
       else {

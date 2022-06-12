@@ -14,6 +14,7 @@ import {SexOptions, IdentifyOptions, ShopStoreStatusOptions} from '@/enums/commo
 import { IShopStore, ShopStoreStatusEnum, IProvinceCityDistrict } from "@/models/shop-store";
 import ProvinceCityArea from '@/components/province-city-area';
 import AvatarUpload from '@/components/avatar-upload';
+import {dateTimeFormat, dateMonthFormat} from '@/lib/common';
 
 interface ShopFormProps {
   visible: boolean;
@@ -43,10 +44,12 @@ const ShopForm: FC<ShopFormProps> = (props) => {
             province: current.province,
             city: current.city,
             district: current.district,
+            provinceName: current.provinceName,
+            cityName: current.cityName,
+            districtName: current.districtName,
         };
         form.setFieldsValue({
             ...current,
-            // provinceCityDistrict: pcdDataTemp,
             createdAt: current.createdAt ? moment(current.createdAt) : null,
         });
         setPcdData(pcdDataTemp);
@@ -56,11 +59,9 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
-    // const pcdDataTemp = pcdRef?.current?.getValue();
     form.setFieldsValue({
         ...formData,
         ...pcdData,
-        // ...pcdDataTemp,
     });
     form.submit();
   };
@@ -68,16 +69,11 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   const handleFinish = async (values: { [key: string]: any }) => {
     console.log('shop-form handleFinish values:', values);
     if (onSubmit) {
-        // const pcdDataTemp = pcdRef?.current?.getValue();
         const formData = {...values, ...pcdData};
         onSubmit(formData);
     }
   };
   const handlePcdChange = pcdDataTemp => {
-    // form.setFieldsValue({
-    //   ...pcdDataTemp,
-    // });
-    // setPcdData(pcdDataTemp);
   };
   const handlePcdConfirm = () => {
     setPcdCompVisible(false);
@@ -90,8 +86,6 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   };
 
   const handleVisibleChange = (newVisible: boolean) => {
-    // const pcdDataTemp = pcdRef?.current?.getValue();
-    // setPcdData(pcdDataTemp);
     setPcdCompVisible(newVisible);
   };
   const getModalContent = () => {
@@ -108,23 +102,30 @@ const ShopForm: FC<ShopFormProps> = (props) => {
                 maxWidth: '100%',
             }}
         >
-            <ProFormText
-                key="appId"
-                name="appId"
-                width="md"
-                label="门店编号"
-                tooltip="最长为24位"
-                placeholder="请输入门店编号"
-                rules={[{ required: true }]}
-            />
-            <ProFormText
-                key="code"
-                name="code"
-                width="md"
-                label="门店编码"
-                placeholder="请输入门店编码"
-                rules={[{ required: true }]}
-            />
+            {current ?
+            (
+              <>
+                <ProFormText
+                    key="appId"
+                    name="appId"
+                    width="md"
+                    label="门店编号"
+                    placeholder="请输入门店编号"
+                    disabled={true}
+                    rules={[{ required: false }]}
+                />
+                <ProFormText
+                    key="code"
+                    name="code"
+                    width="md"
+                    label="门店编码"
+                    placeholder="请输入门店编码"
+                    disabled={true}
+                    rules={[{ required: false }]}
+                />
+              </>
+            )
+            : null}
             <ProFormText
                 key="franchisee"
                 name="franchisee"
@@ -189,7 +190,7 @@ const ShopForm: FC<ShopFormProps> = (props) => {
                 >
                   <div className="pcdLabelBox">
                     <span className="pcdLabel">
-                      {`${pcdData.province || ''} - ${pcdData.city || ''} - ${pcdData.district || ''}`}
+                      {`${pcdData.provinceName || ''} - ${pcdData.cityName || ''} - ${pcdData.districtName || ''}`}
                     </span>
                     <a className="pcdEditLink">编辑</a>
                   </div>
@@ -224,9 +225,10 @@ const ShopForm: FC<ShopFormProps> = (props) => {
                 key="tm"
                 name="tm"
                 label="签约时间"
-                fieldProps={{
-                    format: (value) => value.format('YYYY-MM-DD'),
-                }}
+                format="YYYY-MM-DD HH:mm:ss"
+                // fieldProps={{
+                //     format: dateTimeFormat,
+                // }}
             />
         </ProCard>
     </Form>

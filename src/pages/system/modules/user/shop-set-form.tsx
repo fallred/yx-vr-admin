@@ -28,27 +28,36 @@ const ShopSetDrawer: FC<ShopSetDrawerProps> = props => {
             });
         }
     };
+    const handleCancel = () => {
+        // console.log('handleCancel clearShopTableSelectedRows:');
+        shopTableRef?.current?.clearShopTableSelectedRows();
+        onCancel();
+    };
     return (
         <Drawer
             className="shop-set-drawer"
             title="数据权限设置"
             width={800}
-            onClose={onCancel}
+            onClose={handleCancel}
             visible={visible}
             bodyStyle={{ paddingBottom: 0 }}
             extra={
                 <Space>
-                  <Button onClick={onCancel}>取消</Button>
+                  <Button onClick={handleCancel}>取消</Button>
                   <Button onClick={handleSubmit} type="primary">保存</Button>
                 </Space>
             }
         >
-            <ShopTableCard
-                filterType=""
-                showSearch={false}
-                showTableTitle={false}
-                shopTableRef={shopTableRef}
-            />
+            {
+                visible ? 
+                <ShopTableCard
+                    filterType=""
+                    showSearch={false}
+                    showTableTitle={false}
+                    shopTableRef={shopTableRef}
+                /> : null
+            }
+            
         </Drawer>
     );
 };

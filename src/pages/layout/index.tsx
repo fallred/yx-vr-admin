@@ -65,6 +65,7 @@ const IconMap: { [key: string]: React.ReactNode } = {
 const LayoutPage: FC = ({ children }) => {
   const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
   const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
+  const userName = localStorage.getItem('userName');
   const [pathname, setPathname] = useState("/welcome");
   const [openMenuKeys, setOpenMenuKeys] = useState([]);
   const [user, setUser] = useRecoilState(userState);
@@ -139,7 +140,7 @@ const LayoutPage: FC = ({ children }) => {
       }}
       {...settings}
       waterMarkProps={{
-        content: '影行科技',
+        content: userName,
       }}
       onCollapse={toggle}
       onPageChange={handlePageChange}

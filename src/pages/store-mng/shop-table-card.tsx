@@ -26,6 +26,7 @@ import ProvinceCityArea from '@/components/province-city-area';
 import FormItem from "@/components/form-item";
 import AutoUploadFile from "./modules/auto-upload-file";
 import ShopFormDrawer from "./modules/shop-form";
+import { dateTimeFormat } from "@/lib/common";
 
 interface IShopListProps {
   showOperate?: boolean;
@@ -112,17 +113,21 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   const updateShopStore = async (data: IShopStore) => {
     await updateMutate({appInfo: data});
   };
+  const clearShopTableSelectedRows = () => {
+    setSelectedRows([]);
+  };
   const handleSubmit = async (row: IShopStore) => {
-    row.id = current && current.id ? current.id : 0;
+    row.id = current && current.id ? current.id : void 0;
     const {province, city, district} = row.provinceCityDistrict;
     row.province = province;
     row.city = city;
     row.district = district;
+    row.tm = dateTimeFormat(row.tm);
     setVisible(false);
 
     const hide = message.loading("正在添加/更新");
     try {
-      if (row.id === 0) {
+      if (!row.id) {
         await addShopStore(row);
       }
       else {
@@ -130,7 +135,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       }
 
       hide();
-
+      setSelectedRows([]);
       message.success("操作成功");
       refetch();
 
@@ -150,6 +155,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       const idsStr = ids.join(',');
       await batchDeleteMutate({ids: idsStr});
       setPagination({...pagination, current: 1});
+      setSelectedRows([]);
       hide();
       message.success("删除成功，即将刷新");
       return true;
@@ -205,23 +211,23 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       width: 140,
     },
     {
-      key: 'province',
+      key: 'provinceName',
       title: '省',
-      dataIndex: "province",
+      dataIndex: "provinceName",
       valueType: "text",
       width: 80,
     },
     {
-      key: 'city',
+      key: 'cityName',
       title: '市',
-      dataIndex: "city",
+      dataIndex: "cityName",
       valueType: "text",
       width: 80,
     },
     {
-      key: 'district',
+      key: 'districtName',
       title: '区',
-      dataIndex: "district",
+      dataIndex: "districtName",
       valueType: "text",
       width: 80,
     },
@@ -347,9 +353,8 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   };
   useImperativeHandle(shopTableRef, () => ({
       // changeVal 就是暴露给父组件的方法
-      getValue: () => {
-          return selectedRowsState;
-      },
+      getValue,
+      clearShopTableSelectedRows,
   }));
   return (
     <>

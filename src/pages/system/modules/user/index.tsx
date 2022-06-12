@@ -104,12 +104,12 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         setVisible(false);
     };
     const handleSubmit = async (row: IUser) => {
-        row.id = current && current.id ? current.id : 0;
+        row.id = current && current.id ? current.id : void 0;
         row.identityType = identityType;
         setVisible(false);
         const hide = message.loading("正在添加/更新");
         try {
-            if (row.id === 0) {
+            if(!row.id) {
                 await addUser(row);
             }
             else {
@@ -156,9 +156,10 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     };
     const handleSopSetSubmit = async (info: {appIds: string[], userId: string}) => {
         const {appIds, userId} = info;
+        const appIdStr = appIds.join(',');
         const hide = message.loading("正在设置");
         try {
-            await setUserAppsMutate({...info, identityType});
+            await setUserAppsMutate({userId, appIds: appIdStr, identityType});
             setShopSetVisible(false);
             hide();
             message.success("操作成功");

@@ -2,18 +2,16 @@ import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "rea
 import { Select } from 'antd';
 import ProForm, {ProFormSelect} from "@ant-design/pro-form";
 import FormItem from "../form-item";
-import {IOption} from '@/models/common';
+import {
+    IOption, IProvinceCityDistrict,
+    IProvince, ICity, IArea
+} from '@/models/common';
 import {useGetProvinceList, useGetCityList, useGetAreaList} from '@/api/index';
 
-type IFromData = {
-    province: string;
-    city: string;
-    district: string
-};
 interface IPCRProps {
     cdRef: any;
     hasFormItemWrap: boolean;
-    pcdData: IFromData;
+    pcdData: IProvinceCityDistrict;
 }
 const { Option } = Select;
 const ProvinceCityArea : FC<IPCRProps> = props => {
@@ -21,10 +19,10 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
     const {data: provinceList} = useGetProvinceList();
     const getCityPromise = useGetCityList();
     const getAreaPromise = useGetAreaList();
-    const [formData, setFormData] = React.useState<IFromData>({});
-    const [provinceOptions, setProvinceOptions] = React.useState<IOption[]>([]);
-    const [cityOptions, setCityOptions] = React.useState<IOption[]>([]);
-    const [areaOptions, setAreaOptions] = React.useState<IOption[]>([]);
+    const [formData, setFormData] = React.useState<IProvinceCityDistrict>({});
+    const [provinceOptions, setProvinceOptions] = React.useState<IProvince[]>([]);
+    const [cityOptions, setCityOptions] = React.useState<ICity[]>([]);
+    const [areaOptions, setAreaOptions] = React.useState<IArea[]>([]);
 
     const updateCityData = async (provincecode: string) => {
         const cityList = await getCityPromise({provincecode});
@@ -69,14 +67,26 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             district,
         });
     };
+    const queryItemByCode = (code, opts) => {
+        const item = opts.find(item => item.code === code);
+        console.log('queryItemByCode item:', item);
+        return item;
+    };
     const getValue = () => {
-        return formData;
+        const {province, city, district} = formData;
+        const provinceItem = queryItemByCode(province, provinceOptions);
+        const cityItem = queryItemByCode(city, cityOptions);
+        const districtItem = queryItemByCode(district, areaOptions);
+        return {
+            ...formData,
+            provinceName: provinceItem.name,
+            cityName: cityItem.name,
+            districtName: districtItem.name,
+        };
     };
     useImperativeHandle(cdRef, () => ({
         // changeVal 就是暴露给父组件的方法
-        getValue: () => {
-            return formData;
-        },
+        getValue,
     }));
     useEffect(() => {
         setProvinceOptions(provinceList);

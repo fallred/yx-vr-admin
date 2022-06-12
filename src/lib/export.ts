@@ -1,6 +1,7 @@
 export const downloadData = response => {
     const blob = new Blob([response.data], {
-        type: response.headers['content-type']
+        type: response.headers['content-type'],
+        // type: 'application/vnd.ms-excel;charset=utf-8'
     });
     const a = window.document.createElement('a');
     // 获取 blob 本地文件连接 (blob 为纯二进制对象，不能够直接保存到磁盘上)
