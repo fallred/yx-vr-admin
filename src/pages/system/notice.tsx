@@ -215,8 +215,11 @@ const NoticeTableList = () => {
         <ProList<INotice>
           toolBarRender={() => {
             return [
-              <AuthButton type="primary" key="primary" onClick={showModal} operCode={PageFuncEnum.ADD}>
+              <AuthButton type="primary" key="add" onClick={showModal} operCode={PageFuncEnum.ADD}>
                 {PageFuncMap.get(PageFuncEnum.ADD)}
+              </AuthButton>,
+              <AuthButton type="" key="refresh" onClick={refetch} operCode={PageFuncEnum.LIST}>
+                刷新
               </AuthButton>,
             ];
           }}

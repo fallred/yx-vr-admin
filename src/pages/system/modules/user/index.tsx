@@ -365,7 +365,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
         <>
             <ProTable<IUser>
                 rowKey="id"
-                headerTitle="用户管理"
+                headerTitle=""
                 actionRef={actionRef}
                 scroll={{ x: 1300 }}
                 options={{ reload: false }}

@@ -17,7 +17,7 @@ const ShopDetailPage: React.FC<{}> = () => {
   const [searchForm] = Form.useForm();
   const searchFormRef = useRef(null);
   const searchFormLayout = {
-    labelCol: { span: 4 },
+    labelCol: { span: 2 },
     wrapperCol: { span: 16 },
   };
   const [appId, setAppId] = useState<string>('');
@@ -136,13 +136,13 @@ const ShopDetailPage: React.FC<{}> = () => {
             </ProDescriptions.Item>
           </ProDescriptions>
         </ProCard>
-        <ProCard key="card3">
-            <ShopTask
-              appId={appId}
-              id=""
-              filterType='light'
-            />
-        </ProCard>
+        {/* <ProCard key="card3">
+        </ProCard> */}
+        <ShopTask
+          appId={appId}
+          id=""
+          filterType='light'
+        />
     </PageContainer>
   );
 };
