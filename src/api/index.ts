@@ -34,7 +34,7 @@ export const useLogin = () => {
     return useCreate<LoginParams, LoginResult>("/auth/loginWithAccount", {completeRes: false});
 }
 export const useUpdatePass = () => {
-    return useCreate<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd");
+    return useCreateByQuery<IUpdatePassParams, IUpdatePassResult>("/auth/upatepwd", {completeRes: true});
 }
 
 export const useGetSystemMenuTree = () => {
@@ -105,11 +105,11 @@ export const useGetUserList = (pagination: any, filters: any) => {
         filters
     );
 }
-export const useQueryUserDetail = () => {
+export const useQueryUserDetail = (payload: {userAccount?: string; id?: string}) => {
     return useGetOne<IUser>(
         "userDetail",
         "/manage/user/query/one",
-        null,
+        payload,
         {completeRes: true}
     );
 }

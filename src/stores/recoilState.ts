@@ -2,6 +2,7 @@ import { atom } from 'recoil';
 
 import { LoginParams, Role } from '@/models/login';
 import { Locale, User } from '@/models/user';
+import { IUser } from '@/models/user-mng';
 import { IShopStore } from '@/models/shop-store';
 import { getGlobalState } from '@/models';
 
@@ -19,12 +20,16 @@ const initialState: User = {
     userAccount: localStorage.getItem('userAccount') || '',
     appId: localStorage.getItem('appId') || '',
     identity_type: localStorage.getItem('identity_type') || '',
-    apps: [] as IShopStore[]
 };
 
 export const userState = atom({
     key: 'userState',
     default: initialState,
+});
+
+export const userInfoState = atom({
+  key: 'userInfoState',
+  default: {},
 });
 
 export const userMenuTreeState = atom({

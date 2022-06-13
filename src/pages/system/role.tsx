@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
-import ProTable from "@ant-design/pro-table";
 import { Button, message, Modal, PaginationProps, Space } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
+import { PlusOutlined } from "@ant-design/icons";
+import type { ProColumns, ActionType } from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";

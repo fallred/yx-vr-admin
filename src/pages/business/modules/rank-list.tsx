@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { List, message, Avatar, Skeleton, Divider, Badge } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
-import ProTable from '@ant-design/pro-table';
+import type { ProColumns, ActionType } from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
 import { IRank, RankTypeEnum } from '@/models/rank';
 import { useGetRankList } from "@/api";
 

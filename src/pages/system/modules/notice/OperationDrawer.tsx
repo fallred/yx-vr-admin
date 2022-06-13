@@ -2,12 +2,13 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button, Upload } from "antd";
-import ProForm, {
+import {
+  ProForm,
   ModalForm,
   ProFormText,
   ProFormTextArea,
   ProFormTreeSelect
-} from "@ant-design/pro-form";
+} from '@ant-design/pro-components';
 import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
 import BraftEditor from '@/components/braft-editor/index';
 

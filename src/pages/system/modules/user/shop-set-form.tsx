@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import {IUser} from '@/models/user-mng';
 import {IShopStore, ShopStoreStatusEnum} from '@/models/shop-store';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';
 import {ShopStoreStatusMap} from '@/enums/common';
 
 interface ShopSetDrawerProps {
     visible: boolean;
+    current: Partial<IUser> | undefined;
     onSubmit: (values: IShopStore) => void;
     onCancel: () => void;
   }
 
 const ShopSetDrawer: FC<ShopSetDrawerProps> = props => {
     const shopTableRef = useRef<React.Component>(null);
-    const { visible, onCancel, onSubmit } = props;
+    const { visible, current, onCancel, onSubmit } = props;
     const handleSubmit = () => {
         const shopListSelectedRows = shopTableRef?.current?.getValue();
         console.log('shopListSelectedRows:', shopListSelectedRows);
@@ -24,7 +26,7 @@ const ShopSetDrawer: FC<ShopSetDrawerProps> = props => {
         if (onSubmit) {
             onSubmit({
                 appIds: appIdArr,
-                userId: '',
+                userId: current.id,
             });
         }
     };

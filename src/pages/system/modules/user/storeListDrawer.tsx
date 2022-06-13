@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Drawer, List, Avatar, Divider, Col, Row, Rate, Descriptions } from 'antd';
-import type { ProColumns } from "@ant-design/pro-table";
-import ProTable from "@ant-design/pro-table";
-import ProDescriptions from '@ant-design/pro-descriptions';
+import type { ProColumns } from '@ant-design/pro-components';
+import {ProTable, ProDescriptions} from '@ant-design/pro-components';
 import {IUser} from '@/models/user-mng';
 import {IShopStore, ShopStoreStatusEnum} from '@/models/shop-store';
 import {ShopStoreStatusMap} from '@/enums/common';

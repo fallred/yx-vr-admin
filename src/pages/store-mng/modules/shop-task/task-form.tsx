@@ -2,12 +2,13 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
-import ProCard from "@ant-design/pro-card";
-import ProForm, {
+import {
+  ProCard,
+  ProForm,
   ProFormText,
   ProFormDatePicker,
   ProFormDigit,
-} from "@ant-design/pro-form";
+} from '@ant-design/pro-components';
 import { IShopTask } from "@/models/shop-task";
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';

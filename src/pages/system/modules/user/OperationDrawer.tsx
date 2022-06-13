@@ -2,14 +2,15 @@ import React, { FC, useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import moment from "moment";
 import { Modal, Form, Input, Drawer, Space, Button } from "antd";
-import ProCard from "@ant-design/pro-card";
-import ProForm, {
+import {
+  ProCard,
+  ProForm,
   ModalForm,
   ProFormText,
   ProFormTextArea,
   ProFormTreeSelect,
   ProFormSelect
-} from "@ant-design/pro-form";
+} from '@ant-design/pro-components';
 import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import {useGetRoleListAll} from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
@@ -120,6 +121,13 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 placeholder="请输入用户昵称"
                 rules={[{ required: true }]}
             />
+            <ProFormText.Password
+              key="password"
+              name="password"
+              width="md"
+              label="密码"
+              placeholder="请输入密码"
+            />
             <ProFormText
                 key="realName"
                 name="realName"
@@ -154,7 +162,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 placeholder="请输入公司名称"
                 rules={[{ required: true }]}
             />
-            <ProFormText
+            {/* <ProFormText
                 key="attention"
                 name="attention"
                 width="md"
@@ -170,7 +178,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 label="用途说明"
                 placeholder="请输入用途"
                 rules={[{ required: true }]}
-            />
+            /> */}
             <ProFormText key="imageUrl" name="imageUrl" label="头像设置">
               <AvatarUpload
                 ref={avatarRef}

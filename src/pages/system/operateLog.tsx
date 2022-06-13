@@ -3,14 +3,17 @@ import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
 import { Button, message, PaginationProps, Space } from "antd";
 import { PageContainer } from "@ant-design/pro-layout";
-import { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
-import ProTable, {TableDropdown} from "@ant-design/pro-table";
-import type { ProColumns } from "@ant-design/pro-table";
-import ProCard from '@ant-design/pro-card';
+import {
+  QueryFilter, LightFilter,
+  ProFormDatePicker, ProFormText,
+  ProTable, TableDropdown,
+  ProCard
+} from '@ant-design/pro-components';
+import type { ProColumns } from '@ant-design/pro-components';
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum} from '@/models/common';
-import {useGetLogList} from "@/api";
 import {ILogList, ILog} from "@/models/log";
+import {useGetLogList} from "@/api";
 import FormItem from "@/components/form-item";
 
 

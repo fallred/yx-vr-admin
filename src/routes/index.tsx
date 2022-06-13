@@ -3,7 +3,7 @@ import { useRoutes, RouteObject } from "react-router-dom";
 
 import LayoutPage from "@/pages/layout";
 import SubLayout from "@/pages/layout/sub-layout";
-import LoginPage from "@/pages/login";
+import LoginPage from "@/pages/login/form";
 
 const NotFound = lazy(() => import('@/pages/404'));
 const Dashboard = lazy(() => import('@/pages/dashboard'));

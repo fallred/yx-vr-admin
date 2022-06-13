@@ -2,12 +2,14 @@ import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "rea
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
 import { Form, Button, message, Modal, PaginationProps, Space, Input } from "antd";
-import ProForm, { QueryFilter, LightFilter, ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
-import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { FooterToolbar } from "@ant-design/pro-layout";
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
-import type { ProFormInstance } from '@ant-design/pro-form';
-import ProCard from '@ant-design/pro-card';
+import {
+  ProCard, ProForm,
+  QueryFilter, LightFilter,
+  ProFormDatePicker, ProFormText,
+  ProTable, TableDropdown,
+} from '@ant-design/pro-components';
+import type { ProFormInstance, ProColumns, ActionType } from '@ant-design/pro-components';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';

@@ -5,14 +5,14 @@ import {
     Form, Button, message, Modal,
     PaginationProps, Space, Input
 } from "antd";
-import type { ProFormInstance } from '@ant-design/pro-form';
-import ProForm, {
-    QueryFilter, LightFilter,
-    ProFormDatePicker, ProFormText
-} from '@ant-design/pro-form';
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
-import ProTable, {TableDropdown} from "@ant-design/pro-table";
 import { FooterToolbar } from "@ant-design/pro-layout";
+import type { ProFormInstance, ProColumns, ActionType } from '@ant-design/pro-components';
+import {
+    ProForm,
+    QueryFilter, LightFilter,
+    ProFormDatePicker, ProFormText,
+    ProTable, TableDropdown
+} from '@ant-design/pro-components';
 import moment from 'moment';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
@@ -31,8 +31,10 @@ import TaskFormDrawer from "./task-form";
 interface IShopTaskListProps {
     id: string;
     appId: string;
+    filterType: string;
 }
-const ShopTaskTableList: FC<IShopTaskListProps> = props => {
+const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}) => {
+  const {filterType} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const formRef = useRef<ProFormInstance<IShopTask>>();
@@ -193,6 +195,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = props => {
         //   },
         // }}
         search={{
+          filterType,
           defaultCollapsed: false,
           optionRender: ({ searchText, resetText }, { form }) => [
             <Button

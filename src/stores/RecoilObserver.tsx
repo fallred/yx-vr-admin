@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useSetRecoilState } from 'recoil';
 import defaultSubject from './defaultSubject';
 import {
+  TOPIC_GET_USER_BASE_INFO,
   TOPIC_GET_USER_INFO,
   TOPIC_GET_USER_MENU_TREE,
   TOPIC_GET_SYSTEM_MENU_TREE,
@@ -9,13 +10,15 @@ import {
 } from './observerTopics';
 import {
   userState,
+  userInfoState,
   userMenuTreeState,
   systemMenuTreeState,
   permissionListState
 } from './recoilState';
 
 export const RecoilObserver = () => {
-  const setUser = { topic: TOPIC_GET_USER_INFO, cb: useSetRecoilState(userState) };
+  const setUser = { topic: TOPIC_GET_USER_BASE_INFO, cb: useSetRecoilState(userState) };
+  const setUserInfo = { topic: TOPIC_GET_USER_INFO, cb: useSetRecoilState(userInfoState) };
   const setUserMenuTree = { topic: TOPIC_GET_USER_MENU_TREE, cb: useSetRecoilState(userMenuTreeState) };
   const setSystemMenuTree = { topic: TOPIC_GET_SYSTEM_MENU_TREE, cb: useSetRecoilState(systemMenuTreeState) };
 

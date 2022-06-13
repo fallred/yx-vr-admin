@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { findDOMNode } from "react-dom";
 import { useRecoilValue } from "recoil";
 import { Button, message, Modal, PaginationProps, Space } from "antd";
-import ProTable, { TableDropdown } from "@ant-design/pro-table";
-import { PlusOutlined } from "@ant-design/icons";
 import { FooterToolbar } from "@ant-design/pro-layout";
-import type { ProColumns, ActionType } from "@ant-design/pro-table";
+import { PlusOutlined } from "@ant-design/icons";
+import type { ProColumns, ActionType } from '@ant-design/pro-components';
+import { ProTable, TableDropdown } from '@ant-design/pro-components';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import { SexEnum, PageFuncEnum } from '@/models/common';
@@ -148,8 +148,9 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             return false;
         }
     };
-    const showShopSetDrawer = () => {
+    const showShopSetDrawer = (item: IUser) => {
         setShopSetVisible(true);
+        setCurrent(item);
     };
     const handleShopSetCancel = () => {
         setShopSetVisible(false);
@@ -319,7 +320,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 //     operCode={PageFuncEnum.EDIT}
                 //     onClick={(e) => {
                 //         e.preventDefault();
-                //         showShopSetDrawer();
+                //         showShopSetDrawer(record);
                 //     }}
                 // >
                 //     设置数据权限
@@ -351,7 +352,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                         showViewDrawer(record);
                     }
                     if (key === 'setShop') {
-                        showShopSetDrawer();
+                        showShopSetDrawer(record);
                     }
                   }}
                   menus={opMenuList}
@@ -386,6 +387,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                     },
                 }}
                 search={{
+                    filterType: 'light',
                     defaultCollapsed: false,
                     optionRender: ({ searchText, resetText }, { form }) => [
                         <Button
@@ -449,6 +451,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             />
             <ShopSetDrawer
                 key="shopSetDrawer"
+                current={current}
                 visible={shopSetVisible}
                 onCancel={handleShopSetCancel}
                 onSubmit={handleSopSetSubmit}

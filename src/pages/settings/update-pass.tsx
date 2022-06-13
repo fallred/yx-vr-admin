@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, notification } from "antd";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import { userState } from "@/stores/recoilState";
@@ -17,14 +17,13 @@ const initialValues: IUpdatePassParams = {
 };
 
 const LoginForm: FC = () => {
-  const updatePassMutation = useUpdatePass();
+  const {mutateAsync: updatePassMutate} = useUpdatePass();
   const navigate = useNavigate();
   const location = useLocation() as Location<{ from: string }>;
   const [user, setUser] = useRecoilState(userState);
   const onFinished = async (form: IUpdatePassParams) => {
-    const result = await updatePassMutation.mutateAsync(form);
+    const result = await updatePassMutate(form);
     console.log("result: ", result);
-
     if (result) {
       setUser({
         logged: false

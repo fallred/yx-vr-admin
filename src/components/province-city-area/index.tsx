@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "react";
 import { Select } from 'antd';
-import ProForm, {ProFormSelect} from "@ant-design/pro-form";
+import {ProForm, ProFormSelect} from '@ant-design/pro-components';
 import FormItem from "../form-item";
 import {
     IOption, IProvinceCityDistrict,

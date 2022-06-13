@@ -4,14 +4,20 @@ import { DatePicker, Space, Form } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { PageContainer } from "@ant-design/pro-layout";
-import ProCard, { StatisticCard } from '@ant-design/pro-card';
-import ProForm, { QueryFilter, ProFormSelect, ProFormDateRangePicker } from '@ant-design/pro-form';
+import {
+  ProCard,
+  StatisticCard,
+  ProForm,
+  QueryFilter,
+  ProFormSelect,
+  ProFormDateRangePicker
+} from '@ant-design/pro-components';
 import { useRecoilValue } from "recoil";
 import {IPerformance, IMember, IEvaluate, IConvert} from '@/models/report-list';
 import {useGetShopStoreList} from "@/api";
 import {TimeRangeEnum} from '@/models/common';
 import {timeRange} from '@/lib/time-range';
-import { userState } from "@/stores/recoilState";
+import { userInfoState } from "@/stores/recoilState";
 import useReportList from './use-hooks/useReportList';
 
 moment.locale("zh-cn");
@@ -21,8 +27,8 @@ const { RangePicker } = DatePicker;
 
 const LASTWEEK_RANGE = timeRange.getRange(TimeRangeEnum.LAST1MONTH);
 const reportListPage: React.FC<{}> = () => {
-  const userInfo = useRecoilValue(userState);
-  const {data: shopStoreList} = useGetShopStoreList();
+  const userInfo = useRecoilValue(userInfoState);
+  // const {data: shopStoreList} = useGetShopStoreList();
   const {
     convertList,
     evaluateList,
@@ -89,7 +95,8 @@ const reportListPage: React.FC<{}> = () => {
     });
   };
   useEffect(() => {
-    const selectedAppId = shopStoreList?.[0]?.appId;
+    // const selectedAppId = shopStoreList?.[0]?.appId;
+    const selectedAppId = userInfo?.apps?.[0]?.appId;
     // setDateRangeValue(LASTWEEK_RANGE);
     console.log('LASTWEEK_RANGE:', LASTWEEK_RANGE);
     searchForm.setFieldsValue({
@@ -100,7 +107,7 @@ const reportListPage: React.FC<{}> = () => {
       appIdArr: [selectedAppId],
       dateRange: LASTWEEK_RANGE
     });
-  }, [shopStoreList]);
+  }, [userInfo.apps]);
   const renderConvertTpl = () => {
     const convertListTpl = convertList.map(cardItem => (
       <StatisticCard
@@ -218,7 +225,7 @@ const reportListPage: React.FC<{}> = () => {
           <ProFormSelect
             name="appId"
             label="门店"
-            options={shopStoreList}
+            options={userInfo.apps}
             onChange={handleAppIdChange}
             fieldProps={{
               fieldNames: {

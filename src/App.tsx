@@ -11,7 +11,9 @@ import 'moment/locale/zh-cn';
 import 'antd/dist/antd.css';
 
 import { localeConfig } from "@/config/locale";
-import { userState } from "@/stores/recoilState";
+import { userState, userInfoState } from "@/stores/recoilState";
+import recoilService from '@/stores/recoilService';
+import {useQueryUserDetail} from '@/api';
 import RenderRouter from "./routes";
 import "./App.less";
 
@@ -19,6 +21,7 @@ moment.locale("zh-cn");
 
 const App: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
+  const { data: userDetail } = useQueryUserDetail({userAccount: user.userAccount});
   // const { locale } = user;
  
   useEffect(() => {
@@ -27,7 +30,9 @@ const App: React.FC = () => {
     const lang = user?.locale?.toLowerCase();
     moment.locale(lang);
   }, [user.locale]);
-
+  useEffect(() => {
+    recoilService.getUserInfo(userDetail);
+  }, [userDetail]);
   const getAntdLocale = () => {
     const lang = user?.locale?.toLowerCase();
     if (lang === "en-us") {

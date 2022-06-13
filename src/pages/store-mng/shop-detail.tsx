@@ -2,9 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import moment from 'moment';
 import {Rate, Form} from 'antd';
 import { PageContainer } from "@ant-design/pro-layout";
-import { QueryFilter, ProFormSelect } from '@ant-design/pro-form';
-import ProDescriptions from '@ant-design/pro-descriptions';
-import ProCard from '@ant-design/pro-card';
+import {ProCard, ProDescriptions, QueryFilter, ProFormSelect} from '@ant-design/pro-components';
 import {useGetShopStoreList, useQueryShopStoreDetail} from "@/api";
 import {ShopStoreStatusMap} from '@/enums/common';
 import ShopTask from './modules/shop-task/index';
@@ -139,7 +137,11 @@ const ShopDetailPage: React.FC<{}> = () => {
           </ProDescriptions>
         </ProCard>
         <ProCard key="card3">
-            <ShopTask appId={appId} id="" />
+            <ShopTask
+              appId={appId}
+              id=""
+              filterType='light'
+            />
         </ProCard>
     </PageContainer>
   );
