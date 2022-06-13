@@ -164,10 +164,10 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
   return (
     <>
       <ProTable<IShopTask>
+        rowKey="id"
         headerTitle="月度任务"
         actionRef={actionRef}
-        rowKey="id"
-        options={{reload: false}}
+        options={{ reload: true }}
         toolBarRender={() => [
           <AuthButton
             type="primary"
@@ -178,7 +178,12 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
             {PageFuncMap.get(PageFuncEnum.ADD)}
           </AuthButton>,
         ]}
-        request={undefined}
+        request={(params, sorter, filter) => {
+            // 表单搜索项会从 params 传入，传递给后端接口。
+            console.log(params, sorter, filter);
+            setFilters(params);
+            refetch();
+        }}
         dataSource={shopTaskList}
         columns={columns}
         pagination={pagination}
@@ -197,27 +202,27 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
         search={{
           filterType,
           defaultCollapsed: false,
-          optionRender: ({ searchText, resetText }, { form }) => [
-            <Button
-              key="search"
-              type="primary"
-              onClick={() => {
-                // form?.submit();
-                console.log("search submit");
-                setFilters(form?.getFieldsValue());
-              }}
-            >
-              {searchText}
-            </Button>,
-            <Button
-              key="reset"
-              onClick={() => {
-                form?.resetFields();
-              }}
-            >
-              {resetText}
-            </Button>,
-          ],
+          // optionRender: ({ searchText, resetText }, { form }) => [
+          //   <Button
+          //     key="search"
+          //     type="primary"
+          //     onClick={() => {
+          //       // form?.submit();
+          //       console.log("search submit");
+          //       setFilters(form?.getFieldsValue());
+          //     }}
+          //   >
+          //     {searchText}
+          //   </Button>,
+          //   <Button
+          //     key="reset"
+          //     onClick={() => {
+          //       form?.resetFields();
+          //     }}
+          //   >
+          //     {resetText}
+          //   </Button>,
+          // ],
         }}
       />
       
