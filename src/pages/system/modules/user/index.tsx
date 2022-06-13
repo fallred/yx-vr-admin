@@ -368,13 +368,18 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 headerTitle=""
                 actionRef={actionRef}
                 scroll={{ x: 1300 }}
-                options={{ reload: false }}
+                options={{ reload: true }}
                 toolBarRender={() => [
                     <AuthButton type="primary" key="primary" onClick={showAddModal} operCode={PageFuncEnum.ADD}>
                         {PageFuncMap.get(PageFuncEnum.ADD)}
                     </AuthButton>,
                 ]}
-                request={undefined}
+                request={(params, sorter, filter) => {
+                    // 表单搜索项会从 params 传入，传递给后端接口。
+                    console.log(params, sorter, filter);
+                    setFilters(params);
+                    refetch();
+                }}
                 dataSource={userList}
                 columns={columns}
                 pagination={pagination}
@@ -389,27 +394,27 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 search={{
                     filterType: 'light',
                     defaultCollapsed: false,
-                    optionRender: ({ searchText, resetText }, { form }) => [
-                        <Button
-                            key="search"
-                            type="primary"
-                            onClick={() => {
-                                // form?.submit();
-                                console.log("search submit");
-                                setFilters(form?.getFieldsValue());
-                            }}
-                        >
-                            {searchText}
-                        </Button>,
-                        <Button
-                            key="reset"
-                            onClick={() => {
-                                form?.resetFields();
-                            }}
-                        >
-                            {resetText}
-                        </Button>,
-                    ],
+                    // optionRender: ({ searchText, resetText }, { form }) => [
+                    //     <Button
+                    //         key="search"
+                    //         type="primary"
+                    //         onClick={() => {
+                    //             // form?.submit();
+                    //             console.log("search submit");
+                    //             setFilters(form?.getFieldsValue());
+                    //         }}
+                    //     >
+                    //         {searchText}
+                    //     </Button>,
+                    //     <Button
+                    //         key="reset"
+                    //         onClick={() => {
+                    //             form?.resetFields();
+                    //         }}
+                    //     >
+                    //         {resetText}
+                    //     </Button>,
+                    // ],
                 }}
             />
 

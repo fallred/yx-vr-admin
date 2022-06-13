@@ -227,6 +227,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
             : null
           }
           <ProForm.Item
+              className="user-form__apps"
               name="apps"
               width="md"
               label=""

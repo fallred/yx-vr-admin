@@ -142,6 +142,7 @@ const LayoutPage: FC = ({ children }) => {
       waterMarkProps={{
         content: userName,
       }}
+      menu={{defaultOpenAll: true}}
       onCollapse={toggle}
       onPageChange={handlePageChange}
       // onMenuHeaderClick={() => history.push("https://reactjs.org/")}

@@ -383,7 +383,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
         actionRef={actionRef}
         scroll={{ x: 1300 }}
         bordered={false}
-        options={{reload: false}}
+        options={{reload: true}}
         toolBarRender={() => {
           const toolBtns = showOperate ? [
             <AuthLink
