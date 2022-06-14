@@ -10,6 +10,7 @@ import {
   ProTable, TableDropdown,
 } from '@ant-design/pro-components';
 import type { ProFormInstance, ProColumns, ActionType } from '@ant-design/pro-components';
+import cloneDeep from 'lodash/cloneDeep';
 import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';
@@ -35,6 +36,7 @@ interface IShopListProps {
   showSearch?: boolean;
   showTableTitle?: boolean;
   shopTableRef: any;
+  selectedApps: string[];
 }
 const searchFormLayout = {
   labelCol: { span: 4 },
@@ -42,7 +44,7 @@ const searchFormLayout = {
 };
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTableTitle: true}) => {
-  const {showOperate, showSearch, shopTableRef, showTableTitle} = props;
+  const {showOperate, showSearch, shopTableRef, showTableTitle, selectedApps = []} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const formRef = useRef<ProFormInstance<IShopStore>>();
@@ -59,7 +61,33 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     pageSize: 10,
     total: 0,
   });
-  const [selectedRowsState, setSelectedRows] = useState<IShopStore[]>([]);
+  // 选中的项目
+  const [mySelectedRowKeys, handleMySelectedRowKeys] = useState([...selectedApps]);
+	// 由于cancleRowKeys不影响dom，所以不使用useState定义
+  // 取消选择的项目
+	let cancleRowKeys = [];
+	const onSelect = (record, selected) => {
+		if (!selected) {
+			cancleRowKeys = [record.appId];
+		}
+	}
+	const onMulSelect = (selected, selectedRows, changeRows) => {
+		if (!selected) {
+			cancleRowKeys = changeRows.map((item) => item.appId);
+		}
+	}
+	const onChange = (selectedRowKeys, selectedRows) => {
+    console.log('selectedRowKeys:', selectedRowKeys);
+    console.log('selectedRows:', selectedRows);
+		if (cancleRowKeys.length) {
+			const keys = mySelectedRowKeys.filter((item) => !cancleRowKeys.includes(item));
+			handleMySelectedRowKeys(cloneDeep(keys));
+			cancleRowKeys = [];
+		} else {
+			handleMySelectedRowKeys([...new Set(mySelectedRowKeys.concat(selectedRowKeys))]);
+		}
+  }
+
   const [keyword, setKeyword] = useState<string>('');
 
   const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreListWithPage(pagination, filters);
@@ -69,6 +97,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   const { mutateAsync: batchDeleteMutate } = useBatchDeleteShopStore();
   const getImpLinkPromise = useGetStoreImportTplLink();
   const exportStorePromise = useExportStoreList();
+
   useEffect(() => {
     setShopStoreList(shopStorePageResp?.data);
     setPagination({
@@ -81,6 +110,12 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   useEffect(() => {
     refetch();
   }, [pagination.current, pagination.pageSize, filters]);
+
+  useEffect(() => {
+    if (selectedApps.length > 0) {
+      handleMySelectedRowKeys(cloneDeep(selectedApps));
+    }
+  }, [selectedApps]);
 
   const showAddModal = () => {
     setVisible(true);
@@ -116,7 +151,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     await updateMutate({appInfo: data});
   };
   const clearShopTableSelectedRows = () => {
-    setSelectedRows([]);
+    // handleMySelectedRowKeys([]);
   };
   const handleSubmit = async (row: IShopStore) => {
     row.id = current && current.id ? current.id : void 0;
@@ -137,7 +172,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       }
 
       hide();
-      setSelectedRows([]);
+      // handleMySelectedRowKeys([]);
       message.success("操作成功");
       refetch();
 
@@ -149,15 +184,14 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     }
   };
 
-  const handleRemove = async (selectedRows: IShopStore[]) => {
+  const handleRemove = async (selectedRowIds: string[]) => {
     const hide = message.loading("正在删除");
-    if (!selectedRows) return true;
+    if (!selectedRowIds) return true;
     try {
-      const ids = selectedRows.map((row) => row.appId) ?? [];
-      const idsStr = ids.join(',');
+      const idsStr = selectedRowIds.join(',');
       await batchDeleteMutate({ids: idsStr});
       setPagination({...pagination, current: 1});
-      setSelectedRows([]);
+      // handleMySelectedRowKeys([]);
       hide();
       message.success("删除成功，即将刷新");
       return true;
@@ -318,7 +352,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
                 cancelText: "取消",
                 onOk: async () => {
                   await handleRemove([{ ...record }]);
-                  setSelectedRows([]);
+                  // handleMySelectedRowKeys([]);
                   refetch();
                 },
               });
@@ -337,7 +371,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
           //         cancelText: "取消",
           //         onOk: async () => {
           //           await handleRemove([{ ...record }]);
-          //           setSelectedRows([]);
+          //           handleMySelectedRowKeys([]);
           //           refetch();
           //         },
           //       });
@@ -351,7 +385,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     } : {},
   ];
   const getValue = () => {
-      return selectedRowsState;
+      return mySelectedRowKeys;
   };
   useImperativeHandle(shopTableRef, () => ({
       // changeVal 就是暴露给父组件的方法
@@ -422,19 +456,21 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
           setPagination(pagination);
         }}
         rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
+          selectedRowKeys: mySelectedRowKeys,
+          onSelect,
+          onSelectMultiple: onMulSelect,
+          onSelectAll: onMulSelect,
+          onChange,
         }}
         search={false}
         footer={false}
       />
-      {selectedRowsState?.length > 0 && (
+      {mySelectedRowKeys?.length > 0 && (
         <FooterToolbar
           extra={
             <div>
               <span>已选择</span>
-              <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>
+              <a style={{ fontWeight: 600 }}>{mySelectedRowKeys.length}</a>
               <span>项</span>
             </div>
           }
@@ -444,8 +480,8 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
               <AuthButton
                 type="primary"
                 onClick={async () => {
-                  await handleRemove(selectedRowsState);
-                  setSelectedRows([]);
+                  await handleRemove(mySelectedRowKeys);
+                  // handleMySelectedRowKeys([]);
                   refetch();
                 }}
                 operCode={PageFuncEnum.DELETE}

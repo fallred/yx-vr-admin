@@ -39,6 +39,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const { data: roleListAll, error, isLoading, refetch } = useGetRoleListAll();
   const [roleOptions, setRoleOptions] = useState<IUser[]>();
   const [avatarUrl, setAvatarUrl] = useState<string>('');
+  const [selectedApps, setSelectedApps] = useState<string[]>([]);
   const fieldNames = {label: 'name', value: 'id', key: 'id'};
   useEffect(() => {
     const options = roleListAll?.map(item => ({value: item?.id, label: item?.name}));
@@ -61,6 +62,8 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
         createdAt: current.createdAt ? moment(current.createdAt) : null,
       });
       setAvatarUrl(current.imageUrl);
+      const appIds = current?.apps?.map(item => item.appId);
+      setSelectedApps(appIds);
     }
     // else {
     //   form.resetFields();
@@ -70,15 +73,12 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
-    // const imageUrl = avatarRef.current?.getValue();
-    const shopListSelectedRows = shopTableRef?.current?.getValue();
-    // console.log('imageUrl:', imageUrl);
-    console.log('shopListSelectedRows:', shopListSelectedRows);
-    const appIdArr = shopListSelectedRows?.map(item => item.appId) ?? [];
+    const appIdList = shopTableRef?.current?.getValue();
+    console.log('appIdList:', appIdList);
     form.setFieldsValue({
       ...formData,
       imageUrl: avatarUrl,
-      appId: appIdArr?.join(',') ?? '',
+      appId: appIdList?.join(',') ?? '',
     });
     form.submit();
   };
@@ -163,23 +163,6 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 placeholder="请输入公司名称"
                 rules={[{ required: true }]}
             />
-            {/* <ProFormText
-                key="attention"
-                name="attention"
-                width="md"
-                label="关注领域"
-                tooltip="最长为24位"
-                placeholder="请输入关注领域"
-                rules={[{ required: true }]}
-            />
-            <ProFormText
-                key="remark"
-                name="remark"
-                width="md"
-                label="用途说明"
-                placeholder="请输入用途"
-                rules={[{ required: true }]}
-            /> */}
             <ProFormText key="imageUrl" name="imageUrl" label="头像设置">
               <AvatarUpload
                 ref={avatarRef}
@@ -205,28 +188,25 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 placeholder="选择角色"
               />
           </ProCard>
-          {
-            visible && !current ? 
-            <ProCard
-                title="数据设置"
-                bordered
-                headerBordered
-                collapsible
-                style={{
-                  marginBottom: 16,
-                  minWidth: 200,
-                  maxWidth: '100%',
-                }}
-            >
-              <ShopTableCard
-                filterType=""
-                showSearch={false}
-                showTableTitle={false}
-                shopTableRef={shopTableRef}
-              />
-            </ProCard>
-            : null
-          }
+          <ProCard
+              title="数据设置"
+              bordered
+              headerBordered
+              collapsible
+              style={{
+                marginBottom: 16,
+                minWidth: 200,
+                maxWidth: '100%',
+              }}
+          >
+          
+            <ShopTableCard
+              shopTableRef={shopTableRef}
+              selectedApps={selectedApps}
+              showSearch={false}
+              showTableTitle={false}
+            />
+          </ProCard>
           <ProForm.Item
               className="user-form__apps"
               name="appId"

@@ -15,24 +15,27 @@ interface ShopSetDrawerProps {
 const ShopSetDrawer: FC<ShopSetDrawerProps> = props => {
     const shopTableRef = useRef<React.Component>(null);
     const { visible, current, onCancel, onSubmit } = props;
+    const [selectedApps, setSelectedApps] = useState<string[]>([]);
+    useEffect(() => {
+        const appIds = current?.apps?.map(item => item.appId);
+        setSelectedApps(appIds);
+    }, [current]);
     const handleSubmit = () => {
-        const shopListSelectedRows = shopTableRef?.current?.getValue();
-        console.log('shopListSelectedRows:', shopListSelectedRows);
-        const appIdArr = shopListSelectedRows.map(item => item.appId);
-        if (shopListSelectedRows.length === 0) {
+        const appIdList = shopTableRef?.current?.getValue();
+        const appIdStr = appIdList.join(',');
+        console.log('appIdList:', appIdList);
+        if (appIdList.length === 0) {
             message.error("请选择门店！");
             return;
         }
         if (onSubmit) {
             onSubmit({
-                appIds: appIdArr,
+                appIds: appIdStr,
                 userId: current.id,
             });
         }
     };
     const handleCancel = () => {
-        // console.log('handleCancel clearShopTableSelectedRows:');
-        shopTableRef?.current?.clearShopTableSelectedRows();
         onCancel();
     };
     return (
@@ -54,6 +57,7 @@ const ShopSetDrawer: FC<ShopSetDrawerProps> = props => {
                 visible ? 
                 <ShopTableCard
                     filterType=""
+                    selectedApps={selectedApps}
                     showSearch={false}
                     showTableTitle={false}
                     shopTableRef={shopTableRef}

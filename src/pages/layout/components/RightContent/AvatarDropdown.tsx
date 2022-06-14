@@ -42,6 +42,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       const { key } = event;
       if (key === "logout" && user) {
         setUser({ ...user, logged: false });
+        localStorage.setItem('accessToken', '');
         loginOut();
         return;
       }

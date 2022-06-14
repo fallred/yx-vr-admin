@@ -13,7 +13,6 @@ const initialState: User = {
     newUser: JSON.parse(localStorage.getItem('newUser')!) ?? true,
     logged: false,
     menuList: [],
-    role: (localStorage.getItem('userName') || '') as Role,
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     accessToken: localStorage.getItem('accessToken') || '',
     userName: localStorage.getItem('userName') || '',

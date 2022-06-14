@@ -155,12 +155,11 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     const handleShopSetCancel = () => {
         setShopSetVisible(false);
     };
-    const handleSopSetSubmit = async (info: {appIds: string[], userId: string}) => {
+    const handleSopSetSubmit = async (info: {appIds: string, userId: string}) => {
         const {appIds, userId} = info;
-        const appIdStr = appIds.join(',');
         const hide = message.loading("正在设置");
         try {
-            await setUserAppsMutate({userId, appIds: appIdStr, identityType});
+            await setUserAppsMutate({userId, appIds, identityType});
             setShopSetVisible(false);
             hide();
             message.success("操作成功");
