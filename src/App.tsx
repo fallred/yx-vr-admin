@@ -11,9 +11,7 @@ import 'moment/locale/zh-cn';
 import 'antd/dist/antd.css';
 
 import { localeConfig } from "@/config/locale";
-import { userState, userInfoState } from "@/stores/recoilState";
-import recoilService from '@/stores/recoilService';
-import {useQueryUserDetail} from '@/api';
+import { userState } from "@/stores/recoilState";
 import RenderRouter from "./routes";
 import "./App.less";
 
@@ -21,18 +19,8 @@ moment.locale("zh-cn");
 
 const App: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
-  const { data: userDetail } = useQueryUserDetail({userAccount: user.userAccount});
   // const { locale } = user;
- 
-  useEffect(() => {
-    console.log('user.locale:', user.locale);
-    console.log('user.locale.toLowerCase:', user.locale.toLowerCase());
-    const lang = user?.locale?.toLowerCase();
-    moment.locale(lang);
-  }, [user.locale]);
-  useEffect(() => {
-    recoilService.getUserInfo(userDetail);
-  }, [userDetail]);
+
   const getAntdLocale = () => {
     const lang = user?.locale?.toLowerCase();
     if (lang === "en-us") {
@@ -46,10 +34,16 @@ const App: React.FC = () => {
     const lang = localeConfig.find((item) => {
       return item.key === user.locale.toLowerCase();
     });
-
     return lang?.messages;
   };
 
+  useEffect(() => {
+    console.log('user.locale:', user.locale);
+    console.log('user.locale.toLowerCase:', user.locale.toLowerCase());
+    const lang = user?.locale?.toLowerCase();
+    moment.locale(lang);
+  }, [user.locale]);
+ 
   return (
       <ConfigProvider locale={getAntdLocale()} componentSize="middle">
         <IntlProvider locale={user.locale.split("-")[0]} messages={getLocale()}>

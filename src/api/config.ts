@@ -5,8 +5,8 @@ import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
 import qs from 'qs';
 import cloneDeep from 'lodash/cloneDeep';
 
-// const errorPath = '/vrAdmin/login';
-const errorPath = '/login';
+const errorPath = '/vrAdmin/#/login';
+// const errorPath = '/login';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 console.log('baseurl:', BASE_URL);

@@ -74,9 +74,18 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
     };
     const getValue = () => {
         const {province, city, district} = formData;
-        const provinceItem = queryItemByCode(province, provinceOptions);
-        const cityItem = queryItemByCode(city, cityOptions);
-        const districtItem = queryItemByCode(district, areaOptions);
+        let provinceItem = {};
+        let cityItem = {};
+        let districtItem = {};
+        if (province) {
+            provinceItem = queryItemByCode(province, provinceOptions);
+        }
+        if (city) {
+            cityItem = queryItemByCode(city, cityOptions);
+        }
+        if (district) {
+            districtItem = queryItemByCode(district, areaOptions);
+        }
         return {
             ...formData,
             provinceName: provinceItem.name,

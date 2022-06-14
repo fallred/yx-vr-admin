@@ -27,8 +27,11 @@ import {
 import { Link } from "react-router-dom";
 import { useLocale } from "@/locales";
 import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
-import { userState } from "@/stores/recoilState";
-import { useGetCurrentUser, useGetSystemMenuTree, useGetUserMenuTree } from "@/api";
+import { userState, userInfoState } from "@/stores/recoilState";
+import {
+  useGetCurrentUser, useGetSystemMenuTree,
+  useGetUserMenuTree, useQueryUserDetail
+} from "@/api";
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
 import RenderRouter from '@/routes/index';
@@ -63,14 +66,17 @@ const IconMap: { [key: string]: React.ReactNode } = {
 };
 
 const LayoutPage: FC = ({ children }) => {
+  const [user, setUser] = useRecoilState(userState);
+  const userName = localStorage.getItem('userName');
+  const { device, collapsed, newUser, settings } = user;
   const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
   const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
-  const userName = localStorage.getItem('userName');
+  const { data: userDetail } = useQueryUserDetail({userAccount: user.userAccount});
+  
   const [pathname, setPathname] = useState("/welcome");
   const [openKeys, setOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
-  const [user, setUser] = useRecoilState(userState);
-  const { device, collapsed, newUser, settings } = user;
+  
   const isMobile = device === "MOBILE";
   const { driverStart } = useGuide();
   const location = useLocation();
@@ -138,6 +144,9 @@ const LayoutPage: FC = ({ children }) => {
   useEffect(() => {
     recoilService.getUserMenuTree(userMenuTree);
   }, [userMenuTree]);
+  useEffect(() => {
+    recoilService.getUserInfo(userDetail);
+  }, [userDetail]);
   return (
     <ProLayout
       fixSiderbar

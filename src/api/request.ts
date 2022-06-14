@@ -10,7 +10,7 @@ type IRequestConfig = {
     completeRes: boolean;
 };
 // const errorPath = '/vrAdmin/login';
-const errorPath = '/login';
+const errorPath = '/vrAdmin/#/login';
 
 type IListParams = {
     limit?: number;
@@ -60,9 +60,9 @@ axios.interceptors.response.use(
             description: data || response.statusText || 'Error',
         });
 
-        if (response.status === 401) {
-            window.location.href = errorPath;
-        }
+        // if (response.status === 401) {
+        //     window.location.href = errorPath;
+        // }
 
         return Promise.reject(new Error(response.statusText || 'Error'));
     },

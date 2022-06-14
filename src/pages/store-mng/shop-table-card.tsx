@@ -50,6 +50,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   const formRef = useRef<ProFormInstance<IShopStore>>();
   const actionRef = useRef<ActionType>();
   const pcdRef = useRef<React.Component>(null);
+  const [form] = Form.useForm();
   const [visible, setVisible] = useState<boolean>(false);
   const [shopStoreList, setShopStoreList] = useState<IShopStore[]>();
   const [filters, setFilters] = useState<IShopStore[]>({});
@@ -87,8 +88,6 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
 			handleMySelectedRowKeys([...new Set(mySelectedRowKeys.concat(selectedRowKeys))]);
 		}
   }
-
-  const [keyword, setKeyword] = useState<string>('');
 
   const { data: shopStorePageResp, error, isLoading, refetch } = useGetShopStoreListWithPage(pagination, filters);
 
@@ -131,27 +130,27 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     setVisible(false);
   };
   const handleSearch = () => {
-    const payload = pcdRef?.current?.getValue();
-    setFilters({keyword, ...payload});
+    const formData = form.getFieldsValue();
+    const pcdData = pcdRef?.current?.getValue();
+    setFilters({
+        ...formData,
+        ...pcdData,
+    });
     // refetch();
   };
   const handleReset = () => {
+    form.resetFields();
     setFilters({province: '', city: '', district: '', keyword: ''});
     // refetch();
   };
   const handleKeywordChange = (event) => {
-    // console.log('handleKeywordChange:', value);
-    // refetch();
-    setKeyword(event.target.value);
+    setFilters({province: '', city: '', district: '', keyword: event.target.value});
   };
   const addShopStore = async (data: IShopStore) => {
     await addMutate({appInfo: data});
   };
   const updateShopStore = async (data: IShopStore) => {
     await updateMutate({appInfo: data});
-  };
-  const clearShopTableSelectedRows = () => {
-    // handleMySelectedRowKeys([]);
   };
   const handleSubmit = async (row: IShopStore) => {
     row.id = current && current.id ? current.id : void 0;
@@ -189,7 +188,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     if (!selectedRowIds) return true;
     try {
       const idsStr = selectedRowIds.join(',');
-      await batchDeleteMutate({ids: idsStr});
+      await batchDeleteMutate({appIds: idsStr});
       setPagination({...pagination, current: 1});
       // handleMySelectedRowKeys([]);
       hide();
@@ -208,7 +207,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   const handleImportTemplate = () => {
   };
   const handleExportTemplate = async () => {
-      await exportStorePromise({keyword});
+      await exportStorePromise({keyword: filters.keyword});
       // window.location.href = `http://1.13.20.201:9090${BASE_URL}/app/store/export?keyword=${keyword}`;
   };
   function YgSpan(props1) {
@@ -351,7 +350,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
                 okText: "确认",
                 cancelText: "取消",
                 onOk: async () => {
-                  await handleRemove([{ ...record }]);
+                  await handleRemove([record.appId]);
                   // handleMySelectedRowKeys([]);
                   refetch();
                 },
@@ -370,7 +369,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
           //         okText: "确认",
           //         cancelText: "取消",
           //         onOk: async () => {
-          //           await handleRemove([{ ...record }]);
+          //           await handleRemove([record.appId]);
           //           handleMySelectedRowKeys([]);
           //           refetch();
           //         },
@@ -390,19 +389,46 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
   useImperativeHandle(shopTableRef, () => ({
       // changeVal 就是暴露给父组件的方法
       getValue,
-      clearShopTableSelectedRows,
   }));
   return (
     <>
       {showSearch ? (<ProCard style={{marginBottom: 20}}>
         <ProForm<IShopStore>
             {...searchFormLayout}
+            form={form}
             formRef={formRef}
-            onFinish={handleSearch}
+            submitter={{
+              // 配置按钮文本
+              // searchConfig: {
+              //   resetText: '重置',
+              //   submitText: '搜索',
+              // },
+              // 配置按钮的属性
+              resetButtonProps: {
+                style: {
+                  // 隐藏重置按钮
+                  // display: 'none',
+                },
+              },
+              submitButtonProps: {},
+          
+              // 完全自定义整个区域
+              render: (props, doms) => {
+                console.log(props);
+                return [
+                  <Button key="rest" onClick={handleReset}>
+                    重置
+                  </Button>,
+                  <Button key="submit" type="primary" onClick={handleSearch}>
+                    搜索
+                  </Button>,
+                ];
+              },
+            }}
         >
             <ProFormText width="md" name="keyword" label="关键词" />
             <ProForm.Item
-                name="dateRange"
+                name="pcdData"
                 width="md"
                 label="地址"
                 placeholder="请选择地址"
@@ -417,7 +443,13 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
         actionRef={actionRef}
         scroll={{ x: 1300 }}
         bordered={false}
-        options={{reload: true}}
+        // options={{reload: true}}
+        // request={(params, sorter, filter) => {
+        //   // 表单搜索项会从 params 传入，传递给后端接口。
+        //   console.log(params, sorter, filter);
+        //   setFilters(params);
+        //   refetch();
+        // }}
         toolBarRender={() => {
           const toolBtns = showOperate ? [
             <AuthLink

@@ -15,9 +15,9 @@ const RankList: React.FC<RankTableListProps> = props => {
     const [filters, setFilters] = useState<IRank>({});
     const [rankList, setRankList] = useState<IRank[]>([]);
     const [pagination, setPagination] = useState<Partial<PaginationProps>>({
-        current: 1,
-        pageSize: 10,
-        total: 0,
+      current: 1,
+      pageSize: 10,
+      total: 0,
     });
     const getRankListPromise = useGetRankList(type,  {completeRes: true});
     

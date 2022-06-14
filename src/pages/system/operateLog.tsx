@@ -14,8 +14,8 @@ import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum} from '@/models/common';
 import {ILogList, ILog} from "@/models/log";
 import {useGetLogList} from "@/api";
+import {dateTimeFormat} from '@/lib/common';
 import FormItem from "@/components/form-item";
-
 
 const OperateLogList = () => {
   const permissionList = useRecoilValue(permissionListState);
@@ -28,6 +28,9 @@ const OperateLogList = () => {
   });
 
   const { data: logListResp, error, isLoading, refetch } = useGetLogList(pagination, filters);
+  const handleSearch = form => {
+    setFilters({...form?.getFieldsValue(), createDate: dateTimeFormat(filters?.createDate)});
+  };
   const columns: ProColumns<ILog>[] = [
     {
       key: 'username',
@@ -74,6 +77,11 @@ const OperateLogList = () => {
       dataIndex: 'createDate',
       valueType: 'dateTime',
       width: 150,
+      // search: {
+      //   transform: (value) => {
+      //     return formData.createDate ? dateFormat(formData.createDate) : null
+      //   },
+      // },
     },
   ];
   useEffect(() => {
@@ -107,9 +115,7 @@ const OperateLogList = () => {
             <Button
               key="search"
               type="primary"
-              onClick={() => {
-                setFilters(form?.getFieldsValue());
-              }}
+              onClick={()=> {handleSearch(form)}}
             >
               {searchText}
             </Button>,

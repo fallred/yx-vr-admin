@@ -64,17 +64,19 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
+    const {province, city, district} = pcdData ?? {};
     form.setFieldsValue({
         ...formData,
-        ...pcdData,
+        province, city, district
     });
     form.submit();
   };
 
   const handleFinish = async (values: { [key: string]: any }) => {
     console.log('shop-form handleFinish values:', values);
+    const {province, city, district} = pcdData ?? {};
     if (onSubmit) {
-        const formData = {...values, ...pcdData};
+        const formData = {...values, province, city, district};
         onSubmit(formData);
     }
   };
@@ -83,9 +85,10 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   const handlePcdConfirm = () => {
     setPcdCompVisible(false);
     const pcdDataTemp = pcdRef?.current?.getValue();
+    const {province, city, district} = pcdDataTemp ?? {};
     form.setFieldsValue({
       provinceCityDistrict: pcdDataTemp,
-      ...pcdDataTemp,
+      province, city, district
     });
     setPcdData(pcdDataTemp);
   };
