@@ -67,7 +67,8 @@ const LayoutPage: FC = ({ children }) => {
   const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
   const userName = localStorage.getItem('userName');
   const [pathname, setPathname] = useState("/welcome");
-  const [openMenuKeys, setOpenMenuKeys] = useState([]);
+  const [openKeys, setOpenKeys] = useState([]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
   const [user, setUser] = useRecoilState(userState);
   const { device, collapsed, newUser, settings } = user;
   const isMobile = device === "MOBILE";
@@ -104,8 +105,8 @@ const LayoutPage: FC = ({ children }) => {
     const {permission = []} = menuNode ?? {};
     recoilService.getPermissionList(permission);
   };
-  const onOpenChange = openKeys => {
-    //  const latestOpenKey = openKeys.find(key => openMenuKeys.indexOf(key) === -1);
+  const onOpenChange = data => {
+    //  const latestOpenKey = openKeys.find(key => openKeys.indexOf(key) === -1);
     //  if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
     //    this.setState({ openKeys });
     //   } else {
@@ -113,7 +114,15 @@ const LayoutPage: FC = ({ children }) => {
     //      openKeys: latestOpenKey ? [latestOpenKey] : [],
     //     });
     //   }
-    setOpenMenuKeys(openKeys);
+    const menuIds = data.map(key => `${key}`);
+    console.log('onOpenChange keys:', menuIds);
+    setOpenKeys(menuIds);
+  };
+  const onSelectChange = (data) => {
+    console.log('onSelectChange data:', data);
+    // console.log('onSelectChange keys:', keys);
+    const menuIds = data.map(key => `${key}`);
+    setSelectedKeys(menuIds);
   };
   useEffect(() => {
     if (location.pathname === "/") {
@@ -140,9 +149,11 @@ const LayoutPage: FC = ({ children }) => {
       waterMarkProps={{
         content: userName,
       }}
-      menu={{defaultOpenAll: true}}
-      openKeys={openMenuKeys}
+      menu={{defaultOpenAll: true, selectable: true}}
+      openKeys={openKeys}
+      selectedKeys={selectedKeys}
       onOpenChange={onOpenChange}
+      onSelect={onSelectChange}
       onCollapse={toggle}
       onPageChange={handlePageChange}
       // onMenuHeaderClick={() => history.push("https://reactjs.org/")}

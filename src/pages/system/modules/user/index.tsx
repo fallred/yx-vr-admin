@@ -209,6 +209,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             title: '性别',
             width: 80,
             dataIndex: "sex",
+            valueType: 'select',
             valueEnum: {
                 [SexEnum.MALE]: { text: SexMap.get(SexEnum.MALE) },
                 [SexEnum.FEMALE]: { text: SexMap.get(SexEnum.FEMALE) },
@@ -232,7 +233,8 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             title: '状态',
             width: 120,
             dataIndex: 'status',
-            initialValue: `${UserStatusEnum.NORMAL}`,
+            valueType: 'select',
+            // initialValue: UserStatusEnum.NORMAL,
             valueEnum: {
                 [UserStatusEnum.NORMAL]: { text: UserStatusMap.get(UserStatusEnum.NORMAL), status: 'Success' },
                 [UserStatusEnum.FREEZE]: { text: UserStatusMap.get(UserStatusEnum.FREEZE), status: 'Error' },
