@@ -15,7 +15,7 @@ import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import {useGetRoleListAll} from "@/api";
 import AvatarUpload from '@/components/avatar-upload';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';
-import { IUser } from "@/models/user";
+import { IUser } from "@/models/user-mng";
 
 interface OperationDrawerProps {
   visible: boolean;
@@ -74,10 +74,11 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
     const shopListSelectedRows = shopTableRef?.current?.getValue();
     // console.log('imageUrl:', imageUrl);
     console.log('shopListSelectedRows:', shopListSelectedRows);
+    const appIdArr = shopListSelectedRows?.map(item => item.appId) ?? [];
     form.setFieldsValue({
       ...formData,
       imageUrl: avatarUrl,
-      apps: shopListSelectedRows,
+      appId: appIdArr?.join(',') ?? '',
     });
     form.submit();
   };
@@ -228,7 +229,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
           }
           <ProForm.Item
               className="user-form__apps"
-              name="apps"
+              name="appId"
               width="md"
               label=""
           >

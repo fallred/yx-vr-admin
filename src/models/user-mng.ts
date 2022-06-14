@@ -1,4 +1,4 @@
-import {IApp} from '@/models/app.interface';
+import {IShopStore} from '@/models/shop-store';
 
 export enum IdentifyTypeEnum {
     'PLATFORM' = 1,
@@ -32,7 +32,7 @@ export interface IUser {
     roleId: number;
     roleNm: string;
     appId: string;
-    apps: IApp[];
+    apps: IShopStore[];
 }
 export type IUserList = IUser[];
 

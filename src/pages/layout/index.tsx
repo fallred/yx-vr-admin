@@ -129,8 +129,6 @@ const LayoutPage: FC = ({ children }) => {
   useEffect(() => {
     recoilService.getUserMenuTree(userMenuTree);
   }, [userMenuTree]);
-  // openKeys={openMenuKeys}
-  // onOpenChange={onOpenChange}
   return (
     <ProLayout
       fixSiderbar
@@ -143,6 +141,8 @@ const LayoutPage: FC = ({ children }) => {
         content: userName,
       }}
       menu={{defaultOpenAll: true}}
+      openKeys={openMenuKeys}
+      onOpenChange={onOpenChange}
       onCollapse={toggle}
       onPageChange={handlePageChange}
       // onMenuHeaderClick={() => history.push("https://reactjs.org/")}
