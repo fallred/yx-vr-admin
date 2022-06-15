@@ -147,27 +147,33 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     setFilters({province: '', city: '', district: '', keyword: event.target.value});
   };
   const addShopStore = async (data: IShopStore) => {
-    await addMutate({appInfo: data});
+    // await addMutate({appInfo: data});
+    await addMutate(data);
   };
   const updateShopStore = async (data: IShopStore) => {
-    await updateMutate({appInfo: data});
+    // await updateMutate({appInfo: data});
+    await updateMutate(data);
   };
   const handleSubmit = async (row: IShopStore) => {
-    row.id = current && current.id ? current.id : void 0;
-    const {province, city, district} = row.provinceCityDistrict;
-    row.province = province;
-    row.city = city;
-    row.district = district;
-    row.tm = dateTimeFormat(row.tm);
+    const {id, tm, provinceCityDistrict, ...rest} = row;
+    const {province, city, district} = provinceCityDistrict;
+    const rowTemp = {
+      ...rest,
+      id: current && current.id ? current.id : void 0,
+      tm: dateTimeFormat(tm),
+      province,
+      city,
+      district,
+    };
     setVisible(false);
 
     const hide = message.loading("正在添加/更新");
     try {
-      if (!row.id) {
-        await addShopStore(row);
+      if (!rowTemp.id) {
+        await addShopStore(rowTemp);
       }
       else {
-        await updateShopStore(row);
+        await updateShopStore(rowTemp);
       }
 
       hide();
