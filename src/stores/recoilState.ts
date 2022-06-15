@@ -1,6 +1,4 @@
 import { atom } from 'recoil';
-
-import { LoginParams, Role } from '@/models/login';
 import { Locale, User } from '@/models/user';
 import { IUser } from '@/models/user-mng';
 import { IShopStore } from '@/models/shop-store';

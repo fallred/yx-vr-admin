@@ -110,7 +110,7 @@ export const useQueryUserDetail = (payload: {userAccount?: string; id?: string})
         "userDetail",
         "/manage/user/query/one",
         payload,
-        {completeRes: true}
+        {completeRes: false}
     );
 }
 export const useAddUser = () => {

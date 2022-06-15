@@ -244,13 +244,13 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       ellipsis: true,
       width: 250,
     },
-    {
-      key: 'code',
-      title: '门店编码',
-      dataIndex: 'code',
-      valueType: 'text',
-      width: 140,
-    },
+    // {
+    //   key: 'code',
+    //   title: '门店编码',
+    //   dataIndex: 'code',
+    //   valueType: 'text',
+    //   width: 140,
+    // },
     {
       key: 'provinceName',
       title: '省',
@@ -307,6 +307,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       dataIndex: "grade",
       valueType: "rate",
       width: 100,
+      fieldProps: {
+        allowHalf: true,
+      },
       // copyable: true,
     },
     {
@@ -501,6 +504,9 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
           onChange,
         }}
         search={false}
+        // search={transform = (value: any) => {
+        //   return dateTimeFormat(value.tm)
+        // }}
         footer={false}
       />
       {mySelectedRowKeys?.length > 0 && (

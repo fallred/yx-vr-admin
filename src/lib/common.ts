@@ -29,7 +29,7 @@ export const dateFormat = (tm: string) => {
     return dateFormatStr;
 }
 export const dateMonthFormat = (tm: string) => {
-    const dateFormatStr= moment(tm).format('YYYY-MM');
+    const dateFormatStr= moment(tm).subtract(1, 'months').format('YYYY-MM');
     return dateFormatStr;
 }
 

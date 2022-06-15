@@ -1,7 +1,7 @@
 export enum ReportTypeEnum {
-    'SUMMARY' = '0',
-    'GOOD_COMMENT' = '1',
-    'MEMBER_CONVERT' = '2'
+    SUMMARY = '0',
+    GOOD_COMMENT = '1',
+    MEMBER_CONVERT = '2'
 }
 
 export interface IReport {

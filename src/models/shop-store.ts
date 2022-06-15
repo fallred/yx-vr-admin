@@ -1,36 +1,36 @@
 import {IProvinceCityDistrict} from './common';
 export enum ShopStoreStatusEnum {
-    'NORMAL' = 1,
-    'DISABLED' = 2
+    NORMAL = '1',
+    DISABLED = '2'
 }
 
 export interface IShopStore {
     // 门店编号
-    "appId": string;
+    appId: string;
     // 门店名称
-    "nm": string;
+    nm: string;
     // 省
-    "province": string;
+    province: string;
     // 市
-    "city": string;
+    city: string;
     // 区
-    "district": string;
+    district: string;
     // 详细地址
-    "address": string;
+    address: string;
     // 加盟商
-    "franchisee": string;
+    franchisee: string;
     // 店长
-    "manager": string;
+    manager: string;
     // 状态
-    "status": AppStatusEnum;
+    status: AppStatusEnum;
     // 门店评级
-    "grade": number;
+    grade: number;
     // 合伙人
-    "partner": string;
+    partner: string;
     // 签约时间
-    "tm": string;
+    tm: string;
     // 门店编码
-    "code": string;
+    code: string;
     provinceCityDistrict: IProvinceCityDistrict;
 }
 

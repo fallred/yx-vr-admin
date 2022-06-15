@@ -24,7 +24,7 @@ export const RecoilObserver = () => {
 
   const setPermissionList = { topic: TOPIC_GET_PERMISSION_LIST, cb: useSetRecoilState(permissionListState) };
   
-  const observers = [setUser, setUserMenuTree, setSystemMenuTree, setPermissionList];
+  const observers = [setUser, setUserInfo, setUserMenuTree, setSystemMenuTree, setPermissionList];
 
   React.useEffect(() => {
     observers.forEach((observer) => {

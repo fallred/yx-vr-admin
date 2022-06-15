@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import moment from 'moment';
 import {Rate, Form} from 'antd';
 import { PageContainer } from "@ant-design/pro-layout";
-import {ProCard, ProDescriptions, QueryFilter, ProFormSelect} from '@ant-design/pro-components';
+import {ProCard, ProDescriptions, QueryFilter, ProFormSelect, ProFormRate} from '@ant-design/pro-components';
 import {useGetShopStoreList, useQueryShopStoreDetail} from "@/api";
 import {ShopStoreStatusMap} from '@/enums/common';
 import ShopTask from './modules/shop-task/index';
@@ -73,7 +73,7 @@ const ShopDetailPage: React.FC<{}> = () => {
             </QueryFilter>
         </ProCard>
         <ProCard key="card2" style={{marginBottom: 20}}>
-          <ProDescriptions column={4} title="门店详情" tooltip="门店详细信息">
+          <ProDescriptions column={3} title="门店详情" tooltip="门店详细信息">
             <ProDescriptions.Item
               label="门店名称"
               fieldProps={{
@@ -123,7 +123,11 @@ const ShopDetailPage: React.FC<{}> = () => {
               {ShopStoreStatusMap.get(shopStoreDetail.status)}
             </ProDescriptions.Item>
             <ProDescriptions.Item label="评级">
-              <Rate allowHalf disabled defaultValue={shopStoreDetail.grade} />
+              <Rate
+                 allowHalf
+                 disabled
+                 value={shopStoreDetail.grade}
+              />
             </ProDescriptions.Item>
             <ProDescriptions.Item
                 label="签约时间"
@@ -140,7 +144,6 @@ const ShopDetailPage: React.FC<{}> = () => {
         </ProCard> */}
         <ShopTask
           appId={appId}
-          id=""
           filterType='light'
         />
     </PageContainer>

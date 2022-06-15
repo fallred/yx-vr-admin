@@ -1,14 +1,14 @@
 import {IShopStore} from '@/models/shop-store';
 
 export enum IdentifyTypeEnum {
-    'PLATFORM' = 1,
-    'RELATION' = 2,
+    PLATFORM = 1,
+    RELATION = 2,
 }
 
 export enum UserStatusEnum {
-    'NORMAL' = 0,
-    'FREEZE' = 1,
-    'DISABLED' = 2
+    NORMAL = 0,
+    FREEZE = 1,
+    DISABLED = 2
 }
 
 export interface IUser {

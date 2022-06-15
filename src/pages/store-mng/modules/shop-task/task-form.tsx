@@ -70,24 +70,14 @@ const ShopTaskForm: FC<ShopTaskFormProps> = (props) => {
         form={form}
         onFinish={handleFinish}
       >
-        <ProFormText
+        {/* <ProFormText
           name="appId"
           label="门店编号"
           disabled
           rules={[
             {
-              required: true,
+              required: false,
               message: '请输入门店编号',
-            },
-          ]}
-        />
-        {/* <ProFormText
-          name="taskAmount"
-          label="任务量"
-          rules={[
-            {
-              required: true,
-              message: '请输入任务量',
             },
           ]}
         /> */}

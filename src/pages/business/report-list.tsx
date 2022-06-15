@@ -99,6 +99,7 @@ const reportListPage: React.FC<{}> = () => {
     const selectedAppId = userInfo?.apps?.[0]?.appId;
     // setDateRangeValue(LASTWEEK_RANGE);
     console.log('LASTWEEK_RANGE:', LASTWEEK_RANGE);
+    console.log('userInfo:', userInfo);
     searchForm.setFieldsValue({
       appId: selectedAppId,
       dateRange: LASTWEEK_RANGE,

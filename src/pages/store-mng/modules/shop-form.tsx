@@ -55,6 +55,7 @@ const ShopForm: FC<ShopFormProps> = (props) => {
         };
         form.setFieldsValue({
             ...current,
+            provinceCityDistrict: pcdDataTemp,
             createdAt: current.createdAt ? moment(current.createdAt) : null,
         });
         setPcdData(pcdDataTemp);
@@ -148,6 +149,7 @@ const ShopForm: FC<ShopFormProps> = (props) => {
                 label="门店评级"
                 placeholder="请设置评级"
                 width="md"
+                allowHalf
                 rules={[{ required: true }]}
             />
             <ProFormText
@@ -178,7 +180,7 @@ const ShopForm: FC<ShopFormProps> = (props) => {
                 placeholder="请选择省市区"
                 rules={[{ required: true }]}
             >
-              {
+            {
               <Popover
                   content={
                     <>

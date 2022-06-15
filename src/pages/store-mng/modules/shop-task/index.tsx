@@ -29,12 +29,11 @@ import { IShopTask } from "@/models/shop-store";
 import TaskFormDrawer from "./task-form";
 
 interface IShopTaskListProps {
-    id: string;
     appId: string;
     filterType: string;
 }
 const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}) => {
-  const {filterType} = props;
+  const {filterType, appId} = props;
   const permissionList = useRecoilValue(permissionListState);
   const { formatMessage } = useLocale();
   const formRef = useRef<ProFormInstance<IShopTask>>();
@@ -44,7 +43,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
   const [shopTaskList, setShopTaskList] = useState<IShopTask[]>();
   const [keyword, setKeyword] = useState<string>('');
   const [selectedRowsState, setSelectedRows] = useState<IShopTask[]>([]);
-  const [filters, setFilters] = useState<IShopTask[]>({});
+  const [filters, setFilters] = useState<IShopTask[]>({appId});
   const [current, setCurrent] = useState<Partial<IShopTask> | undefined>(
     undefined
   );
@@ -69,6 +68,9 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
     refetch();
   }, [pagination.current, pagination.pageSize, filters]);
 
+  useEffect(()=> {
+    setFilters({appId});
+  }, [appId]);
   const showAddModal = () => {
     setVisible(true);
     setCurrent(undefined);
@@ -87,16 +89,23 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
     await updateShopTaskMutate(data);
   };
   const handleDrawerFormSubmit = async (row: IShopTask) => {
-    row.id = current && current.id ? current.id : void 0;
-    row.tm = current.tm ? dateFormat(current.tm) : null;
+    const {tm, ...rest} = row;
+    // const idTemp = current && current.id ? current.id : void 0;
+    const tmTemp = tm ? dateFormat(tm) : null;
+    const rowTemp = {
+      ...rest,
+      appId,
+      tm: tmTemp,
+    };
     setVisible(false);
     const hide = message.loading("正在添加/更新");
     try {
-      if (!row.id) {
-        await addShopTask(row);
+      if (!rowTemp.id) {
+        // await addShopTask({taskAmount: [rowTemp]});
+        await addShopTask([rowTemp]);
       }
       else {
-        await updateShopTask(row);
+        await updateShopTask([rowTemp]);
       }
       hide();
       message.success("操作成功");
@@ -120,11 +129,11 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
   const AuthLink = WrapAuth(YgSpan, permissionList);
   const AuthButton = WrapAuth(Button, permissionList);
   const columns: ProColumns<IShopTask>[] = [
-    {
-      title: '门店编号',
-      dataIndex: "appId",
-      tip: "请输入门店编号",
-    },
+    // {
+    //   title: '门店编号',
+    //   dataIndex: "appId",
+    //   tip: "请输入门店编号",
+    // },
     {
       title: '任务量',
       dataIndex: "taskAmount",
@@ -138,7 +147,11 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
         dataIndex: 'tm',
         valueType: 'date',
         ellipsis: true,
+        // renderText: text => {
+        //   return text;
+        // },
         hideInSearch: false,
+        render: dateMonthFormat,
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
@@ -179,18 +192,18 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
           </AuthButton>,
         ]}
         request={(params, sorter, filter) => {
-            // 表单搜索项会从 params 传入，传递给后端接口。
             console.log(params, sorter, filter);
-            setFilters(params);
+            // setFilters(params);
             refetch();
         }}
+        // request={undefined}
         dataSource={shopTaskList}
         columns={columns}
         pagination={pagination}
-        dateFormatter={(value, valueType) => {
-          // console.log('====>', value, valueType);
-          return dateMonthFormat(value);
-        }}
+        // dateFormatter={(value, valueType) => {
+        //   console.log('====>', value, valueType);
+        //   return dateFormat(value);
+        // }}
         onChange={(pagination, filters, sorter) => {
           setPagination(pagination);
         }}

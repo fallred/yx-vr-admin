@@ -1,19 +1,19 @@
 export type IValue = string | number;
 export enum PageFuncEnum {
-    'LIST' = 'list',
-    'ADD' = 'add',
-    'EDIT' = 'edit',
-    'DELETE' = 'delete',
-    'IMPORT' = 'import',
-    'SHOPSET' = 'shopSet'
+    LIST = 'list',
+    ADD = 'add',
+    EDIT = 'edit',
+    DELETE = 'delete',
+    IMPORT = 'import',
+    SHOPSET = 'shopSet'
 }
 
 export enum StatusEnum {
 }
 
 export enum SexEnum {
-    'FEMALE' = 0,
-    'MALE' = 1,
+    FEMALE = 0,
+    MALE = 1,
 }
 
 export interface IProvince {

@@ -243,11 +243,11 @@ const UserTableList: FC<OperationDrawerProps> = props => {
     ];
     if (identityType) {
         columns = columns.concat([
-            {
-                title: '门店ID',
-                dataIndex: 'appId',
-                valueType: 'text',
-            },
+            // {
+            //     title: '门店ID',
+            //     dataIndex: 'appId',
+            //     valueType: 'text',
+            // },
             {
                 title: '门店数量',
                 dataIndex: 'appNums',

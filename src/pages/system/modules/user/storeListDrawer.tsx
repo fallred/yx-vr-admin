@@ -35,7 +35,7 @@ const StoreItem: FC<OperationDrawerProps> = (props) => {
                 {ShopStoreStatusMap.get(store.status)}
             </Descriptions.Item>
             <Descriptions.Item label="评级">
-                <Rate allowHalf disabled defaultValue={store.grade} />
+                <Rate allowHalf disabled value={store.grade} />
             </Descriptions.Item>
             <Descriptions.Item label="签约时间">
                 {store.tm}

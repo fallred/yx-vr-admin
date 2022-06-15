@@ -1,9 +1,8 @@
 export enum RankTypeEnum {
-    'SUMMARY' = '1',
-    'GOOD_COMMENT' = '2',
-    'MEMBER_CONVERT' = '3'
+    SUMMARY = '1',
+    GOOD_COMMENT = '2',
+    MEMBER_CONVERT = '3'
 }
-
 
 export interface IRank {
     id: string;
