@@ -18,7 +18,7 @@ import { LocaleFormatter, useLocale } from "@/locales";
 import { permissionListState } from "@/stores/recoilState";
 import {PageFuncEnum, SexEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
-import {dateFormat, dateMonthFormat} from '@/lib/common';
+import {dateFormat, dateMonthFormat, dateMonthFormat1} from '@/lib/common';
 import {
     useGetShopTaskList,
     useAddShopTask,
@@ -91,7 +91,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
   const handleDrawerFormSubmit = async (row: IShopTask) => {
     const {tm, ...rest} = row;
     const idTemp = current && current.id ? current.id : void 0;
-    const tmTemp = tm ? dateFormat(tm) : null;
+    const tmTemp = tm ? dateMonthFormat1(tm) : null;
     const rowTemp = {
       ...rest,
       appId,
@@ -138,7 +138,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
     {
       title: '任务量',
       dataIndex: "taskAmount",
-      tip: "请输入任务量",
+      hideInSearch: true,
     //   valueType: "textarea",
     },
     {
@@ -148,11 +148,17 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
         dataIndex: 'tm',
         valueType: 'date',
         ellipsis: true,
+        fieldProps: {
+          format: 'yyyy-MM',
+          picker: 'month'
+        },
         // renderText: text => {
         //   return text;
         // },
-        hideInSearch: false,
-        render: dateMonthFormat,
+        hideInSearch: true,
+        render: (text, row) => {
+          return row.tm ?? '--';
+        },
     },
     {
       title: formatMessage({ id: "gloabal.tips.operation" }),
@@ -194,7 +200,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
         ]}
         request={(params, sorter, filter) => {
             console.log(params, sorter, filter);
-            // setFilters(params);
+            setFilters(params);
             refetch();
         }}
         // request={undefined}

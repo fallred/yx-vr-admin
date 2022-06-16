@@ -6,8 +6,8 @@ import qs from 'qs';
 import {downloadData} from '@/lib/export';
 import {useAxios} from './config';
 
-// const errorPath = '/vrAdmin/login';
-const errorPath = '/login';
+// const noAuthPath = '/vrAdmin/login';
+const noAuthPath = '/login';
 
 const transformPagination = (pagination: any) => {
     if (!pagination) return;

@@ -9,8 +9,8 @@ import $axios, {useAxios, opt} from './config';
 type IRequestConfig = {
     completeRes: boolean;
 };
-// const errorPath = '/vrAdmin/login';
-const errorPath = '/vrAdmin/#/login';
+// const noAuthPath = '/vrAdmin/login';
+const noAuthPath = '/vrAdmin/#/login';
 
 type IListParams = {
     limit?: number;
@@ -61,7 +61,7 @@ axios.interceptors.response.use(
         });
 
         // if (response.status === 401) {
-        //     window.location.href = errorPath;
+        //     window.location.href = noAuthPath;
         // }
 
         return Promise.reject(new Error(response.statusText || 'Error'));
@@ -75,7 +75,7 @@ axios.interceptors.response.use(
                 // 未登录则跳转登录页面，并携带当前页面的路径                
                 // 在登录成功后返回当前页面，这一步需要在登录页操作。 
                 case 401:
-                    window.location.href = errorPath;
+                    window.location.href = noAuthPath;
 
                     break;
                 // 403 token过期                    
@@ -83,7 +83,7 @@ axios.interceptors.response.use(
                 // 清除本地token和清空vuex中token对象                    
                 // 跳转登录页面   
                 case 403:
-                    window.location.href = errorPath;
+                    window.location.href = noAuthPath;
                     break;
                 // 404请求不存在                
                 case 404:

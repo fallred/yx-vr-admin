@@ -195,7 +195,14 @@ export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: A
             temp.selected = true;
             selected = true;
             if (temp?.children?.length > 0) {
-                const childrenTree = temp?.children?.map(item => ({...item, selected: true}));
+                const childrenTree = temp?.children?.map(item => ({...item, selected: true}))
+                    .filter(item => {
+                        const isInCheckedIds = menuCheckedIds.includes(item.menuId);
+                        if (!isInCheckedIds) {
+                            temp.selected = false;
+                        }
+                        return isInCheckedIds;
+                    });
                 temp.children = childrenTree;
             }
         }

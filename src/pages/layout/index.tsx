@@ -48,6 +48,7 @@ const IconMap: { [key: string]: React.ReactNode } = {
   home: <HomeOutlined />,
   system: <SettingOutlined />,
   storeMng: <AppstoreOutlined />,
+  "storeMng ": <AppstoreOutlined />,
   businessMng: <RadarChartOutlined />,
   notification: <NotificationOutlined />,
 
@@ -106,7 +107,7 @@ const LayoutPage: FC = ({ children }) => {
     return list;
   };
   const handlePageChange = (location: Location) => {
-    const menuNode = queryMenuNode(userMenuTree1, 'url', location.pathname);
+    const menuNode = queryMenuNode(userMenuTree, 'url', location.pathname);
     console.log('menuNode:', menuNode);
     const {permission = []} = menuNode ?? {};
     recoilService.getPermissionList(permission);
@@ -200,7 +201,7 @@ const LayoutPage: FC = ({ children }) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      menuDataRender={() => loopMenuItem(userMenuTree1)}
+      menuDataRender={() => loopMenuItem(userMenuTree)}
       rightContentRender={() => <RightContent />}
       footerRender={() => <Footer />}
       collapsedButtonRender={() => {

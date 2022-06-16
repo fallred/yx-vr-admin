@@ -5,8 +5,8 @@ import Axios, { AxiosInstance, AxiosTransformer } from 'axios';
 import qs from 'qs';
 import cloneDeep from 'lodash/cloneDeep';
 
-const errorPath = '/vrAdmin/#/login';
-// const errorPath = '/login';
+const noAuthPath = '/vrAdmin/#/login';
+// const noAuthPath = '/login';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 console.log('baseurl:', BASE_URL);
@@ -79,14 +79,14 @@ export function addInterceptors(axiosInstance) {
                     // 未登录则跳转登录页面，并携带当前页面的路径                
                     // 在登录成功后返回当前页面，这一步需要在登录页操作。 
                     case 401:
-                        window.location.href = errorPath;
+                        window.location.href = noAuthPath;
                         break;
                     // 403 token过期                    
                     // 登录过期对用户进行提示                    
                     // 清除本地token和清空vuex中token对象                    
                     // 跳转登录页面   
                     case 403:
-                        window.location.href = errorPath;
+                        window.location.href = noAuthPath;
                         break;
                     // 404请求不存在                
                     case 404:
