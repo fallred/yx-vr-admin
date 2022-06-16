@@ -10,7 +10,6 @@ import {
   ProFormDigit,
 } from '@ant-design/pro-components';
 import { IShopTask } from "@/models/shop-task";
-import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 
 interface ShopTaskFormProps {

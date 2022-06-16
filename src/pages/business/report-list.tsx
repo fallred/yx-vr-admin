@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import RcResizeObserver from 'rc-resize-observer';
 import { DatePicker, Space, Form } from 'antd';
 import moment from 'moment';
-import 'moment/locale/zh-cn';
 import { PageContainer } from "@ant-design/pro-layout";
 import {
   ProCard,
@@ -20,7 +19,6 @@ import {timeRange} from '@/lib/time-range';
 import { userInfoState } from "@/stores/recoilState";
 import useReportList from './use-hooks/useReportList';
 
-moment.locale("zh-cn");
 
 const { Statistic } = StatisticCard;
 const { RangePicker } = DatePicker;

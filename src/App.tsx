@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import enUS from "antd/lib/locale/en_US";
 import zhCN from "antd/lib/locale/zh_CN";
 import moment from "moment";
-import 'moment/locale/zh-cn';
+import 'moment/dist/locale/zh-cn';
 import 'antd/dist/antd.css';
 
 import { localeConfig } from "@/config/locale";

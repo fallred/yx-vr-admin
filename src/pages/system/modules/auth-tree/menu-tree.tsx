@@ -49,8 +49,8 @@ const treeData = [
 
 const MenuTree = () => {
   const systemMenuTree = useRecoilValue(systemMenuTreeState);
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>(['0-1-0', '0-1-1']);
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(['0-1-0']);
+  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
   const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
 
