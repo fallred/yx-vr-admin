@@ -25,7 +25,7 @@ import {
     useUpdateShopTask
 } from "@/api";
 import WrapAuth from '@/components/wrap-auth/index';
-import { IShopTask } from "@/models/shop-store";
+import { IShopTask } from "@/models/shop-task";
 import TaskFormDrawer from "./task-form";
 
 interface IShopTaskListProps {
@@ -90,17 +90,18 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
   };
   const handleDrawerFormSubmit = async (row: IShopTask) => {
     const {tm, ...rest} = row;
-    // const idTemp = current && current.id ? current.id : void 0;
+    const idTemp = current && current.id ? current.id : void 0;
     const tmTemp = tm ? dateFormat(tm) : null;
     const rowTemp = {
       ...rest,
       appId,
+      id: idTemp,
       tm: tmTemp,
     };
     setVisible(false);
     const hide = message.loading("正在添加/更新");
     try {
-      if (!rowTemp.id) {
+      if (!idTemp) {
         // await addShopTask({taskAmount: [rowTemp]});
         await addShopTask([rowTemp]);
       }

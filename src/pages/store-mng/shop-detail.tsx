@@ -31,9 +31,9 @@ const ShopDetailPage: React.FC<{}> = () => {
   }
   const addressFormat = () => {
     const addrInfo = [
-        shopStoreDetail.province ?? '--',
-        shopStoreDetail.city ?? '--',
-        shopStoreDetail.district ?? '',
+        shopStoreDetail.provinceName ?? '--',
+        shopStoreDetail.cityName ?? '--',
+        shopStoreDetail.districtName ?? '--',
         shopStoreDetail.address ?? ''
     ];
     return addrInfo.join('-');
@@ -90,16 +90,28 @@ const ShopDetailPage: React.FC<{}> = () => {
               {shopStoreDetail.code}
             </ProDescriptions.Item>
             <ProDescriptions.Item
-              label="地址"
+              label="所在省"
               valueType="text"
             >
-              {addressFormat()}
+              {shopStoreDetail.provinceName}
             </ProDescriptions.Item>
             <ProDescriptions.Item
               label="所在市"
               valueType="text"
             >
-              {shopStoreDetail.province}
+              {shopStoreDetail.cityName}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label="所在区"
+              valueType="text"
+            >
+              {shopStoreDetail.districtName}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label="详细地址"
+              valueType="text"
+            >
+              {shopStoreDetail.address}
             </ProDescriptions.Item>
             <ProDescriptions.Item
               label="加盟商"

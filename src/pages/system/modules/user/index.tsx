@@ -224,7 +224,10 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             dataIndex: 'roleId',
             valueType: 'select',
             with: 100,
-            valueEnum: roleMap
+            valueEnum: roleMap,
+            render: (text, row) => {
+                return row.roleNm ?? '--';
+            }
             // sorter: true,
             // hideInSearch: true,
         },

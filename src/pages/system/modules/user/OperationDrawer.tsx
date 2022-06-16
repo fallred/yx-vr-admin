@@ -128,6 +128,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
               width="md"
               label="密码"
               placeholder="请输入密码"
+              rules={[{ required: true }]}
             />
             <ProFormText
                 key="realName"
@@ -154,7 +155,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
               options={UserStatusOptions}
               placeholder="选择账号状态"
             />
-            <ProFormText
+            {/* <ProFormText
                 key="companyName"
                 name="companyName"
                 width="md"
@@ -162,7 +163,7 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
                 tooltip="最长为24位"
                 placeholder="请输入公司名称"
                 rules={[{ required: true }]}
-            />
+            /> */}
             <ProFormText key="imageUrl" name="imageUrl" label="头像设置">
               <AvatarUpload
                 ref={avatarRef}
