@@ -12,9 +12,12 @@ interface EditorProps {
 
 const UEditor: FC<EditorProps> = props => {
     const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator', 'media' ];
-    const [editorState, setEditorState] = useState(BraftEditor.createEditorState(null));
+    const {content, handleChange: handleChange1} = props;
+    const [editorState, setEditorState] = useState(BraftEditor.createEditorState(content));
+    
     const handleChange = (editorState) => {
         setEditorState(editorState);
+        handleChange1(editorState.toHTML());
     };
     const uploadHandler = (param) => {
         if (!param.file) {
@@ -30,9 +33,9 @@ const UEditor: FC<EditorProps> = props => {
     const getValue = () => {
     };
     useEffect(()=> {
-        const editorContent = BraftEditor.createEditorState(props.content);
+        const editorContent = BraftEditor.createEditorState(content);
         setEditorState(editorContent);
-    }, [props.content]);
+    }, [content]);
     const extendControls = [
         {
           key: 'antd-uploader',

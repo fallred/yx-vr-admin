@@ -13,7 +13,7 @@ export class ObserverSubject {
   }
 
   private log(...message: any) {
-    console.info(`[ObserverSubject: ${this.name}] `, ...message);
+    // console.info(`[ObserverSubject: ${this.name}] `, ...message);
   }
 
   public attach(observer: Observer) {

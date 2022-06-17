@@ -39,8 +39,9 @@ interface IShopListProps {
   selectedApps: string[];
 }
 const searchFormLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 16 },
+  labelCol: { span: 3 },
+  wrapperCol: { span: 20 },
+  layout: 'horizontal'
 };
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTableTitle: true}) => {
@@ -159,7 +160,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     const {province, city, district} = provinceCityDistrict;
     const rowTemp = {
       ...rest,
-      id: current && current.id ? current.id : void 0,
+      appId: current && current.appId ? current.appId : void 0,
       tm: dateTimeFormat(tm),
       province,
       city,
@@ -169,7 +170,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
 
     const hide = message.loading("正在添加/更新");
     try {
-      if (!rowTemp.id) {
+      if (!rowTemp.appId) {
         await addShopStore(rowTemp);
       }
       else {
@@ -403,6 +404,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     <>
       {showSearch ? (<ProCard style={{marginBottom: 20}}>
         <ProForm<IShopStore>
+            className="shop-list-search"
             {...searchFormLayout}
             form={form}
             formRef={formRef}
@@ -420,10 +422,8 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
                 },
               },
               submitButtonProps: {},
-          
               // 完全自定义整个区域
               render: (props, doms) => {
-                console.log(props);
                 return [
                   <Button key="rest" onClick={handleReset}>
                     重置

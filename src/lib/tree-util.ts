@@ -75,7 +75,7 @@ export function queryMenuNode(menuTree: IMenuTree, key: string, value: any): IMe
     let resultTree = null;
     for(let i = 0; i < menuTree.length; i++) {
         const item = menuTree[i];
-        console.log('item:', item)
+        console.log('queryMenuNode item:', item)
         if (item?.[key] === value) {
             resultTree = item;
             break;
@@ -244,7 +244,7 @@ export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: A
     let resultTree = null;
     for(let i = 0; i < funcMenuTree.length; i++) {
         const item = funcMenuTree[i];
-        console.log('item:', item)
+        console.log('queryFuncNode item:', item)
         if (item?.[key] === value) {
             resultTree = item;
             break;

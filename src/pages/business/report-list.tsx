@@ -50,8 +50,6 @@ const reportListPage: React.FC<{}> = () => {
   function handleAppIdChange(value) {
   }
   function handleDateRangeChange(dates, dateStrings) {
-    console.log('From: ', dates[0], ', to: ', dates[1]);
-    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
     // setDateRangeValue(dates);
     // searchForm.setFieldsValue({
     //   dateRange: dates
@@ -93,11 +91,7 @@ const reportListPage: React.FC<{}> = () => {
     });
   };
   useEffect(() => {
-    // const selectedAppId = shopStoreList?.[0]?.appId;
     const selectedAppId = userInfo?.apps?.[0]?.appId;
-    // setDateRangeValue(LASTWEEK_RANGE);
-    console.log('LASTWEEK_RANGE:', LASTWEEK_RANGE);
-    console.log('userInfo:', userInfo);
     searchForm.setFieldsValue({
       appId: selectedAppId,
       dateRange: LASTWEEK_RANGE,
@@ -231,6 +225,16 @@ const reportListPage: React.FC<{}> = () => {
                 label: 'nm',
                 value: 'appId'
               },
+              showSearch: true,
+                  optionFilterProp: "label",
+                  filterOption: (input, option) => {
+                    // console.log('filterOption option:', option);
+                    // console.log('filterOption input:', input);
+                    const isSHow = (option?.label as unknown as string)
+                      ?.toLowerCase()
+                      ?.includes(input.toLowerCase());
+                    return isSHow;
+                  }
             }}
           />
           <ProForm.Item

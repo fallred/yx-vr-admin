@@ -38,8 +38,6 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('user.locale:', user.locale);
-    console.log('user.locale.toLowerCase:', user.locale.toLowerCase());
     const lang = user?.locale?.toLowerCase();
     moment.locale(lang);
   }, [user.locale]);

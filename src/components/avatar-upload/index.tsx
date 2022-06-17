@@ -40,8 +40,6 @@ class AvatarUpload extends React.Component {
     ],
   };
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('getDerivedStateFromProps nextProps:', nextProps);
-    console.log('getDerivedStateFromProps prevState:', prevState);
     if (nextProps.imageUrl !== prevState.imageUrl) {
       // 通过对比nextProps和prevState，返回一个用于更新状态的对象
       return {
@@ -53,8 +51,8 @@ class AvatarUpload extends React.Component {
   handleChange = info => {
     const {fileList} = this.state;
     let newFileList = [...info.fileList];
-    console.log('file info:', info);
-    console.log('fileList:', fileList);
+    // console.log('file info:', info);
+    // console.log('fileList:', fileList);
     // 1. Limit the number of uploaded files
     // Only to show two recent uploaded files, and old ones will be replaced by the new
     newFileList = fileList.slice(-2);
@@ -86,9 +84,7 @@ class AvatarUpload extends React.Component {
       //   reader.onerror = error => reject(error);
       // });
       // Get this url from response in real world.
-      console.log('info.file.originFileObj:', info.file.originFileObj);
       getBase64(info.file.originFileObj, imgUrl => {
-        console.log('imageUrl:', imgUrl);
         this.setState({
           imageUrl: imgUrl,
           loading: false,

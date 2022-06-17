@@ -206,7 +206,6 @@ const RoleTableList= () => {
               type="primary"
               onClick={() => {
                 // form?.submit();
-                console.log("search submit");
                 setFilters(form?.getFieldsValue());
               }}
             >

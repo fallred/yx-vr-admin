@@ -17,8 +17,10 @@ const ShopDetailPage: React.FC<{}> = () => {
   const [searchForm] = Form.useForm();
   const searchFormRef = useRef(null);
   const searchFormLayout = {
-    labelCol: { span: 2 },
-    wrapperCol: { span: 16 },
+    labelCol: { span: 4 },
+    wrapperCol: { span: 28, offset: 0 },
+    size: 'middle'
+    // layout: 'vertical'
   };
   const [appId, setAppId] = useState<string>('');
   const [shopStoreDetail, setShopStoreDetail] = useState({});
@@ -48,7 +50,7 @@ const ShopDetailPage: React.FC<{}> = () => {
   }, [shopStoreList]);
 
   return (
-    <PageContainer>
+    <PageContainer className='shop-detail'>
         <ProCard key="card1" style={{marginBottom: 20}}>
             <QueryFilter
                 {...searchFormLayout}
@@ -68,6 +70,17 @@ const ShopDetailPage: React.FC<{}> = () => {
                     label: 'nm',
                     value: 'appId'
                   },
+                  labelCol: {span: 4, offset: 16},
+                  showSearch: true,
+                  optionFilterProp: "label",
+                  filterOption: (input, option) => {
+                    // console.log('filterOption option:', option);
+                    // console.log('filterOption input:', input);
+                    const isSHow = (option?.label as unknown as string)
+                      ?.toLowerCase()
+                      ?.includes(input.toLowerCase());
+                    return isSHow;
+                  }
                 }}
               />
             </QueryFilter>

@@ -20,7 +20,6 @@ type IListParams = {
 }
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-console.log('baseurl:', BASE_URL);
 const axios = Axios.create({
     baseURL: BASE_URL + '',
     timeout: 10000,

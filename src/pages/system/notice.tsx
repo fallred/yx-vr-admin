@@ -138,8 +138,7 @@ const NoticeTableList = () => {
           type: types[index],
           avatar: 'https://gw.alipayobjects.com/zos/antfincdn/UCSiy1j6jx/xingzhuang.svg',
           content: (
-            <div className="notice-content">
-              {item.content}
+            <div className="notice-content" dangerouslySetInnerHTML={{__html: item.content}}>
             </div>
           ),
         }),

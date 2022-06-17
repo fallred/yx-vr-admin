@@ -380,7 +380,7 @@ const UserTableList: FC<UserTableListProps> = props => {
                 ]}
                 request={(params, sorter, filter) => {
                     // 表单搜索项会从 params 传入，传递给后端接口。
-                    console.log(params, sorter, filter);
+                    // console.log(params, sorter, filter);
                     setFilters(params);
                     refetch();
                 }}

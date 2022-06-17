@@ -74,7 +74,7 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   };
 
   const handleFinish = async (values: { [key: string]: any }) => {
-    console.log('shop-form handleFinish values:', values);
+    // console.log('shop-form handleFinish values:', values);
     const {province, city, district} = pcdData ?? {};
     if (onSubmit) {
         const formData = {...values, province, city, district};

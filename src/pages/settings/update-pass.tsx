@@ -23,7 +23,6 @@ const LoginForm: FC = () => {
   const [user, setUser] = useRecoilState(userState);
   const onFinished = async (form: IUpdatePassParams) => {
     const result = await updatePassMutate(form);
-    console.log("result: ", result);
     if (result) {
       setUser({
         logged: false

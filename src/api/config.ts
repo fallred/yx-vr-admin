@@ -9,7 +9,6 @@ const noAuthPath = '/vrAdmin/#/login';
 // const noAuthPath = '/login';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-console.log('baseurl:', BASE_URL);
 export const opt = {
     timeout: 20000,
     method: 'post',

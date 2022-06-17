@@ -207,10 +207,6 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
         dataSource={shopTaskList}
         columns={columns}
         pagination={pagination}
-        // dateFormatter={(value, valueType) => {
-        //   console.log('====>', value, valueType);
-        //   return dateFormat(value);
-        // }}
         onChange={(pagination, filters, sorter) => {
           setPagination(pagination);
         }}

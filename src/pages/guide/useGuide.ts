@@ -54,7 +54,6 @@ export const useGuide = () => {
         newUser: false
       })
       driver.current.start();
-      console.log('guide started');
     }, 1000);
   };
 

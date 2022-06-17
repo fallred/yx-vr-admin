@@ -28,15 +28,16 @@ const NoticeForm: FC<NoticeFormProps> = (props) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
-  useEffect(() => {
-    if (formRef.current) {
-      if (!visible) {
-        form.resetFields();
-      }
-    }
-  }, [formRef, visible]);
+  // useEffect(() => {
+  //   if (formRef.current) {
+  //     if (!visible) {
+  //       form.resetFields();
+  //     }
+  //   }
+  // }, [formRef, visible]);
 
   useEffect(() => {
+    form.resetFields();
     if (current) {
       form.setFieldsValue({
         ...current,
@@ -61,9 +62,22 @@ const NoticeForm: FC<NoticeFormProps> = (props) => {
     }
   };
 
+  const handleContentChange = content => {
+    const formData = form.getFieldsValue();
+    form.setFieldsValue({
+      ...formData,
+      content
+    });
+  };
+
   const getModalContent = () => {
     return (
-      <Form {...formLayout} form={form} ref={formRef} onFinish={handleFinish}>
+      <Form
+        {...formLayout}
+        form={form}
+        ref={formRef}
+        onFinish={handleFinish}
+      >
         <ProFormText
           name="title"
           label="公告标题"
@@ -84,8 +98,9 @@ const NoticeForm: FC<NoticeFormProps> = (props) => {
             },
           ]}
         />
-        {/* <ProFormTextArea
+        {/* <ProForm.Item
           name="content"
+          width="md"
           label="公告内容"
           rules={[
             {
@@ -94,8 +109,11 @@ const NoticeForm: FC<NoticeFormProps> = (props) => {
             },
           ]}
         >
-            <BraftEditor content={current?.content ?? ''} />
-        </ProFormTextArea> */}
+            <BraftEditor
+              content={current?.content ?? ''}
+              handleChange={handleContentChange}
+            />
+        </ProForm.Item> */}
       </Form>
     );
   };

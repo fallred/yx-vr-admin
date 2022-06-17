@@ -19,7 +19,7 @@ const Notification: React.FC<{}> = () => {
       description:
         '<div>111</div>',
       onClick: () => {
-        console.log('Notification Clicked!');
+        // console.log('Notification Clicked!');
       },
     });
   };

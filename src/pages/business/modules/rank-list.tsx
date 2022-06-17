@@ -14,6 +14,8 @@ const RankList: React.FC<RankTableListProps> = props => {
     const { type } = props;
     const [filters, setFilters] = useState<IRank>({});
     const [rankList, setRankList] = useState<IRank[]>([]);
+    const [localPageNo, setLocalPageNo] = useState<number>(0);
+    const [maxPage, setMaxPage] = useState<number>(9999);
     const [pagination, setPagination] = useState<Partial<PaginationProps>>({
       current: 1,
       pageSize: 10,
@@ -80,6 +82,8 @@ const RankList: React.FC<RankTableListProps> = props => {
         }
       });
       setRankList(rList);
+      const maxP =  Math.ceil(rankResp?.total / pagination.pageSize);
+      setMaxPage(maxP);
       setPagination({
         ...pagination,
         total: rankResp?.total,
@@ -87,65 +91,67 @@ const RankList: React.FC<RankTableListProps> = props => {
         showQuickJumper: true,
       });
     };
+    function handleNext() {
+      const newPage = pagination.current + 1;
+      fetchRank(newPage, false);
+      setLocalPageNo(newPage);
+    }
     useEffect(() => {
       fetchRank(1, true);
     }, [type]);
 
-    function handleNext() {
-      fetchRank(pagination.current + 1, false);
-    }
-  return (
-    <div className="rank-list" id="scrollableDiv">
-        {/* <ProTable<IRank>
-          headerTitle="排行榜"
-          rowKey="id"
-          request={null}
-          dataSource={rankList}
-          columns={columns}
-          pagination={pagination}
-          onChange={(pagination, filters, sorter) => {
-            setPagination(pagination);
-          }}
-        /> */}
-        <InfiniteScroll
-            dataLength={rankList?.length ?? 0}
-            next={handleNext}
-            hasMore={true}
-            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>没有更多 🤐</Divider>}
-            scrollableTarget="scrollableDiv"
-          >
-            <List
-              dataSource={rankList}
-              renderItem={item => {
-                const listItemTpl = (
-                  <List.Item key={item.id}>
-                      <List.Item.Meta
-                          avatar={<Avatar size={48} src={item.city} />}
-                          title={
-                            <div className="rank-item-title">
-                              <span className="store">店名:{item.store}</span>
-                              <span className="manager">店长:{item.manager || '--'}</span>
-                            </div>
-                          }
-                          description={<div className="rank-item-desp"><span className="city">城市名:{item.city || '--'}</span><span className="rankName">排名:{item.rank}</span></div>}
-                      />
-                  </List.Item>
-                );
-                let tpl = listItemTpl;
-                if(item.rank <=3) {
-                  tpl = (
-                    <Badge.Ribbon text={`排名：${item.rank}`} color="red" placement="start">
-                      {listItemTpl}
-                    </Badge.Ribbon>
+    return (
+      <div className="rank-list" id="scrollableDiv">
+          {/* <ProTable<IRank>
+            headerTitle="排行榜"
+            rowKey="id"
+            request={null}
+            dataSource={rankList}
+            columns={columns}
+            pagination={pagination}
+            onChange={(pagination, filters, sorter) => {
+              setPagination(pagination);
+            }}
+          /> */}
+          <InfiniteScroll
+              dataLength={rankList?.length ?? 0}
+              next={handleNext}
+              hasMore={maxPage > 1 && localPageNo < maxPage}
+              loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+              endMessage={<Divider plain>没有更多 🤐</Divider>}
+              scrollableTarget="scrollableDiv"
+            >
+              <List
+                dataSource={rankList}
+                renderItem={item => {
+                  const listItemTpl = (
+                    <List.Item key={item.id}>
+                        <List.Item.Meta
+                            avatar={<Avatar size={48} src={item.city} />}
+                            title={
+                              <div className="rank-item-title">
+                                <span className="store">店名:{item.store}</span>
+                                <span className="manager">店长:{item.manager || '--'}</span>
+                              </div>
+                            }
+                            description={<div className="rank-item-desp"><span className="city">城市名:{item.city || '--'}</span><span className="rankName">排名:{item.rank}</span></div>}
+                        />
+                    </List.Item>
                   );
-                }
-                return tpl;
-              }}
-            />
-        </InfiniteScroll>
-    </div>
-  );
+                  let tpl = listItemTpl;
+                  if(item.rank <=3) {
+                    tpl = (
+                      <Badge.Ribbon text={`排名：${item.rank}`} color="red" placement="start">
+                        {listItemTpl}
+                      </Badge.Ribbon>
+                    );
+                  }
+                  return tpl;
+                }}
+              />
+          </InfiniteScroll>
+      </div>
+    );
 };
 
 export default RankList;
