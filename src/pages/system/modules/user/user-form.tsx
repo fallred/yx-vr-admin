@@ -16,6 +16,7 @@ import {useGetRoleListAll} from '@/api';
 import AvatarUpload from '@/components/avatar-upload';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';
 import { IUser } from '@/models/user-mng';
+import {IRole} from '@/models/role';
 
 interface UserFormProps {
   visible: boolean;
@@ -37,7 +38,7 @@ const UserForm: FC<UserFormProps> = (props) => {
   const { visible, current, onCancel, onSubmit } = props;
   const {selectedMenuTree} = current ?? {};
   const { data: roleListAll, error, isLoading, refetch } = useGetRoleListAll();
-  const [roleOptions, setRoleOptions] = useState<IUser[]>();
+  const [roleOptions, setRoleOptions] = useState<IRole[]>();
   const [avatarUrl, setAvatarUrl] = useState<string>('');
   const [selectedApps, setSelectedApps] = useState<string[]>([]);
   const fieldNames = {label: 'name', value: 'id', key: 'id'};
@@ -122,14 +123,16 @@ const UserForm: FC<UserFormProps> = (props) => {
                 placeholder="请输入用户昵称"
                 rules={[{ required: true }]}
             />
-            <ProFormText.Password
-              key="password"
-              name="password"
-              width="md"
-              label="密码"
-              placeholder="请输入密码"
-              rules={[{ required: true }]}
-            />
+            {
+              current && current.id ? null : <ProFormText.Password
+                key="password"
+                name="password"
+                width="md"
+                label="密码"
+                placeholder="请输入密码"
+                rules={[{ required: true }]}
+              />
+            }
             <ProFormText
                 key="realName"
                 name="realName"

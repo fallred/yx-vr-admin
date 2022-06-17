@@ -244,7 +244,7 @@ export function genSelectedAuthTree(systemMenuTree: IMenuTree, menuCheckedIds: A
     let resultTree = null;
     for(let i = 0; i < funcMenuTree.length; i++) {
         const item = funcMenuTree[i];
-        console.log('queryFuncNode item:', item)
+        // console.log('queryFuncNode item:', item);
         if (item?.[key] === value) {
             resultTree = item;
             break;

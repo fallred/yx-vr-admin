@@ -50,7 +50,7 @@ const AuthTree: FC<AuthTreeProps> = (props) => {
         console.log('checkedKeys1:', checkedKeys1);
         const funcCheckedKeys = genFuncCheckedKeys(funcMTree, checkedKeys1);
         console.log('funcCheckedKeys:', funcCheckedKeys);
-        setSelectedKeys1(funcCheckedKeys);
+        setCheckedKeys1(funcCheckedKeys);
     };
 
     const onSelect = (selectedKeysValue: React.Key[], info: any) => {
