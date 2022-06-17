@@ -1,20 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
-import { findDOMNode } from "react-dom";
-import { useRecoilValue } from "recoil";
-import { Button, message, Modal, PaginationProps, Space } from "antd";
-import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import { useRecoilValue } from 'recoil';
+import { Button, message, Modal, PaginationProps, Space } from 'antd';
+import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
+import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import { LocaleFormatter, useLocale } from "@/locales";
-import { permissionListState } from "@/stores/recoilState";
-import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
+import { LocaleFormatter, useLocale } from '@/locales';
+import { permissionListState } from '@/stores/recoilState';
+import { IRole, IRoleList, IRolePaginationResp } from '@/models/role';
 import {PageFuncEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
-import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from "@/api";
+import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from '@/api';
 import WrapAuth from '@/components/wrap-auth/index';
-import OperationDrawer from "./modules/role/OperationDrawer";
-import { add } from "cypress/types/lodash";
+import RoleForm from './modules/role/role-form';
 
 const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
@@ -251,7 +250,7 @@ const RoleTableList= () => {
       )}
       {
         visible
-        ? <OperationDrawer
+        ? <RoleForm
           current={current}
           visible={visible}
           onCancel={handleCancel}

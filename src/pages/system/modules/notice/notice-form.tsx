@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import moment from "moment";
-import { Modal, Form, Input, Drawer, Space, Button, Upload } from "antd";
+import React, { FC, useEffect, useState, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import moment from 'moment';
+import { Modal, Form, Input, Drawer, Space, Button, Upload } from 'antd';
 import {
   ProForm,
   ModalForm,
@@ -9,10 +9,10 @@ import {
   ProFormTextArea,
   ProFormTreeSelect
 } from '@ant-design/pro-components';
-import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
+import { IRole, IRoleList, IRolePaginationResp } from '@/models/role';
 import BraftEditor from '@/components/braft-editor/index';
 
-interface OperationDrawerProps {
+interface NoticeFormProps {
   visible: boolean;
   current: Partial<IRole> | undefined;
   onSubmit: (values: IRole) => void;
@@ -24,7 +24,7 @@ const formLayout = {
   wrapperCol: { span: 20 },
 };
 
-const OperationDrawer: FC<OperationDrawerProps> = (props) => {
+const NoticeForm: FC<NoticeFormProps> = (props) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
@@ -119,4 +119,4 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   );
 };
 
-export default OperationDrawer;
+export default NoticeForm;

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Badge, notification, Modal, Button } from 'antd';
-import { NotificationOutlined } from "@ant-design/icons";
+import { NotificationOutlined } from '@ant-design/icons';
 import {useQueryNoticeAll, useQueryNoticeList} from '@/api';
 
 const Notification: React.FC<{}> = () => {

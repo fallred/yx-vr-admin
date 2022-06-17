@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import moment from "moment";
-import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import React, { FC, useEffect, useState, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import moment from 'moment';
+import { Modal, Form, Input, Drawer, Space, Button } from 'antd';
 import {
   ProCard,
   ProForm,
@@ -9,7 +9,7 @@ import {
   ProFormDatePicker,
   ProFormDigit,
 } from '@ant-design/pro-components';
-import { IShopTask } from "@/models/shop-task";
+import { IShopTask } from '@/models/shop-task';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 
 interface ShopTaskFormProps {

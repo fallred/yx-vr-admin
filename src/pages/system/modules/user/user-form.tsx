@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import moment from "moment";
-import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import React, { FC, useEffect, useState, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import moment from 'moment';
+import { Modal, Form, Input, Drawer, Space, Button } from 'antd';
 import {
   ProCard,
   ProForm,
@@ -12,12 +12,12 @@ import {
   ProFormSelect
 } from '@ant-design/pro-components';
 import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
-import {useGetRoleListAll} from "@/api";
+import {useGetRoleListAll} from '@/api';
 import AvatarUpload from '@/components/avatar-upload';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';
-import { IUser } from "@/models/user-mng";
+import { IUser } from '@/models/user-mng';
 
-interface OperationDrawerProps {
+interface UserFormProps {
   visible: boolean;
   current: Partial<IUser> | undefined;
   onSubmit: (values: IUser) => void;
@@ -29,7 +29,7 @@ const formLayout = {
   wrapperCol: { span: 20 },
 };
 
-const OperationDrawer: FC<OperationDrawerProps> = (props) => {
+const UserForm: FC<UserFormProps> = (props) => {
   const formRef = useRef(null);
   const avatarRef = useRef(null);
   const shopTableRef = useRef<React.Component>(null);
@@ -238,4 +238,4 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   );
 };
 
-export default OperationDrawer;
+export default UserForm;

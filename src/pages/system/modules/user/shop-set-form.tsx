@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import React, { useEffect, useRef, useState } from 'react';
+import { Modal, Form, Input, Drawer, Space, Button } from 'antd';
 import {IUser} from '@/models/user-mng';
 import {IShopStore, ShopStoreStatusEnum} from '@/models/shop-store';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';

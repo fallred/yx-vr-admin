@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "rea
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import React, { useState } from 'react';
-import {useImportStoreList} from "@/api";
+import {useImportStoreList} from '@/api';
 
 interface IUploadFileRProps {
     // apiUrl: '',

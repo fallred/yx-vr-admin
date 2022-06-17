@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from 'react';
 import type { ReactText } from 'react';
-import { findDOMNode } from "react-dom";
-import { useRecoilValue } from "recoil";
-import { Button, message, Modal, PaginationProps, Tag } from "antd";
-import { FooterToolbar, PageContainer } from "@ant-design/pro-layout";
+import { findDOMNode } from 'react-dom';
+import { useRecoilValue } from 'recoil';
+import { Button, message, Modal, PaginationProps, Tag } from 'antd';
+import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
 import { EditOutlined, DeleteOutlined, LikeOutlined } from '@ant-design/icons';
 import {ProList} from '@ant-design/pro-components';
-import { LocaleFormatter } from "@/locales";
-import { permissionListState } from "@/stores/recoilState";
+import { LocaleFormatter } from '@/locales';
+import { permissionListState } from '@/stores/recoilState';
 import {PageFuncEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
 import {
@@ -15,10 +15,10 @@ import {
   useBatchDeleteNotice,
   useUpdateNotice,
   useQueryNoticeList
-} from "@/api";
+} from '@/api';
 import WrapAuth from '@/components/wrap-auth/index';
-import { INotice, INoticeList } from "@/models/notice-mng";
-import OperationDrawer from "./modules/notice/OperationDrawer";
+import { INotice, INoticeList } from '@/models/notice-mng';
+import NoticeForm from './modules/notice/notice-form';
 
 const types = ['top', 'inline', 'new'];
 
@@ -150,7 +150,7 @@ const NoticeTableList = () => {
     refetch();
   }, [pagination.current, pagination.pageSize, filters]);
 
-  const showModal = () => {
+  const showAddModal = () => {
     setVisible(true);
     setCurrent(undefined);
   };
@@ -215,7 +215,7 @@ const NoticeTableList = () => {
         <ProList<INotice>
           toolBarRender={() => {
             return [
-              <AuthButton type="primary" key="add" onClick={showModal} operCode={PageFuncEnum.ADD}>
+              <AuthButton type="primary" key="add" onClick={showAddModal} operCode={PageFuncEnum.ADD}>
                 {PageFuncMap.get(PageFuncEnum.ADD)}
               </AuthButton>,
               <AuthButton type="" key="refresh" onClick={refetch} operCode={PageFuncEnum.LIST}>
@@ -264,7 +264,7 @@ const NoticeTableList = () => {
           </AuthButton>
         </FooterToolbar>
         )}
-      <OperationDrawer
+      <NoticeForm
         current={current}
         visible={visible}
         onCancel={handleCancel}

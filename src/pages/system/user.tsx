@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { PageContainer } from "@ant-design/pro-layout";
-import UserList from "./modules/user/index";
+import React, { useEffect, useRef, useState } from 'react';
+import { PageContainer } from '@ant-design/pro-layout';
+import UserList from './modules/user/index';
 
 const UserMngPage = () => {
   return (

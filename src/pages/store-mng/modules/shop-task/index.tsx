@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useRef, useState } from "react";
-import { findDOMNode } from "react-dom";
-import { useRecoilValue } from "recoil";
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import { useRecoilValue } from 'recoil';
 import {
     Form, Button, message, Modal,
     PaginationProps, Space, Input
-} from "antd";
-import { FooterToolbar } from "@ant-design/pro-layout";
+} from 'antd';
+import { FooterToolbar } from '@ant-design/pro-layout';
 import type { ProFormInstance, ProColumns, ActionType } from '@ant-design/pro-components';
 import {
     ProForm,
@@ -14,8 +14,8 @@ import {
     ProTable, TableDropdown
 } from '@ant-design/pro-components';
 import moment from 'moment';
-import { LocaleFormatter, useLocale } from "@/locales";
-import { permissionListState } from "@/stores/recoilState";
+import { LocaleFormatter, useLocale } from '@/locales';
+import { permissionListState } from '@/stores/recoilState';
 import {PageFuncEnum, SexEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
 import {dateFormat, dateMonthFormat, dateMonthFormat1} from '@/lib/common';
@@ -23,10 +23,10 @@ import {
     useGetShopTaskList,
     useAddShopTask,
     useUpdateShopTask
-} from "@/api";
+} from '@/api';
 import WrapAuth from '@/components/wrap-auth/index';
-import { IShopTask } from "@/models/shop-task";
-import TaskFormDrawer from "./task-form";
+import { IShopTask } from '@/models/shop-task';
+import TaskForm from './task-form';
 
 interface IShopTaskListProps {
     appId: string;
@@ -272,7 +272,7 @@ const ShopTaskTableList: FC<IShopTaskListProps> = (props = {filterType: 'light'}
       )}
       {
         visible
-        ? <TaskFormDrawer
+        ? <TaskForm
           current={current}
           visible={visible}
           onCancel={handleDrawerCancel}

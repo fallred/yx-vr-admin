@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react";
-import { findDOMNode } from "react-dom";
-import { useRecoilValue } from "recoil";
-import { Button, message, PaginationProps, Space } from "antd";
-import { PageContainer } from "@ant-design/pro-layout";
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import { useRecoilValue } from 'recoil';
+import { Button, message, PaginationProps, Space } from 'antd';
+import { PageContainer } from '@ant-design/pro-layout';
 import {
   QueryFilter, LightFilter,
   ProFormDatePicker, ProFormText,
@@ -10,12 +10,12 @@ import {
   ProCard
 } from '@ant-design/pro-components';
 import type { ProColumns } from '@ant-design/pro-components';
-import { permissionListState } from "@/stores/recoilState";
+import { permissionListState } from '@/stores/recoilState';
 import {PageFuncEnum} from '@/models/common';
-import {ILogList, ILog} from "@/models/log";
-import {useGetLogList} from "@/api";
+import {ILogList, ILog} from '@/models/log';
+import {useGetLogList} from '@/api';
 import {dateTimeFormat} from '@/lib/common';
-import FormItem from "@/components/form-item";
+import FormItem from '@/components/form-item';
 
 const OperateLogList = () => {
   const permissionList = useRecoilValue(permissionListState);

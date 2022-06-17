@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "react";
-import { findDOMNode } from "react-dom";
-import { useRecoilValue } from "recoil";
-import { Form, Button, message, Modal, PaginationProps, Space, Input } from "antd";
-import { FooterToolbar } from "@ant-design/pro-layout";
+import React, { FC, useEffect, useRef, useState, useImperativeHandle } from 'react';
+import { findDOMNode } from 'react-dom';
+import { useRecoilValue } from 'recoil';
+import { Form, Button, message, Modal, PaginationProps, Space, Input } from 'antd';
+import { FooterToolbar } from '@ant-design/pro-layout';
 import {
   ProCard, ProForm,
   QueryFilter, LightFilter,
@@ -11,8 +11,8 @@ import {
 } from '@ant-design/pro-components';
 import type { ProFormInstance, ProColumns, ActionType } from '@ant-design/pro-components';
 import cloneDeep from 'lodash/cloneDeep';
-import { LocaleFormatter, useLocale } from "@/locales";
-import { permissionListState } from "@/stores/recoilState";
+import { LocaleFormatter, useLocale } from '@/locales';
+import { permissionListState } from '@/stores/recoilState';
 import {PageFuncEnum, SexEnum} from '@/models/common';
 import {ShopStoreStatusMap, ShopStoreStatusOptions, PageFuncMap} from '@/enums/common';
 import {
@@ -22,14 +22,14 @@ import {
   useGetShopStoreListWithPage,
   useGetStoreImportTplLink,
   useExportStoreList
-} from "@/api";
+} from '@/api';
 import WrapAuth from '@/components/wrap-auth/index';
-import { IShopStore, ShopStoreStatusEnum } from "@/models/shop-store";
+import { IShopStore, ShopStoreStatusEnum } from '@/models/shop-store';
 import ProvinceCityArea from '@/components/province-city-area';
-import FormItem from "@/components/form-item";
-import AutoUploadFile from "./modules/auto-upload-file";
-import ShopFormDrawer from "./modules/shop-form";
-import { dateTimeFormat } from "@/lib/common";
+import FormItem from '@/components/form-item';
+import AutoUploadFile from './modules/auto-upload-file';
+import ShopForm from './modules/shop-form';
+import { dateTimeFormat } from '@/lib/common';
 
 interface IShopListProps {
   showOperate?: boolean;
@@ -536,7 +536,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
           }
         </FooterToolbar>
       )}
-      <ShopFormDrawer
+      <ShopForm
         current={current}
         visible={visible}
         onCancel={handleCancel}

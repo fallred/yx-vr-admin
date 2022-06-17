@@ -1,6 +1,6 @@
 import React from 'react';
-import { PageContainer } from "@ant-design/pro-layout";
-import UserList from "../system/modules/user/index";
+import { PageContainer } from '@ant-design/pro-layout';
+import UserList from '../system/modules/user/index';
 
 const AssociateMngPage: React.FC<{}> = () => {
   return (

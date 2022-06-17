@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import moment from "moment";
+import React, { FC, useEffect, useState, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import moment from 'moment';
 import {
   Modal, Form, Input,
   Drawer, Space, Button,
   Popover
-} from "antd";
+} from 'antd';
 import {
   ProCard,
   ProForm,
@@ -14,7 +14,7 @@ import {
   ProFormSelect,
   ProFormDateTimePicker,
   ProFormRate
-} from "@ant-design/pro-components";
+} from '@ant-design/pro-components';
 import {SexOptions, IdentifyOptions, ShopStoreStatusOptions} from '@/enums/common';
 import { IShopStore, ShopStoreStatusEnum, IProvinceCityDistrict } from "@/models/shop-store";
 import ProvinceCityArea from '@/components/province-city-area';

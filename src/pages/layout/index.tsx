@@ -1,10 +1,10 @@
-import React, { FC, useEffect, Suspense, useCallback, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { createBrowserHistory } from "history";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import type { MenuDataItem } from "@ant-design/pro-layout";
-import ProLayout from "@ant-design/pro-layout";
+import React, { FC, useEffect, Suspense, useCallback, useState } from 'react';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { createBrowserHistory } from 'history';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import type { MenuDataItem } from '@ant-design/pro-layout';
+import ProLayout from '@ant-design/pro-layout';
 import {
   SmileOutlined,
   HeartOutlined,
@@ -23,24 +23,24 @@ import {
   AppstoreOutlined,
   UserSwitchOutlined,
   FileSearchOutlined
-} from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { useLocale } from "@/locales";
-import { IMenuItem, IMenuTree, MenuChild } from "@/models/menu";
-import { userState, userInfoState } from "@/stores/recoilState";
+} from '@ant-design/icons';
+
+import { useLocale } from '@/locales';
+import { IMenuItem, IMenuTree, MenuChild } from '@/models/menu';
+import { userState, userInfoState } from '@/stores/recoilState';
 import {
   useGetCurrentUser, useGetSystemMenuTree,
   useGetUserMenuTree, useQueryUserDetail
-} from "@/api";
+} from '@/api';
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
 import RenderRouter from '@/routes/index';
 import {userMenuTree1} from '@/config/menu-config';
-// import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
-import LogoIcon from "@/assets/logo/logo-2.png";
-import { useGuide } from "../guide/useGuide";
-import Footer from "./components/Footer";
-import RightContent from "./components/RightContent";
+// import { ReactComponent as LogoSvg } from '@/assets/logo/logo.svg';
+import LogoIcon from '@/assets/logo/logo-2.png';
+import { useGuide } from '../guide/useGuide';
+import Footer from './components/footer';
+import RightContent from './components/right-content';
 
 const history = createBrowserHistory();
 

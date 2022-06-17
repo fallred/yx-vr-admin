@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NotificationOutlined } from "@ant-design/icons";
+import { NotificationOutlined } from '@ant-design/icons';
 import NoticeView from '@/pages/notification/index';
 
 const NotificationPage: React.FC<{}> = () => {

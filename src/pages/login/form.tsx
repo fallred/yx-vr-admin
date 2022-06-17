@@ -1,4 +1,8 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Location } from 'history';
+import { useRecoilState } from 'recoil';
+import { message, Space, Tabs } from 'antd';
 import {
     AlipayCircleOutlined,
     LockOutlined,
@@ -13,17 +17,12 @@ import {
     ProFormCheckbox,
     ProFormText,
 } from '@ant-design/pro-components';
-import { message, Space, Tabs } from 'antd';
 // import type { CSSProperties } from 'react';
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Location } from "history";
-import { useRecoilState } from 'recoil';
-import { userState } from "@/stores/recoilState";
-
-import { useLogin } from "@/api";
-import { LoginParams } from "@/models/login";
-import LogoIcon from "@/assets/logo/logo-2.png";
-import styles from "./index.module.less";
+import { userState } from '@/stores/recoilState';
+import { useLogin } from '@/api';
+import { LoginParams } from '@/models/login';
+import LogoIcon from '@/assets/logo/logo-2.png';
+import styles from './index.module.less';
   
 type LoginType = 'phone' | 'account';
 

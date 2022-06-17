@@ -1,8 +1,8 @@
 
 
-import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "react";
-import { UploadOutlined } from '@ant-design/icons';
+import React, { FC, useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { Button, message, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 interface IAutoUploadFileProps {
     apiUrl: string;

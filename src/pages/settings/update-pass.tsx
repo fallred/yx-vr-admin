@@ -1,14 +1,14 @@
-import React, { FC } from "react";
-import { Button, Checkbox, Form, Input, notification } from "antd";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import React, { FC } from 'react';
+import { Button, Checkbox, Form, Input, notification } from 'antd';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Location } from 'history';
 import { useRecoilState } from 'recoil';
-import { userState } from "@/stores/recoilState";
-import { IUpdatePassParams } from "@/models/setting";
-import { Location } from "history";
-import { useUpdatePass } from "@/api";
-import LogoIcon from "@/assets/logo/logo-2.png";
-import styles from "./index.module.less";
-import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
+import { userState } from '@/stores/recoilState';
+import { IUpdatePassParams } from '@/models/setting';
+import { useUpdatePass } from '@/api';
+import { ReactComponent as LogoSvg } from '@/assets/logo/logo.svg';
+import LogoIcon from '@/assets/logo/logo-2.png';
+import styles from './index.module.less';
 
 const initialValues: IUpdatePassParams = {
     oldpwd: '',

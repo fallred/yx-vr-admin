@@ -1,12 +1,12 @@
 import React, { FC, useState, useEffect, useImperativeHandle } from 'react';
-import { useRecoilValue } from "recoil";
+import { useRecoilValue } from 'recoil';
 import { Tree } from 'antd';
 import {IFuncMenuTree} from '@/models/menu';
-import { systemMenuTreeState } from "@/stores/recoilState";
-import { genFuncTree, genSelectedAuthTree, genFuncCheckedKeys } from "@/lib/tree-util";
+import { systemMenuTreeState } from '@/stores/recoilState';
+import { genFuncTree, genSelectedAuthTree, genFuncCheckedKeys } from '@/lib/tree-util';
 import { API } from '@/models/typings';
 import WithCompLoad from '@/components/with-load/index';
-import styles from "./index.module.less";
+import styles from './index.module.less';
 
 interface AuthTreeProps {
     leftCheckedKeys: API.IId[];

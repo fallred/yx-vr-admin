@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import moment from "moment";
-import { Modal, Form, Input, Drawer, Space, Button } from "antd";
+import React, { FC, useEffect, useState, useRef } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import moment from 'moment';
+import { Modal, Form, Input, Drawer, Space, Button } from 'antd';
 import {queryMenuAndFuncNodes} from '@/lib/tree-util';
-import { IRole, IRoleList, IRolePaginationResp } from "@/models/role";
+import { IRole, IRoleList, IRolePaginationResp } from '@/models/role';
 import {
   ProForm,
   ModalForm,
@@ -13,7 +13,7 @@ import {
 } from '@ant-design/pro-components';
 import AuthTree from '../auth-tree/index';
 
-interface OperationDrawerProps {
+interface RoleFormProps {
   visible: boolean;
   current: Partial<IRole> | undefined;
   onSubmit: (values: IRole) => void;
@@ -25,7 +25,7 @@ const formLayout = {
   wrapperCol: { span: 20 },
 };
 
-const OperationDrawer: FC<OperationDrawerProps> = (props) => {
+const RoleForm: FC<RoleFormProps> = (props) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
@@ -147,4 +147,4 @@ const OperationDrawer: FC<OperationDrawerProps> = (props) => {
   );
 };
 
-export default OperationDrawer;
+export default RoleForm;

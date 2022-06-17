@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import moment from 'moment';
 import {Rate, Form} from 'antd';
-import { PageContainer } from "@ant-design/pro-layout";
+import { PageContainer } from '@ant-design/pro-layout';
 import {ProCard, ProDescriptions, QueryFilter, ProFormSelect, ProFormRate} from '@ant-design/pro-components';
-import {useGetShopStoreList, useQueryShopStoreDetail} from "@/api";
+import {useGetShopStoreList, useQueryShopStoreDetail} from '@/api';
 import {ShopStoreStatusMap} from '@/enums/common';
 import ShopTask from './modules/shop-task/index';
 

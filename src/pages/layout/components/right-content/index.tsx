@@ -1,15 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Tag, Space, Menu } from "antd";
-import { useRecoilState } from "recoil";
-import { userState } from "@/stores/recoilState";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Tag, Space, Menu } from 'antd';
+import { useRecoilState } from 'recoil';
+import { userState } from '@/stores/recoilState';
 import Notice from '@/pages/notification/index';
-import Avatar from "./AvatarDropdown";
-import HeaderDropdown from "../HeaderDropdown";
-import HeaderSearch from "../HeaderSearch";
-// import "./index.less";
-import classes from "./index.module.less";
-import SelectLang from "./SelectLang";
+
+import Avatar from './avatar-dropdown';
+import HeaderSearch from '../header-search';
+import classes from './index.module.less';
+import SelectLang from './select-lang';
+
 import { ReactComponent as LanguageSvg } from '@/assets/header/language.svg';
 
 const GlobalHeaderRight: React.FC = () => {
@@ -28,7 +28,12 @@ const GlobalHeaderRight: React.FC = () => {
     <Space className={className}>
       <Notice />
       <Avatar />
-      <Link to={'/setting/updatePass'} className="upatePass">修改密码</Link>
+      <Link
+        to={'/setting/updatePass'}
+        className="upatePass"
+      >
+        修改密码
+      </Link>
     </Space>
   );
 };

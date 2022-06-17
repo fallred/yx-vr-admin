@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { findDOMNode } from "react-dom";
-import { useRecoilValue } from "recoil";
-import { Button, message, Modal, PaginationProps, Space } from "antd";
-import { FooterToolbar } from "@ant-design/pro-layout";
-import { PlusOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from 'react';
+import { findDOMNode } from 'react-dom';
+import { useRecoilValue } from 'recoil';
+import { Button, message, Modal, PaginationProps, Space } from 'antd';
+import { FooterToolbar } from '@ant-design/pro-layout';
+import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { LocaleFormatter, useLocale } from "@/locales";
-import { permissionListState } from "@/stores/recoilState";
+import { LocaleFormatter, useLocale } from '@/locales';
+import { permissionListState } from '@/stores/recoilState';
 import { SexEnum, PageFuncEnum } from '@/models/common';
-import { IUser } from "@/models/user";
+import { IUser } from '@/models/user';
 import { PageFuncMap, UserStatusMap, SexMap } from '@/enums/common';
 import {
     useAddUser,
@@ -18,18 +18,18 @@ import {
     useGetUserList,
     useGetRoleListAll,
     useSetUserApps
-} from "@/api";
+} from '@/api';
 import WrapAuth from '@/components/wrap-auth/index';
-import { IUser, UserStatusEnum, IdentifyTypeEnum } from "@/models/user-mng";
-import { IShopStore } from "@/models/shop-store";
-import OperationDrawer from "./OperationDrawer";
-import ShopListDrawer from "./storeListDrawer";
-import ShopSetDrawer from "./shop-set-form";
+import { IUser, UserStatusEnum, IdentifyTypeEnum } from '@/models/user-mng';
+import { IShopStore } from '@/models/shop-store';
+import UserForm from './user-form';
+import StoreListView from './store-list-view';
+import ShopSetForm from './shop-set-form';
 
 interface UserTableListProps {
     identityType: IdentifyTypeEnum;
 }
-const UserTableList: FC<OperationDrawerProps> = props => {
+const UserTableList: FC<UserTableListProps> = props => {
     const { identityType = IdentifyTypeEnum.PLATFORM } = props;
     const permissionList = useRecoilValue(permissionListState);
     const actionRef = useRef<ActionType>();
@@ -148,7 +148,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
             return false;
         }
     };
-    const showShopSetDrawer = (item: IUser) => {
+    const showShopSetForm = (item: IUser) => {
         setShopSetVisible(true);
         setCurrent(item);
     };
@@ -324,7 +324,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                 //     operCode={PageFuncEnum.EDIT}
                 //     onClick={(e) => {
                 //         e.preventDefault();
-                //         showShopSetDrawer(record);
+                //         showShopSetForm(record);
                 //     }}
                 // >
                 //     设置数据权限
@@ -356,7 +356,7 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                         showViewDrawer(record);
                     }
                     if (key === 'setShop') {
-                        showShopSetDrawer(record);
+                        showShopSetForm(record);
                     }
                   }}
                   menus={opMenuList}
@@ -446,19 +446,19 @@ const UserTableList: FC<OperationDrawerProps> = props => {
                     </AuthButton>,
                 </FooterToolbar>
             )}
-            <OperationDrawer
+            <UserForm
                 current={current}
                 visible={visible}
                 onCancel={handleCancel}
                 onSubmit={handleSubmit}
             />
-            <ShopListDrawer
+            <StoreListView
                 key="shopListDrawer"
                 current={current}
                 visible={shopViewVisible}
                 onClose={hideViewDrawer}
             />
-            <ShopSetDrawer
+            <ShopSetForm
                 key="shopSetDrawer"
                 current={current}
                 visible={shopSetVisible}

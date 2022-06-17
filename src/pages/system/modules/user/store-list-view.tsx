@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import { Drawer, List, Avatar, Divider, Col, Row, Rate, Descriptions } from 'antd';
 import type { ProColumns } from '@ant-design/pro-components';
 import {ProTable, ProDescriptions} from '@ant-design/pro-components';
@@ -6,13 +6,13 @@ import {IUser} from '@/models/user-mng';
 import {IShopStore, ShopStoreStatusEnum} from '@/models/shop-store';
 import {ShopStoreStatusMap} from '@/enums/common';
 
-interface OperationDrawerProps {
+interface StoreListViewProps {
     visible: boolean;
     current: Partial<IUser> | undefined;
     onClose: () => void;
 }
 
-const StoreItem: FC<OperationDrawerProps> = (props) => {
+const StoreItem: FC<StoreListViewProps> = (props) => {
     const {store} = props;
     const addressFormat = () => {
         const addrInfo = [
@@ -44,7 +44,7 @@ const StoreItem: FC<OperationDrawerProps> = (props) => {
       )
 };
 
-const StoreDescriptions: FC<OperationDrawerProps> = (props) => {
+const StoreDescriptions: FC<StoreListViewProps> = (props) => {
     const {store} = props;
     const columns: ProColumns<IShopStore>[] = [
         {
@@ -156,7 +156,7 @@ const StoreDescriptions: FC<OperationDrawerProps> = (props) => {
     );
 };
 
-const StoreTable: FC<OperationDrawerProps> = (props) => {
+const StoreTable: FC<StoreListViewProps> = (props) => {
     const {apps} = props;
     const columns: ProColumns<IShopStore>[] = [
         {
@@ -267,7 +267,7 @@ const StoreTable: FC<OperationDrawerProps> = (props) => {
         />
     );
 };
-const StoreListDrawer: FC<OperationDrawerProps> = (props) => {
+const StoreListView: FC<StoreListViewProps> = (props) => {
     const { visible, current, onClose } = props;
     const {apps = []} = current ?? {};
     // const getStoreList = () => {
@@ -291,4 +291,4 @@ const StoreListDrawer: FC<OperationDrawerProps> = (props) => {
     );
 };
 
-export default StoreListDrawer;
+export default StoreListView;
