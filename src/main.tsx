@@ -6,9 +6,8 @@ import { RecoilRoot } from "recoil";
 import axios, { AxiosContext } from "@/api/request";
 import RecoilObserver from '@/stores/RecoilObserver.tsx';
 import SuspendFallbackLoading from "@/pages/layout/suspendFallbackLoading";
-
 import App from "./App";
-import "./index.css";
+import './styles/index.less';
 
 const queryClient = new QueryClient({
   defaultOptions: {

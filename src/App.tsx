@@ -13,7 +13,6 @@ import 'antd/dist/antd.css';
 import { localeConfig } from "@/config/locale";
 import { userState } from "@/stores/recoilState";
 import RenderRouter from "./routes";
-import "./App.less";
 
 moment.locale("zh-cn");
 
