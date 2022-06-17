@@ -126,7 +126,7 @@ const RoleTableList= () => {
     {
       title: '角色名',
       dataIndex: "name",
-      tip: "请输入角色名",
+      // tip: "请输入角色名",
     },
     {
       title: '角色描述',

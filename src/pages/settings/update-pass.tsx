@@ -6,7 +6,7 @@ import { userState } from "@/stores/recoilState";
 import { IUpdatePassParams } from "@/models/setting";
 import { Location } from "history";
 import { useUpdatePass } from "@/api";
-import LogoIcon from "@/assets/logo/logo.png";
+import LogoIcon from "@/assets/logo/logo-2.png";
 import styles from "./index.module.less";
 import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
 

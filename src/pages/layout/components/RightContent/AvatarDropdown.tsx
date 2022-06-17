@@ -10,8 +10,8 @@ import { Avatar, Menu, Spin } from "antd";
 
 import HeaderDropdown from "../HeaderDropdown";
 import classes from "./index.module.less";
-import { useRecoilState } from "recoil";
-import { userState } from "@/stores/recoilState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userState, userInfoState } from "@/stores/recoilState";
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -19,6 +19,7 @@ export type GlobalHeaderRightProps = {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const [user, setUser] = useRecoilState(userState);
+  const userInfo = useRecoilValue(userInfoState);
 
   const { userName, avatar } = user;
 
@@ -93,7 +94,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         <Avatar
           size="small"
           className={classes.avatar}
-          src={avatar}
+          src={userInfo.imageUrl}
           alt="avatar"
         />
         <span className={`${classes.name} anticon`}>{userName}</span>

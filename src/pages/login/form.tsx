@@ -22,7 +22,7 @@ import { userState } from "@/stores/recoilState";
 
 import { useLogin } from "@/api";
 import { LoginParams } from "@/models/login";
-import LogoIcon from "@/assets/logo/logo.png";
+import LogoIcon from "@/assets/logo/logo-2.png";
 import styles from "./index.module.less";
   
 type LoginType = 'phone' | 'account';

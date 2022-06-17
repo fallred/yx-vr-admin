@@ -42,15 +42,17 @@ ul::-webkit-scrollbar-track {
 .ant-page-header-heading {
   display: none;
 }
-.ant-pro-global-header-layout-mix {
-  background-color: #fff;
-  .ant-pro-global-header-logo h1 {
-    color: #333;
-  }
-  .anticon {
-    color: #333;
+.ant-pro-global-header {
+  .ant-pro-global-header-logo {
+    .layout-page-logo {
+      height: 40px;
+    }
+    h1 {
+      font-size: 24px;
+    }
   }
 }
+
 .ant-pro-basicLayout-content {
   margin: 0;
   min-width: 900px;
@@ -85,10 +87,6 @@ ul::-webkit-scrollbar-track {
       width: 30px;
       height: 30px;
     }
-  }
-  &-logo {
-    // width: 80px;
-    // height: 80px !important;
   }
 }
 
@@ -129,7 +127,7 @@ ul::-webkit-scrollbar-track {
 }
 
 .rank-list {
-  height: 500px;
+  height: 700px;
   overflow: auto;
   padding: 0;
   border: 1px solid rgba(140, 140, 140, 0.35);

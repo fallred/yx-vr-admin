@@ -12,14 +12,6 @@ import classes from "./index.module.less";
 import SelectLang from "./SelectLang";
 import { ReactComponent as LanguageSvg } from '@/assets/header/language.svg';
 
-export type SiderTheme = "light" | "dark";
-
-const ENVTagColor = {
-  dev: "orange",
-  test: "green",
-  pre: "#87d068",
-};
-
 const GlobalHeaderRight: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
 
@@ -36,7 +28,7 @@ const GlobalHeaderRight: React.FC = () => {
     <Space className={className}>
       <Notice />
       <Avatar />
-      <Link to={'/setting/updatePass'}>修改密码</Link>
+      <Link to={'/setting/updatePass'} className="upatePass">修改密码</Link>
     </Space>
   );
 };

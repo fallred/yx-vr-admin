@@ -125,6 +125,9 @@ const StoreDescriptions: FC<OperationDrawerProps> = (props) => {
           dataIndex: "grade",
           valueType: "rate",
           width: 200,
+          fieldProps: {
+            allowHalf: true,
+          },
           // copyable: true,
         },
         {

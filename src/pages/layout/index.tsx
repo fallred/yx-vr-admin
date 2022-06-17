@@ -37,7 +37,7 @@ import {queryMenuNode} from '@/lib/tree-util';
 import RenderRouter from '@/routes/index';
 import {userMenuTree1} from '@/config/menu-config';
 // import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
-import LogoIcon from "@/assets/logo/logo.png";
+import LogoIcon from "@/assets/logo/logo-2.png";
 import { useGuide } from "../guide/useGuide";
 import Footer from "./components/Footer";
 import RightContent from "./components/RightContent";
@@ -186,13 +186,16 @@ const LayoutPage: FC = ({ children }) => {
         }
         return <Link to={menuItemProps.url} onClick={setPathname(menuItemProps.url || '')}>{defaultDom}</Link>;
       }}
-      breadcrumbRender={(routers = []) => [
-        {
-          path: "/",
-          breadcrumbName: formatMessage({ id: "menu.home" }),
-        },
-        ...routers,
-      ]}
+      breadcrumbRender={(routers = []) => {
+        const [menuRouter, ...rest] = routers;
+        return [
+          {
+            path: "/",
+            breadcrumbName: menuRouter?.breadcrumbName ?? '--',
+          },
+          ...rest
+        ];
+      }}
       itemRender={(route, params, routes, paths) => {
         const first = routes.indexOf(route) === 0;
         return first ? (

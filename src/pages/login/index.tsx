@@ -8,7 +8,7 @@ import { LoginParams } from "@/models/login";
 // import { useAppDispatch } from '@/stores';
 import { Location } from "history";
 import { useLogin } from "@/api";
-import LogoIcon from "@/assets/logo/logo.png";
+import LogoIcon from "@/assets/logo/logo-2.png";
 import styles from "./index.module.less";
 import { ReactComponent as LogoSvg } from "@/assets/logo/logo.svg";
 
