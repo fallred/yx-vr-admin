@@ -1,4 +1,5 @@
 import {IButtonItem} from '@/models/menu';
+import {RoleEnum} from '@/models/common';
 import defaultSubject from './defaultSubject';
 import {
   TOPIC_GET_USER_INFO,
@@ -12,7 +13,8 @@ const getUserBaseInfo = (userInfo) => {
   defaultSubject.notify(TOPIC_GET_USER_BASE_INFO, userInfo);
 };
 
-const getUserInfo = (userInfo) => {
+const getUserInfo = userInfo => {
+  userInfo.isSuperAdmin = userInfo?.roleCode === RoleEnum.SUPER_ADMIN;
   defaultSubject.notify(TOPIC_GET_USER_INFO, userInfo);
 };
 

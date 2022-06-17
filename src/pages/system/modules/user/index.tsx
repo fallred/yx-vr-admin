@@ -7,8 +7,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
 import { LocaleFormatter, useLocale } from '@/locales';
-import { permissionListState } from '@/stores/recoilState';
-import { SexEnum, PageFuncEnum } from '@/models/common';
+import { permissionListState, userInfoState } from '@/stores/recoilState';
+import { SexEnum, PageFuncEnum, RoleEnum } from '@/models/common';
 import { IUser } from '@/models/user';
 import { PageFuncMap, UserStatusMap, SexMap } from '@/enums/common';
 import {
@@ -32,6 +32,7 @@ interface UserTableListProps {
 const UserTableList: FC<UserTableListProps> = props => {
     const { identityType = IdentifyTypeEnum.PLATFORM } = props;
     const permissionList = useRecoilValue(permissionListState);
+    const userInfo = useRecoilValue(userInfoState);
     const actionRef = useRef<ActionType>();
     const { formatMessage } = useLocale();
     const { data: roleListAll } = useGetRoleListAll();
@@ -285,6 +286,10 @@ const UserTableList: FC<UserTableListProps> = props => {
             },
         ]);
     }
+    // console.log('userInfo:', userInfo);
+    // if (identityType === IdentifyTypeEnum.PLATFORM && userInfo.isSuperAdmin) {
+    // }
+    // else {
     columns.push({
         title: formatMessage({ id: "gloabal.tips.operation" }),
         dataIndex: "option",
@@ -293,6 +298,11 @@ const UserTableList: FC<UserTableListProps> = props => {
         fixed: 'right',
         width: 150,
         render: (_, record) => {
+            if (identityType === IdentifyTypeEnum.PLATFORM
+                && (record.roleNm === '超级管理员'
+                || record.roleCode === RoleEnum.SUPER_ADMIN)) {
+                return [];
+            }
             const opMenuList = [];
             if (PageFuncEnum.EDIT) {
                 opMenuList.push({ key: 'viewShop', name: '查看数据权限' });
@@ -330,41 +340,42 @@ const UserTableList: FC<UserTableListProps> = props => {
                 //     设置数据权限
                 // </AuthLink>,
                 <AuthLink
-                  key={PageFuncEnum.DELETE}
-                  operCode={PageFuncEnum.DELETE}
-                  onClick={(e) => {
+                    key={PageFuncEnum.DELETE}
+                    operCode={PageFuncEnum.DELETE}
+                    onClick={(e) => {
                     e.preventDefault();
                     Modal.confirm({
-                      title: "删除用户",
-                      content: "确定删除该用户吗？",
-                      okText: "确认",
-                      cancelText: "取消",
-                      onOk: async () => {
+                        title: "删除用户",
+                        content: "确定删除该用户吗？",
+                        okText: "确认",
+                        cancelText: "取消",
+                        onOk: async () => {
                         await handleRemove([{ ...record }]);
                         setSelectedRows([]);
                         refetch();
-                      },
+                        },
                     });
-                  }}
+                    }}
                 >
-                  删除
+                    删除
                 </AuthLink>,
                 <TableDropdown
-                  key="actionGroup"
-                  onSelect={(key) => {
+                    key="actionGroup"
+                    onSelect={(key) => {
                     if (key === 'viewShop') {
                         showViewDrawer(record);
                     }
                     if (key === 'setShop') {
                         showShopSetForm(record);
                     }
-                  }}
-                  menus={opMenuList}
+                    }}
+                    menus={opMenuList}
                 />,
             ];
             return btnList;
         },
     });
+    // }
     return (
         <>
             <ProTable<IUser>

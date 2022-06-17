@@ -7,9 +7,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import { LocaleFormatter, useLocale } from '@/locales';
-import { permissionListState } from '@/stores/recoilState';
+import { permissionListState, userInfoState } from '@/stores/recoilState';
 import { IRole, IRoleList, IRolePaginationResp } from '@/models/role';
-import {PageFuncEnum} from '@/models/common';
+import {PageFuncEnum, RoleEnum} from '@/models/common';
 import {PageFuncMap} from '@/enums/common';
 import { useAddRole, useBatchDeleteRole, useGetRoleList, useUpdateRole } from '@/api';
 import WrapAuth from '@/components/wrap-auth/index';
@@ -17,6 +17,7 @@ import RoleForm from './modules/role/role-form';
 
 const RoleTableList= () => {
   const permissionList = useRecoilValue(permissionListState);
+  const userInfo = useRecoilValue(userInfoState);
   const { formatMessage } = useLocale();
   const [roleList, setRoleList] = useState<IRole[]>();
   const [filters, setFilters] = useState<IRole>();
@@ -132,48 +133,52 @@ const RoleTableList= () => {
       dataIndex: "comment",
       valueType: "textarea",
     },
-    {
-      title: formatMessage({ id: "gloabal.tips.operation" }),
-      dataIndex: "option",
-      valueType: "option",
-      render: (_, record) => {
-        const btnList = [
-          <AuthLink
-            key={PageFuncEnum.EDIT}
-            operCode={PageFuncEnum.EDIT}
-            onClick={(e) => {
-              e.preventDefault();
-              showEditModal(record);
-            }}
-          >
-            编辑
-          </AuthLink>,
-          <AuthLink
-            key={PageFuncEnum.DELETE}
-            operCode={PageFuncEnum.DELETE}
-            onClick={(e) => {
-              e.preventDefault();
-              Modal.confirm({
-                title: "删除角色",
-                content: "确定删除该角色吗？",
-                okText: "确认",
-                cancelText: "取消",
-                onOk: async () => {
-                  await handleRemove([{ ...record }]);
-                  setSelectedRows([]);
-                  refetch();
-                },
-              });
-            }}
-          >
-            删除
-          </AuthLink>,
-        ];
-        return btnList;
-      },
-    },
   ];
-
+  // if (!userInfo.isSuperAdmin) {
+  columns.push({
+    title: formatMessage({ id: "gloabal.tips.operation" }),
+    dataIndex: "option",
+    valueType: "option",
+    render: (_, record) => {
+      if (record.code === RoleEnum.SUPER_ADMIN) {
+          return [];
+      }
+      const btnList = [
+        <AuthLink
+          key={PageFuncEnum.EDIT}
+          operCode={PageFuncEnum.EDIT}
+          onClick={(e) => {
+            e.preventDefault();
+            showEditModal(record);
+          }}
+        >
+          编辑
+        </AuthLink>,
+        <AuthLink
+          key={PageFuncEnum.DELETE}
+          operCode={PageFuncEnum.DELETE}
+          onClick={(e) => {
+            e.preventDefault();
+            Modal.confirm({
+              title: "删除角色",
+              content: "确定删除该角色吗？",
+              okText: "确认",
+              cancelText: "取消",
+              onOk: async () => {
+                await handleRemove([{ ...record }]);
+                setSelectedRows([]);
+                refetch();
+              },
+            });
+          }}
+        >
+          删除
+        </AuthLink>,
+      ];
+      return btnList;
+    },
+  });
+  // }
   return (
     <PageContainer>
       <ProTable<IRole>

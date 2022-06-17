@@ -35,19 +35,33 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-const wrapAuth = (ComposedComponent, operCodes = [], path = '') => class WrapComponent extends Component {
+const superAdminDisablePathList = [
+  'user',
+  'role'
+];
+const WrapAuth = (ComposedComponent, operCodes = []) => class WrapComponent extends Component {
   // 构造
   constructor(props) {
     super(props);
     this.state = {
-      operCode: props.operCode,
-      specialCode: props.specialCode,
+      // operCode: props.operCode,
+      // specialCode: props.specialCode,
+      // path: props.path,
+      // isSuperAdmin: props.isSuperAdmin,
     };
   }
 
-  checkBtnAuth(operCode, specialCode = '') {
-    const hasAuth = !!operCode && operCode.length > 0 ? operCodes.includes(operCode) : true;
-    return hasAuth;
+  checkBtnAuth(params) {
+    const {operCode, specialCode, path, isSuperAdmin} = params;
+    let hasAuth = true;
+    if (isSuperAdmin && path && superAdminDisablePathList.includes(path)) {
+      hasAuth = false;
+      return hasAuth;
+    }
+    if (!!operCode && operCode.length > 0) {
+      hasAuth = operCodes.includes(operCode);
+      return hasAuth;
+    }
   }
 
   static propTypes = {
@@ -56,8 +70,8 @@ const wrapAuth = (ComposedComponent, operCodes = [], path = '') => class WrapCom
   };
 
   render() {
-    const {operCode, specialCode, ...others} = this.props;
-    if (this.checkBtnAuth(operCode, specialCode)) {
+    const {operCode, specialCode, path, isSuperAdmin, ...others} = this.props;
+    if (this.checkBtnAuth({operCode, specialCode, path, isSuperAdmin})) {
       return <ComposedComponent { ...others} />;
     } else {
       return null;
@@ -65,4 +79,4 @@ const wrapAuth = (ComposedComponent, operCodes = [], path = '') => class WrapCom
   }
 };
 
-export default wrapAuth;
+export default WrapAuth;

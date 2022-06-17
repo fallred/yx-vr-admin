@@ -83,3 +83,7 @@ export interface IProvinceCityDistrict {
     cityName: string;
     districtName: string;
 };
+
+export enum RoleEnum {
+    SUPER_ADMIN = 'super_admin',
+}
