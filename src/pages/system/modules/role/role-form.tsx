@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import moment from 'moment';
-import { Modal, Form, Input, Drawer, Space, Button } from 'antd';
+import { Modal, Form, Input, Drawer, Space, Button, message } from 'antd';
 import {queryMenuAndFuncNodes} from '@/lib/tree-util';
 import { IRole, IRoleList, IRolePaginationResp } from '@/models/role';
 import {
@@ -11,6 +11,7 @@ import {
   ProFormTextArea,
   ProFormTreeSelect
 } from '@ant-design/pro-components';
+import {RoleEnum} from '@/models/common';
 import AuthTree from '../auth-tree/index';
 
 interface RoleFormProps {
@@ -63,6 +64,12 @@ const RoleForm: FC<RoleFormProps> = (props) => {
   const handleSubmit = () => {
     if (!form) return;
     const formData = form.getFieldsValue();
+    const {code, name} = formData;
+    if (code === RoleEnum.SUPER_ADMIN
+      || name === '超级管理员') {
+      message.error('不能创建角色为超级管理员的角色');
+      return;
+    }
     const selMenuTree = authTreeRef?.current?.getValue();
     const selMenuTreeJSON = JSON.stringify(selMenuTree);
     console.log('selMenuTreeJSON:', selMenuTreeJSON);
@@ -74,7 +81,7 @@ const RoleForm: FC<RoleFormProps> = (props) => {
     });
     form.submit();
   };
-
+  // 提交表单且数据验证成功后回调事件
   const handleFinish = async (values: { [key: string]: any }) => {
     if (onSubmit) {
       onSubmit(values as IRole);

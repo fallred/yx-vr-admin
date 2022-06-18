@@ -4,7 +4,7 @@ import moment from 'moment';
 import {
   Modal, Form, Input,
   Drawer, Space, Button,
-  Popover
+  Popover, Rate
 } from 'antd';
 import {
   ProCard,
@@ -19,6 +19,7 @@ import {SexOptions, IdentifyOptions, ShopStoreStatusOptions} from '@/enums/commo
 import { IShopStore, ShopStoreStatusEnum, IProvinceCityDistrict } from "@/models/shop-store";
 import ProvinceCityArea from '@/components/province-city-area';
 import AvatarUpload from '@/components/avatar-upload';
+import WithRate from '@/components/with-rate';
 import {dateTimeFormat, dateMonthFormat} from '@/lib/common';
 
 interface ShopFormProps {
@@ -39,7 +40,9 @@ const ShopForm: FC<ShopFormProps> = (props) => {
   const [form] = Form.useForm();
   const [pcdData, setPcdData] = useState<IProvinceCityDistrict>({});
   const [pcdCompVisible, setPcdCompVisible] = useState(false);
+  // const [gradeNumber, setGradeNumber] = useState(0);
   const { visible, current, onCancel, onSubmit } = props;
+  const {grade} = current ?? {};
   const {selectedMenuTree} = current ?? {};
 
   useEffect(() => {
@@ -59,6 +62,8 @@ const ShopForm: FC<ShopFormProps> = (props) => {
             createdAt: current.createdAt ? moment(current.createdAt) : null,
         });
         setPcdData(pcdDataTemp);
+        // const gradeTemp = grade ? parseFloat(grade, 2) : 0;
+        // setGradeNumber(gradeTemp);
     }
   }, [current]);
 
@@ -82,6 +87,12 @@ const ShopForm: FC<ShopFormProps> = (props) => {
     }
   };
   const handlePcdChange = pcdDataTemp => {
+  };
+  const handleGradeChange = gradeTemp => {
+    form.setFieldsValue({
+      ...current,
+      grade: gradeTemp,
+    });
   };
   const handlePcdConfirm = () => {
     setPcdCompVisible(false);
@@ -143,15 +154,21 @@ const ShopForm: FC<ShopFormProps> = (props) => {
                 placeholder="请输入加盟商"
                 rules={[{ required: true }]}
             />
-            <ProFormRate
-                key="grade"
-                name="grade"
-                label="门店评级"
-                placeholder="请设置评级"
-                width="md"
-                allowHalf
-                rules={[{ required: true }]}
-            />
+            <ProForm.Item
+              name="grade"
+              width="md"
+              label="门店评级"
+              placeholder="请设置评级"
+              rules={[{ required: true }]}
+            >
+                {/* <Rate allowHalf value={gradeNumber} onChange={setGradeNumber} count={5} /> */}
+                <WithRate
+                  allowHalf
+                  grade={grade}
+                  onChange={handleGradeChange}
+                  count={5}
+                />
+            </ProForm.Item>
             <ProFormText
                 key="manager"
                 name="manager"

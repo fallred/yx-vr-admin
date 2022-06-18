@@ -13,9 +13,10 @@ const getUserBaseInfo = (userInfo) => {
   defaultSubject.notify(TOPIC_GET_USER_BASE_INFO, userInfo);
 };
 
-const getUserInfo = userInfo => {
-  userInfo.isSuperAdmin = userInfo?.roleCode === RoleEnum.SUPER_ADMIN;
-  defaultSubject.notify(TOPIC_GET_USER_INFO, userInfo);
+const getUserInfo = (userInfo = {}) => {
+  const userInfoTemp = {...userInfo};
+  userInfoTemp.isSuperAdmin = userInfoTemp?.roleCode === RoleEnum.SUPER_ADMIN;
+  defaultSubject.notify(TOPIC_GET_USER_INFO, userInfoTemp);
 };
 
 const getUserMenuTree = currentMenuTree => {
@@ -27,7 +28,7 @@ const getSystemMenuTree = systemMenuTree => {
 };
 
 const getPermissionList = (permissionList: IButtonItem[]) => {
-  const authCodeList = permissionList.map(item => {
+  const authCodeList = permissionList?.map(item => {
     const splitList = item.code?.split(':') ?? [];
     const opCoode = splitList?.[1];
     return opCoode;

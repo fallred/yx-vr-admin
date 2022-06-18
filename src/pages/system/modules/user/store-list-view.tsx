@@ -5,6 +5,7 @@ import {ProTable, ProDescriptions} from '@ant-design/pro-components';
 import {IUser} from '@/models/user-mng';
 import {IShopStore, ShopStoreStatusEnum} from '@/models/shop-store';
 import {ShopStoreStatusMap} from '@/enums/common';
+import WithRate from '@/components/with-rate';
 
 interface StoreListViewProps {
     visible: boolean;
@@ -35,7 +36,12 @@ const StoreItem: FC<StoreListViewProps> = (props) => {
                 {ShopStoreStatusMap.get(store.status)}
             </Descriptions.Item>
             <Descriptions.Item label="评级">
-                <Rate allowHalf disabled value={store.grade} />
+                {/* <Rate allowHalf disabled value={store.grade} /> */}
+                <WithRate
+                  allowHalf
+                  disabled
+                  grade={store.grade}
+                />
             </Descriptions.Item>
             <Descriptions.Item label="签约时间">
                 {store.tm}

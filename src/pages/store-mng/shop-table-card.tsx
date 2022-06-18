@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { findDOMNode } from 'react-dom';
 import { useRecoilValue } from 'recoil';
-import { Form, Button, message, Modal, PaginationProps, Space, Input } from 'antd';
+import { Form, Button, message, Modal, PaginationProps, Space, Input, Rate } from 'antd';
 import { FooterToolbar } from '@ant-design/pro-layout';
 import {
   ProCard, ProForm,
@@ -27,6 +27,7 @@ import WrapAuth from '@/components/wrap-auth/index';
 import { IShopStore, ShopStoreStatusEnum } from '@/models/shop-store';
 import ProvinceCityArea from '@/components/province-city-area';
 import FormItem from '@/components/form-item';
+import WithRate from '@/components/with-rate';
 import AutoUploadFile from './modules/auto-upload-file';
 import ShopForm from './modules/shop-form';
 import { dateTimeFormat } from '@/lib/common';
@@ -156,7 +157,7 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
     await updateMutate(data);
   };
   const handleSubmit = async (row: IShopStore) => {
-    const {id, tm, provinceCityDistrict, ...rest} = row;
+    const {id, tm, provinceCityDistrict, provinceName, cityName, districtName, ...rest} = row;
     const {province, city, district} = provinceCityDistrict;
     const rowTemp = {
       ...rest,
@@ -308,8 +309,19 @@ const ShopTableList: FC<IShopListProps> = (props = {showOperate: false, showTabl
       dataIndex: "grade",
       valueType: "rate",
       width: 100,
-      fieldProps: {
-        allowHalf: true,
+      // fieldProps: {
+      //   allowHalf: true,
+      // },
+      render: (text, row) => {
+        // const grade = row.grade ? parseFloat(row.grade) : 0;
+        return (
+          // <Rate allowHalf value={grade} disabled count={5} />
+          <WithRate
+            allowHalf
+            disabled
+            grade={row.grade}
+          />
+        );
       },
       // copyable: true,
     },

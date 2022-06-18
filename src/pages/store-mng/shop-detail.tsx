@@ -5,6 +5,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import {ProCard, ProDescriptions, QueryFilter, ProFormSelect, ProFormRate} from '@ant-design/pro-components';
 import {useGetShopStoreList, useQueryShopStoreDetail} from '@/api';
 import {ShopStoreStatusMap} from '@/enums/common';
+import WithRate from '@/components/with-rate';
 import ShopTask from './modules/shop-task/index';
 
 const ShopDetailPage: React.FC<{}> = () => {
@@ -70,7 +71,6 @@ const ShopDetailPage: React.FC<{}> = () => {
                     label: 'nm',
                     value: 'appId'
                   },
-                  labelCol: {span: 4, offset: 16},
                   showSearch: true,
                   optionFilterProp: "label",
                   filterOption: (input, option) => {
@@ -148,10 +148,15 @@ const ShopDetailPage: React.FC<{}> = () => {
               {ShopStoreStatusMap.get(shopStoreDetail.status)}
             </ProDescriptions.Item>
             <ProDescriptions.Item label="评级">
-              <Rate
+              {/* <Rate
                  allowHalf
                  disabled
                  value={shopStoreDetail.grade}
+              /> */}
+              <WithRate
+                allowHalf
+                disabled
+                grade={shopStoreDetail.grade}
               />
             </ProDescriptions.Item>
             <ProDescriptions.Item

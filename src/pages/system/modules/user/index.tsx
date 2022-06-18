@@ -305,7 +305,9 @@ const UserTableList: FC<UserTableListProps> = props => {
             const opMenuList = [];
             if (PageFuncEnum.EDIT) {
                 opMenuList.push({ key: 'viewShop', name: '查看数据权限' });
-                opMenuList.push({ key: 'setShop', name: '设置数据权限' });
+                if (userInfo.username !== record.username) {
+                    opMenuList.push({ key: 'setShop', name: '设置数据权限' });
+                }
             }
             const btnList = [
                 <AuthLink

@@ -52,8 +52,7 @@ const RankList: React.FC<RankTableListProps> = props => {
           render: (dom) => (
             <Space>
               <span>{dom}</span>
-              <a href="https://github.com/chenshuai2144" target="_blank" rel="noopener noreferrer">
-                chenshuai2144
+              <a href="" target="_blank" rel="noopener noreferrer">
               </a>
             </Space>
           ),

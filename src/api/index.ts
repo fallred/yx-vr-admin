@@ -129,11 +129,12 @@ export const useSetUserApps = () => {
 
 // 门店管理
 export const useGetShopStoreListWithPage = (pagination: any, filters: any) => {
+    const {provinceName, cityName, districtName, ...rest} = filters;
     return useGetList<IShopStorePaginationResp>(
         "StoreList",
         '/app/store/query',
         pagination,
-        filters
+        rest
     );
 }
 export const useGetShopStoreList = () => {

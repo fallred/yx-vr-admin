@@ -11,12 +11,14 @@ import {
   ProFormTreeSelect,
   ProFormSelect
 } from '@ant-design/pro-components';
+import { userInfoState } from "@/stores/recoilState";
 import {SexOptions, IdentifyOptions, UserStatusOptions} from '@/enums/common';
 import {useGetRoleListAll} from '@/api';
 import AvatarUpload from '@/components/avatar-upload';
 import ShopTableCard from '@/pages/store-mng/shop-table-card';
 import { IUser } from '@/models/user-mng';
 import {IRole} from '@/models/role';
+import { RoleEnum } from '@/models/common';
 
 interface UserFormProps {
   visible: boolean;
@@ -36,7 +38,8 @@ const UserForm: FC<UserFormProps> = (props) => {
   const shopTableRef = useRef<React.Component>(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
-  const {selectedMenuTree} = current ?? {};
+  const {selectedMenuTree, username, roleCode} = current ?? {};
+  const userInfo = useRecoilValue(userInfoState);
   const { data: roleListAll, error, isLoading, refetch } = useGetRoleListAll();
   const [roleOptions, setRoleOptions] = useState<IRole[]>();
   const [avatarUrl, setAvatarUrl] = useState<string>('');
@@ -182,42 +185,51 @@ const UserForm: FC<UserFormProps> = (props) => {
                 options={IdentifyOptions}
                 placeholder="选择账号类型"
               />
-              <ProFormSelect
-                key="roleId"
-                name="roleId"
-                label="角色"
-                width="md"
-                options={roleOptions}
-                // fieldNames={fieldNames}
-                placeholder="选择角色"
-              />
+              {
+                userInfo.username !== username
+                && roleCode !== RoleEnum.SUPER_ADMIN ? 
+                <ProFormSelect
+                  key="roleId"
+                  name="roleId"
+                  label="角色"
+                  width="md"
+                  options={roleOptions}
+                  // fieldNames={fieldNames}
+                  placeholder="选择角色"
+                /> : null
+              }
           </ProCard>
-          <ProCard
-              title="数据设置"
-              bordered
-              headerBordered
-              collapsible
-              style={{
-                marginBottom: 16,
-                minWidth: 200,
-                maxWidth: '100%',
-              }}
-          >
-          
-            <ShopTableCard
-              shopTableRef={shopTableRef}
-              selectedApps={selectedApps}
-              showSearch={false}
-              showTableTitle={false}
-            />
-          </ProCard>
-          <ProForm.Item
-              className="user-form__apps"
-              name="appId"
-              width="md"
-              label=""
-          >
-          </ProForm.Item>
+          {
+            userInfo.username !== username ? 
+            <React.Fragment>
+                 <ProCard
+                    title="数据设置"
+                    bordered
+                    headerBordered
+                    collapsible
+                    style={{
+                      marginBottom: 16,
+                      minWidth: 200,
+                      maxWidth: '100%',
+                    }}
+                >
+                  <ShopTableCard
+                    shopTableRef={shopTableRef}
+                    selectedApps={selectedApps}
+                    showSearch={false}
+                    showTableTitle={false}
+                  />
+                </ProCard>
+                <ProForm.Item
+                    className="user-form__apps"
+                    name="appId"
+                    width="md"
+                    label=""
+                >
+                </ProForm.Item>
+            </React.Fragment>
+            : null
+          }
       </Form>
     );
   };
