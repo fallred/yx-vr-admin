@@ -299,8 +299,7 @@ const UserTableList: FC<UserTableListProps> = props => {
         width: 150,
         render: (_, record) => {
             if (identityType === IdentifyTypeEnum.PLATFORM
-                && (record.roleNm === '超级管理员'
-                || record.roleCode === RoleEnum.SUPER_ADMIN)) {
+                && record.username === 'admin') {
                 return [];
             }
             const opMenuList = [];

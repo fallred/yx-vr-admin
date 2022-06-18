@@ -14,7 +14,7 @@ const RankList: React.FC<RankTableListProps> = props => {
     const { type } = props;
     const [filters, setFilters] = useState<IRank>({});
     const [rankList, setRankList] = useState<IRank[]>([]);
-    const [localPageNo, setLocalPageNo] = useState<number>(0);
+    const [localPageNo, setLocalPageNo] = useState<number>(1);
     const [maxPage, setMaxPage] = useState<number>(9999);
     const [pagination, setPagination] = useState<Partial<PaginationProps>>({
       current: 1,
@@ -98,6 +98,8 @@ const RankList: React.FC<RankTableListProps> = props => {
     }
     useEffect(() => {
       fetchRank(1, true);
+      setLocalPageNo(1);
+      setPagination({...pagination, current: 1});
     }, [type]);
 
     return (
