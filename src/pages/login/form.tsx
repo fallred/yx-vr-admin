@@ -61,8 +61,12 @@ const LoginFormComp: FC = () => {
           localStorage.setItem("appId", result.appId);
           localStorage.setItem("identity_type", result.identity_type);
           // localStorage.setItem("apps", JSON.stringify(result.apps));
-          const from = location.state?.from || { pathname: "/home" };
-          navigate(from);
+          // const from = location.state?.from || { pathname: "/home" };
+          // navigate(from);
+          console.log('login skip:');
+          navigate(`/`);
+          // window.location.href = '/vrAdmin/#/home';
+          // window.location.reload();
         }
       };
     return (

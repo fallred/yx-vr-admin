@@ -29,8 +29,12 @@ import { useLocale } from '@/locales';
 import { IMenuItem, IMenuTree, MenuChild } from '@/models/menu';
 import { userState, userInfoState } from '@/stores/recoilState';
 import {
-  useGetCurrentUser, useGetSystemMenuTree,
-  useGetUserMenuTree, useQueryUserDetail
+  useGetSystemMenuTree,
+  useGetUserMenuTree,
+  useQueryUserDetail,
+  useGetSystemMenuTree1,
+  useGetUserMenuTree1,
+  useQueryUserDetail1
 } from '@/api';
 import recoilService from '@/stores/recoilService';
 import {queryMenuNode} from '@/lib/tree-util';
@@ -69,16 +73,24 @@ const IconMap: { [key: string]: React.ReactNode } = {
 const LayoutPage: FC = ({ children }) => {
   const [user, setUser] = useRecoilState(userState);
   const userName = localStorage.getItem('userName');
+  const userAccount = localStorage.getItem('userAccount');
   const { device, collapsed, newUser, settings } = user;
-  const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
-  const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
-  const { data: userDetail } = useQueryUserDetail({userAccount: user.userAccount});
+  // const { data: userMenuTree, error: error1 } = useGetUserMenuTree();
+  // const { data: systemMenuTree, error: error2 } = useGetSystemMenuTree();
+  // const { data: userDetail } = useQueryUserDetail({userAccount: user.userAccount});
   
+  const fetchUserMenuTree = useGetUserMenuTree1();
+  const fetchSystemMenuTree = useGetSystemMenuTree1();
+  const fetchUserDetail = useQueryUserDetail1();
+
   const [pathname, setPathname] = useState("/welcome");
   const [openKeys, setOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
-  
-  const isMobile = device === "MOBILE";
+
+  const [userMenuTree, setUserMenuTree] = useState([]);
+  const [systemMenuTree, setSystemMenuTree] = useState([]);
+  const [userDetail, setUserDetail] = useState([]);
+
   const { driverStart } = useGuide();
   const location = useLocation();
   const navigate = useNavigate();
@@ -87,7 +99,19 @@ const LayoutPage: FC = ({ children }) => {
   const toggle = () => {
     setUser({ ...user, collapsed: !collapsed });
   };
+  const fetchMenu = async () => {
+    const systemMenuTreeResp = await fetchSystemMenuTree();
+    const userMenuTreeResp = await fetchUserMenuTree({username: userAccount});
+    const userDetailResp = await fetchUserDetail({userAccount});
+    setSystemMenuTree(systemMenuTreeResp);
+    recoilService.getSystemMenuTree(systemMenuTreeResp);
 
+    setUserMenuTree(userMenuTreeResp);
+    recoilService.getUserMenuTree(userMenuTreeResp);
+
+    setUserDetail(userDetailResp);
+    recoilService.getUserInfo(userDetailResp);
+  };
   const loopMenuItem = (menus?: IMenuTree): MenuDataItem[] => {
     if (!menus || menus.length === 0) return [];
 
@@ -102,10 +126,6 @@ const LayoutPage: FC = ({ children }) => {
 
     return m;
   };
-  const generateMenuList = () => {
-    const list = loopMenuItem(userMenuTree);
-    return list;
-  };
   const handlePageChange = (location: Location) => {
     const menuNode = queryMenuNode(userMenuTree, 'url', location.pathname);
     console.log('menuNode:', menuNode);
@@ -113,14 +133,6 @@ const LayoutPage: FC = ({ children }) => {
     recoilService.getPermissionList(permission);
   };
   const onOpenChange = data => {
-    //  const latestOpenKey = openKeys.find(key => openKeys.indexOf(key) === -1);
-    //  if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-    //    this.setState({ openKeys });
-    //   } else {
-    //    this.setState({
-    //      openKeys: latestOpenKey ? [latestOpenKey] : [],
-    //     });
-    //   }
     const menuIds = data.map(key => `${key}`);
     console.log('onOpenChange keys:', menuIds);
     setOpenKeys(menuIds);
@@ -132,22 +144,24 @@ const LayoutPage: FC = ({ children }) => {
     setSelectedKeys(menuIds);
   };
   useEffect(() => {
+    console.log('navigate change:', location);
     if (location.pathname === "/") {
       navigate("/home");
     }
   }, [navigate, location]);
   useEffect(() => {
     newUser && driverStart();
+    fetchMenu();
   }, [newUser]);
-  useEffect(() => {
-    recoilService.getSystemMenuTree(systemMenuTree);
-  }, [systemMenuTree]);
-  useEffect(() => {
-    recoilService.getUserMenuTree(userMenuTree);
-  }, [userMenuTree]);
-  useEffect(() => {
-    recoilService.getUserInfo(userDetail);
-  }, [userDetail]);
+  // useEffect(() => {
+  //   recoilService.getSystemMenuTree(systemMenuTree);
+  // }, [systemMenuTree]);
+  // useEffect(() => {
+  //   recoilService.getUserMenuTree(userMenuTree);
+  // }, [userMenuTree]);
+  // useEffect(() => {
+  //   recoilService.getUserInfo(userDetail);
+  // }, [userDetail]);
   return (
     <ProLayout
       fixSiderbar

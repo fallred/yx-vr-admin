@@ -113,6 +113,15 @@ export const useQueryUserDetail = (payload: {userAccount?: string; id?: string})
         {completeRes: false}
     );
 }
+export const useQueryUserDetail1 = () => {
+    // return useGetOne<IUser>(
+    //     "userDetail",
+    //     "/manage/user/query/one",
+    //     payload,
+    //     {completeRes: false}
+    // );
+    return useQueryGet<IUser, IUser[]>('/manage/user/query/one');
+}
 export const useAddUser = () => {
     return useCreate<IUser, IUser>('/manage/user/create');
 }
