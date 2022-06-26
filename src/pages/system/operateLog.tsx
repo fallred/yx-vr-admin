@@ -29,7 +29,15 @@ const OperateLogList = () => {
 
   const { data: logListResp, error, isLoading, refetch } = useGetLogList(pagination, filters);
   const handleSearch = form => {
-    setFilters({...form?.getFieldsValue(), createDate: dateTimeFormat(filters?.createDate)});
+    const formData = form?.getFieldsValue();
+    const {createDate,...rest} = formData;
+    console.log('handleSearch formData:', formData);
+    console.log('handleSearch filters:', filters);
+    const transFilter = {};
+    if (createDate) {
+      transFilter.createDate = dateTimeFormat(createDate);
+    }
+    setFilters({...rest, ...transFilter});
   };
   const columns: ProColumns<ILog>[] = [
     {

@@ -127,13 +127,14 @@ const UserForm: FC<UserFormProps> = (props) => {
                 rules={[{ required: true }]}
             />
             {
-              current && current.id ? null : <ProFormText.Password
+              <ProFormText.Password
                 key="password"
                 name="password"
                 width="md"
                 label="密码"
                 placeholder="请输入密码"
                 rules={[{ required: true }]}
+                disabled={current && current.id}
               />
             }
             <ProFormText
@@ -184,6 +185,7 @@ const UserForm: FC<UserFormProps> = (props) => {
                 width="md"
                 options={IdentifyOptions}
                 placeholder="选择账号类型"
+                disabled={current && current.id}
               />
               {
                 userInfo.username !== username
