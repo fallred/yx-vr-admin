@@ -39,9 +39,9 @@ const superAdminDisablePathList = [
   'user',
   'role'
 ];
-const WrapAuth = (ComposedComponent, operCodes = []) => class WrapComponent extends Component {
+const WrapAuth = (ComposedComponent: any, operCodes = []) => class WrapComponent extends Component {
   // 构造
-  constructor(props) {
+  constructor(props: {operCode: string; specialCode: string; path: string; isSuperAdmin: boolean} | Readonly<{}>) {
     super(props);
     this.state = {
       // operCode: props.operCode,
@@ -51,7 +51,7 @@ const WrapAuth = (ComposedComponent, operCodes = []) => class WrapComponent exte
     };
   }
 
-  checkBtnAuth(params) {
+  checkBtnAuth(params: { operCode: string; specialCode: string; path: string; isSuperAdmin: boolean}) {
     const {operCode, specialCode, path, isSuperAdmin} = params;
     let hasAuth = true;
     if (isSuperAdmin && path && superAdminDisablePathList.includes(path)) {
@@ -70,7 +70,7 @@ const WrapAuth = (ComposedComponent, operCodes = []) => class WrapComponent exte
   };
 
   render() {
-    const {operCode, specialCode, path, isSuperAdmin, ...others} = this.props;
+    const {operCode, specialCode, path, isSuperAdmin, ...others} = this.props ?? {};
     if (this.checkBtnAuth({operCode, specialCode, path, isSuperAdmin})) {
       return <ComposedComponent { ...others} />;
     } else {

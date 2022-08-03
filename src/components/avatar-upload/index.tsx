@@ -8,13 +8,13 @@ import $axios, {useAxios, opt} from '@/api/config';
 const env = import.meta.env.VITE_NODE_ENV;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function getBase64(img, callback) {
+function getBase64(img: Blob, callback: { (imgUrl: any): void; (arg0: string | ArrayBuffer | null): any; }) {
   const reader = new FileReader();
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
 
-function beforeUpload(file) {
+function beforeUpload(file: { type: string; size: number; }) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
     message.error('You can only upload JPG/PNG file!');
@@ -27,6 +27,9 @@ function beforeUpload(file) {
 }
 
 class AvatarUpload extends React.Component {
+  setState(arg0: { fileList: any[]; }) {
+    throw new Error('Method not implemented.');
+  }
   state = {
     loading: false,
     imageUrl: '',
@@ -39,7 +42,8 @@ class AvatarUpload extends React.Component {
       // },
     ],
   };
-  static getDerivedStateFromProps(nextProps, prevState) {
+  props: any;
+  static getDerivedStateFromProps(nextProps: { imageUrl: any; }, prevState: { imageUrl: any; }) {
     if (nextProps.imageUrl !== prevState.imageUrl) {
       // 通过对比nextProps和prevState，返回一个用于更新状态的对象
       return {
@@ -48,7 +52,7 @@ class AvatarUpload extends React.Component {
     }
     return null;
   }
-  handleChange = info => {
+  handleChange = (info: { fileList: any; }) => {
     const {fileList} = this.state;
     let newFileList = [...info.fileList];
     // console.log('file info:', info);
@@ -70,7 +74,7 @@ class AvatarUpload extends React.Component {
       fileList: newFileList
     });
   };
-  handleChange1 = info => {
+  handleChange1 = (info: { file: { status: string; originFileObj: Blob; }; }) => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
@@ -109,7 +113,7 @@ class AvatarUpload extends React.Component {
         headers: {
           accessToken,
         },
-        customRequest:  async info => {
+        customRequest:  async (info: { file: string | Blob; }) => {
           //手动上传
           const formData = new FormData();
           // 名字和后端接口名字对应
@@ -142,9 +146,9 @@ class AvatarUpload extends React.Component {
           //   message.error('上传失败！');
           // }
         },
-        onRemove: file => {
+        onRemove: (file: any) => {
           //删除图片调用
-          this.setState(state => {
+          this.setState((state: { fileList: string | any[]; }) => {
             const index = state.fileList.indexOf(file);
             const newFileList = state.fileList.slice();
             newFileList.splice(index, 1);
@@ -162,7 +166,7 @@ class AvatarUpload extends React.Component {
       </div>
     );
     return (
-      <Upload {...uploadProps}>
+      <Upload capture={undefined} {...uploadProps}>
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>
     );

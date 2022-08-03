@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef, useState, useImperativeHandle } from "react";
 import { Select } from 'antd';
-import {ProForm, ProFormSelect} from '@ant-design/pro-components';
 import FormItem from "../form-item";
 import {
     IOption, IProvinceCityDistrict,
@@ -67,8 +66,8 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
             district,
         });
     };
-    const queryItemByCode = (code, opts) => {
-        const item = opts.find(item => item.code === code);
+    const queryItemByCode = (code: string, opts: any[]) => {
+        const item = opts.find((item: { code: any; }) => item.code === code);
         console.log('queryItemByCode item:', item);
         return item;
     };
@@ -101,7 +100,6 @@ const ProvinceCityArea : FC<IPCRProps> = props => {
         setProvinceOptions(provinceList);
     }, [provinceList]);
     useEffect(() => {
-        const {province, city, district} = pcdData ?? {};
         // setFormData({...pcdData});
         // updateCityData(province);
         // updateAreaData(city);

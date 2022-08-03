@@ -40,7 +40,7 @@ export default ({ command, mode } : { command: string, mode: string}) => {
       include: [
         '@ant-design/colors',
         '@ant-design/icons',
-        '@ant-design/pro-card',
+        // '@ant-design/pro-card',
       ],
     },
     plugins: [

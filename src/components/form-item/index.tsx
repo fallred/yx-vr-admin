@@ -1,6 +1,8 @@
 import React, { FC, useState, useRef } from "react";
+import { ReactNode } from "react";
 
 interface IFormItemProps {
+    children: ReactNode;
     label: string;
 }
 

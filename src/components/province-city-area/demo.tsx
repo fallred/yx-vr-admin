@@ -1,4 +1,5 @@
 import { Cascader } from 'antd';
+import React from 'react';
 
 const optionLists = [
   {
@@ -16,11 +17,11 @@ const optionLists = [
 const LazyOptions = () => {
   const [options, setOptions] = React.useState(optionLists);
 
-  const onChange = (value, selectedOptions) => {
+  const onChange = (value: any, selectedOptions: any) => {
     console.log(value, selectedOptions);
   };
 
-  const loadData = selectedOptions => {
+  const loadData = (selectedOptions: string | any[]) => {
     const targetOption = selectedOptions[selectedOptions.length - 1];
     targetOption.loading = true;
 

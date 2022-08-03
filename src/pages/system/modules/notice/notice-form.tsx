@@ -24,7 +24,7 @@ const formLayout = {
   wrapperCol: { span: 20 },
 };
 
-const NoticeForm: FC<NoticeFormProps> = (props) => {
+const NoticeForm: FC<NoticeFormProps> = (props: { visible: any; current: any; onCancel: any; onSubmit: any; }) => {
   const formRef = useRef(null);
   const [form] = Form.useForm();
   const { visible, current, onCancel, onSubmit } = props;
@@ -62,7 +62,7 @@ const NoticeForm: FC<NoticeFormProps> = (props) => {
     }
   };
 
-  const handleContentChange = content => {
+  const handleContentChange = (content: any) => {
     const formData = form.getFieldsValue();
     form.setFieldsValue({
       ...formData,

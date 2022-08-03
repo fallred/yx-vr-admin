@@ -4,12 +4,12 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 interface IWithLoadProps {
     isLoading: boolean;
-    list: Array;
+    list: Array<any>;
 }
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-export default function WithCompLoad(Component) {
+export default function WithCompLoad(Component: any) {
     return function LoadComp(props: IWithLoadProps) {
         if (props.isLoading) {
             return  <React.Fragment><Spin indicator={antIcon} />加载中...</React.Fragment>;

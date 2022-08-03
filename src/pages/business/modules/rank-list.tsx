@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { List, message, Avatar, Skeleton, Divider, Badge } from 'antd';
+import { List, message, Avatar, Skeleton, Divider, Badge, PaginationProps, Space } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import type { ProColumns, ActionType } from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
+import type { ProColumns } from '@ant-design/pro-components';
 import { IRank, RankTypeEnum } from '@/models/rank';
 import { useGetRankList } from "@/api";
 
 interface RankTableListProps {
     type: RankTypeEnum;
+}
+interface IPageProps {
+  current: number;
+  pageSize: number;
+  total: number;
+  showQuickJumper: boolean;
 }
 
 const RankList: React.FC<RankTableListProps> = props => {
@@ -16,7 +21,7 @@ const RankList: React.FC<RankTableListProps> = props => {
     const [rankList, setRankList] = useState<IRank[]>([]);
     const [localPageNo, setLocalPageNo] = useState<number>(1);
     const [maxPage, setMaxPage] = useState<number>(9999);
-    const [pagination, setPagination] = useState<Partial<PaginationProps>>({
+    const [pagination, setPagination] = useState<Partial<IPageProps>>({
       current: 1,
       pageSize: 10,
       total: 0,
@@ -49,7 +54,7 @@ const RankList: React.FC<RankTableListProps> = props => {
           key: 'city',
           valueType: 'avatar',
           width: 150,
-          render: (dom) => (
+          render: (dom: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined) => (
             <Space>
               <span>{dom}</span>
               <a href="" target="_blank" rel="noopener noreferrer">
@@ -81,7 +86,7 @@ const RankList: React.FC<RankTableListProps> = props => {
         }
       });
       setRankList(rList);
-      const maxP =  Math.ceil(rankResp?.total / pagination.pageSize);
+      const maxP =  Math.ceil(rankResp?.total / (pagination?.pageSize ?? 0));
       setMaxPage(maxP);
       setPagination({
         ...pagination,
@@ -91,7 +96,7 @@ const RankList: React.FC<RankTableListProps> = props => {
       });
     };
     function handleNext() {
-      const newPage = pagination.current + 1;
+      const newPage = (pagination.current ?? 0) + 1;
       fetchRank(newPage, false);
       setLocalPageNo(newPage);
     }

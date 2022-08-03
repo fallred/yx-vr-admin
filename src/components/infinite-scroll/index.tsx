@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useLoadItems } from '../utils';
 import { List, ListItem, Loading } from '../components/List';
+import { Key } from 'react';
 
 const ListContainer = styled.div`
   max-width: 600px;
@@ -24,7 +25,7 @@ function InfiniteListWithHorizontalScroll() {
   return (
     <ListContainer ref={rootRef}>
       <List direction="horizontal">
-        {items.map((item) => (
+        {items.map((item: { key: Key | null | undefined; value: any; }) => (
           <ListItem key={item.key}>{item.value}</ListItem>
         ))}
         {hasNextPage && (
